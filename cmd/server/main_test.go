@@ -140,7 +140,12 @@ func TestStartupSchemaAndListenerIntegration(t *testing.T) {
 	if dsn == os.Getenv("DATABASE_URL") {
 		t.Fatal("test and runtime DB must differ")
 	}
-	// This test database is dedicated to B01. Migration is non-destructive and idempotent.
+	// Fixture generation is setup, outside the startup operation's deadline.
+	dir := t.TempDir()
+	if err := testworld.Write(t.Context(), dir, "v1"); err != nil {
+		t.Fatal(err)
+	}
+	// This database is dedicated to tests. Migration is non-destructive and idempotent.
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	if _, err := postgres.Migrate(ctx, dsn, "up"); err != nil {
@@ -151,24 +156,15 @@ func TestStartupSchemaAndListenerIntegration(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer func() { _ = listener.Close() }()
-	dir := t.TempDir()
-	if err = testworld.Write(ctx, dir, "v1"); err != nil {
-		t.Fatal(err)
-	}
 	cfg := config.Config{DatabaseURL: dsn, HTTPAddr: listener.Addr().String(), WorldDir: dir, WorldVersion: "v1"}
-	// World validation must fail before even an occupied listener is opened.
-	if err = os.WriteFile(dir+"/catalog.json", []byte("{}"), 0600); err != nil {
-		t.Fatal(err)
-	}
-	err = run(ctx, cfg, slog.New(slog.NewTextHandler(&bytes.Buffer{}, nil)))
+	// A missing catalog must fail before even an occupied listener is opened.
+	invalid := cfg
+	invalid.WorldDir = t.TempDir()
+	err = run(ctx, invalid, slog.New(slog.NewTextHandler(&bytes.Buffer{}, nil)))
 	if err == nil || !strings.Contains(err.Error(), "prepare world") {
 		t.Fatalf("expected world failure before listener: %v", err)
 	}
-	fresh := t.TempDir()
-	if err = testworld.Write(ctx, fresh, "v1"); err != nil {
-		t.Fatal(err)
-	}
-	cfg.WorldDir = fresh
+
 	var output bytes.Buffer
 	err = run(ctx, cfg, slog.New(slog.NewTextHandler(&output, nil)))
 	if err == nil || !strings.Contains(err.Error(), "HTTP listener") {
@@ -192,6 +188,11 @@ func TestSIGTERMIntegration(t *testing.T) {
 	if dsn == os.Getenv("DATABASE_URL") {
 		t.Fatal("test and runtime database must differ")
 	}
+	// Encoding the synthetic images is setup, not part of the signal/startup timeout.
+	dir := t.TempDir()
+	if err := testworld.Write(t.Context(), dir, "signal_test"); err != nil {
+		t.Fatal(err)
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	if _, err := postgres.Migrate(ctx, dsn, "up"); err != nil {
@@ -205,10 +206,6 @@ func TestSIGTERMIntegration(t *testing.T) {
 	_ = listener.Close()
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	if err = testworld.Write(ctx, dir, "signal_test"); err != nil {
 		t.Fatal(err)
 	}
 	process := exec.CommandContext(ctx, executable, "-test.run=^TestServerSignalHelper$")
