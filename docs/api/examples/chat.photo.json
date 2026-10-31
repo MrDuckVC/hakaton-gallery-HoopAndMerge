@@ -1,0 +1,29 @@
+{
+  "type": "chat.message",
+  "event_id": "evt_01",
+  "request_id": "11111111-1111-4111-8111-111111111111",
+  "server_time": "2026-10-31T12:00:00Z",
+  "payload": {
+    "message_id": "chat_photo_01",
+    "author": {
+      "user_id": "usr_01",
+      "display_name": "Валентин"
+    },
+    "text": "",
+    "photo": {
+      "id": "11111111-1111-4111-8111-111111111111",
+      "owner_id": "usr_01",
+      "caption": "Фото в галерее",
+      "room_id": "room_egypt_01",
+      "exhibit_id": null,
+      "published": true,
+      "image_url": "/api/v1/photos/11111111-1111-4111-8111-111111111111/image",
+      "image_bytes": 180000,
+      "thumbnail_url": "/api/v1/photos/11111111-1111-4111-8111-111111111111/thumbnail",
+      "thumbnail_bytes": 12000,
+      "width": 1280,
+      "height": 720,
+      "created_at": "2026-01-01T12:00:00Z"
+    }
+  }
+}

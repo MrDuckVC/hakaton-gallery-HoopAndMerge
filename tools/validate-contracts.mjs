@@ -74,3 +74,16 @@ assert.throws(()=>check({image:'x',room_id:'room',movement_epoch:'1',caption:'a\
 for(const movement_epoch of ['0','01','1.0','1e3','-1'])assert.throws(()=>check({image:'x',room_id:'room',movement_epoch},uploadSchema,api));
 assert.throws(()=>check({image:'x',room_id:'room',movement_epoch:'1',unknown:'x'},uploadSchema,api));
 assert(paths['/photos'].post.responses['200']);
+
+check(read('docs/api/examples/photos.page.json'),api.components.schemas.PhotoPage,api);
+check(read('docs/api/examples/chat.photo.json'),server,server);
+assert.deepEqual(paths['/photos'].get.parameters[0].schema,{type:'integer',minimum:1,maximum:6,default:6});
+assert.deepEqual(Object.keys(paths['/photos/{photo_id}/thumbnail'].get.responses['200'].content),['image/jpeg']);
+for(const route of ['/photos/{photo_id}/image','/photos/{photo_id}/thumbnail']) {
+ const headers=paths[route].get.responses['200'].headers;
+ assert.equal(headers['X-Content-Type-Options'].schema.const,'nosniff');
+ assert.equal(headers['Cache-Control'].schema.const,'no-store');
+ assert(headers['Content-Length']);
+ assert(!paths[route].get.responses['403']);
+}
+console.log('PASS: photo album/chat fixtures, pagination limits, JPEG thumbnail and protected file headers.');

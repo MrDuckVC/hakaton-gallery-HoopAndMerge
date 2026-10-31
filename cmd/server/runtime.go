@@ -15,6 +15,7 @@ import (
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/images"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/ollama"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/photofiles"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/photopublisher"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/postgres"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/security"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/sessionevents"
@@ -80,8 +81,11 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	connections.Configure(catalog, postgres.NewGameStore(pool), guides)
 	connections.ConfigureGuides(guides)
 	server.ConfigureGuides(guides)
-	server.ConfigurePhotos(photocase.New(accounts, postgres.NewPhotoStore(pool), photoFiles, images.Codec{}, connections, time.Now, security.Crypto{}.NewID))
-	connections.ConfigureSocial(postgres.NewSocialStore(pool), game.UnavailablePhotos{}, security.Crypto{}.NewID)
+	photoStore := postgres.NewPhotoStore(pool)
+	photos := photocase.NewLibrary(accounts, photoStore, photoFiles)
+	server.ConfigurePhotos(photocase.New(accounts, photoStore, photoFiles, images.Codec{}, connections, time.Now, security.Crypto{}.NewID))
+	server.ConfigurePhotoLibrary(photos)
+	connections.ConfigureSocial(postgres.NewSocialStore(pool), photopublisher.New(photos), security.Crypto{}.NewID)
 	loopCtx, stopLoop := context.WithCancel(context.Background())
 	loopDone := make(chan struct{})
 	go func() { defer close(loopDone); connections.Run(loopCtx) }()

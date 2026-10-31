@@ -25,7 +25,7 @@ type Photos interface {
 	Upload(context.Context, photocase.Admission, domain.Request) (domain.Photo, bool, error)
 }
 
-// ConfigurePhotos enables upload only; album, file reads and publication belong to B10.
+// ConfigurePhotos enables uploads; reads are connected through ConfigurePhotoLibrary.
 func (s *Server) ConfigurePhotos(photos Photos) { s.photos = photos }
 
 func (s *Server) servePhotos(w http.ResponseWriter, r *http.Request) bool {
