@@ -194,3 +194,15 @@ func (c *Catalog) Geometry(id string) (domain.Room, error) {
 	r.Guides = slices.Clone(r.Guides)
 	return r, nil
 }
+
+// HasGuide recognizes a personality independently of the current room.
+func (c *Catalog) HasGuide(id string) bool {
+	for _, r := range c.rooms {
+		for _, g := range r.Guides {
+			if g.ID == id {
+				return true
+			}
+		}
+	}
+	return false
+}

@@ -55,6 +55,8 @@ for(const name of ['world.snapshot','players.state','guide.completed'])check(rea
 const snapshot=read('docs/api/examples/world.snapshot.json');assert.equal(snapshot.payload.current_room.descriptor_bytes,fs.statSync(path.join(root,'docs/api/examples/room.json')).size);
 const uuid='11111111-1111-4111-8111-111111111111';
 check({type:'world.ready',request_id:uuid,payload:{world_version:'world_v1',movement_epoch:1}},client,client);
+check({type:'guide.ask',request_id:uuid,payload:{guide_id:'guide',text:'question 0 🌍'}},client,client);
+assert.throws(()=>check({type:'guide.ask',request_id:uuid,payload:{guide_id:'guide',text:'q\u0000x'}},client,client));
 check({type:'player.move',payload:{movement_epoch:1,seq:1,position:{x:1,y:0,z:-1},rotation:{yaw:0,pitch:0}}},client,client);
 assert.throws(()=>check({type:'move',payload:{}},client,client));
 assert.throws(()=>check({type:'player.move',payload:{seq:1,position:{x:1,y:0,z:-1},rotation:{yaw:0,pitch:0}}},client,client));

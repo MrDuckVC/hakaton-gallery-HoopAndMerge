@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/guidewire"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/worldwire"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/game"
 )
@@ -28,6 +29,21 @@ func publicPlayer(p game.Player) worldwire.Player {
 func encode(e game.Event) ([]byte, error) {
 	var payload any
 	switch e.Type {
+	case "guide.accepted", "guide.completed", "guide.failed", "guide.cancelled":
+		payload = struct {
+			Generation guidewire.Generation `json:"generation"`
+		}{guidewire.Public(e.Guide.Generation)}
+	case "guide.started":
+		payload = struct {
+			GenerationID string `json:"generation_id"`
+		}{e.Guide.GenerationID}
+	case "guide.delta":
+		payload = struct {
+			GenerationID string `json:"generation_id"`
+			Index        int    `json:"index"`
+			Text         string `json:"text"`
+		}{e.Guide.GenerationID, e.Guide.Index, e.Guide.Text}
+
 	case "chat.message":
 		payload = publicChat(e.Chat)
 	case "exhibit.inspected":

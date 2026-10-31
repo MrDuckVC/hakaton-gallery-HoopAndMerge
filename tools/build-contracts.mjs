@@ -146,6 +146,8 @@ delete P['/guides/{guide_id}/messages'];
 const genParams=[param('guide_id','path',asciiID())];
 P['/guides/{guide_id}/generations']={get:operation('getGuideGenerations','Личная история генераций; внутри страницы от старых к новым',{'200':success(ref('GenerationPage')),...errors([400,401,404])},{parameters:[...genParams,param('limit','query',integer({minimum:1,maximum:50,default:20}),false),param('before','query',asciiID(),false)]})};
 P['/guides/{guide_id}/generations/by-request/{request_id}']={get:operation('getGenerationByRequest','Восстановить вопрос по устойчивому request_id',{'200':success(ref('Generation')),...errors([400,401,404])},{parameters:[...genParams,param('request_id','path',uuid())]})};
+P['/guides/{guide_id}/generations'].get.description='Только текущий пользователь, без требования WS и независимо от зала. Последние записи, внутри страницы от старых к новым по (created_at,id). before привязан к пользователю и гиду; неверный курсор — INVALID_CURSOR.';
+P['/guides/{guide_id}/generations/by-request/{request_id}'].get.description='Только текущий пользователь и указанный гид. Восстановление сохранённого вопроса без повторной генерации; отсутствующая или чужая запись — NOT_FOUND.';
 P['/photos'].post.parameters=[param('Idempotency-Key','header',uuid())];
 P['/photos'].post.summary='Идемпотентная загрузка фото из готовой игровой сессии';
 P['/photos'].post.responses['200']=success(ref('Photo'),'Существующее фото при повторе того же ключа и содержимого');
@@ -178,7 +180,7 @@ const clientV1={
  'player.move':obj({movement_epoch:epoch,seq:safeInt({minimum:1}),position:ref('Vector3'),rotation:ref('Rotation')}),
  'chat.send':obj({text:str({maxLength:500}),photo_id:asciiID()},[]),
  'exhibit.inspect':obj({exhibit_id:asciiID()}),
- 'guide.ask':obj({guide_id:asciiID(),text:str({minLength:1,maxLength:2000}),exhibit_id:asciiID()},['guide_id','text']),
+ 'guide.ask':obj({guide_id:asciiID(),text:str({minLength:1,maxLength:2000,pattern:'^[^\u0000]*$'}),exhibit_id:asciiID()},['guide_id','text']),
  'guide.cancel':obj({generation_id:asciiID()})
 };
 const serverV1={

@@ -79,3 +79,11 @@ Loopback WS-тесты проверяют реальные payload ready/entered
 Usecase-тесты проверяют чат до ready, корреляцию только отправителю, Unicode trim/500 символов, отсутствие рассылки при ошибке публикации фото; осмотр проверяет ready, границу 3 м, стену/чужой зал, SQL-сбой и disconnect во время записи. Wire-тесты проверяют payload chat.message/exhibit.inspected и nullable photo.
 
 PostgreSQL integration проверяет атомарный rollback обеих записей, изоляцию владельца, повтор с сохранением ID и обновлением времени/контекста между версиями, конкурентные повторы, лимит и сортировку личных событий, недействующие сессии. Сценарий двух аккаунтов по настоящему WS проверяет chat до ready, inspect после ready, сохранение до ответа и отсутствие success при реальном SQL-сбое. Используется только отдельная TEST_DATABASE_URL.
+
+## B07: устойчивая генерация
+
+Unit-тесты проверяют fingerprint/trim/Unicode, replay до ready и нового лимита, исходную UUID-корреляцию, cancel/terminal replay, output limit 8000/8001, queue deadline 120 с и model deadline 90 с через fake clock/model. Проверяются отмена при shutdown/disconnect, отсутствие partial в памяти и recovery после ошибки чтения уже claimed записи, включая уведомления всех pending-владельцев.
+
+PostgreSQL-тесты проверяют concurrent admission восьми queued, один running плюс восемь queued, FIFO при одинаковом created_at, единственного победителя cancel/completion, rollback ответа при ошибке памяти, terminal immutability через Store, владельца и границы history, revoked sessions и restart recovery. Сквозной HTTP/WS-тест проверяет accepted → started → delta → completed, replay, приватность by-request, корреляцию failed/cancelled, потерю accepted при обрыве, восстановление без ready и SQL-сбой завершения с close1011 и SERVER_RESTARTED. Все SQL-сценарии используют отдельную TEST_DATABASE_URL и входят в race/coverage.
+
+Регрессия ревью B07 проверяет disconnect после принятого движения при тайм-ауте, ошибке и успешной отмене вопроса. `testing/synctest` доводит отмену до deadline без реального ожидания; context-aware PositionStore подтверждает свежий ограниченный бюджет и сохранение последней позы. Повторный cleanup старого connection ID не отменяет вопрос и не сохраняет позицию нового соединения.

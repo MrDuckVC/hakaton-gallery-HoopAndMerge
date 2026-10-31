@@ -10,6 +10,7 @@ import (
 
 	authdomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
 	worlddomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	guidecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
 )
 
 // Configure installs game ports before admission starts.
@@ -73,9 +74,10 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 	case "chat.send":
 		s.mu.Unlock()
 		return s.chat(ctx, c, cmd)
-	case "guide.cancel":
+	case "guide.ask", "guide.cancel":
+		in := guidecase.Input{Session: c.identity.Session, State: c.identity.State, ConnectionID: c.id, Ready: c.ready}
 		s.mu.Unlock()
-		return Failure{Code: "SERVICE_UNAVAILABLE"}
+		return s.guideCommand(ctx, in, cmd)
 	}
 	if !c.ready {
 		s.mu.Unlock()

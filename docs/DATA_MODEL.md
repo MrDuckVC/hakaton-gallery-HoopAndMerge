@@ -1,6 +1,6 @@
 # Модель PostgreSQL
 
-B01 реализует `users`, `sessions`, `player_states` в `migrations/00001_users_sessions_player_states.sql`; B06 добавляет `exhibit_inspections` и `memory_events` миграцией 00002. Остальные таблицы ниже — проект для задач их подсистем. `goose_db_version` — служебная история миграций. Внешние ID сериализуются строками; UUID внутри допустим. Все timestamps timestamptz. SQL параметризован. Владельца брать из сессии.
+B01 реализует `users`, `sessions`, `player_states` в `migrations/00001_users_sessions_player_states.sql`; B06 добавляет `exhibit_inspections` и `memory_events` миграцией 00002. B07 добавляет guide_generations, guide_memories и guide_scheduler миграциями 00003–00004. Таблица photos ниже — проект её подсистемы. `goose_db_version` — служебная история миграций. Внешние ID сериализуются строками; UUID внутри допустим. Все timestamps timestamptz. SQL параметризован. Владельца брать из сессии.
 
 | Таблица | Основные поля / ограничения |
 |---|---|
@@ -9,7 +9,7 @@ B01 реализует `users`, `sessions`, `player_states` в `migrations/00001
 | player_states | user_id PK FK, world_version, room_id, x/y/z,yaw,pitch,updated_at; Y=0 |
 | exhibit_inspections | user_id, exhibit_id composite PK; world_version,room_id,inspected_at обновляются атомарно с событием памяти |
 | guide_memories | user_id,guide_id composite PK, summary, version,updated_at |
-| guide_generations | id PK,user_id,request_id UUID,guide_id,exhibit_id nullable,normalized_payload_hash,status,user_text,user_message_id,user_created_at,assistant_text/message_id/created_at nullable,error_code/message/retryable nullable,created_at,started_at,finished_at,origin_connection_id |
+| guide_generations | id PK,user_id,request_id UUID,request_correlation_id,guide_id,exhibit_id nullable,normalized_payload_hash,status,user_text,user_message_id,user_created_at,assistant_text/message_id/created_at nullable,error_code/message/retryable nullable,created_at,started_at,finished_at,origin_connection_id |
 | photos | id PK,user_id,idempotency_key UUID,request_fingerprint,world_version,room_id,movement_epoch,exhibit_id nullable,caption,published default false,original_path,thumbnail_path,image_bytes,thumbnail_bytes,width,height,created_at |
 | memory_events | id PK,user_id FK,type,world_version,room_id,exhibit_id nullable,photo_id nullable,created_at; UNIQUE(user_id,exhibit_id) WHERE type=EXHIBIT_INSPECTED |
 
@@ -49,3 +49,13 @@ Epoch/ack_seq не сохраняются в SQL: начальные значе�
 ## Осмотр B06
 
 Миграция 00002 добавляет exhibit_inspections и memory_events. Осмотр и событие EXHIBIT_INSPECTED сохраняются одной транзакцией с проверкой действующей сессии. Повтор сохраняет ID события, обновляет время и контекст обеих записей; уникальность по (user_id,exhibit_id) действует между версиями мира. ID экспоната нельзя переиспользовать для другого по смыслу экспоната. Чтение памяти всегда ограничено user_id, сортируется по (created_at,id) DESC и имеет ограниченный limit. Индекс memory_events(user_id,created_at DESC,id DESC) обслуживает личную память. photo_id пока без FK: хранение фото реализует B09. История общего чата не сохраняется.
+
+## Очередь и история B07
+
+Строка guide_scheduler(id=1) блокируется FOR UPDATE в операциях admission, claim, finish и recovery. Поэтому проверка количества queued и вставка атомарны с изменением running; индекс guide_one_running дополнительно запрещает два running. Транзакции не охватывают модель или сеть. Канальный gate usecase удерживает порядок create → enqueue accepted → claim без mutex на I/O.
+
+request_id хранится как UUID для нечувствительного к регистру ключа; request_correlation_id сохраняет исходное написание и CHECK проверяет их равенство как UUID. Fingerprint — SHA-256 от полей guide_id, trim текста, exhibit_id с длинами полей; отсутствие exhibit_id нормализуется в пустое внутреннее значение и null на wire.
+
+Finish обновляет только pending, одновременно записывая completed-ответ и guide_memories. Проигравшая терминальная операция читает уже сохранённый результат. Память B07 — последняя завершённая пара user/assistant, версия увеличивается; failed ничего в ней не меняет. Семантическое резюме и контекст модели относятся к B08.
+
+History выбирает limit+1 последних записей по (created_at,id), возвращая страницу в обратном порядке. Opaque before — base64url UUID её первой записи; граница читается из БД с проверкой user_id и guide_id. Неизвестный, чужой или неверно кодированный cursor даёт INVALID_CURSOR. Записи не удаляются при reconnect/restart.
