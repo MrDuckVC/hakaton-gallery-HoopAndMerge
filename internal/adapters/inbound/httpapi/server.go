@@ -62,6 +62,7 @@ func (s *Server) Serve(listener net.Listener) error {
 		_ = listener.Close()
 		return http.ErrServerClosed
 	}
+	listener = &sharedCloseListener{Listener: listener}
 	s.listener = listener
 	s.mu.Unlock()
 	return s.Server.Serve(listener)
@@ -80,4 +81,17 @@ func (s *Server) StopAccepting(_ context.Context) error {
 		}
 	}
 	return nil
+}
+
+// sharedCloseListener gives admission shutdown and net/http the same close result.
+// net/http wraps listeners itself, but StopAccepting must share that idempotency.
+type sharedCloseListener struct {
+	net.Listener
+	once     sync.Once
+	closeErr error
+}
+
+func (l *sharedCloseListener) Close() error {
+	l.once.Do(func() { l.closeErr = l.Listener.Close() })
+	return l.closeErr
 }

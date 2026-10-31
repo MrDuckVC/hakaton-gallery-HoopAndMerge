@@ -22,7 +22,7 @@ Unit: password boundary bytes/Unicode trim; Origin exact match; finite coordinat
 
 ## Текущие тесты и порог CI
 
-B01 проверяет конфигурацию/defaults/ошибки без утечки credentials, HTTP 404/503 и request_id/no-store, порядок lifecycle и продолжение cleanup после ошибок, deadline даже при зависшем участнике, освобождение startup-ресурсов. PostgreSQL integration tests проверяют пустую и более новую схему, read-only startup check, транзакционные миграции, повторное применение с сохранением users/sessions/player_states, SQL constraints и FK. Игровые сценарии выше пока не реализованы.
+B01 проверяет конфигурацию/defaults/ошибки без утечки credentials, HTTP 404/503 и request_id/no-store, порядок lifecycle и продолжение cleanup после ошибок, deadline даже при зависшем участнике, освобождение startup-ресурсов. PostgreSQL integration tests проверяют пустую и более новую схему, read-only startup check, транзакционные миграции, повторное применение с сохранением users/sessions/player_states, SQL constraints и FK. Регрессия shutdown удерживает listener зарегистрированным в `net/http` и вызывает `Shutdown` сразу после `StopAccepting`, без ожидания `Serve`: штатное закрытие не даёт ложный `net.ErrClosed`, реальные ошибки закрытия сохраняются. Игровые сценарии выше пока не реализованы.
 
 Для SQL-тестов нужен отдельный `TEST_DATABASE_URL`, отличающийся от runtime `DATABASE_URL`, с правом CREATE SCHEMA; без него тесты явно SKIP. В CI PostgreSQL обязательна. Тесты владеют случайными schemas и удаляют только их, тесты команд применяют append-only миграции к тестовой БД. Подготовка и реальные команды — DEVELOPMENT.md. Проверка графа импортов запускает `go list`, поэтому Go должен быть в PATH.
 
