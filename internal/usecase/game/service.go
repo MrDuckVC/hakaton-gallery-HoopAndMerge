@@ -194,7 +194,11 @@ func (s *Service) Detach(userID, id string) {
 	if s.questions != nil {
 		_ = s.questions.CancelQuestion(ctx, userID, id)
 	}
-	_ = s.flush(ctx, userID, id)
+	// Guide cleanup may exhaust its deadline. The accepted pose still needs its
+	// own bounded persistence attempt before it is removed from memory.
+	flushCtx, flushCancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer flushCancel()
+	_ = s.flush(flushCtx, userID, id)
 	s.remove(userID, id)
 }
 func (s *Service) remove(userID, id string) {

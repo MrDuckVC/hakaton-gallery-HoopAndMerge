@@ -6,6 +6,7 @@ import (
 	"sync"
 	"sync/atomic"
 	"testing"
+	"testing/synctest"
 	"time"
 
 	authdomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
@@ -183,5 +184,79 @@ processed:
 	}
 	if !s.Current("fast", ticket) {
 		t.Fatal("healthy player was closed by slow neighbour failure")
+	}
+}
+
+type cleanupQuestions struct {
+	timeout bool
+	err     error
+	calls   int
+}
+
+func (q *cleanupQuestions) CancelQuestion(ctx context.Context, _, _ string) error {
+	q.calls++
+	if q.timeout {
+		<-ctx.Done()
+		return ctx.Err()
+	}
+	return q.err
+}
+
+type contextPoseStore struct {
+	*poseStore
+	saveErr error
+	budget  time.Duration
+}
+
+func (p *contextPoseStore) SaveState(ctx context.Context, session authdomain.Session, old, next player.State, required bool) (player.State, error) {
+	p.saveErr = ctx.Err()
+	if p.saveErr != nil {
+		return player.State{}, p.saveErr
+	}
+	if deadline, ok := ctx.Deadline(); ok {
+		p.budget = time.Until(deadline)
+	}
+	return p.poseStore.SaveState(ctx, session, old, next, required)
+}
+
+func TestDetachSavesPositionAfterQuestionCancellation(t *testing.T) {
+	for _, tc := range []struct {
+		name    string
+		timeout bool
+		err     error
+	}{
+		{name: "deadline", timeout: true},
+		{name: "failure", err: errors.New("guide storage unavailable")},
+		{name: "success"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			synctest.Test(t, func(t *testing.T) {
+				s, _, id, now, store := setupGame(t)
+				positions := &contextPoseStore{poseStore: store}
+				questions := &cleanupQuestions{timeout: tc.timeout, err: tc.err}
+				s.store = positions
+				s.questions = questions
+				s.Handle(t.Context(), "a", id, readyCommand())
+				*now = now.Add(100 * time.Millisecond)
+				s.Handle(t.Context(), "a", id, moveCommand(1, .4))
+				started := time.Now()
+				s.Detach("a", id)
+				if questions.calls != 1 || positions.saveErr != nil || store.saves != 1 || store.state.Position.X != .4 {
+					t.Fatalf("cancel calls=%d, save error=%v, saves=%d, durable x=%v", questions.calls, positions.saveErr, store.saves, store.state.Position.X)
+				}
+				if positions.budget <= 0 || positions.budget > 5*time.Second {
+					t.Fatalf("invalid final save budget %v", positions.budget)
+				}
+				if elapsed := time.Since(started); elapsed > 10*time.Second {
+					t.Fatalf("unbounded disconnect cleanup %v", elapsed)
+				}
+				replacement := &testSink{}
+				newID := attach(t, s, "a", replacement)
+				s.Detach("a", id)
+				if !s.Current("a", newID) || questions.calls != 1 || store.saves != 1 {
+					t.Fatal("old cleanup affected replacement")
+				}
+			})
+		})
 	}
 }
