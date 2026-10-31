@@ -114,7 +114,7 @@ const safeInt=extra=>integer({minimum:0,maximum:9007199254740991,...extra});
 for (const name of ['RegisterRequest','LoginRequest']) {
  S[name].properties.username=str({description:'После Unicode White_Space trim: [A-Za-z0-9_]{3,32}; хранится и возвращается lowercase. Проверяет сервер.'});
 }
-S.RegisterRequest.properties.display_name=str({description:'1–32 Unicode-кодовые точки после Unicode White_Space trim. Проверяет сервер.'});
+S.RegisterRequest.properties.display_name=str({pattern:'^[^\\u0000]*$',description:'1–32 Unicode-кодовые точки после Unicode White_Space trim; U+0000 запрещён (400 VALIDATION_ERROR). Длину после trim проверяет сервер.'});
 S.RegisterRequest.properties.password.minLength=1;
 S.RegisterRequest.properties.password.description='8–128 байт UTF-8; без trim/нормализации. Байтовый минимум проверяет сервер.';
 S.LoginRequest.properties.password.description='8–128 байт UTF-8; без trim/нормализации.';

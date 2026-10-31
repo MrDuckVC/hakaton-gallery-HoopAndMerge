@@ -138,6 +138,15 @@ func TestRegisterWorldFailureHasNoSideEffects(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestRegisterRejectsNULDisplayNameBeforePorts(t *testing.T) {
+	s, db, security, world, events := fixture()
+	world.err = domain.Unavailable
+	_, err := s.Register(t.Context(), "alice", "A\x00B", "password", "old-cookie")
+	if !errors.Is(err, domain.Validation) || security.password != "" || db.logins != 0 || len(events.ids) != 0 {
+		t.Fatalf("invalid display name reached ports: err=%v logins=%d", err, db.logins)
+	}
+}
 func TestLoginAndFailedCredentials(t *testing.T) {
 	s, db, sec, _, events := fixture()
 	db.revoked = "old"

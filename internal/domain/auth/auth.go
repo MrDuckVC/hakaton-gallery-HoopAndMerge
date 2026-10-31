@@ -55,7 +55,7 @@ func Credentials(username, displayName, password string, register bool) (string,
 			return "", "", Validation
 		}
 	}
-	if register && (utf8.RuneCountInString(displayName) < 1 || utf8.RuneCountInString(displayName) > 32) {
+	if register && (strings.ContainsRune(displayName, '\x00') || utf8.RuneCountInString(displayName) < 1 || utf8.RuneCountInString(displayName) > 32) {
 		return "", "", Validation
 	}
 	return strings.ToLower(username), displayName, nil

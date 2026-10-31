@@ -17,6 +17,11 @@ func TestCredentials(t *testing.T) {
 		{"alice", strings.Repeat("😀", 33), "password", false},
 		{"alice", "Alice", strings.Repeat("a", 7), false},
 		{"alice", "Alice", strings.Repeat("a", 129), false},
+		{"alice", "\x00", "password", false},
+		{"alice", "A\x00B", "password", false},
+		{"alice", "\x00Алиса", "password", false},
+		{"alice", "Алиса\x00", "password", false},
+		{"alice", "Алиса", "pass\x00word", true},
 		{"alice", "Alice", string([]byte{0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff}), false},
 	} {
 		t.Run(tc.username+tc.display, func(t *testing.T) {

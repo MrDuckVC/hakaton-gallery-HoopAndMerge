@@ -2753,7 +2753,8 @@
           },
           "display_name": {
             "type": "string",
-            "description": "1–32 Unicode-кодовые точки после Unicode White_Space trim. Проверяет сервер."
+            "pattern": "^[^\\u0000]*$",
+            "description": "1–32 Unicode-кодовые точки после Unicode White_Space trim; U+0000 запрещён (400 VALIDATION_ERROR). Длину после trim проверяет сервер."
           },
           "password": {
             "type": "string",

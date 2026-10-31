@@ -42,6 +42,9 @@ for (const name of ['RegisterRequest', 'LoginRequest']) {
  if(name==='RegisterRequest')credentials.display_name='  '+ '😀'.repeat(32)+'  ';
  check(credentials,schema,api); // Public text constraints apply after Unicode trim.
 }
+const registerSchema=api.components.schemas.RegisterRequest;
+assert.throws(()=>check({username:'alice',display_name:'A\u0000B',password:'password'},registerSchema,api));
+check({username:'alice',display_name:'Алиса',password:'pass\u0000word'},registerSchema,api);
 const paths=api.paths;assert(!paths['/guides/{guide_id}/messages']);assert(paths['/guides/{guide_id}/generations/by-request/{request_id}']);assert(paths['/photos/{photo_id}/thumbnail']);
 for (const route of ['/auth/register','/auth/login']) for (const status of ['413','415']) assert(paths[route].post.responses[status],route+' missing '+status);
 const serverTypes=server.oneOf.map(x=>x.properties.type.const);assert(!serverTypes.includes('world.rooms_available'));assert(serverTypes.includes('guide.cancelled'));
