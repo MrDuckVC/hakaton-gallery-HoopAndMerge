@@ -156,6 +156,14 @@ P['/photos'].post.responses['200']=success(ref('Photo'),'Существующе�
 P['/photos'].get.parameters[0].schema={type:'integer',minimum:1,maximum:6,default:6};
 P['/photos/{photo_id}/thumbnail']={get:operation('getPhotoThumbnail','Миниатюра владельцу или после публикации',{'200':P['/photos/{photo_id}/image'].get.responses['200'],...errors([401,404])},{parameters:[param('photo_id','path',asciiID())]})};
 delete P['/photos/{photo_id}/image'].get.responses['403'];
+P['/photos'].get.description='Только фото текущей сессии, без игрового WS. Порядок (created_at,id) DESC; cursor непрозрачен, привязан к владельцу. Неверный, неизвестный или чужой cursor — 400 INVALID_CURSOR. Новые вставки не сдвигают следующие страницы; next_cursor=null в конце.';
+P['/photos/{photo_id}/thumbnail'].get.responses['200']={description:'JPEG-миниатюра сервера',content:{'image/jpeg':{schema:{type:'string',format:'binary'}}}};
+for(const path of ['/photos/{photo_id}/image','/photos/{photo_id}/thumbnail']) {
+ P[path].get.responses['400']=err('VALIDATION_ERROR');
+ P[path].get.description='Действующая сессия без игрового WS. Приватное фото доступно только владельцу; опубликованное — любому вошедшему. Чужое приватное и отсутствующее фото — 404 NOT_FOUND. Байты отдаются без преобразования; ошибка чтения или несовпадение размера — 503 SERVICE_UNAVAILABLE.';
+ P[path].get.responses['200'].headers={'Content-Length':{schema:safeInt({minimum:1}),description:'Точный размер файла, совпадает с соответствующим полем bytes в Photo'},'X-Content-Type-Options':{schema:{const:'nosniff'}}};
+}
+
 P['/world/assets/{asset_id}'].get.responses['200'].content=Object.fromEntries(['image/jpeg','image/webp'].map(t=>[t,{schema:{type:'string',format:'binary'}}]));
 P['/world/rooms/{room_id}'].get.responses['409']=err('GAME_NOT_READY / WORLD_VERSION_MISMATCH');
 P['/world/assets/{asset_id}'].get.responses['409']=err('GAME_NOT_READY / WORLD_VERSION_MISMATCH');
@@ -223,3 +231,7 @@ json('docs/api/examples/guide.completed.json',envelope('guide.completed',{genera
 console.log('Applied normative API v1 revision.');
 
 json('docs/api/examples/photo.created.json',{id:'11111111-1111-4111-8111-111111111111',owner_id:'usr_01',caption:'Фото в галерее',room_id:room.id,exhibit_id:null,published:false,image_url:'/api/v1/photos/11111111-1111-4111-8111-111111111111/image',image_bytes:180000,thumbnail_url:'/api/v1/photos/11111111-1111-4111-8111-111111111111/thumbnail',thumbnail_bytes:12000,width:1280,height:720,created_at:'2026-01-01T12:00:00Z'});
+
+const createdPhoto=JSON.parse(fs.readFileSync(path.join(root,'docs/api/examples/photo.created.json'),'utf8'));
+json('docs/api/examples/photos.page.json',{items:[createdPhoto],next_cursor:null});
+json('docs/api/examples/chat.photo.json',envelope('chat.message',{message_id:'chat_photo_01',author:{user_id:createdPhoto.owner_id,display_name:'Валентин'},text:'',photo:{...createdPhoto,published:true}},askID));

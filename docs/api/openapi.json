@@ -1815,7 +1815,8 @@
               "pattern": "^[\\x21-\\x7E]+$"
             }
           }
-        ]
+        ],
+        "description": "Только фото текущей сессии, без игрового WS. Порядок (created_at,id) DESC; cursor непрозрачен, привязан к владельцу. Неверный, неизвестный или чужой cursor — 400 INVALID_CURSOR. Новые вставки не сдвигают следующие страницы; next_cursor=null в конце."
       }
     },
     "/photos/{photo_id}/image": {
@@ -1836,6 +1837,44 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
+                }
+              }
+            },
+            "headers": {
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "description": "Точный размер файла, совпадает с соответствующим полем bytes в Photo"
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
@@ -1968,7 +2007,8 @@
               "pattern": "^[\\x21-\\x7E]+$"
             }
           }
-        ]
+        ],
+        "description": "Действующая сессия без игрового WS. Приватное фото доступно только владельцу; опубликованное — любому вошедшему. Чужое приватное и отсутствующее фото — 404 NOT_FOUND. Байты отдаются без преобразования; ошибка чтения или несовпадение размера — 503 SERVICE_UNAVAILABLE."
       }
     },
     "/ws": {
@@ -2538,18 +2578,50 @@
         "summary": "Миниатюра владельцу или после публикации",
         "responses": {
           "200": {
-            "description": "JPEG или WebP",
+            "description": "JPEG-миниатюра сервера",
             "content": {
               "image/jpeg": {
                 "schema": {
                   "type": "string",
                   "format": "binary"
                 }
+              }
+            },
+            "headers": {
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "description": "Точный размер файла, совпадает с соответствующим полем bytes в Photo"
               },
-              "image/webp": {
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
                 "schema": {
                   "type": "string",
-                  "format": "binary"
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
@@ -2682,7 +2754,8 @@
               "pattern": "^[\\x21-\\x7E]+$"
             }
           }
-        ]
+        ],
+        "description": "Действующая сессия без игрового WS. Приватное фото доступно только владельцу; опубликованное — любому вошедшему. Чужое приватное и отсутствующее фото — 404 NOT_FOUND. Байты отдаются без преобразования; ошибка чтения или несовпадение размера — 503 SERVICE_UNAVAILABLE."
       }
     }
   },

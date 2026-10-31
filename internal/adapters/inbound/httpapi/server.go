@@ -15,13 +15,14 @@ import (
 // Server owns the HTTP listener and admission state.
 type Server struct {
 	*http.Server
-	mu        sync.Mutex
-	listener  net.Listener
-	stopping  atomic.Bool
-	world     World
-	guides    Guides
-	photos    Photos
-	websocket http.Handler
+	mu           sync.Mutex
+	listener     net.Listener
+	stopping     atomic.Bool
+	world        World
+	guides       Guides
+	photos       Photos
+	photoLibrary PhotoLibrary
+	websocket    http.Handler
 }
 
 type errorResponse struct {
@@ -51,6 +52,9 @@ func (s *Server) ConfigureWebSocket(handler http.Handler) { s.websocket = handle
 func (s *Server) fallback(w http.ResponseWriter, r *http.Request) {
 	if s.websocket != nil && r.Method == http.MethodGet && r.URL.Path == "/api/v1/ws" {
 		s.websocket.ServeHTTP(w, r)
+		return
+	}
+	if s.servePhotoLibrary(w, r) {
 		return
 	}
 	if s.servePhotos(w, r) {

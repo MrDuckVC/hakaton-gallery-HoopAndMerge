@@ -23,6 +23,7 @@ import (
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/worldwire"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/images"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/photofiles"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/photopublisher"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/security"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/sessionevents"
 	worldfiles "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/world"
@@ -125,6 +126,9 @@ func startPhotoClient(t *testing.T, codec photocase.Images) (*photoClient, strin
 	t.Cleanup(func() { _ = files.Close() })
 	store := NewPhotoStore(pool)
 	api.ConfigurePhotos(photocase.New(sessions, store, files, codec, connections, time.Now, security.Crypto{}.NewID))
+	library := photocase.NewLibrary(sessions, store, files)
+	api.ConfigurePhotoLibrary(library)
+	connections.ConfigureSocial(NewSocialStore(pool), photopublisher.New(library), security.Crypto{}.NewID)
 	server := httptest.NewServer(api.Handler)
 	t.Cleanup(server.Close)
 	t.Cleanup(func() {
