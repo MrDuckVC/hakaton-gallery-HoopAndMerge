@@ -58,6 +58,9 @@ type Event struct {
 	Type, RequestID string
 	Snapshot        Snapshot
 	Player          Player
+	Players         []Player
+	CurrentRoom     worlddomain.RoomPackage
+	MovementEpoch   int64
 	UserID          string
 	Failure         Failure
 }
@@ -118,3 +121,28 @@ func (PendingHandler) Handle(_ context.Context, _, _ string, c Command) Failure 
 
 // Clock supplies server time for sliding windows.
 type Clock func() time.Time
+
+// World supplies immutable geometry, packages, and directed spawns.
+type World interface {
+	Catalog
+	Geometry(string) (worlddomain.Room, error)
+	Spawn(string) (player.State, error)
+}
+
+// PositionStore saves a server-accepted pose with optimistic revision checking.
+// requireSession is false only for flushing already accepted state after disconnect.
+type PositionStore interface {
+	PlayerState(context.Context, string) (player.State, error)
+	SaveState(context.Context, authdomain.Session, player.State, player.State, bool) (player.State, error)
+}
+
+// Questions cancels an unfinished question before a room transition or replacement.
+type Questions interface {
+	CancelQuestion(context.Context, string, string) error
+}
+
+// NoQuestions is used until the generation subsystem is connected.
+type NoQuestions struct{}
+
+// CancelQuestion succeeds because no questions can be created in this composition.
+func (NoQuestions) CancelQuestion(context.Context, string, string) error { return nil }

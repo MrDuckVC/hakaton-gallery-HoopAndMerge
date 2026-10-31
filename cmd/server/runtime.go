@@ -55,10 +55,18 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, catalog, sessions, time.Now)
 	server.ConfigureAuth(accounts, cfg.AllowedOrigins, cfg.CookieSecure)
 	connections := game.New(time.Now)
-	transport := wsapi.New(connections, accounts, catalog, game.PendingHandler{}, cfg.AllowedOrigins)
+	connections.Configure(catalog, postgres.NewGameStore(pool), game.NoQuestions{})
+	loopCtx, stopLoop := context.WithCancel(context.Background())
+	loopDone := make(chan struct{})
+	go func() { defer close(loopDone); connections.Run(loopCtx) }()
+	transport := wsapi.New(connections, accounts, catalog, connections, cfg.AllowedOrigins)
 	server.ConfigureWebSocket(transport)
 	server.ConfigureWorld(worldcase.New(catalog, accounts, connections))
-	return serve(ctx, server, listener, lifecycle.Coordinator{Admission: connections, Connections: transport}, logger, 15*time.Second, pool.Close)
+	return serve(ctx, server, listener, lifecycle.Coordinator{Admission: connections, Positions: connections, Connections: transport}, logger, 15*time.Second, func() {
+		stopLoop()
+		<-loopDone
+		pool.Close()
+	})
 }
 
 func prepareWorld(ctx context.Context, cfg config.Config) (*worldcase.Catalog, error) {

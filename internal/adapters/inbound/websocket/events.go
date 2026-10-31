@@ -35,6 +35,23 @@ func encode(e game.Event) ([]byte, error) {
 			players[i] = publicPlayer(p)
 		}
 		payload = worldwire.SnapshotPayload{ProtocolVersion: 1, WorldVersion: s.WorldVersion, Self: publicPlayer(s.Self), Players: players, CurrentRoom: worldwire.Package(s.CurrentRoom)}
+	case "world.ready":
+		payload = struct {
+			MovementEpoch int64 `json:"movement_epoch"`
+		}{e.MovementEpoch}
+	case "world.entered":
+		payload = struct {
+			Self        worldwire.Player      `json:"self"`
+			CurrentRoom worldwire.RoomPackage `json:"current_room"`
+		}{publicPlayer(e.Player), worldwire.Package(e.CurrentRoom)}
+	case "players.state":
+		players := make([]worldwire.Player, len(e.Players))
+		for i, p := range e.Players {
+			players[i] = publicPlayer(p)
+		}
+		payload = struct {
+			Players []worldwire.Player `json:"players"`
+		}{players}
 	case "player.joined":
 		payload = struct {
 			Player worldwire.Player `json:"player"`

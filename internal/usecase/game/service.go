@@ -12,28 +12,36 @@ import (
 )
 
 type connection struct {
-	id       string
-	identity Identity
-	sink     Sink
-	seen     map[string]struct{}
-	ended    bool
+	id         string
+	identity   Identity
+	sink       Sink
+	seen       map[string]struct{}
+	ended      bool
+	reloadPose bool
+	ready      bool
+	epoch, ack int64
+	lastMove   time.Time
 }
 type reservation struct{ identity Identity }
 
 // Service serializes registry and presence changes; its lock never covers external I/O.
 type Service struct {
-	mu       sync.Mutex
-	now      Clock
-	next     uint64
-	stopping bool
-	active   map[string]*connection
-	pending  map[string]reservation
-	limits   map[string]*windows
+	mu        sync.Mutex
+	now       Clock
+	next      uint64
+	stopping  bool
+	active    map[string]*connection
+	pending   map[string]reservation
+	limits    map[string]*windows
+	gates     map[string]chan struct{}
+	world     World
+	store     PositionStore
+	questions Questions
 }
 
 // New constructs a registry limited to 32 active or reserved accounts.
 func New(now Clock) *Service {
-	return &Service{now: now, active: make(map[string]*connection), pending: make(map[string]reservation), limits: make(map[string]*windows)}
+	return &Service{now: now, active: make(map[string]*connection), pending: make(map[string]reservation), limits: make(map[string]*windows), gates: make(map[string]chan struct{})}
 }
 
 // Reserve admits before upgrade, leaving an existing connection untouched until Attach.
@@ -70,9 +78,60 @@ func (s *Service) Release(ticket string) { s.mu.Lock(); defer s.mu.Unlock(); del
 
 // Attach publishes the new owner only after upgrade; snapshot is always queued first.
 func (s *Service) Attach(ticket string, sink Sink) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	return s.AttachContext(ctx, ticket, sink)
+}
+
+// AttachContext serializes replacement with all accepted state writes for this user.
+func (s *Service) AttachContext(ctx context.Context, ticket string, sink Sink) error {
+	s.mu.Lock()
+	r, ok := s.pending[ticket]
+	s.mu.Unlock()
+	if !ok {
+		return authdomain.Unavailable
+	}
+	release, err := s.acquire(ctx, r.identity.User.ID)
+	if err != nil {
+		return err
+	}
+	defer release()
+	if s.store != nil {
+		s.mu.Lock()
+		old := s.active[r.identity.User.ID]
+		reload := old == nil || old.reloadPose
+		if old != nil {
+			r.identity.State = old.identity.State
+		}
+		s.mu.Unlock()
+		if reload {
+			state, readErr := s.store.PlayerState(ctx, r.identity.User.ID)
+			if readErr != nil {
+				return readErr
+			}
+			// Prepare has already durably repaired the pose through auth.Me.
+			r.identity.State = state
+		}
+		pkg, packageErr := s.world.Package(r.identity.State.RoomID)
+		if packageErr != nil {
+			return packageErr
+		}
+		r.identity.Package = pkg
+		if old != nil {
+			if err = s.questions.CancelQuestion(ctx, r.identity.User.ID, old.id); err != nil {
+				return err
+			}
+		}
+	}
+	if err = ctx.Err(); err != nil {
+		return err
+	}
+	return s.attachPrepared(ticket, sink, r)
+}
+func (s *Service) attachPrepared(ticket string, sink Sink, r reservation) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	r, ok := s.pending[ticket]
+	_, ok := s.pending[ticket]
 	delete(s.pending, ticket)
 	if !ok || s.stopping {
 		return authdomain.Unavailable
@@ -81,7 +140,7 @@ func (s *Service) Attach(ticket string, sink Sink) error {
 	snapshot := Snapshot{WorldVersion: r.identity.State.WorldVersion, Self: presence(r.identity), CurrentRoom: r.identity.Package, Players: make([]Player, 0, len(s.active))}
 	for id, c := range s.active {
 		if id != userID {
-			snapshot.Players = append(snapshot.Players, presence(c.identity))
+			snapshot.Players = append(snapshot.Players, presenceConnection(c))
 		}
 	}
 	if !sink.Enqueue(Event{Type: "world.snapshot", Snapshot: snapshot}) {
@@ -91,11 +150,14 @@ func (s *Service) Attach(ticket string, sink Sink) error {
 		old.sink.Close(4009)
 		s.broadcastLocked(Event{Type: "player.left", UserID: userID}, userID)
 	}
-	s.active[userID] = &connection{id: ticket, identity: r.identity, sink: sink, seen: make(map[string]struct{})}
+	s.active[userID] = &connection{id: ticket, identity: r.identity, sink: sink, seen: make(map[string]struct{}), epoch: 1}
 	s.broadcastLocked(Event{Type: "player.joined", Player: presence(r.identity)}, userID)
 	return nil
 }
 func presence(i Identity) Player { return Player{User: i.User, State: i.State, MovementEpoch: 1} }
+func presenceConnection(c *connection) Player {
+	return Player{User: c.identity.User, State: c.identity.State, MovementEpoch: c.epoch, AckSeq: c.ack}
+}
 func (s *Service) broadcastLocked(e Event, except string) {
 	for id, c := range s.active {
 		if id != except {
@@ -106,6 +168,18 @@ func (s *Service) broadcastLocked(e Event, except string) {
 
 // Detach ignores every late cleanup belonging to a replaced connection.
 func (s *Service) Detach(userID, id string) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	release, err := s.acquire(ctx, userID)
+	if err != nil {
+		s.remove(userID, id)
+		return
+	}
+	defer release()
+	_ = s.flush(ctx, userID, id)
+	s.remove(userID, id)
+}
+func (s *Service) remove(userID, id string) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if c := s.active[userID]; c != nil && c.id == id {
@@ -133,10 +207,24 @@ func (s *Service) Send(userID, id string, e Event) {
 
 // End terminates only the named connection, never its replacement.
 func (s *Service) End(userID, id string, code int) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	release, err := s.acquire(ctx, userID)
+	if err != nil {
+		s.closeCurrent(userID, id, code)
+		return
+	}
+	defer release()
+	s.closeCurrent(userID, id, code)
+}
+func (s *Service) closeCurrent(userID, id string, code int) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if c := s.active[userID]; c != nil && c.id == id {
 		c.ended = true
+		if code == 1011 {
+			c.reloadPose = true
+		}
 		c.sink.Close(code)
 	}
 }
