@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/httpapi"
+	wsapi "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/websocket"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/worldwire"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/postgres"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/security"
@@ -17,6 +18,7 @@ import (
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/world"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/game"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/lifecycle"
 	worldcase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/world"
 )
@@ -52,8 +54,11 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	sessions := sessionevents.New()
 	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, catalog, sessions, time.Now)
 	server.ConfigureAuth(accounts, cfg.AllowedOrigins, cfg.CookieSecure)
-	server.ConfigureWorld(worldcase.New(catalog, accounts, worldcase.NoConnections{}))
-	return serve(ctx, server, listener, lifecycle.Coordinator{}, logger, 15*time.Second, pool.Close)
+	connections := game.New(time.Now)
+	transport := wsapi.New(connections, accounts, catalog, game.PendingHandler{}, cfg.AllowedOrigins)
+	server.ConfigureWebSocket(transport)
+	server.ConfigureWorld(worldcase.New(catalog, accounts, connections))
+	return serve(ctx, server, listener, lifecycle.Coordinator{Admission: connections, Connections: transport}, logger, 15*time.Second, pool.Close)
 }
 
 func prepareWorld(ctx context.Context, cfg config.Config) (*worldcase.Catalog, error) {

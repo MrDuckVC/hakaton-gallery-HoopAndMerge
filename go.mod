@@ -3,6 +3,7 @@ module github.com/MrDuckVC/hakaton-gallery-HoopAndMerge
 go 1.27.1
 
 require (
+	github.com/coder/websocket v1.8.15
 	github.com/jackc/pgx/v5 v5.11.0
 	github.com/pressly/goose/v3 v3.29.0
 	golang.org/x/image v0.47.0

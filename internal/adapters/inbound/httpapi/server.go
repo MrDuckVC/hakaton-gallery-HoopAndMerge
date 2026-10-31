@@ -15,10 +15,11 @@ import (
 // Server owns the HTTP listener and admission state.
 type Server struct {
 	*http.Server
-	mu       sync.Mutex
-	listener net.Listener
-	stopping atomic.Bool
-	world    World
+	mu        sync.Mutex
+	listener  net.Listener
+	stopping  atomic.Bool
+	world     World
+	websocket http.Handler
 }
 
 type errorResponse struct {
@@ -42,7 +43,14 @@ func NewServer(addr string) *Server {
 	return server
 }
 
+// ConfigureWebSocket connects the independently authenticated WS handler before serving.
+func (s *Server) ConfigureWebSocket(handler http.Handler) { s.websocket = handler }
+
 func (s *Server) fallback(w http.ResponseWriter, r *http.Request) {
+	if s.websocket != nil && r.Method == http.MethodGet && r.URL.Path == "/api/v1/ws" {
+		s.websocket.ServeHTTP(w, r)
+		return
+	}
 	if s.serveWorld(w, r) {
 		return
 	}
@@ -55,6 +63,11 @@ func (s *Server) common(next http.Handler) http.Handler {
 		w.Header().Set("Cache-Control", "no-store")
 		if s.stopping.Load() {
 			writeError(w, http.StatusServiceUnavailable, "SERVICE_UNAVAILABLE", "Сервер завершает работу", 0)
+			return
+		}
+		// The WS handler bounds its handshake and owns the upgraded connection lifetime.
+		if s.websocket != nil && r.Method == http.MethodGet && r.URL.Path == "/api/v1/ws" {
+			next.ServeHTTP(w, r)
 			return
 		}
 		ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
