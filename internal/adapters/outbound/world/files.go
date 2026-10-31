@@ -29,7 +29,17 @@ func (r *reader) read(ctx context.Context, path string) (usecase.File, error) {
 	if !fs.ValidPath(path) || strings.Contains(path, "\\") {
 		return usecase.File{}, errors.New("invalid world-relative path")
 	}
-	f, err := r.root.Open(path)
+	// Reject stable special files before invoking their open operation. On Unix,
+	// O_NONBLOCK also prevents a FIFO replacement between this stat and open
+	// from hanging startup. Stat on the opened descriptor below remains required.
+	before, err := r.root.Stat(path)
+	if err != nil {
+		return usecase.File{}, fmt.Errorf("stat world file: %w", err)
+	}
+	if !before.Mode().IsRegular() {
+		return usecase.File{}, errors.New("world file must be regular")
+	}
+	f, err := openWorldFile(r.root, path)
 	if err != nil {
 		return usecase.File{}, fmt.Errorf("open world file: %w", err)
 	}
