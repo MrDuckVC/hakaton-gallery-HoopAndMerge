@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
 )
 
 type historyFake struct {

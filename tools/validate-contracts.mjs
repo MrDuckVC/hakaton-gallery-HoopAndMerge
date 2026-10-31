@@ -66,3 +66,11 @@ function yaml(value,depth=0){const pad='  '.repeat(depth);if(Array.isArray(value
 assert.equal(fs.readFileSync(path.join(root,'docs/api/openapi.yaml'),'utf8'),yaml(api));
 console.log('PASS: references, operation IDs, YAML/JSON parity, four fixtures, ready/move, legacy rejection, room byte size, AGENTS '+length+'/6000 chars.');
 console.log('This is a focused local check, not a full OpenAPI/JSON Schema conformance validator or backend runtime test.');
+
+check(read('docs/api/examples/photo.created.json'),api.components.schemas.Photo,api);
+const uploadSchema=api.components.schemas.PhotoUpload;
+check({image:'fixture bytes',room_id:'room',movement_epoch:'1',caption:'  '+ 'я'.repeat(200)+'  '},uploadSchema,api);
+assert.throws(()=>check({image:'x',room_id:'room',movement_epoch:'1',caption:'a\u0000b'},uploadSchema,api));
+for(const movement_epoch of ['0','01','1.0','1e3','-1'])assert.throws(()=>check({image:'x',room_id:'room',movement_epoch},uploadSchema,api));
+assert.throws(()=>check({image:'x',room_id:'room',movement_epoch:'1',unknown:'x'},uploadSchema,api));
+assert(paths['/photos'].post.responses['200']);

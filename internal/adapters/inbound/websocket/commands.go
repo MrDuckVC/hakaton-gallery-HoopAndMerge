@@ -11,8 +11,8 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	world "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/game"
+	world "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/game"
 )
 
 func decode(body []byte) (game.Command, game.Failure) {

@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	authdomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	worlddomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
-	guidecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
+	authdomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	worlddomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
+	guidecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
 )
 
 // Configure installs game ports before admission starts.

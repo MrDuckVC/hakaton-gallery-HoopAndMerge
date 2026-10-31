@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/guidewire"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
-	world "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/guidewire"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
+	world "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 // Guides is the private history application boundary.

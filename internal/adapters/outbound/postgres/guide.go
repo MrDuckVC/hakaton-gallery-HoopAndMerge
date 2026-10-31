@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"time"
 
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
-	usecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
+	usecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )

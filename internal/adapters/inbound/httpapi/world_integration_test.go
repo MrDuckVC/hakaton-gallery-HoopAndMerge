@@ -8,11 +8,11 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/worldwire"
-	files "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/world"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/testworld"
-	world "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/world"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/worldwire"
+	files "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/world"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/testworld"
+	world "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/world"
 )
 
 type worldSessions struct{}

@@ -8,9 +8,9 @@ import (
 	"maps"
 	"slices"
 
-	guide "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	guide "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 // Catalog owns immutable content. No mutable reference escapes its public methods.

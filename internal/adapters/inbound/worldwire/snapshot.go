@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"strings"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 // Asset is an exact byte reservation in a public room package.

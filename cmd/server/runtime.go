@@ -9,20 +9,23 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/httpapi"
-	wsapi "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/websocket"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/worldwire"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/ollama"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/postgres"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/security"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/sessionevents"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/world"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/game"
-	guidecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/lifecycle"
-	worldcase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/world"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/httpapi"
+	wsapi "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/websocket"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/worldwire"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/images"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/ollama"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/photofiles"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/postgres"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/security"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/sessionevents"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/world"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/config"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/game"
+	guidecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/lifecycle"
+	photocase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/photo"
+	worldcase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/world"
 )
 
 func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
@@ -59,6 +62,12 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 		pool.Close()
 		return fmt.Errorf("recover guide generations: %w", err)
 	}
+	photoFiles, err := photofiles.Open(cfg.PhotoDir)
+	if err != nil {
+		pool.Close()
+		return err
+	}
+	defer func() { _ = photoFiles.Close() }()
 	listenCtx, listenCancel := context.WithTimeout(ctx, 10*time.Second)
 	listener, err := (&net.ListenConfig{}).Listen(listenCtx, "tcp", cfg.HTTPAddr)
 	listenCancel()
@@ -71,6 +80,7 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	connections.Configure(catalog, postgres.NewGameStore(pool), guides)
 	connections.ConfigureGuides(guides)
 	server.ConfigureGuides(guides)
+	server.ConfigurePhotos(photocase.New(accounts, postgres.NewPhotoStore(pool), photoFiles, images.Codec{}, connections, time.Now, security.Crypto{}.NewID))
 	connections.ConfigureSocial(postgres.NewSocialStore(pool), game.UnavailablePhotos{}, security.Crypto{}.NewID)
 	loopCtx, stopLoop := context.WithCancel(context.Background())
 	loopDone := make(chan struct{})

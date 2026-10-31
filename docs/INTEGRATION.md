@@ -1,6 +1,6 @@
 # Перенос в backend-репозиторий
 
-Цель: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge. Комплект подготовлен отдельно от checkout: GitHub-коннектор вернул404. Существующие AGENTS.md, Makefile, Compose и исходники не проверены и не изменены. Публикации/коммитов в GitHub не было.
+Цель: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge. Комплект подготовлен отдельно от checkout: GitHub-коннектор вернул404. Существующие AGENTS.md, Makefile, Compose и исходники не проверены и не изменены. Публикации/коммитов в GitHub не было.
 
 1. Открыть отдельный backend checkout, прочитать действующий AGENTS.md и git status.
 2. Сопоставить новый AGENTS.md с существующим: сохранить действующие применимые правила; объединить инструкции без автоматической перезаписи. Не превысить6000 Unicode-символов.

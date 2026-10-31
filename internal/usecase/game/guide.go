@@ -3,7 +3,7 @@ package game
 import (
 	"context"
 
-	guide "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
+	guide "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
 )
 
 // GuideCommands delegates durable idempotency before ready and new-question limits.

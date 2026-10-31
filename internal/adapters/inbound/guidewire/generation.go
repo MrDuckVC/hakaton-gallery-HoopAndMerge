@@ -4,7 +4,7 @@ package guidewire
 import (
 	"time"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
 )
 
 // Message is a fully saved dialog message.

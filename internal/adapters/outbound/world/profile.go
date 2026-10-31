@@ -1,6 +1,6 @@
 package world
 
-import domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
+import domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
 
 type profile struct {
 	Personality string     `json:"personality"`

@@ -15,11 +15,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/httpapi"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/postgres"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/testworld"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/lifecycle"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/httpapi"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/postgres"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/config"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/testworld"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/lifecycle"
 )
 
 func TestCommandInvalidEnvironment(t *testing.T) {
@@ -156,7 +156,7 @@ func TestStartupSchemaAndListenerIntegration(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer func() { _ = listener.Close() }()
-	cfg := config.Config{DatabaseURL: dsn, HTTPAddr: listener.Addr().String(), WorldDir: dir, WorldVersion: "v1"}
+	cfg := config.Config{PhotoDir: t.TempDir(), DatabaseURL: dsn, HTTPAddr: listener.Addr().String(), WorldDir: dir, WorldVersion: "v1"}
 	// A missing catalog must fail before even an occupied listener is opened.
 	invalid := cfg
 	invalid.WorldDir = t.TempDir()
@@ -209,7 +209,7 @@ func TestSIGTERMIntegration(t *testing.T) {
 		t.Fatal(err)
 	}
 	process := exec.CommandContext(ctx, executable, "-test.run=^TestServerSignalHelper$")
-	process.Env = append(os.Environ(), "GALLERY_B01_SIGNAL_HELPER=1", "DATABASE_URL="+dsn, "HTTP_ADDR="+address, "ALLOWED_ORIGINS=http://localhost:8080", "WORLD_VERSION=signal_test", "WORLD_DIR="+dir, "OLLAMA_MODEL=unused:test", "LOG_LEVEL=info")
+	process.Env = append(os.Environ(), "GALLERY_B01_SIGNAL_HELPER=1", "DATABASE_URL="+dsn, "HTTP_ADDR="+address, "ALLOWED_ORIGINS=http://localhost:8080", "WORLD_VERSION=signal_test", "WORLD_DIR="+dir, "PHOTO_DIR="+t.TempDir(), "OLLAMA_MODEL=unused:test", "LOG_LEVEL=info")
 	stderr, err := process.StderrPipe()
 	if err != nil {
 		t.Fatal(err)

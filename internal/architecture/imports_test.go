@@ -31,10 +31,10 @@ func TestImportRulesCatchInfrastructure(t *testing.T) {
 	}{
 		{"domain", "net/http", true}, {"usecase", "os", true}, {"usecase", "io/fs", true},
 		{"usecase", "github.com/jackc/pgx/v5", true}, {"usecase", "github.com/coder/websocket", true},
-		{"domain", "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/lifecycle", true},
-		{"usecase", "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/postgres", true},
+		{"domain", "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/lifecycle", true},
+		{"usecase", "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/postgres", true},
 		{"usecase", "context", false}, {"domain", "time", false},
-		{"usecase", "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player", false},
+		{"usecase", "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player", false},
 	} {
 		if got := forbidden(tc.layer, tc.imported); got != tc.want {
 			t.Errorf("%s -> %s: forbidden=%v", tc.layer, tc.imported, got)

@@ -1,7 +1,7 @@
 # Инструкции агенту backend
 
 ## Проект и источники
-Отдельный репозиторий https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge. Go backend офлайн 3D-галереи для LAN: PostgreSQL, cookie-сессии, WebSocket, локальный Ollama. Frontend живёт отдельно. Не создавать монорепозиторий.
+Отдельный репозиторий https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge. Go backend офлайн 3D-галереи для LAN: PostgreSQL, cookie-сессии, WebSocket, локальный Ollama. Frontend живёт отдельно. Не создавать монорепозиторий.
 Сначала прочитай README.md, локальные инструкции, go.mod, Makefile, .golangci.yml, docker-compose.yml и .env.example. Затем docs/api/contract.md, conventions.md, openapi.yaml, websocket.md. Контракт пользователя в contract.md приоритетнее старых планов и примеров. Старые маршруты не поддерживать. При конфликте требований сообщи о нём и исправь производные схемы до кода.
 
 ## Стек и среда

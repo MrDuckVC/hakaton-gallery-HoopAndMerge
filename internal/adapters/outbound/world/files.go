@@ -10,10 +10,10 @@ import (
 	"os"
 	"strings"
 
-	guideDomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
-	usecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/world"
+	guideDomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
+	usecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/world"
 )
 
 // Files reads server-only catalog metadata and exact immutable wire files under Dir.

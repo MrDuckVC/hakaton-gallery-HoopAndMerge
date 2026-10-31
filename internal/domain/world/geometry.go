@@ -4,7 +4,7 @@ import (
 	"math"
 	"slices"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
 )
 
 func finite(n float64) bool             { return !math.IsNaN(n) && !math.IsInf(n, 0) }
