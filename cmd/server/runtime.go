@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/httpapi"
+	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/worldwire"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/postgres"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/security"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/sessionevents"
@@ -17,6 +18,7 @@ import (
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/auth"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/lifecycle"
+	worldcase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/world"
 )
 
 func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
@@ -31,17 +33,35 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 		pool.Close()
 		return err
 	}
-	listener, err := (&net.ListenConfig{}).Listen(startupCtx, "tcp", cfg.HTTPAddr)
 	cancel()
+	worldCtx, worldCancel := context.WithTimeout(ctx, 60*time.Second)
+	catalog, err := prepareWorld(worldCtx, cfg)
+	worldCancel()
+	if err != nil {
+		pool.Close()
+		return err
+	}
+	listenCtx, listenCancel := context.WithTimeout(ctx, 10*time.Second)
+	listener, err := (&net.ListenConfig{}).Listen(listenCtx, "tcp", cfg.HTTPAddr)
+	listenCancel()
 	if err != nil {
 		pool.Close()
 		return fmt.Errorf("open HTTP listener: %w", err)
 	}
 	server := httpapi.NewServer(cfg.HTTPAddr)
 	sessions := sessionevents.New()
-	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, world.Unavailable{}, sessions, time.Now)
+	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, catalog, sessions, time.Now)
 	server.ConfigureAuth(accounts, cfg.AllowedOrigins, cfg.CookieSecure)
+	server.ConfigureWorld(worldcase.New(catalog, accounts, worldcase.NoConnections{}))
 	return serve(ctx, server, listener, lifecycle.Coordinator{}, logger, 15*time.Second, pool.Close)
+}
+
+func prepareWorld(ctx context.Context, cfg config.Config) (*worldcase.Catalog, error) {
+	catalog, err := worldcase.Load(ctx, world.Files{Dir: cfg.WorldDir}, worldwire.SnapshotSizer{}, cfg.WorldVersion)
+	if err != nil {
+		return nil, fmt.Errorf("prepare world: %w", err)
+	}
+	return catalog, nil
 }
 
 func serve(ctx context.Context, server *httpapi.Server, listener net.Listener, participants lifecycle.Coordinator, logger *slog.Logger, timeout time.Duration, closeStorage func()) error {

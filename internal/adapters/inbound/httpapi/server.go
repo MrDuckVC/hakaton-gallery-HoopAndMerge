@@ -18,6 +18,7 @@ type Server struct {
 	mu       sync.Mutex
 	listener net.Listener
 	stopping atomic.Bool
+	world    World
 }
 
 type errorResponse struct {
@@ -41,7 +42,10 @@ func NewServer(addr string) *Server {
 	return server
 }
 
-func (s *Server) fallback(w http.ResponseWriter, _ *http.Request) {
+func (s *Server) fallback(w http.ResponseWriter, r *http.Request) {
+	if s.serveWorld(w, r) {
+		return
+	}
 	writeError(w, http.StatusNotFound, "NOT_FOUND", "Ресурс не найден", 0)
 }
 

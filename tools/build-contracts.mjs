@@ -155,6 +155,11 @@ delete P['/photos/{photo_id}/image'].get.responses['403'];
 P['/world/assets/{asset_id}'].get.responses['200'].content=Object.fromEntries(['image/jpeg','image/webp'].map(t=>[t,{schema:{type:'string',format:'binary'}}]));
 P['/world/rooms/{room_id}'].get.responses['409']=err('GAME_NOT_READY / WORLD_VERSION_MISMATCH');
 P['/world/assets/{asset_id}'].get.responses['409']=err('GAME_NOT_READY / WORLD_VERSION_MISMATCH');
+for (const path of ['/world/rooms/{room_id}', '/world/assets/{asset_id}']) {
+ P[path].get.description='Действующая сессия и активный owning WS; только текущий зал. Загрузка разрешена до world.ready. Проверка при начале запроса; исходные байты без переформатирования. version обязателен и единственный: отсутствие/пустое/повтор — 400, другая версия — 409.';
+ P[path].get.responses['200'].headers={...P[path].get.responses['200'].headers,'Content-Length':{schema:safeInt({minimum:1}),description:'Точный размер исходного файла'},'X-Content-Type-Options':{schema:{const:'nosniff'}}};
+}
+P['/world/manifest'].get.description='Доступен любой действующей сессии без active WS и без параметра version. Размеры уникальных используемых файлов проверяются при startup; резерв фото 3145728 байт.';
 P['/ws'].get.responses['503']=err('SERVICE_UNAVAILABLE: максимум 32 игровых соединения');
 for(const item of Object.values(P))for(const op of Object.values(item)){
  op.responses['500']=err('INTERNAL_ERROR');op.responses['503']??=err('SERVICE_UNAVAILABLE');

@@ -16,6 +16,7 @@ import (
 
 	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
+	world "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
 	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/auth"
 )
 
@@ -227,6 +228,14 @@ func readStrings(w http.ResponseWriter, r *http.Request, fields []string) (map[s
 func applicationError(w http.ResponseWriter, err error) {
 	status, code, message := 500, "INTERNAL_ERROR", "Внутренняя ошибка сервера"
 	switch {
+	case errors.Is(err, world.VersionMismatch):
+		status, code, message = 409, "WORLD_VERSION_MISMATCH", "Версия мира не совпадает"
+	case errors.Is(err, world.RoomNotAccessible):
+		status, code, message = 403, "ROOM_NOT_ACCESSIBLE", "Зал или ресурс недоступен"
+	case errors.Is(err, world.NotReady):
+		status, code, message = 409, "GAME_NOT_READY", "Нет активного игрового соединения"
+	case errors.Is(err, world.NotFound):
+		status, code, message = 404, "NOT_FOUND", "Ресурс не найден"
 	case errors.Is(err, domain.Validation):
 		status, code, message = 400, "VALIDATION_ERROR", "Некорректные данные"
 	case errors.Is(err, domain.Unauthenticated):

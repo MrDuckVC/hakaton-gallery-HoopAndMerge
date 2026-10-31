@@ -10,3 +10,7 @@
 6. Реализовывать по IMPLEMENTATION_PLAN, не создавать legacy aliases. contract.md — пользовательская редакция; изменения семантики сначала согласовать в контракте и синхронизировать с frontend-командой.
 
 Не запускать tools/write-docs.mjs поверх изменённых Markdown: это первоначальный scaffold. Архив не содержит Go реализации, миграций или world assets. Проверка схем не означает проверки игрового сервера.
+
+## B03 → B04
+
+Каталог внедряется в auth.World и предоставляет `Package(roomID)` и `Spawn(doorID)`. B04 использует общий wire package `internal/adapters/inbound/worldwire` для RoomPackage и snapshot, чтобы соответствовать startup size bound. Порт `usecase/world.Ownership` проверяет sessionID+userID активного владельца и атомарно возвращает текущий подтверждённый room, в том числе до ready. Заменить NoConnections в composition root после подключения игры. Поздний cleanup старого connection ID не должен менять этот снимок. До B04 manifest/register/me работают с каталогом, доступ к пакетам не открывается одним login.

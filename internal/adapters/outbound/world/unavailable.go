@@ -1,4 +1,4 @@
-// Package world supplies catalog adapters; B03 will provide the validated file catalog.
+// Package world supplies adapters for validated local world files.
 package world
 
 import (
@@ -8,15 +8,15 @@ import (
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
 )
 
-// Unavailable explicitly refuses to represent test fixtures as a validated production world.
+// Unavailable represents an explicit unavailable dependency in adapter integration tests.
 type Unavailable struct{}
 
-// Start cannot provide a verified spawn before the real catalog is connected.
+// Start refuses to provide an unverified spawn.
 func (Unavailable) Start(context.Context) (player.State, error) {
 	return player.State{}, domain.Unavailable
 }
 
-// Valid cannot validate stored positions before the real catalog is connected.
+// Valid refuses to validate positions without a catalog.
 func (Unavailable) Valid(context.Context, player.State) (bool, error) {
 	return false, domain.Unavailable
 }
