@@ -19,6 +19,7 @@ Go-модуль `github.com/MrDuckVC/hakaton-gallery-HoopAndMerge`, Go >=1.27.1;
 export PATH="/usr/local/go/bin:$PATH" # если требуется
 cp .env.example .env
 # Отредактируйте .env: пароли, origins, версия мира и заранее подготовленный model tag.
+# Подготовьте WORLD_DIR/catalog.json и файлы по docs/WORLD_CONTENT.md.
 set -a
 . ./.env
 set +a
@@ -30,7 +31,9 @@ make migrate-up
 
 Сервер проверяет конфигурацию, соединение с PostgreSQL и точный набор применённых миграций, затем слушает `HTTP_ADDR`. Схему при старте не меняет. SIGINT/SIGTERM запускает завершение с общим deadline 15 секунд. `make migrate-status` показывает миграции; повторный `make migrate-up` сохраняет данные. Compose хранит PostgreSQL в постоянном named volume.
 
-B01 реализует запуск и lifecycle; B02 добавляет `/api/v1/auth/register`, `/auth/login`, `/auth/logout` и `/api/v1/me`, cookie-сессии и exact Origin. До подключения каталога B03 регистрация и авторизованный `/me` возвращают `503 SERVICE_UNAVAILABLE`: сервер не подменяет проверенный spawn тестовой позицией. Login/logout работают с существующими аккаунтами независимо от мира; `/me` без сессии возвращает 401. Остальные маршруты пока отвечают контрактным JSON `404 NOT_FOUND`. WS, мир, Ollama и раздача frontend dist ещё не подключены.
+B01 реализует запуск и lifecycle; B02 — аккаунты и cookie-сессии; B03 — проверяемый локальный каталог и `/api/v1/world/manifest`, `/world/rooms/{room_id}`, `/world/assets/{asset_id}`. До открытия HTTP listener проверяются геометрия, ссылки, spawns, точные размеры, бюджет с резервом фото и максимальный snapshot. Без валидного WORLD_DIR запуск завершается ошибкой. Формат контента — docs/WORLD_CONTENT.md.
+
+Manifest доступен действующей сессии. Для rooms/assets нужны version и активный owning WS; до подключения игрового subsystem B04 запросы пакетов получают 409 GAME_NOT_READY. Каталог уже обеспечивает настоящий spawn для register и `/me`. WS, Ollama и раздача frontend dist ещё не подключены.
 
 Команды миграций, отдельная тестовая БД, Docker smoke-test и подготовка офлайн-работы — в docs/DEVELOPMENT.md. Docker-образ собирается через `make docker-build` и содержит `/gallery` и административный `/migrate`.
 
@@ -53,10 +56,10 @@ make coverage
 make contracts
 ```
 
-Также доступны `make test`, `make vet`, `make fmt`. Для конкурентного кода — `go test -race ./...`. Тестируются конфигурация, ошибки запуска, lifecycle, HTTP-контракт, миграции и сценарии B02: KDF, сессии, Origin, лимиты и восстановление положения через порт мира. `make coverage` запускает тесты с race detector и требует суммарное покрытие всех Go-пакетов не ниже 60%; отчёт — `coverage.out`. Интеграционные тесты требуют отдельный `TEST_DATABASE_URL`; без него они явно пропускаются. `make lint` при первом запуске скачивает golangci-lint версии из Makefile; для офлайн-работы установите его заранее.
+Также доступны `make test`, `make vet`, `make fmt`. Для конкурентного кода — `go test -race ./...`. Тестируются каталог/бюджет/выдача файлов B03, конфигурация, ошибки запуска, lifecycle, HTTP-контракт, миграции и сценарии B02: KDF, сессии, Origin, лимиты и восстановление положения через порт мира. `make coverage` запускает тесты с race detector и требует суммарное покрытие всех Go-пакетов не ниже 60%; отчёт — `coverage.out`. Интеграционные тесты требуют отдельный `TEST_DATABASE_URL`; без него они явно пропускаются. `make lint` при первом запуске скачивает golangci-lint версии из Makefile; для офлайн-работы установите его заранее.
 
 `make contracts` генерирует и проверяет схемы API; Node нужен только этим инструментам.
 
-Проект содержит запускаемый backend с PostgreSQL и документацию, но ещё не работающий игровой сервер и не готовый пакет мира. Примеры используют демонстрационные ID и размер картинки; реальный asset не включён. Карта документации — docs/INDEX.md.
+Проект содержит запускаемый backend с PostgreSQL и каталогом, но ещё не работающий игровой сервер и не готовый образовательный пакет мира. Примеры используют демонстрационные ID и размер картинки; реальный asset не включён. Карта документации — docs/INDEX.md.
 
 GitHub Actions (`.github/workflows/ci.yml`) запускается на push, pull_request и вручную: форматирование, vet, race-тесты с порогом 60%, golangci-lint и Go-сборка. После успешных проверок собирается Docker-образ и проверяется запуск контейнера с отдельной тестовой PostgreSQL и штатное завершение по SIGTERM. Образ не публикуется в registry.

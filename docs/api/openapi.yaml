@@ -549,6 +549,7 @@
                 "minLength": 1
                 "maxLength": 128
                 "pattern": "^[\\x21-\\x7E]+$"
+      "description": "Доступен любой действующей сессии без active WS и без параметра version. Размеры уникальных используемых файлов проверяются при startup; резерв фото 3145728 байт."
   "/world/rooms/{room_id}":
     "get":
       "operationId": "getRoom"
@@ -561,6 +562,15 @@
               "schema":
                 "$ref": "#/components/schemas/Room"
           "headers":
+            "Content-Length":
+              "schema":
+                "type": "integer"
+                "minimum": 1
+                "maximum": 9007199254740991
+              "description": "Точный размер исходного файла"
+            "X-Content-Type-Options":
+              "schema":
+                "const": "nosniff"
             "Cache-Control":
               "schema":
                 "const": "no-store"
@@ -701,6 +711,7 @@
             "minLength": 1
             "maxLength": 128
             "pattern": "^[\\x21-\\x7E]+$"
+      "description": "Действующая сессия и активный owning WS; только текущий зал. Загрузка разрешена до world.ready. Проверка при начале запроса; исходные байты без переформатирования. version обязателен и единственный: отсутствие/пустое/повтор — 400, другая версия — 409."
   "/world/assets/{asset_id}":
     "get":
       "operationId": "getAsset"
@@ -718,6 +729,15 @@
                 "type": "string"
                 "format": "binary"
           "headers":
+            "Content-Length":
+              "schema":
+                "type": "integer"
+                "minimum": 1
+                "maximum": 9007199254740991
+              "description": "Точный размер исходного файла"
+            "X-Content-Type-Options":
+              "schema":
+                "const": "nosniff"
             "Cache-Control":
               "schema":
                 "const": "no-store"
@@ -858,6 +878,7 @@
             "minLength": 1
             "maxLength": 128
             "pattern": "^[\\x21-\\x7E]+$"
+      "description": "Действующая сессия и активный owning WS; только текущий зал. Загрузка разрешена до world.ready. Проверка при начале запроса; исходные байты без переформатирования. version обязателен и единственный: отсутствие/пустое/повтор — 400, другая версия — 409."
   "/photos":
     "post":
       "operationId": "uploadPhoto"

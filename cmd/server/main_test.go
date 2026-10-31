@@ -18,6 +18,7 @@ import (
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/httpapi"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/postgres"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config"
+	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/testworld"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/lifecycle"
 )
 
@@ -140,7 +141,7 @@ func TestStartupSchemaAndListenerIntegration(t *testing.T) {
 		t.Fatal("test and runtime DB must differ")
 	}
 	// This test database is dedicated to B01. Migration is non-destructive and idempotent.
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	if _, err := postgres.Migrate(ctx, dsn, "up"); err != nil {
 		t.Fatal(err)
@@ -150,7 +151,24 @@ func TestStartupSchemaAndListenerIntegration(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer func() { _ = listener.Close() }()
-	cfg := config.Config{DatabaseURL: dsn, HTTPAddr: listener.Addr().String()}
+	dir := t.TempDir()
+	if err = testworld.Write(ctx, dir, "v1"); err != nil {
+		t.Fatal(err)
+	}
+	cfg := config.Config{DatabaseURL: dsn, HTTPAddr: listener.Addr().String(), WorldDir: dir, WorldVersion: "v1"}
+	// World validation must fail before even an occupied listener is opened.
+	if err = os.WriteFile(dir+"/catalog.json", []byte("{}"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	err = run(ctx, cfg, slog.New(slog.NewTextHandler(&bytes.Buffer{}, nil)))
+	if err == nil || !strings.Contains(err.Error(), "prepare world") {
+		t.Fatalf("expected world failure before listener: %v", err)
+	}
+	fresh := t.TempDir()
+	if err = testworld.Write(ctx, fresh, "v1"); err != nil {
+		t.Fatal(err)
+	}
+	cfg.WorldDir = fresh
 	var output bytes.Buffer
 	err = run(ctx, cfg, slog.New(slog.NewTextHandler(&output, nil)))
 	if err == nil || !strings.Contains(err.Error(), "HTTP listener") {
@@ -174,7 +192,7 @@ func TestSIGTERMIntegration(t *testing.T) {
 	if dsn == os.Getenv("DATABASE_URL") {
 		t.Fatal("test and runtime database must differ")
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	if _, err := postgres.Migrate(ctx, dsn, "up"); err != nil {
 		t.Fatal(err)
@@ -189,8 +207,12 @@ func TestSIGTERMIntegration(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	dir := t.TempDir()
+	if err = testworld.Write(ctx, dir, "signal_test"); err != nil {
+		t.Fatal(err)
+	}
 	process := exec.CommandContext(ctx, executable, "-test.run=^TestServerSignalHelper$")
-	process.Env = append(os.Environ(), "GALLERY_B01_SIGNAL_HELPER=1", "DATABASE_URL="+dsn, "HTTP_ADDR="+address, "ALLOWED_ORIGINS=http://localhost:8080", "WORLD_VERSION=signal_test", "OLLAMA_MODEL=unused:test", "LOG_LEVEL=info")
+	process.Env = append(os.Environ(), "GALLERY_B01_SIGNAL_HELPER=1", "DATABASE_URL="+dsn, "HTTP_ADDR="+address, "ALLOWED_ORIGINS=http://localhost:8080", "WORLD_VERSION=signal_test", "WORLD_DIR="+dir, "OLLAMA_MODEL=unused:test", "LOG_LEVEL=info")
 	stderr, err := process.StderrPipe()
 	if err != nil {
 		t.Fatal(err)

@@ -45,3 +45,11 @@ PostgreSQL tests используют тот же отдельный TEST_DATABA
 Регрессии ревью: Upgrade проверяется как список токенов во всех строках заголовка; lone UTF-16 surrogate в JSON отклоняется, валидная surrogate pair и literal U+FFFD сохраняются. `/me` повторно проверяет сессию после world validation; SQL-тест запрещает repair для отозванной/истёкшей сессии и проверяет восстановление отсутствующего state.
 
 U+0000 в display_name отклоняется с 400 VALIDATION_ERROR до world/KDF/SQL. Domain tests проверяют NUL в начале, середине и конце имени; usecase test проверяет приоритет валидации над недоступным миром. Сквозной HTTP/SQL-тест подтверждает отсутствие новых users/sessions/player_states и сохранение прежней cookie-сессии после отказа. Пароль с U+0000 регистрируется и проверяется без удаления символа; вход с тем же паролем без NUL отклоняется. Validator проверяет запрет NUL только для display_name.
+
+## Проверки B03
+
+Domain tests проверяют цилиндр/углы/конечные координаты, касание пола, bounds, ID, ссылки, направленные spawns и связность; budget tests — точную границу с резервом 3145728 и safe integers. Usecase tests через fake ports проверяют дедупликацию общего asset между залами и внутри пакета, неизменяемость файлов/резервов/spawns, ошибки источника и snapshot, version, active ownership, переход и отмену.
+
+Файловые tests используют temp dirs: строгий JSON, UTF-8/surrogates, реальные JPEG и статический WebP, запрет анимации/повреждений, traversal, symlink escape и hardlink identity. HTTP tests проверяют версии/ошибки, композицию с auth, непрозрачные URL IDs, точные исходные байты и Content-Length/no-store/request ID/nosniff. Сквозной тест генерирует отдельный синтетический мир и связывает Files → usecase → HTTP, сверяя total с размерами файлов и проверяя неизменность после перезаписи диска.
+
+Startup tests проверяют отсутствующий/повреждённый мир, несовпадение версии и отмену. SQL startup integration проверяет world failure до открытия даже занятого listener; SIGTERM и Docker smoke используют тот же валидный тестовый формат. Никаких production fallback и фиктивного WS-владения.
