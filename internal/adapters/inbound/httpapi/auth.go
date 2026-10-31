@@ -228,6 +228,10 @@ func readStrings(w http.ResponseWriter, r *http.Request, fields []string) (map[s
 func applicationError(w http.ResponseWriter, err error) {
 	status, code, message := 500, "INTERNAL_ERROR", "Внутренняя ошибка сервера"
 	switch {
+	case errors.Is(err, domain.Code("NOT_FOUND")):
+		status, code, message = 404, "NOT_FOUND", "Ресурс не найден"
+	case errors.Is(err, domain.Code("INVALID_CURSOR")):
+		status, code, message = 400, "INVALID_CURSOR", "Некорректный курсор"
 	case errors.Is(err, world.VersionMismatch):
 		status, code, message = 409, "WORLD_VERSION_MISMATCH", "Версия мира не совпадает"
 	case errors.Is(err, world.RoomNotAccessible):

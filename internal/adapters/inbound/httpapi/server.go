@@ -19,6 +19,7 @@ type Server struct {
 	listener  net.Listener
 	stopping  atomic.Bool
 	world     World
+	guides    Guides
 	websocket http.Handler
 }
 
@@ -49,6 +50,9 @@ func (s *Server) ConfigureWebSocket(handler http.Handler) { s.websocket = handle
 func (s *Server) fallback(w http.ResponseWriter, r *http.Request) {
 	if s.websocket != nil && r.Method == http.MethodGet && r.URL.Path == "/api/v1/ws" {
 		s.websocket.ServeHTTP(w, r)
+		return
+	}
+	if s.serveGuides(w, r) {
 		return
 	}
 	if s.serveWorld(w, r) {

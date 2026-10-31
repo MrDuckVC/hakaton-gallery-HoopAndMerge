@@ -218,7 +218,8 @@
             "text": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 2000
+              "maxLength": 2000,
+              "pattern": "^[^\u0000]*$"
             },
             "exhibit_id": {
               "type": "string",

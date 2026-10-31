@@ -184,10 +184,6 @@ func (t *Transport) read(ctx context.Context, conn *ws.Conn, p *peer, token, use
 			return
 		}
 		if failure.Code == "" {
-			// Until the durable guide subsystem exists every accepted ask is new.
-			if cmd.Type == "guide.ask" {
-				failure = t.service.AdmitNewAsk(userID, id)
-			}
 			if failure.Code == "" && !failure.Drop {
 				commandCtx, commandCancel := context.WithTimeout(ctx, 10*time.Second)
 				failure = t.handler.Handle(commandCtx, userID, id, cmd)

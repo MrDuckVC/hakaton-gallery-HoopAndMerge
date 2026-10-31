@@ -19,6 +19,7 @@ import (
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/auth"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/game"
+	guidecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/lifecycle"
 	worldcase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/world"
 )
@@ -43,6 +44,18 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 		pool.Close()
 		return err
 	}
+
+	connections := game.New(time.Now)
+	sessions := sessionevents.New()
+	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, catalog, sessions, time.Now)
+	guides := guidecase.New(postgres.NewGuideStore(pool), catalog, accounts, connections, guidecase.UnavailableModel{}, guidecase.Clock{Now: time.Now, After: time.After}, security.Crypto{}.NewID)
+	recoveryCtx, recoveryCancel := context.WithTimeout(ctx, 10*time.Second)
+	err = guides.Recover(recoveryCtx)
+	recoveryCancel()
+	if err != nil {
+		pool.Close()
+		return fmt.Errorf("recover guide generations: %w", err)
+	}
 	listenCtx, listenCancel := context.WithTimeout(ctx, 10*time.Second)
 	listener, err := (&net.ListenConfig{}).Listen(listenCtx, "tcp", cfg.HTTPAddr)
 	listenCancel()
@@ -51,21 +64,23 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 		return fmt.Errorf("open HTTP listener: %w", err)
 	}
 	server := httpapi.NewServer(cfg.HTTPAddr)
-	sessions := sessionevents.New()
-	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, catalog, sessions, time.Now)
 	server.ConfigureAuth(accounts, cfg.AllowedOrigins, cfg.CookieSecure)
-	connections := game.New(time.Now)
-	connections.Configure(catalog, postgres.NewGameStore(pool), game.NoQuestions{})
+	connections.Configure(catalog, postgres.NewGameStore(pool), guides)
+	connections.ConfigureGuides(guides)
+	server.ConfigureGuides(guides)
 	connections.ConfigureSocial(postgres.NewSocialStore(pool), game.UnavailablePhotos{}, security.Crypto{}.NewID)
 	loopCtx, stopLoop := context.WithCancel(context.Background())
 	loopDone := make(chan struct{})
 	go func() { defer close(loopDone); connections.Run(loopCtx) }()
+	guideDone := make(chan struct{})
+	go func() { defer close(guideDone); guides.Run(loopCtx) }()
 	transport := wsapi.New(connections, accounts, catalog, connections, cfg.AllowedOrigins)
 	server.ConfigureWebSocket(transport)
 	server.ConfigureWorld(worldcase.New(catalog, accounts, connections))
-	return serve(ctx, server, listener, lifecycle.Coordinator{Admission: connections, Positions: connections, Connections: transport}, logger, 15*time.Second, func() {
+	return serve(ctx, server, listener, lifecycle.Coordinator{Admission: connections, Generations: guides, Positions: connections, Connections: transport}, logger, 15*time.Second, func() {
 		stopLoop()
 		<-loopDone
+		<-guideDone
 		pool.Close()
 	})
 }

@@ -1533,6 +1533,7 @@
             "minLength": 1
             "maxLength": 128
             "pattern": "^[\\x21-\\x7E]+$"
+      "description": "Только текущий пользователь, без требования WS и независимо от зала. Последние записи, внутри страницы от старых к новым по (created_at,id). before привязан к пользователю и гиду; неверный курсор — INVALID_CURSOR."
   "/guides/{guide_id}/generations/by-request/{request_id}":
     "get":
       "operationId": "getGenerationByRequest"
@@ -1652,6 +1653,7 @@
             "type": "string"
             "format": "uuid"
             "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "description": "Только текущий пользователь и указанный гид. Восстановление сохранённого вопроса без повторной генерации; отсутствующая или чужая запись — NOT_FOUND."
   "/photos/{photo_id}/thumbnail":
     "get":
       "operationId": "getPhotoThumbnail"

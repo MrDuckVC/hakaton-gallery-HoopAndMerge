@@ -9,6 +9,7 @@ import (
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
 	worlddomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
 	authcase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/auth"
+	guidecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
 )
 
 // Sessions is the persisted authentication boundary used by the connection scenario.
@@ -66,6 +67,7 @@ type Event struct {
 	Chat            ChatMessage
 	ExhibitID       string
 	InspectedAt     time.Time
+	Guide           guidecase.Event
 }
 
 // Sink performs bounded, nonblocking memory operations only, never network I/O.

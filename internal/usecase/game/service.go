@@ -37,6 +37,7 @@ type Service struct {
 	world        World
 	store        PositionStore
 	questions    Questions
+	guides       GuideCommands
 	inspections  InspectionStore
 	photos       PhotoPublisher
 	newMessageID func() string
@@ -190,6 +191,9 @@ func (s *Service) Detach(userID, id string) {
 		return
 	}
 	defer release()
+	if s.questions != nil {
+		_ = s.questions.CancelQuestion(ctx, userID, id)
+	}
 	_ = s.flush(ctx, userID, id)
 	s.remove(userID, id)
 }
