@@ -70,7 +70,10 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 		}
 		c.sink.Enqueue(Event{Type: "world.ready", RequestID: cmd.RequestID, MovementEpoch: c.epoch})
 		return Failure{}
-	case "chat.send", "guide.cancel":
+	case "chat.send":
+		s.mu.Unlock()
+		return s.chat(ctx, c, cmd)
+	case "guide.cancel":
 		s.mu.Unlock()
 		return Failure{Code: "SERVICE_UNAVAILABLE"}
 	}
@@ -81,6 +84,11 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 	if cmd.Type == "player.move" {
 		defer s.mu.Unlock()
 		return s.moveLocked(c, cmd)
+	}
+	if cmd.Type == "exhibit.inspect" {
+		state := c.identity.State
+		s.mu.Unlock()
+		return s.inspect(ctx, c, state, cmd)
 	}
 	if cmd.Type != "world.enter" {
 		s.mu.Unlock()

@@ -26,17 +26,20 @@ type reservation struct{ identity Identity }
 
 // Service serializes registry and presence changes; its lock never covers external I/O.
 type Service struct {
-	mu        sync.Mutex
-	now       Clock
-	next      uint64
-	stopping  bool
-	active    map[string]*connection
-	pending   map[string]reservation
-	limits    map[string]*windows
-	gates     map[string]chan struct{}
-	world     World
-	store     PositionStore
-	questions Questions
+	mu           sync.Mutex
+	now          Clock
+	next         uint64
+	stopping     bool
+	active       map[string]*connection
+	pending      map[string]reservation
+	limits       map[string]*windows
+	gates        map[string]chan struct{}
+	world        World
+	store        PositionStore
+	questions    Questions
+	inspections  InspectionStore
+	photos       PhotoPublisher
+	newMessageID func() string
 }
 
 // New constructs a registry limited to 32 active or reserved accounts.

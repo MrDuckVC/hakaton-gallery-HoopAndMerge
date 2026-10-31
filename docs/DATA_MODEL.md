@@ -1,17 +1,17 @@
 # Модель PostgreSQL
 
-B01 реализует `users`, `sessions`, `player_states` в `migrations/00001_users_sessions_player_states.sql`; остальные таблицы ниже — проект для задач их подсистем. `goose_db_version` — служебная история миграций. Внешние ID сериализуются строками; UUID внутри допустим. Все timestamps timestamptz. SQL параметризован. Владельца брать из сессии.
+B01 реализует `users`, `sessions`, `player_states` в `migrations/00001_users_sessions_player_states.sql`; B06 добавляет `exhibit_inspections` и `memory_events` миграцией 00002. Остальные таблицы ниже — проект для задач их подсистем. `goose_db_version` — служебная история миграций. Внешние ID сериализуются строками; UUID внутри допустим. Все timestamps timestamptz. SQL параметризован. Владельца брать из сессии.
 
 | Таблица | Основные поля / ограничения |
 |---|---|
 | users | id PK, username UNIQUE lowercase, display_name, avatar_color, password_hash с параметрами KDF, created_at |
 | sessions | id PK, token_hash UNIQUE, user_id FK, expires_at, revoked_at nullable |
 | player_states | user_id PK FK, world_version, room_id, x/y/z,yaw,pitch,updated_at; Y=0 |
-| exhibit_inspections | user_id, world_version, exhibit_id composite PK, inspected_at обновляется |
+| exhibit_inspections | user_id, exhibit_id composite PK; world_version,room_id,inspected_at обновляются атомарно с событием памяти |
 | guide_memories | user_id,guide_id composite PK, summary, version,updated_at |
 | guide_generations | id PK,user_id,request_id UUID,guide_id,exhibit_id nullable,normalized_payload_hash,status,user_text,user_message_id,user_created_at,assistant_text/message_id/created_at nullable,error_code/message/retryable nullable,created_at,started_at,finished_at,origin_connection_id |
 | photos | id PK,user_id,idempotency_key UUID,request_fingerprint,world_version,room_id,movement_epoch,exhibit_id nullable,caption,published default false,original_path,thumbnail_path,image_bytes,thumbnail_bytes,width,height,created_at |
-| memory_events | id PK,user_id,type,world_version,room_id,exhibit_id nullable,photo_id nullable,created_at |
+| memory_events | id PK,user_id FK,type,world_version,room_id,exhibit_id nullable,photo_id nullable,created_at; UNIQUE(user_id,exhibit_id) WHERE type=EXHIBIT_INSPECTED |
 
 Уникальные guide_generations(user_id,request_id), photos(user_id,idempotency_key). Частичный UNIQUE(user_id) WHERE status IN ('queued','running') обеспечивает один вопрос при гонке запросов. Индексы history(user_id,guide_id,created_at,id), album(user_id,created_at,id), sessions(token_hash), queue(status,created_at,id).
 
@@ -45,3 +45,7 @@ Player state хранит world_version/room_id, конечные x/z, y=0, yaw 
 GameStore использует существующую player_states без новой миграции. SaveState выполняет CAS по updated_at в явной транзакции и возвращает новую монотонную ревизию. Для перехода разделяемая блокировка сессии и повторная проверка срока перед commit исключают изменение отозванной сессией. Обычный/final flush сохраняет уже авторизованную серверную позу; отзыв сессии не мешает сохранить последнюю принятую позицию. Конкурентные записи одного пользователя сериализует game usecase. CAS-конфликт не считается успехом и не перезаписывает более новую строку; ошибка периодической записи закрывает соответствующий WS с 1011. Ошибка записи перехода также закрывает WS: потеря ответа COMMIT не доказывает rollback, поэтому играть в прежнем зале до восстановления нельзя. Следующий snapshot использует перечитанную SQL-позу.
 
 Epoch/ack_seq не сохраняются в SQL: начальные значения нового игрового соединения всегда 1/0. Исправление недопустимой восстановленной позиции остаётся транзакционным сценарием auth.Me до допуска WS.
+
+## Осмотр B06
+
+Миграция 00002 добавляет exhibit_inspections и memory_events. Осмотр и событие EXHIBIT_INSPECTED сохраняются одной транзакцией с проверкой действующей сессии. Повтор сохраняет ID события, обновляет время и контекст обеих записей; уникальность по (user_id,exhibit_id) действует между версиями мира. ID экспоната нельзя переиспользовать для другого по смыслу экспоната. Чтение памяти всегда ограничено user_id, сортируется по (created_at,id) DESC и имеет ограниченный limit. Индекс memory_events(user_id,created_at DESC,id DESC) обслуживает личную память. photo_id пока без FK: хранение фото реализует B09. История общего чата не сохраняется.

@@ -63,6 +63,9 @@ type Event struct {
 	MovementEpoch   int64
 	UserID          string
 	Failure         Failure
+	Chat            ChatMessage
+	ExhibitID       string
+	InspectedAt     time.Time
 }
 
 // Sink performs bounded, nonblocking memory operations only, never network I/O.

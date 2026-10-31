@@ -45,6 +45,7 @@ func setupGame(t *testing.T) (*Service, *testSink, string, *time.Time, *poseStor
 	s := New(func() time.Time { return now })
 	st := &poseStore{state: identity("a").State}
 	s.Configure(gameCatalog{}, st, NoQuestions{})
+	s.ConfigureSocial(nil, UnavailablePhotos{}, func() string { return "test-message" })
 	sink := &testSink{}
 	id := attach(t, s, "a", sink)
 	return s, sink, id, &now, st
