@@ -142,3 +142,20 @@ func TestShutdownImmediatelyAfterStopAccepting(t *testing.T) {
 		})
 	}
 }
+
+func TestWebSocketHandlerOwnsDeadline(t *testing.T) {
+	server := NewServer(":0")
+	called := false
+	server.ConfigureWebSocket(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		called = true
+		if _, ok := r.Context().Deadline(); ok {
+			t.Error("WS inherited ordinary HTTP deadline")
+		}
+		w.WriteHeader(204)
+	}))
+	response := httptest.NewRecorder()
+	server.Handler.ServeHTTP(response, httptest.NewRequest("GET", "/api/v1/ws", nil))
+	if !called || response.Code != 204 {
+		t.Fatal("WS route not connected")
+	}
+}

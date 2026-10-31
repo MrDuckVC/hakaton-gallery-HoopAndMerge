@@ -53,3 +53,11 @@ Domain tests проверяют цилиндр/углы/конечные коо�
 Файловые tests используют temp dirs: строгий JSON, UTF-8/surrogates, реальные JPEG и статический WebP, запрет анимации/повреждений, traversal, symlink escape и hardlink identity. Linux-регрессия подаёт FIFO без писателя вместо индекса/комнаты/изображения/профиля; короткий context и ограниченный subprocess проверяют своевременный отказ и отсутствие открытых world-дескрипторов. HTTP tests проверяют версии/ошибки, композицию с auth, непрозрачные URL IDs, точные исходные байты и Content-Length/no-store/request ID/nosniff. Сквозной тест генерирует отдельный синтетический мир и связывает Files → usecase → HTTP, сверяя total с размерами файлов и проверяя неизменность после перезаписи диска.
 
 Startup tests проверяют отсутствующий/повреждённый мир, несовпадение версии и отмену. SQL startup integration проверяет world failure до открытия даже занятого listener; SIGTERM и Docker smoke используют тот же валидный тестовый формат. Никаких production fallback и фиктивного WS-владения.
+
+## B04: соединения и транспорт
+
+Usecase-тесты через fake Sink проверяют snapshot первым, left/joined при замене, защиту от старых callbacks, user/session ownership, резервации 32 мест, остановку admission, дедупликацию/10000/1012, sliding limits и серию move нарушений через reconnect. Парсер проверяет ошибки JSON/type/fields/null/Unicode, UUID, точные integer boundaries и дроби, округляемые float64.
+
+Реальные loopback WS-тесты покрывают auth/Origin до upgrade, snapshot/presence/replacement4009, 33-й аккаунт503 и замену при полной вместимости, expiry/revoke4001, binary1003/oversize1009, heartbeat с pong и без него, shutdown1012. Детерминированно остановленный data writer использует настоящий WS для close1013; здоровые клиенты продолжают получать presence. Проверяется байтовый бюджет очереди. Ошибочные команды и повторы ограничены общим окном, которое переживает reconnect.
+
+`TestWebSocketWorldAndLogoutIntegration` требует отдельную TEST_DATABASE_URL и связывает настоящие HTTP/WS, PostgreSQL, B02 и B03. Проверяет login → snapshot → room/assets, отсутствие ownership от login, смену owning session при replacement и logout4001. Синтетический каталог подготавливается до начала DB deadline; runtime не использует fixtures. Все конкурентные сценарии запускаются под `go test -race ./...` и `make coverage`.
