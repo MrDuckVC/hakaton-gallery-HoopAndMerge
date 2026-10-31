@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/game"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/game"
 	ws "github.com/coder/websocket"
 )
 

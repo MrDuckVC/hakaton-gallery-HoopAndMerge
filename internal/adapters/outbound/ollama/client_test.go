@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	guide "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	guide "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
 )
 
 func TestStreamSplitUTF8AndFinalChunk(t *testing.T) {

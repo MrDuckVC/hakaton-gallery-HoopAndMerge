@@ -8,8 +8,8 @@ import (
 	"time"
 	"unicode/utf8"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
-	world "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
+	world "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 type contextFixture struct {

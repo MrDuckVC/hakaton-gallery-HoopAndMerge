@@ -4,8 +4,8 @@ package world
 import (
 	"context"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
 )
 
 // Unavailable represents an explicit unavailable dependency in adapter integration tests.

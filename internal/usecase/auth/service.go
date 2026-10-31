@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
 )
 
 // Service owns authentication and restoration rules. It holds no request or SQL state.

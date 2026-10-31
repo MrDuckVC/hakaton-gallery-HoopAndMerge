@@ -3,8 +3,8 @@ package world
 import (
 	"context"
 
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 // Service authorizes immutable downloads using current persisted sessions and WS ownership.

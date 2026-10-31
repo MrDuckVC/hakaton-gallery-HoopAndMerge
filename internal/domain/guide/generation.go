@@ -9,8 +9,8 @@ import (
 	"time"
 	"unicode/utf8"
 
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	world "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	world "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 // Payload is the normalized client question, without client-supplied context.

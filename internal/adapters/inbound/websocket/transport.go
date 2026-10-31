@@ -10,8 +10,8 @@ import (
 	"sync"
 	"time"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/game"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/game"
 	ws "github.com/coder/websocket"
 )
 

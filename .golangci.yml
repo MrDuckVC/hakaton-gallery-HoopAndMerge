@@ -54,13 +54,13 @@ linters:
               desc: Инфраструктура доступна только через порты внутренних слоёв.
             - pkg: github.com/pressly/goose
               desc: Инфраструктура доступна только через порты внутренних слоёв.
-            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/config
               desc: Инфраструктура доступна только через порты внутренних слоёв.
-            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/migrations
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/migrations
               desc: Инфраструктура доступна только через порты внутренних слоёв.
-            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase
               desc: Domain не зависит от usecase.
-            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters
               desc: Domain не зависит от адаптеров.
             - pkg: net/http
               desc: Domain не знает о HTTP.
@@ -90,11 +90,11 @@ linters:
               desc: Инфраструктура доступна только через порты внутренних слоёв.
             - pkg: github.com/pressly/goose
               desc: Инфраструктура доступна только через порты внутренних слоёв.
-            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/config
               desc: Инфраструктура доступна только через порты внутренних слоёв.
-            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/migrations
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/migrations
               desc: Инфраструктура доступна только через порты внутренних слоёв.
-            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters
               desc: Usecase не зависит от HTTP.
             - pkg: golang.org/x/crypto
               desc: Криптография подключается через порты.

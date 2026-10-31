@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	authdomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	worlddomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	authdomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	worlddomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 type connection struct {

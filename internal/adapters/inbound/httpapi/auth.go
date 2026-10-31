@@ -14,10 +14,10 @@ import (
 	"time"
 	"unicode/utf8"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
-	world "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/auth"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
+	world "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/auth"
 )
 
 // Auth is the inbound adapter's application boundary, implemented by auth.Service.

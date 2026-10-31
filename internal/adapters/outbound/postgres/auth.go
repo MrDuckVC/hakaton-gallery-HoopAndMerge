@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/auth"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/auth"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"

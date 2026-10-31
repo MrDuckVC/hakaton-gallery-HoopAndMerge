@@ -14,9 +14,9 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/photo"
-	photocase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/photo"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/photo"
+	photocase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/photo"
 )
 
 // Photos is the application's upload boundary; each Begin counts exactly one POST.

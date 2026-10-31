@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/photo"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
-	worlddomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/photo"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
+	worlddomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 func TestPhotoCaptureRechecksOwnershipAndEpoch(t *testing.T) {

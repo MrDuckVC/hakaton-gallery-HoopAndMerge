@@ -6,8 +6,8 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/security"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/security"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
 )
 
 func TestGuideContextRestartIsolationAndMemoryIntegration(t *testing.T) {

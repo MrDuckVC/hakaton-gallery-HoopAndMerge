@@ -14,8 +14,8 @@ import (
 	"time"
 	"unicode/utf8"
 
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	guide "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	guide "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
 )
 
 // Client sends only usecase-assembled messages to the configured model server.

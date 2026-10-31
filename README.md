@@ -4,7 +4,7 @@
 
 Backend многопользовательской 3D-галереи: посещение тематических залов, общий чат, фотографии и локальные ИИ-гиды с персональной памятью. Во время игры интернет не требуется; клиенты подключаются по LAN/Wi-Fi.
 
-Репозиторий: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge. Frontend разрабатывается отдельно.
+Репозиторий: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge. Frontend разрабатывается отдельно.
 
 Единственный сервер — ноутбук с RTX 4070 Laptop: backend, PostgreSQL, Ollama и контент находятся на нём. На остальных ноутбуках нужен только браузер. Обязательны два показа: несколько игроков по Wi-Fi без интернета, затем игра с локальным ИИ в браузере на серверном ноутбуке с выключенным Wi-Fi. Модель выбирается по замерам на этом ноутбуке. Требования и приёмка — docs/REQUIREMENTS.md; задачи — docs/ISSUE_BACKLOG.md.
 
@@ -13,7 +13,7 @@ Go net/http, PostgreSQL, pgx/v5, coder/websocket, локальный Ollama. В�
 
 ## Запуск
 
-Go-модуль `github.com/MrDuckVC/hakaton-gallery-HoopAndMerge`, Go >=1.27.1; pgx/v5 и goose закреплены в go.mod/go.sum.
+Go-модуль `github.com/MrDuckVC/hakaton-gallery-HopeAndMerge`, Go >=1.27.1; pgx/v5 и goose закреплены в go.mod/go.sum.
 
 ```sh
 export PATH="/usr/local/go/bin:$PATH" # если требуется

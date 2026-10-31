@@ -12,7 +12,7 @@ import (
 	"fmt"
 	"strings"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
 )
 
 const iterations = 600000

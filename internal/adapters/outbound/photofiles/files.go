@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/photo"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/photo"
 )
 
 // Files confines all operations to a process-owned photo root.

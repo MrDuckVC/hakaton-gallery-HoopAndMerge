@@ -6,9 +6,9 @@ import (
 	"net/url"
 	"testing"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	world "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
-	usecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/world"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	world "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
+	usecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/world"
 )
 
 type fakeWorld struct {

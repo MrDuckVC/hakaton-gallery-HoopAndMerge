@@ -15,11 +15,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/httpapi"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/postgres"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/testworld"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/lifecycle"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/httpapi"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/postgres"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/config"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/testworld"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/lifecycle"
 )
 
 func TestCommandInvalidEnvironment(t *testing.T) {

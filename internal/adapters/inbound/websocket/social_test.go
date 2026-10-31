@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/game"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/game"
 )
 
 func TestSocialWireEvents(t *testing.T) {

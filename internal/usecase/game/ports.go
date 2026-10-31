@@ -5,11 +5,11 @@ import (
 	"context"
 	"time"
 
-	authdomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
-	worlddomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
-	authcase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/auth"
-	guidecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
+	authdomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
+	worlddomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
+	authcase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/auth"
+	guidecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
 )
 
 // Sessions is the persisted authentication boundary used by the connection scenario.

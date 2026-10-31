@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	guide "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/guide"
+	guide "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
 )
 
 type questionCommands struct {

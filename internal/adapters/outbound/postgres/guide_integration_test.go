@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/security"
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	guide "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/security"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	guide "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
 )
 
 func question(user, connection string, now time.Time) guide.Generation {

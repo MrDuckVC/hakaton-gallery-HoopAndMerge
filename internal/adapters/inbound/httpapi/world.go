@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
-	usecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/world"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
+	usecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/world"
 )
 
 // World is the inbound boundary for authorized immutable content downloads.

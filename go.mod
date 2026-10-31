@@ -1,4 +1,4 @@
-module github.com/MrDuckVC/hakaton-gallery-HoopAndMerge
+module github.com/MrDuckVC/hakaton-gallery-HopeAndMerge
 
 go 1.27.1
 

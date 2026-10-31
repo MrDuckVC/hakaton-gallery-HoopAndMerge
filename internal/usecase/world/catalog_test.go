@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"testing"
 
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	guide "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	guide "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 type fakeSource struct {

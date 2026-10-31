@@ -10,9 +10,9 @@ import (
 	stddraw "image/draw"
 	"image/jpeg"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/photo"
-	photocase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/photo"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/photo"
+	photocase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/photo"
 	"golang.org/x/image/draw"
 	"golang.org/x/image/webp"
 )

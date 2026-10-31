@@ -8,7 +8,7 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/migrations"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/migrations"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/stdlib"
 	"github.com/pressly/goose/v3"

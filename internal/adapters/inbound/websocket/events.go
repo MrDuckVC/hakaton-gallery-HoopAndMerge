@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/guidewire"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/worldwire"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/game"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/guidewire"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/worldwire"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/game"
 )
 
 type envelope struct {

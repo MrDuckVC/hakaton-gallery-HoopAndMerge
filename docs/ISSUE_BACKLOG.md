@@ -8,32 +8,32 @@
 
 Первый день: B01–B08, A01, C01, I01, F01–F04 и промежуточный LAN/localhost-показ. Второй день: B09/B10/F05, доводка контента/памяти, Q01/Q02. При нехватке времени сокращается декор, а не обязательные правила/локальность/память/бюджет.
 
-Родительская GitHub issue: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/1 — объединяет 20 дочерних задач.
+Родительская GitHub issue: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/1 — объединяет 20 дочерних задач.
 
 ## Карта работ
 
 | Ключ | Область | Задача | Этап |
 |---|---|---|---|
-| [B01](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/2) | backend | Backend. Реализовать запуск сервера, конфигурацию и миграции | День 1 |
-| [B02](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/3) | backend | Backend. Реализовать аккаунты, cookie-сессии и проверку Origin | День 1 |
-| [B03](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/4) | backend | Backend. Подготовить каталог мира, бюджет и выдачу текущего зала | День 1 |
-| [B04](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/5) | backend | Backend. Реализовать защищённый WebSocket и lifecycle соединений | День 1 |
-| [B05](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/6) | backend | Backend. Реализовать игровой state, движение, двери и сохранение | День 1 |
-| [B06](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/7) | backend | Backend. Реализовать общий чат, осмотр и события личной памяти | День 1 |
-| [B07](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/8) | backend | Backend. Реализовать устойчивую очередь и историю генераций гидов | День 1 |
-| [B08](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/9) | backend-ai | AI. Интегрировать Ollama, личности, знания и персональную память | День 1; улучшение День 2 |
-| [B09](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/10) | backend | Backend. Реализовать идемпотентную загрузку фото и миниатюры | День 2 |
-| [B10](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/11) | backend | Backend. Реализовать альбом, доступ к фото и публикацию в чат | День 2 |
-| [A01](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/12) | hardware-ai | AI. Выбрать основную и резервную модели по замерам RTX 4070 Laptop | Начало дня 1 |
-| [C01](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/13) | content | Content. Подготовить образовательный мир, профили и знания гидов | День 1; оформление День 2 |
-| [I01](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/14) | infrastructure | DevOps. Подготовить запуск одного сервера и автономный комплект | День 1; финал День 2 |
-| [F01](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/15) | frontend | Frontend. Создать браузерный клиент, авторизацию и офлайн-сборку | День 1 |
-| [F02](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/16) | frontend | Frontend. Реализовать Three.js-залы и строгий бюджет кеша10% | День 1 |
-| [F03](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/17) | frontend | Frontend. Реализовать WS, других игроков, движение и общий чат | День 1 |
-| [F04](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/18) | frontend | Frontend. Реализовать диалог с гидом, поток и восстановление истории | День 1 |
-| [F05](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/19) | frontend | Frontend. Реализовать камеру, альбом и публикацию фото | День 2 |
-| [Q01](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/20) | qa | QA. Проверить контракты, безопасность, гонки и восстановление | Параллельно; финал День 2 |
-| [Q02](https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/21) | qa-demo | Demo. Провести LAN-показ и автономный показ с выключенным Wi-Fi | Конец дня 1; финал День 2 |
+| [B01](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/2) | backend | Backend. Реализовать запуск сервера, конфигурацию и миграции | День 1 |
+| [B02](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/3) | backend | Backend. Реализовать аккаунты, cookie-сессии и проверку Origin | День 1 |
+| [B03](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/4) | backend | Backend. Подготовить каталог мира, бюджет и выдачу текущего зала | День 1 |
+| [B04](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/5) | backend | Backend. Реализовать защищённый WebSocket и lifecycle соединений | День 1 |
+| [B05](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/6) | backend | Backend. Реализовать игровой state, движение, двери и сохранение | День 1 |
+| [B06](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/7) | backend | Backend. Реализовать общий чат, осмотр и события личной памяти | День 1 |
+| [B07](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/8) | backend | Backend. Реализовать устойчивую очередь и историю генераций гидов | День 1 |
+| [B08](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/9) | backend-ai | AI. Интегрировать Ollama, личности, знания и персональную память | День 1; улучшение День 2 |
+| [B09](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/10) | backend | Backend. Реализовать идемпотентную загрузку фото и миниатюры | День 2 |
+| [B10](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/11) | backend | Backend. Реализовать альбом, доступ к фото и публикацию в чат | День 2 |
+| [A01](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/12) | hardware-ai | AI. Выбрать основную и резервную модели по замерам RTX 4070 Laptop | Начало дня 1 |
+| [C01](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/13) | content | Content. Подготовить образовательный мир, профили и знания гидов | День 1; оформление День 2 |
+| [I01](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/14) | infrastructure | DevOps. Подготовить запуск одного сервера и автономный комплект | День 1; финал День 2 |
+| [F01](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/15) | frontend | Frontend. Создать браузерный клиент, авторизацию и офлайн-сборку | День 1 |
+| [F02](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/16) | frontend | Frontend. Реализовать Three.js-залы и строгий бюджет кеша10% | День 1 |
+| [F03](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/17) | frontend | Frontend. Реализовать WS, других игроков, движение и общий чат | День 1 |
+| [F04](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/18) | frontend | Frontend. Реализовать диалог с гидом, поток и восстановление истории | День 1 |
+| [F05](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/19) | frontend | Frontend. Реализовать камеру, альбом и публикацию фото | День 2 |
+| [Q01](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/20) | qa | QA. Проверить контракты, безопасность, гонки и восстановление | Параллельно; финал День 2 |
+| [Q02](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/21) | qa-demo | Demo. Провести LAN-показ и автономный показ с выключенным Wi-Fi | Конец дня 1; финал День 2 |
 
 ## Трассировка требований
 
@@ -57,7 +57,7 @@
 
 ## B01. Backend. Реализовать запуск сервера, конфигурацию и миграции
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/2
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/2
 
 **Требования:** R02 R07 R11. **Этап:** День 1.
 
@@ -84,7 +84,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/2
 
 ## B02. Backend. Реализовать аккаунты, cookie-сессии и проверку Origin
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/3
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/3
 
 **Требования:** R04 R07 R11. **Этап:** День 1.
 
@@ -115,7 +115,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/3
 
 ## B03. Backend. Подготовить каталог мира, бюджет и выдачу текущего зала
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/4
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/4
 
 **Требования:** R05 R06 R11. **Этап:** День 1.
 
@@ -146,7 +146,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/4
 
 ## B04. Backend. Реализовать защищённый WebSocket и lifecycle соединений
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/5
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/5
 
 **Требования:** R03 R04 R11. **Этап:** День 1.
 
@@ -177,7 +177,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/5
 
 ## B05. Backend. Реализовать игровой state, движение, двери и сохранение
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/6
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/6
 
 **Требования:** R03 R05 R07. **Этап:** День 1.
 
@@ -208,7 +208,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/6
 
 ## B06. Backend. Реализовать общий чат, осмотр и события личной памяти
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/7
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/7
 
 **Требования:** R08 R10 R12. **Этап:** День 1.
 
@@ -239,7 +239,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/7
 
 ## B07. Backend. Реализовать устойчивую очередь и историю генераций гидов
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/8
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/8
 
 **Требования:** R09 R10 R11. **Этап:** День 1.
 
@@ -270,7 +270,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/8
 
 ## B08. AI. Интегрировать Ollama, личности, знания и персональную память
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/9
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/9
 
 **Требования:** R09 R10 R11 R12 R15. **Этап:** День 1; улучшение День 2.
 
@@ -301,7 +301,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/9
 
 ## B09. Backend. Реализовать идемпотентную загрузку фото и миниатюры
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/10
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/10
 
 **Требования:** R06 R08 R10. **Этап:** День 2.
 
@@ -332,7 +332,7 @@ GET альбома, чтение файлов и публикация — B10; �
 
 ## B10. Backend. Реализовать альбом, доступ к фото и публикацию в чат
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/11
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/11
 
 **Требования:** R06 R08. **Этап:** День 2.
 
@@ -363,7 +363,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/11
 
 ## A01. AI. Выбрать основную и резервную модели по замерам RTX 4070 Laptop
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/12
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/12
 
 **Требования:** R02 R11 R13 R15. **Этап:** Начало дня 1.
 
@@ -390,7 +390,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/12
 
 ## C01. Content. Подготовить образовательный мир, профили и знания гидов
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/13
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/13
 
 **Требования:** R05 R06 R09 R12. **Этап:** День 1; оформление День 2.
 
@@ -417,7 +417,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/13
 
 ## I01. DevOps. Подготовить запуск одного сервера и автономный комплект
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/14
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/14
 
 **Требования:** R02 R11 R14. **Этап:** День 1; финал День 2.
 
@@ -444,7 +444,7 @@ Runtime lifecycle — B01; UI сборку поставляет F01; финал�
 
 ## F01. Frontend. Создать браузерный клиент, авторизацию и офлайн-сборку
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/15
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/15
 
 **Требования:** R01 R02 R04 R11. **Этап:** День 1.
 
@@ -471,7 +471,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/15
 
 ## F02. Frontend. Реализовать Three.js-залы и строгий бюджет кеша10%
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/16
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/16
 
 **Требования:** R01 R05 R06 R13. **Этап:** День 1.
 
@@ -502,7 +502,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/16
 
 ## F03. Frontend. Реализовать WS, других игроков, движение и общий чат
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/17
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/17
 
 **Требования:** R03 R04 R08 R13. **Этап:** День 1.
 
@@ -533,7 +533,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/17
 
 ## F04. Frontend. Реализовать диалог с гидом, поток и восстановление истории
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/18
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/18
 
 **Требования:** R09 R10 R12 R13. **Этап:** День 1.
 
@@ -564,7 +564,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/18
 
 ## F05. Frontend. Реализовать камеру, альбом и публикацию фото
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/19
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/19
 
 **Требования:** R06 R08 R13. **Этап:** День 2.
 
@@ -595,7 +595,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/19
 
 ## Q01. QA. Проверить контракты, безопасность, гонки и восстановление
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/20
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/20
 
 **Требования:** R03 R04 R05 R06 R07 R08 R10 R11. **Этап:** Параллельно; финал День 2.
 
@@ -626,7 +626,7 @@ GPU benchmark — A01; фактический двухрежимный пока�
 
 ## Q02. Demo. Провести LAN-показ и автономный показ с выключенным Wi-Fi
 
-GitHub: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/issues/21
+GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/21
 
 **Требования:** R01 R02 R03 R04 R05 R06 R07 R08 R09 R10 R11 R12 R13 R14 R15. **Этап:** Конец дня 1; финал День 2.
 

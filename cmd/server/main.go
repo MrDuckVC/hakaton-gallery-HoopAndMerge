@@ -9,7 +9,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/config"
 )
 
 func main() { os.Exit(entry()) }

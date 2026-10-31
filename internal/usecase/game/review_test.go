@@ -9,8 +9,8 @@ import (
 	"testing/synctest"
 	"time"
 
-	authdomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
+	authdomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
 )
 
 func TestDetachRevokesOwnershipBeforeFlushCompletes(t *testing.T) {

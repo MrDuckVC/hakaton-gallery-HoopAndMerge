@@ -6,9 +6,9 @@ import (
 	"math"
 	"sync/atomic"
 
-	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
-	world "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
+	world "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 // Service coordinates persisted work and orders events before releasing the scheduler.

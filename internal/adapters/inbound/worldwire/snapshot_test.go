@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
+	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
 func TestSnapshotSizeIncludesWorstCaseEnvelope(t *testing.T) {

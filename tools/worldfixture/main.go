@@ -6,7 +6,7 @@ import (
 	"flag"
 	"log"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/testworld"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/testworld"
 )
 
 func main() {

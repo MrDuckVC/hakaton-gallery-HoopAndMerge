@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config"
-	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/testworld"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/config"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/testworld"
 )
 
 func TestPrepareWorld(t *testing.T) {
