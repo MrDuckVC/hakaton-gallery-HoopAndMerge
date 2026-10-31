@@ -139,7 +139,7 @@ func (s *Service) attachPrepared(ticket string, sink Sink, r reservation) error 
 	userID := r.identity.User.ID
 	snapshot := Snapshot{WorldVersion: r.identity.State.WorldVersion, Self: presence(r.identity), CurrentRoom: r.identity.Package, Players: make([]Player, 0, len(s.active))}
 	for id, c := range s.active {
-		if id != userID {
+		if id != userID && !c.ended {
 			snapshot.Players = append(snapshot.Players, presenceConnection(c))
 		}
 	}
@@ -168,6 +168,17 @@ func (s *Service) broadcastLocked(e Event, except string) {
 
 // Detach ignores every late cleanup belonging to a replaced connection.
 func (s *Service) Detach(userID, id string) {
+	// Revoke admission and HTTP ownership before waiting for this user's gate or SQL.
+	// Keep the accepted pose until its serialized final flush has completed.
+	s.mu.Lock()
+	c := s.active[userID]
+	if c == nil || c.id != id {
+		s.mu.Unlock()
+		return
+	}
+	c.ended = true
+	c.ready = false
+	s.mu.Unlock()
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	release, err := s.acquire(ctx, userID)

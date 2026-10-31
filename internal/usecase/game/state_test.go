@@ -103,13 +103,21 @@ func TestDoorSaveBeforeEnteredAndReplacement(t *testing.T) {
 	s.Handle(ctx, "a", id, readyCommand())
 	cmd := Command{Type: "world.enter", RequestID: "enter", DoorID: "door", MovementEpoch: 1}
 	store.fail = true
-	if f := s.Handle(ctx, "a", id, cmd); f.Code != "SERVICE_UNAVAILABLE" {
-		t.Fatal(f)
+	if f := s.Handle(ctx, "a", id, cmd); !f.Drop || sink.closed != 1011 {
+		t.Fatal(f, sink.closed)
 	}
-	if room, _ := s.OwningRoom(ctx, "session-a", "a"); room != "room" {
-		t.Fatal(room)
+	if store.state.RoomID != "room" {
+		t.Fatal("failed save changed persisted room")
+	}
+	for _, e := range sink.events {
+		if e.Type == "world.entered" {
+			t.Fatal("failed save confirmed a transition")
+		}
 	}
 	store.fail = false
+	sink = &testSink{}
+	id = attach(t, s, "a", sink)
+	s.Handle(ctx, "a", id, readyCommand())
 	if f := s.Handle(ctx, "a", id, cmd); f.Code != "" {
 		t.Fatal(f)
 	}
@@ -394,11 +402,11 @@ func TestReplacementAfterUncertainTransitionReloadsCommittedRoom(t *testing.T) {
 	s.Handle(ctx, "a", id, readyCommand())
 	uncertain := &uncertainCommitStore{poseStore: *store}
 	s.store = uncertain
-	if f := s.Handle(ctx, "a", id, Command{Type: "world.enter", DoorID: "door", MovementEpoch: 1}); f.Code != "SERVICE_UNAVAILABLE" {
+	if f := s.Handle(ctx, "a", id, Command{Type: "world.enter", DoorID: "door", MovementEpoch: 1}); !f.Drop {
 		t.Fatal(f)
 	}
-	if room, _ := s.OwningRoom(ctx, "session-a", "a"); room != "room" {
-		t.Fatal("unconfirmed transition published", room)
+	if room, err := s.OwningRoom(ctx, "session-a", "a"); err == nil {
+		t.Fatal("unconfirmed transition retained ownership", room)
 	}
 	replacement := &testSink{}
 	attach(t, s, "a", replacement)
@@ -414,6 +422,8 @@ func TestSuccessfulTransitionClearsReloadBeforeNewMovement(t *testing.T) {
 	store.fail = true
 	s.Handle(ctx, "a", id, cmd)
 	store.fail = false
+	id = attach(t, s, "a", &testSink{})
+	s.Handle(ctx, "a", id, readyCommand())
 	if f := s.Handle(ctx, "a", id, cmd); f.Code != "" {
 		t.Fatal(f)
 	}

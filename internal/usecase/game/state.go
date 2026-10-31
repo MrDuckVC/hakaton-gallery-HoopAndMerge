@@ -142,11 +142,14 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 			c.reloadPose = true
 		}
 		s.mu.Unlock()
+		// The port cannot prove rollback after a failed COMMIT response. Stop this
+		// connection before any more moves or downloads can use the old room.
+		code := 1011
 		if errors.Is(err, authdomain.Unauthenticated) {
-			s.closeCurrent(userID, id, 4001)
-			return Failure{Drop: true}
+			code = 4001
 		}
-		return Failure{Code: "SERVICE_UNAVAILABLE"}
+		s.closeCurrent(userID, id, code)
+		return Failure{Drop: true}
 	}
 	// Ownership operations use the same user gate. Publish committed data even if
 	// shutdown has started: the database is now the canonical position.
@@ -282,38 +285,52 @@ func (s *Service) SavePositions(ctx context.Context) error {
 }
 
 // Run owns bounded state/save ticks until cancellation. Each save cycle completes
-// before the next begins; slow storage cannot accumulate pending save workers.
+// before the next begins; overlapping ticks coalesce into one deferred cycle.
 func (s *Service) Run(ctx context.Context) {
 	stateTick := time.NewTicker(100 * time.Millisecond)
 	defer stateTick.Stop()
 	saveTick := time.NewTicker(5 * time.Second)
 	defer saveTick.Stop()
-	saved := make(chan struct{}, 1)
-	saved <- struct{}{}
+	s.run(ctx, stateTick.C, saveTick.C)
+}
+
+func (s *Service) run(ctx context.Context, stateTicks, saveTicks <-chan time.Time) {
+	completed := make(chan struct{}, 1)
+	running, pending := false, false
 	var workers sync.WaitGroup
 	defer workers.Wait()
+	startSave := func() {
+		running = true
+		workers.Go(func() {
+			defer func() { completed <- struct{}{} }()
+			saveCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+			defer cancel()
+			_ = s.SavePositions(saveCtx)
+		})
+	}
+	stopping := func() bool { s.mu.Lock(); defer s.mu.Unlock(); return s.stopping }
 	for {
 		select {
 		case <-ctx.Done():
 			return
-		case <-stateTick.C:
+		case <-stateTicks:
 			s.PublishState()
-		case <-saveTick.C:
-			s.mu.Lock()
-			stopping := s.stopping
-			s.mu.Unlock()
-			if stopping {
+		case <-saveTicks:
+			if stopping() {
 				continue
 			}
-			select {
-			case <-saved:
-				workers.Go(func() {
-					defer func() { saved <- struct{}{} }()
-					saveCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
-					defer cancel()
-					_ = s.SavePositions(saveCtx)
-				})
-			default:
+			if running {
+				pending = true
+			} else {
+				startSave()
+			}
+		case <-completed:
+			running = false
+			if pending {
+				pending = false
+				if !stopping() && ctx.Err() == nil {
+					startSave()
+				}
 			}
 		}
 	}
