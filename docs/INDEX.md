@@ -9,3 +9,5 @@ REQUIREMENTS.md — исходное задание и уточнение орг
 При изменении модели данных сверять SQL и DATA_MODEL. При изменении wire сверять contract/OpenAPI/WS schemas/examples. При изменении команды — README/AGENTS/DEVELOPMENT/Makefile. Источник генерации машинных файлов tools/build-contracts.mjs; после редактирования перегенерировать и валидировать. tools/write-docs.mjs — первоначальный scaffold, не запускать поверх отредактированных документов.
 
 - [GUIDES.md](GUIDES.md) — B08: профили, локальный Ollama, контекст, память и реальная проверка.
+
+- [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) — лицензия WebP decoder и масштабирования миниатюр B09.

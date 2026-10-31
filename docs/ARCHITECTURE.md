@@ -100,3 +100,10 @@ Game usecase хранит ready/epoch/ack_seq и время последнего
 PostgreSQL-адаптер сериализует очередь через отдельную scheduler-строку и сохраняет completion+memory одной транзакцией. Общий gate гида согласует accepted с worker; вызов модели идёт вне gate. Независимый sweep завершает просроченные queued, даже когда модель занята. Worker ждёт остановки отменённой модели до следующего вызова. Неопределённый результат SQL блокирует новое выполнение до recovery, закрывает затронутый WS с 1011; recovery уведомляет остальных владельцев pending.
 
 Composition root выполняет recovery до listener, подключает порты отмены и lifecycle Generations. B08 связывает Ollama HTTP/NDJSON, типизированные профили каталога и ContextReader PostgreSQL. Usecase собирает ModelRequest; адаптер модели не читает БД и не выбирает личность. Детерминированные выдержки вычисляет usecase-функция внутри атомарного Finish. Прямого импорта game в guide нет. Поддельных ответов в runtime нет. Пределы и правила — [GUIDES.md](GUIDES.md).
+
+
+## Загрузка фото B09
+
+В domain/photo находятся Photo, нормализация и fingerprint; usecase/photo определяет порты Sessions, Images, Files, Game и Repository. HTTP строго разбирает ограниченный multipart и формирует DTO; images выполняет DecodeConfig/Decode и JPEG thumbnail, photofiles публикует каталог с парой файлов; PostgreSQL реализует сериализацию ключа и транзакцию фото+память. Domain/usecase не знают файловых путей, pgx или HTTP.
+
+Идемпотентный replay проверяется до текущего ready/room. Capture запоминает исходный connection ID, а WithCapture использует пользовательский gate B05. После SQL-записей непосредственно перед COMMIT повторно проверяются owning session/socket, ready, room, epoch и inspect distance/LOS. Проверка — точка принятия загрузки: detach/shutdown до неё отклоняет снимок, последующее отключение может пересекаться с завершением COMMIT. Общий mutex не удерживается на I/O; gate исключает движение/переход/replacement в финализации. Файлы публикуются до начала SQL-транзакции. Неопределённый результат COMMIT разрешается отдельным чтением под новой блокировкой ключа; до установления исхода компенсация запрещена.

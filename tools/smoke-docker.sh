@@ -26,6 +26,7 @@ docker run --detach --name "$container" --network "$network" "$@" \
     --env DATABASE_URL --env HTTP_ADDR=0.0.0.0:18080 \
     --env ALLOWED_ORIGINS=http://localhost:18080 --env COOKIE_SECURE=false \
     --mount "type=bind,source=$world_dir,target=/world,readonly" \
+    --tmpfs /photos:rw,uid=65532,gid=65532,mode=0700 --env PHOTO_DIR=/photos \
     --env WORLD_DIR=/world --env WORLD_VERSION=smoke_v1 --env OLLAMA_MODEL=smoke:unused "$image" >/dev/null
 attempt=0
 while :; do

@@ -1,6 +1,6 @@
 # Модель PostgreSQL
 
-B01 реализует `users`, `sessions`, `player_states` в `migrations/00001_users_sessions_player_states.sql`; B06 добавляет `exhibit_inspections` и `memory_events` миграцией 00002. B07 добавляет guide_generations, guide_memories и guide_scheduler миграциями 00003–00004. Таблица photos ниже — проект её подсистемы. `goose_db_version` — служебная история миграций. Внешние ID сериализуются строками; UUID внутри допустим. Все timestamps timestamptz. SQL параметризован. Владельца брать из сессии.
+B01 реализует `users`, `sessions`, `player_states` в `migrations/00001_users_sessions_player_states.sql`; B06 добавляет `exhibit_inspections` и `memory_events` миграцией 00002. B07 добавляет guide_generations, guide_memories и guide_scheduler миграциями 00003–00004. B09 добавляет photos миграцией 00005. `goose_db_version` — служебная история миграций. Внешние ID сериализуются строками; UUID внутри допустим. Все timestamps timestamptz. SQL параметризован. Владельца брать из сессии.
 
 | Таблица | Основные поля / ограничения |
 |---|---|
@@ -10,7 +10,7 @@ B01 реализует `users`, `sessions`, `player_states` в `migrations/00001
 | exhibit_inspections | user_id, exhibit_id composite PK; world_version,room_id,inspected_at обновляются атомарно с событием памяти |
 | guide_memories | user_id,guide_id composite PK, summary, version,updated_at |
 | guide_generations | id PK,user_id,request_id UUID,request_correlation_id,guide_id,exhibit_id nullable,normalized_payload_hash,status,user_text,user_message_id,user_created_at,assistant_text/message_id/created_at nullable,error_code/message/retryable nullable,created_at,started_at,finished_at,origin_connection_id |
-| photos | id PK,user_id,idempotency_key UUID,request_fingerprint,world_version,room_id,movement_epoch,exhibit_id nullable,caption,published default false,original_path,thumbnail_path,image_bytes,thumbnail_bytes,width,height,created_at |
+| photos | id PK,user_id,idempotency_key UUID,request_fingerprint,world_version,room_id,movement_epoch,exhibit_id nullable,caption,published default false,content_type,original_path,thumbnail_path,image_bytes,thumbnail_bytes,width,height,created_at |
 | memory_events | id PK,user_id FK,type,world_version,room_id,exhibit_id nullable,photo_id nullable,created_at; UNIQUE(user_id,exhibit_id) WHERE type=EXHIBIT_INSPECTED |
 
 Уникальные guide_generations(user_id,request_id), photos(user_id,idempotency_key). Частичный UNIQUE(user_id) WHERE status IN ('queued','running') обеспечивает один вопрос при гонке запросов. Индексы history(user_id,guide_id,created_at,id), album(user_id,created_at,id), sessions(token_hash), queue(status,created_at,id).
@@ -19,9 +19,9 @@ CHECK generation: queued/running -> assistant/error null; completed -> assistant
 
 guide.ask: поиск существующего key -> сравнение fingerprint нормализованных text/guide_id/exhibit_id -> accepted(current) либо conflict; для нового проверить game/limits/queue -> транзакция insert+резерв очереди -> accepted -> worker. Ограничение 8 queued проверять с общей блокировкой scheduler/транзакции, а не COUNT без сериализации. Завершение: assistant+status+memory в одной транзакции. При потере DB не посылать success.
 
-Photo fingerprint: SHA-256 проверенного исходного файла + канонически закодированные нормализованные поля, включая room_id/movement_epoch/exhibit_id/caption. Конкурентные повторы сериализуются advisory lock/резервацией по user/key. Повтор совпадающего ключа проверять до текущего room/ready, но после сессии, лимита и проверки содержимого. Вернуть существующее Photo200 даже после перехода.
+Photo fingerprint: SHA-256 проверенного исходного файла + канонически закодированные нормализованные поля, включая room_id/movement_epoch/exhibit_id/caption. Конкурентные повторы сериализуются advisory lock/резервацией по user/key. Повтор совпадающего ключа проверять до текущего room/ready, но после сессии, лимита и структурной проверки запроса. Вернуть существующее Photo200 даже после перехода.
 
-Файловая система и SQL не имеют общей транзакции: staging -> decode+thumbnail -> atomic rename -> SQL commit -> доступ. При ошибке удалить собственные staged/final файлы; периодический cleanup сверяет references, не трогает чужие активные uploads. Фото становится видимо только после полного commit. memory_event PHOTO_CAPTURED создаётся в той же SQL транзакции. published=true фиксируется перед chat broadcast.
+Файловая система и SQL не имеют общей транзакции: decode+thumbnail -> staging -> atomic rename каталога пары -> SQL commit -> доступ. При подтверждённом rollback удалить только собственные staged/final файлы. При неопределённом COMMIT сначала перечитать ключ под новой блокировкой; пока исход не установлен, файлы сохраняются. Массового/периодического cleanup в B09 нет. Фото становится видимо только после полного commit. memory_event PHOTO_CREATED создаётся в той же SQL транзакции. published=true фиксируется перед chat broadcast.
 
 Positions: save раз в5s и disconnect; door transition сохранить до ACK. cursor history по (created_at,id), привязан к user+guide; album аналогично user. Подписанный opaque cursor либо строгая server-side lookup/валидация, не доверять переданному user_id. Мир файловый, FK на room/guide заменяется startup/service validation. Миграции append-only, down с потерей данных только по прямому запросу.
 
@@ -48,7 +48,7 @@ Epoch/ack_seq не сохраняются в SQL: начальные значе�
 
 ## Осмотр B06
 
-Миграция 00002 добавляет exhibit_inspections и memory_events. Осмотр и событие EXHIBIT_INSPECTED сохраняются одной транзакцией с проверкой действующей сессии. Повтор сохраняет ID события, обновляет время и контекст обеих записей; уникальность по (user_id,exhibit_id) действует между версиями мира. ID экспоната нельзя переиспользовать для другого по смыслу экспоната. Чтение памяти всегда ограничено user_id, сортируется по (created_at,id) DESC и имеет ограниченный limit. Индекс memory_events(user_id,created_at DESC,id DESC) обслуживает личную память. photo_id пока без FK: хранение фото реализует B09. История общего чата не сохраняется.
+Миграция 00002 добавляет exhibit_inspections и memory_events. Осмотр и событие EXHIBIT_INSPECTED сохраняются одной транзакцией с проверкой действующей сессии. Повтор сохраняет ID события, обновляет время и контекст обеих записей; уникальность по (user_id,exhibit_id) действует между версиями мира. ID экспоната нельзя переиспользовать для другого по смыслу экспоната. Чтение памяти всегда ограничено user_id, сортируется по (created_at,id) DESC и имеет ограниченный limit. Индекс memory_events(user_id,created_at DESC,id DESC) обслуживает личную память. B09 добавляет FK photo_id → photos.id и единственное событие PHOTO_CREATED на фото. История общего чата не сохраняется.
 
 ## Очередь и история B07
 
@@ -59,3 +59,10 @@ request_id хранится как UUID для нечувствительног�
 Finish обновляет только pending, одновременно записывая completed-ответ и guide_memories. Проигравшая терминальная операция читает уже сохранённый результат. B08 сохраняет детерминированные выдержки последних четырёх completed-пар, до 4000 кодовых точек; версия увеличивается только при успешном завершении. Failed/partial память не меняют. Выдержки вычисляет чистая функция usecase из completed-записей, прочитанных в той же транзакции. ReadContext читает последние четыре completed-пары и память по user_id+guide_id, а также 20 личных событий по user_id в read-only repeatable-read транзакции. Схема БД не меняется. Пределы и совместимость памяти B07 — [GUIDES.md](GUIDES.md).
 
 History выбирает limit+1 последних записей по (created_at,id), возвращая страницу в обратном порядке. Opaque before — base64url UUID её первой записи; граница читается из БД с проверкой user_id и guide_id. Неизвестный, чужой или неверно кодированный cursor даёт INVALID_CURSOR. Записи не удаляются при reconnect/restart.
+
+
+## Фотографии B09
+
+photos.id — UUID v4 в каноническом text, совместимом с memory_events.photo_id; user_id и idempotency_key — uuid. Проверки user/key сериализуются session advisory lock на выделенном соединении. Первичный lookup освобождает соединение до ожидания игрового gate; финализация захватывает gate → соединение → key lock. Во время кодеков и файловых операций соединение не удерживается, SQL-транзакция не открыта. Уникальность дополнительно обеспечена UNIQUE(user_id,idempotency_key). Закрытое соединение не возвращается в пул с удержанной блокировкой.
+
+Фото и PHOTO_CREATED вставляются одной короткой транзакцией; сессия проверяется под FOR SHARE и повторно перед COMMIT. original_path=id/image, thumbnail_path=id/thumbnail.jpg; MIME оригинала хранится отдельно. Обе записи остаются приватными (published=false); раздача, альбом и публикация реализуются в B10. Файлы без метаданных не являются доступными объектами.

@@ -74,7 +74,7 @@ func TestMigrationAndStartupIntegration(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(status) != 4 {
+	if len(status) != 5 {
 		t.Fatalf("migration status: %v", status)
 	}
 	if err = CheckSchema(ctx, pool); err != nil {
@@ -119,7 +119,7 @@ func TestMigrationAndStartupIntegration(t *testing.T) {
 			t.Errorf("constraint missing for %s", query)
 		}
 	}
-	if _, err := pool.Exec(ctx, "INSERT INTO goose_db_version (version_id,is_applied) VALUES (5,true)"); err != nil {
+	if _, err := pool.Exec(ctx, "INSERT INTO goose_db_version (version_id,is_applied) VALUES (6,true)"); err != nil {
 		t.Fatal(err)
 	}
 	if err := CheckSchema(ctx, pool); err == nil {

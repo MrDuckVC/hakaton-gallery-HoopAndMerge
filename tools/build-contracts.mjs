@@ -140,6 +140,7 @@ S.Generation.allOf=[
 ];
 Object.assign(S.Photo.properties,{published:{type:'boolean'},thumbnail_url:str(),thumbnail_bytes:safeInt({minimum:1,maximum:131072}),width:safeInt({minimum:1,maximum:1920}),height:safeInt({minimum:1,maximum:1080})}); S.Photo.required=Object.keys(S.Photo.properties);
 S.PhotoUpload.properties.movement_epoch=str({pattern:'^[1-9][0-9]*$',description:'Десятичное целое <=2^53-1'});S.PhotoUpload.required.push('movement_epoch');
+S.PhotoUpload.properties.caption=str({pattern:'^[^\\u0000]*$',description:'Не более 200 Unicode-кодовых точек после Unicode White_Space trim; U+0000 запрещён. Отсутствие означает пустую подпись.'});
 S.PhotoUpload.properties.image.description='Один неподвижный JPEG/WebP <=2097152 bytes; весь multipart <=2162688 bytes.';
 for(const obsolete of ['PublicPlayer','PlayerMotion','RoomAvailability','DialogPage'])delete S[obsolete];
 delete P['/guides/{guide_id}/messages'];
@@ -149,6 +150,7 @@ P['/guides/{guide_id}/generations/by-request/{request_id}']={get:operation('getG
 P['/guides/{guide_id}/generations'].get.description='Только текущий пользователь, без требования WS и независимо от зала. Последние записи, внутри страницы от старых к новым по (created_at,id). before привязан к пользователю и гиду; неверный курсор — INVALID_CURSOR.';
 P['/guides/{guide_id}/generations/by-request/{request_id}'].get.description='Только текущий пользователь и указанный гид. Восстановление сохранённого вопроса без повторной генерации; отсутствующая или чужая запись — NOT_FOUND.';
 P['/photos'].post.parameters=[param('Idempotency-Key','header',uuid())];
+P['/photos'].post.description='Ровно один image; неизвестные и повторные multipart-поля запрещены. 201 после сохранения пары файлов, метаданных и PHOTO_CREATED. 200 replay проверяется до текущего ready/room; другой fingerprint — 409 IDEMPOTENCY_CONFLICT. Все POST, включая повторы и неверные запросы, учитываются после аутентификации в лимите 6/60 секунд на пользователя. Повреждённые/анимированные изображения и неверные размеры — 400; превышение байтов — 413; иной формат — 415. Миниатюра JPEG, исходный формат определяется декодированием.';
 P['/photos'].post.summary='Идемпотентная загрузка фото из готовой игровой сессии';
 P['/photos'].post.responses['200']=success(ref('Photo'),'Существующее фото при повторе того же ключа и содержимого');
 P['/photos'].get.parameters[0].schema={type:'integer',minimum:1,maximum:6,default:6};
@@ -219,3 +221,5 @@ json('docs/api/examples/players.state.json',envelope('players.state',{players:[{
 const askID='11111111-1111-4111-8111-111111111111';
 json('docs/api/examples/guide.completed.json',envelope('guide.completed',{generation:{id:'gen_01',request_id:askID,guide_id:'guide_herodotus',exhibit_id:'exhibit_01',status:'completed',user_message:{id:'dialog_01',role:'user',text:'Почему фигура изображена в профиль?',created_at:'2026-10-31T11:59:50Z'},assistant_message:{id:'dialog_02',role:'assistant',text:'Ты уже осмотрел рельеф. Части тела показаны с наиболее узнаваемых сторон: это помогает прочитать изображение.',created_at:'2026-10-31T12:00:00Z'},error:null}},askID));
 console.log('Applied normative API v1 revision.');
+
+json('docs/api/examples/photo.created.json',{id:'11111111-1111-4111-8111-111111111111',owner_id:'usr_01',caption:'Фото в галерее',room_id:room.id,exhibit_id:null,published:false,image_url:'/api/v1/photos/11111111-1111-4111-8111-111111111111/image',image_bytes:180000,thumbnail_url:'/api/v1/photos/11111111-1111-4111-8111-111111111111/thumbnail',thumbnail_bytes:12000,width:1280,height:720,created_at:'2026-01-01T12:00:00Z'});
