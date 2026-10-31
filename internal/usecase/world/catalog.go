@@ -181,3 +181,16 @@ func (c *Catalog) Spawn(doorID string) (player.State, error) {
 	}
 	return s, nil
 }
+
+// Geometry returns an independent copy of the validated room geometry.
+func (c *Catalog) Geometry(id string) (domain.Room, error) {
+	r, ok := c.rooms[id]
+	if !ok {
+		return domain.Room{}, domain.NotFound
+	}
+	r.Surfaces = slices.Clone(r.Surfaces)
+	r.Doors = slices.Clone(r.Doors)
+	r.Exhibits = slices.Clone(r.Exhibits)
+	r.Guides = slices.Clone(r.Guides)
+	return r, nil
+}
