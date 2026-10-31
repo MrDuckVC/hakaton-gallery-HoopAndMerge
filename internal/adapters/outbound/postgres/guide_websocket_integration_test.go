@@ -13,6 +13,7 @@ import (
 
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/httpapi"
 	wsapi "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/websocket"
+	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/ollama"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/security"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/sessionevents"
 	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
@@ -28,21 +29,7 @@ type guideCatalog struct{ socialWorld }
 
 func (guideCatalog) HasGuide(id string) bool { return id == "guide" }
 func (guideCatalog) Geometry(id string) (world.Room, error) {
-	return world.Room{ID: id, Guides: []world.Guide{{ID: "guide", Position: player.Vector{X: 2, Z: -3}}}}, nil
-}
-
-type controlledModel struct{ finish chan string }
-
-func (m controlledModel) Stream(ctx context.Context, _ domain.Generation, emit func(string) error) error {
-	select {
-	case <-ctx.Done():
-		return ctx.Err()
-	case text := <-m.finish:
-		if err := emit(text); err != nil {
-			return err
-		}
-		return nil
-	}
+	return world.Room{ID: id, Guides: []world.Guide{{ID: "guide", Position: player.Vector{X: 2, Z: -3}}}, Exhibits: []world.Exhibit{{ID: "inspected", Title: "Свет", Description: "Контраст", Position: player.Vector{X: 2, Y: 1, Z: -3}}}}, nil
 }
 
 func TestGuideWebSocketHistoryReconnectAndOutageIntegration(t *testing.T) {
@@ -55,13 +42,42 @@ func TestGuideWebSocketHistoryReconnectAndOutageIntegration(t *testing.T) {
 	accounts := auth.New(NewAuthStore(pool), crypto, catalog, sessionevents.New(), time.Now)
 	registry := game.New(time.Now)
 	store := NewGuideStore(pool)
-	model := controlledModel{finish: make(chan string)}
+	finish := make(chan string)
+	requests := make(chan string, 16)
+	modelServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var payload struct {
+			Messages []struct{ Role, Content string }
+		}
+		if e := json.NewDecoder(r.Body).Decode(&payload); e != nil {
+			t.Error(e)
+			return
+		}
+		var contents strings.Builder
+		for _, m := range payload.Messages {
+			contents.WriteString(m.Content)
+			contents.WriteByte('\n')
+		}
+		requests <- contents.String()
+		select {
+		case <-r.Context().Done():
+			return
+		case text := <-finish:
+			w.Header().Set("Content-Type", "application/x-ndjson")
+			if e := json.NewEncoder(w).Encode(map[string]any{"message": map[string]string{"role": "assistant", "content": text}, "done": true}); e != nil {
+				t.Error(e)
+			}
+		}
+	}))
+	defer modelServer.Close()
+	model := ollama.New(modelServer.URL, "fixture:tag")
 	service := guide.New(store, catalog, accounts, registry, model, guide.Clock{Now: time.Now, After: time.After}, crypto.NewID)
+	service.ConfigureContext(catalog, store)
 	if err := service.Recover(ctx); err != nil {
 		t.Fatal(err)
 	}
 	registry.Configure(catalog, NewGameStore(pool), service)
 	registry.ConfigureGuides(service)
+	registry.ConfigureSocial(NewSocialStore(pool), game.UnavailablePhotos{}, crypto.NewID)
 	transport := wsapi.New(registry, accounts, catalog, registry, []string{"http://allowed"})
 	server := httpapi.NewServer("")
 	server.ConfigureAuth(accounts, []string{"http://allowed"}, false)
@@ -139,6 +155,8 @@ func TestGuideWebSocketHistoryReconnectAndOutageIntegration(t *testing.T) {
 	a := connect(owner.Token)
 	send(a, "world.ready", crypto.NewID(), `{"world_version":"v1","movement_epoch":1}`)
 	read(a, "world.ready")
+	send(a, "exhibit.inspect", crypto.NewID(), `{"exhibit_id":"inspected"}`)
+	read(a, "exhibit.inspected")
 	request := strings.ToUpper(crypto.NewID())
 	send(a, "guide.ask", request, askPayload)
 	accepted := read(a, "guide.accepted")
@@ -146,7 +164,11 @@ func TestGuideWebSocketHistoryReconnectAndOutageIntegration(t *testing.T) {
 		t.Fatal(accepted)
 	}
 	read(a, "guide.started")
-	model.finish <- "answer"
+	firstContext := <-requests
+	if !strings.Contains(firstContext, "EXHIBIT_INSPECTED") {
+		t.Fatal("inspection absent from model context")
+	}
+	finish <- "answer"
 	read(a, "guide.delta")
 	completed := read(a, "guide.completed")
 	if completed["request_id"] != request {
@@ -167,6 +189,10 @@ func TestGuideWebSocketHistoryReconnectAndOutageIntegration(t *testing.T) {
 	send(a, "guide.ask", second, askPayload)
 	accepted = read(a, "guide.accepted")
 	read(a, "guide.started")
+	nextContext := <-requests
+	if !strings.Contains(nextContext, "answer") {
+		t.Fatal("completed response absent from next model context")
+	}
 	id := accepted["payload"].(map[string]any)["generation"].(map[string]any)["id"].(string)
 	cancelID := crypto.NewID()
 	send(a, "guide.cancel", cancelID, fmt.Sprintf(`{"generation_id":%q}`, id))
@@ -219,7 +245,7 @@ func TestGuideWebSocketHistoryReconnectAndOutageIntegration(t *testing.T) {
 	send(b, "guide.ask", outageID, askPayload)
 	read(b, "guide.accepted")
 	read(b, "guide.started")
-	model.finish <- "unsaved answer"
+	finish <- "unsaved answer"
 	read(b, "guide.delta")
 	bounded, cancel := context.WithTimeout(ctx, 3*time.Second)
 	_, _, err = b.Read(bounded)
@@ -247,4 +273,12 @@ func TestGuideWebSocketHistoryReconnectAndOutageIntegration(t *testing.T) {
 	if err = accounts.Logout(ctx, owner.Token); err != nil && !errors.Is(err, context.Canceled) {
 		t.Fatal(err)
 	}
+}
+
+func (guideCatalog) Profile(string) (domain.Profile, error) {
+	return domain.Profile{Personality: "Гид", Style: "Объяснение", Topic: "Живопись", Constraints: []string{"Без выдуманных цитат"}}, nil
+}
+
+func (guideCatalog) Exhibit(id string) (world.Exhibit, error) {
+	return world.Exhibit{ID: id, Title: "Свет", Description: "Контраст"}, nil
 }

@@ -5,6 +5,7 @@ import (
 	"context"
 
 	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
+	guide "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
 	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
 )
 
@@ -16,6 +17,7 @@ type File struct {
 
 // LoadedWorld separates semantic content from original wire bytes.
 type LoadedWorld struct {
+	Profiles      map[string]guide.Profile
 	Input         domain.Input
 	Rooms, Assets map[string]File
 }

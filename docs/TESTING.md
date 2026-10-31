@@ -87,3 +87,12 @@ Unit-тесты проверяют fingerprint/trim/Unicode, replay до ready �
 PostgreSQL-тесты проверяют concurrent admission восьми queued, один running плюс восемь queued, FIFO при одинаковом created_at, единственного победителя cancel/completion, rollback ответа при ошибке памяти, terminal immutability через Store, владельца и границы history, revoked sessions и restart recovery. Сквозной HTTP/WS-тест проверяет accepted → started → delta → completed, replay, приватность by-request, корреляцию failed/cancelled, потерю accepted при обрыве, восстановление без ready и SQL-сбой завершения с close1011 и SERVER_RESTARTED. Все SQL-сценарии используют отдельную TEST_DATABASE_URL и входят в race/coverage.
 
 Регрессия ревью B07 проверяет disconnect после принятого движения при тайм-ауте, ошибке и успешной отмене вопроса. `testing/synctest` доводит отмену до deadline без реального ожидания; context-aware PositionStore подтверждает свежий ограниченный бюджет и сохранение последней позы. Повторный cleanup старого connection ID не отменяет вопрос и не сохраняет позицию нового соединения.
+
+
+## B08 — Ollama, контекст и память
+
+Fake HTTP/NDJSON tests проверяют побайтовый split UTF-8, конечный chunk, HTTP/JSON/stream errors, обрыв без done, предел 256 КиБ на запись, timeout/cancel и отказ callback. Usecase tests проверяют серверный контекст, только completed-пары, осмотр/фото, ограничения 16 000/4000 и отсутствие LLM-summary. Каталог проверяет строгие профили и ссылки материалов.
+
+С отдельной TEST_DATABASE_URL выполняются атомарность/rollback памяти B07, последние четыре completed-пары, изоляция user+guide, новый экземпляр адаптера после restart и отсутствие изменений памяти после failed. Сквозной тест связывает настоящий WS → B07 → ContextReader → HTTP/NDJSON fake Ollama → PostgreSQL; проверяет включение осмотра и прошлого ответа, cancel/reconnect и сбой completion с close1011. `make coverage` включает эти тесты и race detector.
+
+Opt-in тест двух fixture-личностей с настоящим Ollama, ручные LAN/localhost-сценарии и статус непроведённого реального показа — [GUIDES.md](GUIDES.md). Реальный tag и токенное окно определяет A01; unit/integration тесты GPU не требуют.

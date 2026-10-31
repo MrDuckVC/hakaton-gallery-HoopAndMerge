@@ -12,11 +12,11 @@ import (
 	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
 )
 
-// UnavailableModel explicitly represents B07 production until B08 supplies Ollama.
+// UnavailableModel explicitly refuses generation when a model is not configured.
 type UnavailableModel struct{}
 
 // Stream never manufactures an answer when a real model is not configured.
-func (UnavailableModel) Stream(context.Context, domain.Generation, func(string) error) error {
+func (UnavailableModel) Stream(context.Context, ModelRequest, func(string) error) error {
 	return auth.Unavailable
 }
 
@@ -89,7 +89,8 @@ func (s *Service) work(ctx context.Context) {
 }
 func (s *Service) execute(ctx context.Context, g domain.Generation) {
 	defer s.notify()
-	modelCtx, cancel := context.WithCancel(ctx)
+	remaining := max(0, g.StartedAt.Add(90*time.Second).Sub(s.clock.Now()))
+	modelCtx, cancel := context.WithTimeout(ctx, remaining)
 	defer cancel()
 	if err := s.acquire(ctx); err != nil {
 		s.dirty.Store(true)
@@ -114,7 +115,12 @@ func (s *Service) execute(ctx context.Context, g domain.Generation) {
 	code := ""
 	done := make(chan error, 1)
 	go func() {
-		done <- s.model.Stream(modelCtx, g, func(delta string) error {
+		request, buildErr := s.context.Build(modelCtx, g)
+		if buildErr != nil {
+			done <- buildErr
+			return
+		}
+		done <- s.model.Stream(modelCtx, request, func(delta string) error {
 			if acquireErr := s.acquire(modelCtx); acquireErr != nil {
 				return acquireErr
 			}
@@ -169,8 +175,18 @@ func (s *Service) execute(ctx context.Context, g domain.Generation) {
 	if s.dirty.Load() {
 		return
 	}
+	if code == "" && (errors.Is(err, context.DeadlineExceeded) || errors.Is(modelCtx.Err(), context.DeadlineExceeded)) {
+		code = "AI_TIMEOUT"
+	}
 	if err != nil && code == "" {
 		code = "AI_UNAVAILABLE"
+		if errors.Is(modelCtx.Err(), context.DeadlineExceeded) {
+			code = "AI_TIMEOUT"
+		}
+		var modelCode auth.Code
+		if errors.As(err, &modelCode) && modelCode == auth.Code("AI_OUTPUT_LIMIT") {
+			code = "AI_OUTPUT_LIMIT"
+		}
 		if errors.Is(ctx.Err(), context.Canceled) {
 			code = "CANCELLED"
 		}

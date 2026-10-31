@@ -19,6 +19,7 @@ type Service struct {
 	sessions    Sessions
 	events      Events
 	model       Model
+	context     Context
 	clock       Clock
 	newID       func() string
 	gate        chan struct{}
@@ -300,4 +301,9 @@ func (s *Service) finishLocked(ctx context.Context, g domain.Generation, code, t
 		s.events.Emit(g.UserID, g.ConnectionID, Event{Type: event, RequestID: g.RequestID, Generation: current})
 	}
 	return current, won, nil
+}
+
+// ConfigureContext installs private context ports before the worker starts.
+func (s *Service) ConfigureContext(profiles Profiles, reader ContextReader) {
+	s.context = Context{Profiles: profiles, Reader: reader}
 }

@@ -187,7 +187,11 @@ func (s *GuideStore) Finish(ctx context.Context, g domain.Generation) (domain.Ge
 		return g, false, err
 	}
 	if current.Status == "completed" {
-		summary := "user: " + current.UserMessage.Text + "\nassistant: " + current.AssistantMessage.Text
+		items, readErr := completedContext(ctx, tx, current.UserID, current.GuideID)
+		if readErr != nil {
+			return g, false, readErr
+		}
+		summary := usecase.Summarize(items)
 		_, err = tx.Exec(ctx, `INSERT INTO guide_memories(user_id,guide_id,summary,version,updated_at) VALUES($1,$2,$3,1,$4) ON CONFLICT(user_id,guide_id) DO UPDATE SET summary=EXCLUDED.summary,version=guide_memories.version+1,updated_at=EXCLUDED.updated_at`, current.UserID, current.GuideID, summary, g.FinishedAt)
 		if err != nil {
 			return g, false, auth.Unavailable

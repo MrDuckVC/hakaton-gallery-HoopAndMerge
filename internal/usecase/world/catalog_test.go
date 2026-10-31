@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	auth "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/auth"
+	guide "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
 	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
 )
@@ -234,5 +235,42 @@ func TestSharedAssetAcrossRoomsCountsOnce(t *testing.T) {
 	s := New(c, sessions{}, &ownership{room: "r1"})
 	if _, err := s.Asset(t.Context(), "owner", "v1", "a0"); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestCatalogProfilesArePrivateImmutableAndReferenced(t *testing.T) {
+	data := input()
+	data.Input.Profiles = []string{"g"}
+	data.Profiles = map[string]guide.Profile{"g": {Personality: "Художник", Style: "Наблюдение", Topic: "Живопись", Constraints: []string{"Без выдуманных цитат"}, Materials: []guide.Material{{ID: "m", Text: "Свет", Sources: []string{"Каталог"}, ExhibitIDs: []string{"er0"}}}}}
+	catalog, err := Load(t.Context(), fakeSource{data: data}, fakeSizer(1000), "v1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	p, err := catalog.Profile("g")
+	if err != nil {
+		t.Fatal(err)
+	}
+	p.Materials[0].Sources[0] = "changed"
+	data.Profiles["g"].Constraints[0] = "changed"
+	again, _ := catalog.Profile("g")
+	if again.Materials[0].Sources[0] != "Каталог" || again.Constraints[0] == "changed" {
+		t.Fatal("mutable profile escaped")
+	}
+	if _, err = catalog.Profile("missing"); err == nil {
+		t.Fatal("unknown profile")
+	}
+	if ex, e := catalog.Exhibit("er0"); e != nil || ex.ID != "er0" {
+		t.Fatal(ex, e)
+	}
+	if _, err = catalog.Exhibit("missing"); err == nil {
+		t.Fatal("unknown exhibit")
+	}
+	data.Profiles["g"].Materials[0].ExhibitIDs[0] = "missing"
+	if _, err = Load(t.Context(), fakeSource{data: data}, fakeSizer(1000), "v1"); err == nil {
+		t.Fatal("unknown material exhibit accepted")
+	}
+	delete(data.Profiles, "g")
+	if _, err = Load(t.Context(), fakeSource{data: data}, fakeSizer(1000), "v1"); err == nil {
+		t.Fatal("missing profile accepted")
 	}
 }
