@@ -20,5 +20,9 @@ check 0 'example/main.go:1.1,2.1 3 1' 'example/main.go:3.1,4.1 2 0'
 check 0 'example/main.go:1.1,2.1 1 1'
 check 1 'example/main.go:1.1,2.1 5999 1' 'example/main.go:3.1,4.1 4001 0'
 check 1 'example/main.go:1.1,2.1 1 0'
+# -coverpkg repeats blocks across package test binaries; combine coverage by block.
+check 0 'example/main.go:1.1,2.1 3 0' 'example/main.go:1.1,2.1 3 1' 'example/main.go:3.1,4.1 2 0'
+check 1 'example/main.go:1.1,2.1 1 0' 'example/main.go:1.1,2.1 1 1' 'example/main.go:3.1,4.1 1 0'
+check 1 'example/main.go:1.1,2.1 1 1' 'example/main.go:1.1,2.1 2 1'
 check 1
-printf '%s\n' 'PASS: coverage gate accepts 60%/100%, rejects 59.99%/0%/empty profile.'
+printf '%s\n' 'PASS: coverage gate accepts 60%/100%, merges repeated blocks, rejects 59.99%/0%/empty/inconsistent profiles.'

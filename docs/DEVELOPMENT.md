@@ -1,57 +1,90 @@
 # Локальная разработка и конфигурация
 
-Статус: Go-модуль и `cmd/server` инициализированы. Go >=1.27.1. Точка входа выводит сообщение и завершается; HTTP/WS, PostgreSQL, Ollama и миграции ещё не реализованы. Внешних Go-зависимостей нет, поэтому `go.sum` пока не требуется.
+B01: backend слушает HTTP, проверяет PostgreSQL/схему и обрабатывает SIGINT/SIGTERM. Игровые сценарии, WS, загрузка мира, раздача frontend и интеграция Ollama ещё не реализованы. Текущие HTTP-запросы возвращают JSON `404 NOT_FOUND` с `X-Request-ID` и `Cache-Control: no-store`.
+
+## Подготовка и запуск
+
+Go >=1.27.1, Docker Compose для локальной PostgreSQL. Версии pgx/v5 и goose закреплены в go.mod/go.sum. Если Go установлен в `/usr/local/go`, добавьте `/usr/local/go/bin` в PATH.
 
 ```sh
-# Если go отсутствует в PATH, но установлен в /usr/local/go:
-export PATH="/usr/local/go/bin:$PATH"
-make build                  # bin/gallery
-make run                    # запуск каркаса, затем завершение
-make test
-make coverage               # race + порог покрытия 60%, coverage.out
-make vet
-make fmt
-make lint                   # первая установка требует интернета
-make contracts              # генерация и проверка схем API
+cp .env.example .env
+# Замените пароли, origins, WORLD_VERSION и OLLAMA_MODEL.
+# .env — доверенный shell-файл; backend сам его не загружает.
+set -a
+. ./.env
+set +a
+docker compose up -d --wait postgres
+make build                         # bin/gallery и bin/migrate
+make migrate-up                    # либо ./bin/migrate up
+make migrate-status                # либо ./bin/migrate status
+./bin/gallery
 ```
 
-Прямые проверки: `go build ./...`, `go vet ./...`, `go test ./...`. Для конкурентных изменений: `go test -race ./...`. Реальных тестов бизнес-правил пока нет. Makefile использует `GO ?= go`; при необходимости путь можно передать как `make build GO=/usr/local/go/bin/go`. Для линтера каталог Go также должен быть в PATH.
+Миграции всегда выполняются до backend. Его startup не создаёт даже `goose_db_version`: проверяет Ping и точное соответствие истории встроенным миграциям. Отсутствующая/отстающая схема требует `make migrate-up`; более новая — соответствующего бинарника. Применённые миграции не переписывать, новые добавлять следующим номером. В административной команде доступны только `up` и `status`; служебную историю goose при необходимости инициализирует административная команда. `up` использует advisory lock и транзакционные SQL-миграции. Миграции имеют deadline 60 секунд, соединение 5 секунд, ожидание SQL-блокировки 5 секунд. Runtime-роль backend может не иметь DDL-прав; выдачу отдельных ролей администратор выполняет отдельно.
 
-Цели `migrate-up` и `world-check` пока не реализованы. `.env.example` пуст, Compose содержит только заготовку `services:`; запуск PostgreSQL/Ollama через Compose ещё не настроен.
+`make run` запускает через `go run`; для проверки сигналов используйте собранный `./bin/gallery`. Остановка: Ctrl+C или SIGTERM; затем `docker compose stop postgres`. Не удаляйте named volume. Фото в `PHOTO_DIR` и PostgreSQL должны оставаться на серверном ноутбуке.
 
-Предлагаемые .env.example ключи без секретных значений:
-- HTTP_ADDR=0.0.0.0:8080
-- DATABASE_URL=postgres://gallery:change-me@localhost:5432/gallery?sslmode=disable (только local)
-- ALLOWED_ORIGINS=http://localhost:5173,http://SERVER_LAN_IP:8080
-- COOKIE_SECURE=false (явный local HTTP; HTTPS=true)
-- WORLD_DIR=./content/world; WORLD_VERSION=world_v1
-- PHOTO_DIR=./data/photos
-- OLLAMA_BASE_URL=http://127.0.0.1:11434
-- OLLAMA_MODEL=<заранее скачанный проверенный tag>
-- LOG_LEVEL=info
+## Настройки
 
-Значения с placeholder заменить до запуска. Длины/тайм-ауты/лимиты contract.md фиксированы v1; не менять незаметно через env. Пароль/KDF параметры и connection pool настраиваются отдельно с документированными defaults.
+| Переменная | Default / правило |
+|---|---|
+| HTTP_ADDR | `0.0.0.0:8080`, host:port, порт 1–65535 |
+| DATABASE_URL | Обязательный PostgreSQL URL с host и database; не логируется |
+| ALLOWED_ORIGINS | Обязательные точные HTTP(S) origins через запятую, без path/query/fragment/credentials; включить LAN и localhost |
+| COOKIE_SECURE | `true`; локальный HTTP требует явного `false` |
+| WORLD_DIR | `./content/world` |
+| WORLD_VERSION | Обязательный ID, 1–128 печатных ASCII-символов без пробелов |
+| PHOTO_DIR | `./data/photos` |
+| OLLAMA_BASE_URL | `http://127.0.0.1:11434`, HTTP(S), без credentials/query/fragment |
+| OLLAMA_MODEL | Обязательный заранее подготовленный tag без пробелов; выбрать по A01 |
+| LOG_LEVEL | `info`; доступны `debug`, `info`, `warn`, `error` |
 
-БД можно Compose если уже установлен Docker; имя сервиса прочитать в docker-compose.yml. Не использовать down -v для обычной остановки. PostgreSQL volume и photo directory постоянные. Ollama на хосте Windows/WSL/GPU: проверить доступ Go-процесса отдельно; localhost внутри контейнера не равен хосту. API Ollama не открывать в LAN без необходимости. Подготовить модель, drivers, Go deps, образ PostgreSQL и весь контент до отключения интернета.
+Явно пустые значения отклоняются. `.env.example` — шаблон; `change-me`, адреса и model tag замените. Настройки мира/фото/cookie/origins/Ollama предназначены и для следующих подсистем; B01 не реализует их игровые возможности. Нет startup-проверки Ollama и файлов мира. При реализации B03/B07 добавить world validation и recovery до listeners согласно ARCHITECTURE.md.
 
-Frontend — отдельный checkout. В dev его proxy /api -> backend поддерживает WS и сохраняет cookie Origin semantics. Для показа один origin: backend может раздавать полученный dist, но frontend source не переносить в этот репозиторий. Адрес origin должен совпадать с адресом браузера, не bind0.0.0.0. Проверить firewall и отсутствие Wi-Fi client isolation.
+Compose использует `postgres:18.6-bookworm`, постоянный volume на `/var/lib/postgresql`, healthcheck и порт только `127.0.0.1:${POSTGRES_PORT:-5432}`. `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` должны соответствовать `DATABASE_URL`. Изменение этих переменных не меняет credentials уже инициализированного volume.
 
-Контент: отдельные неизменяемые room JSON+JPEG/WebP; серверные door spawn, profiles и knowledge не отдавать клиенту. Сборщик вычисляет descriptor_bytes, assets.bytes,total, budget. Startup проверяет связность дверей и безопасные spawns/LOS/коллизии; каждый room package+3MiB помещается в10%. Примеры docs/api/examples не содержат image asset и не запускаются как готовый world.
+Startup deadline 10 секунд; DB connect/query timeout 5 секунд; максимум 10 соединений. HTTP: headers 5 секунд, read 15, write 30, idle 60. Shutdown — общий deadline 15 секунд с независимым контекстом: остановить listener/новые запросы, lifecycle-порты отмены генераций/сохранения позиций/закрытия WS, HTTP drain, закрытие пула. При ошибке выполняется последующая очистка; по deadline последующие lifecycle cleanup-вызовы и закрытие пула предпринимаются best-effort без ожидания зависших участников, HTTP закрывается принудительно, процесс завершается с ненулевым кодом. Сейчас игровые участники отсутствуют. Не держать SQL-транзакции при сетевом/file/LLM I/O.
 
-Документы: node tools/build-contracts.mjs; node tools/validate-contracts.mjs. tools/write-docs.mjs — первоначальное создание Markdown, не применять поверх ручных правок. Миграции выполнять выбранным в проекте инструментом; точную команду добавить после интеграции. Тестовую DB задавать отдельно, не переиспользовать рабочую.
+## Проверки и отдельная тестовая БД
 
-## Docker и CI
+```sh
+go build ./...
+go vet ./...
+go test ./...
+go test -race ./...
+make lint
+make coverage
+make contracts
+```
+
+Интеграционные тесты явно пропускаются без `TEST_DATABASE_URL`; в CI переменная обязательна и PostgreSQL предоставляется сервисом. Она должна указывать на отдельную тестовую БД, отличную от `DATABASE_URL`. Не используйте рабочую БД.
+
+```sh
+# На запущенной локальной PostgreSQL создайте отдельную БД для тестов один раз:
+docker compose exec postgres sh -c 'createdb -U "$POSTGRES_USER" gallery_test'
+export TEST_DATABASE_URL='postgres://gallery:change-me@127.0.0.1:5432/gallery_test?sslmode=disable'
+make coverage
+```
+
+Тесты PostgreSQL создают случайные собственные schemas и удаляют только их. Тесты команд применяют обычные append-only миграции к тестовой БД без удаления существующих записей. Подключению для тестов нужны права CREATE SCHEMA. Повторный прогон допустим. Тесты сигналов используют дочерний процесс и временный loopback-порт. `go list` и depguard проверяют граф импортов. `make coverage` проверяет суммарные операторы всех Go-пакетов, включая cmd, с порогом >=60%, race detector и отчётом `coverage.out`. Node используется только генератором/валидатором контрактов.
+
+Если sandbox запрещает запись в стандартный Go cache, задайте `GOCACHE=/tmp/gallery-go-cache`; для линтера аналогично `GOLANGCI_LINT_CACHE=/tmp/gallery-lint-cache`. Сетевым тестам нужен loopback. `make build GO=/usr/local/go/bin/go` позволяет указать путь Go; для архитектурного теста и линтера он также должен быть в PATH.
+
+## Docker, CI и офлайн-подготовка
 
 ```sh
 make docker-build
-# Эквивалент:
-docker build -f build/main.Dockerfile -t gallery-backend:local .
-docker run --rm --network none gallery-backend:local
+# На Linux, только с отдельной тестовой БД:
+DATABASE_URL="$TEST_DATABASE_URL" sh tools/smoke-docker.sh gallery-backend:local
 ```
 
-Multi-stage Dockerfile использует официальный `golang:1.27.1` и финальный `scratch`, статическую сборку без CGO и пользователя 65532:65532. Точка входа пока только логирует статус и завершается; это ожидаемо и в контейнере. Docker Desktop должен быть доступен из WSL. Для сборки заранее нужны образ Go и, после появления зависимостей, доступ к ним. `.dockerignore` допускает только Go-модуль, cmd, internal и Dockerfile; при добавлении embed-ресурсов обновлять список.
+Multi-stage Dockerfile: `golang:1.27.1`, статические `/gallery` и `/migrate`, финальный `scratch`, пользователь 65532:65532. Миграции встроены в оба бинарника. Smoke-test выполняет миграции, стартует контейнер на localhost:18080, проверяет HTTP 404 и успешное завершение по SIGTERM. Использует host networking на Linux для доступа к тестовой БД и удаляет только свой контейнер. Для Docker Desktop/WSL можно задать `SMOKE_DOCKER_NETWORK` с именем уже созданной обычной bridge-сети (без `--internal`, чтобы работала публикация порта): тестовая PostgreSQL должна быть подключена к ней, а `DATABASE_URL` должен использовать её сетевой alias и порт 5432; HTTP-порт 18080 публикуется на loopback. Старый запуск с `--network none` без PostgreSQL теперь ожидаемо завершается с ошибкой.
 
-Workflow `.github/workflows/ci.yml` предназначен для корня отдельного backend-репозитория. Срабатывает на push, pull_request и workflow_dispatch. Версия Go берётся из go.mod; версия golangci-lint — из Makefile. После форматирования, vet, race-тестов с покрытием >=60%, линтера и сборки выполняются docker build и запуск контейнера без сети. Публикации или деплоя нет, secrets не требуются. Проверка покрытия включает cmd/server и все будущие Go-пакеты (`-coverpkg=./...`); исключений нет.
+GitHub Actions: gofmt, vet, race/coverage с PostgreSQL integration tests, lint, build, генерация и проверка отсутствия drift контрактов, затем Docker build и smoke-test с отдельной PostgreSQL. Workflow не публикует образ и не выполняет deploy.
+
+До отключения интернета: `go mod download`, `make lint` для установки закреплённого линтера, `docker compose pull postgres`, `make build`, `make docker-build`; отдельно подготовить модель и контент по A01/C01/I01. Runtime B01 использует только PostgreSQL, без внешних API. Не выполнять `tools/write-docs.mjs` поверх ручных изменений. `world-check` пока не реализован.
+
+Frontend остаётся в отдельном репозитории. Proxy `/api` должен поддерживать WS и сохранять Origin. Bind `0.0.0.0` не является браузерным origin; адреса LAN и localhost задаются явно. Пакеты мира/фото и раздача dist появятся в следующих задачах.
 
 ## Требуемая топология демонстрации
 

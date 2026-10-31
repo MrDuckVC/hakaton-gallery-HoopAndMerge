@@ -15,8 +15,22 @@ concurrency:
 jobs:
   checks:
     name: Tests, coverage and linters
+    env:
+      TEST_DATABASE_URL: postgres://gallery_test:ci-test-only@127.0.0.1:5432/gallery_test?sslmode=disable
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18.6-bookworm
+        env:
+          POSTGRES_USER: gallery_test
+          POSTGRES_PASSWORD: ci-test-only
+          POSTGRES_DB: gallery_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U gallery_test -d gallery_test"
+          --health-interval 2s --health-timeout 3s --health-retries 15
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-go@v6
@@ -38,15 +52,36 @@ jobs:
         run: make lint
       - name: Build
         run: make build
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Contract generation and validation
+        run: |
+          make contracts
+          git diff --exit-code -- docs/api
 
   docker:
     name: Build Docker image
     needs: checks
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18.6-bookworm
+        env:
+          POSTGRES_USER: gallery_test
+          POSTGRES_PASSWORD: ci-test-only
+          POSTGRES_DB: gallery_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U gallery_test -d gallery_test"
+          --health-interval 2s --health-timeout 3s --health-retries 15
     steps:
       - uses: actions/checkout@v6
       - name: Build image
         run: docker build --file build/main.Dockerfile --tag gallery-backend:ci .
       - name: Smoke test
-        run: docker run --rm --network none gallery-backend:ci
+        env:
+          DATABASE_URL: postgres://gallery_test:ci-test-only@127.0.0.1:5432/gallery_test?sslmode=disable
+        run: sh tools/smoke-docker.sh gallery-backend:ci

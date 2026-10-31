@@ -7,3 +7,5 @@
 !internal/**
 !build/
 !build/main.Dockerfile
+!migrations/
+!migrations/**
