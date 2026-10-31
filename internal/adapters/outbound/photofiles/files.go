@@ -18,17 +18,17 @@ type Files struct{ root *os.Root }
 // Open prepares the root without scanning or deleting other uploads.
 func Open(dir string) (*Files, error) {
 	if err := os.MkdirAll(dir, 0700); err != nil {
-		return nil, fmt.Errorf("prepare photo directory: %w", err)
+		return nil, storageError("prepare photo directory", err)
 	}
 	root, err := os.OpenRoot(dir)
 	if err != nil {
-		return nil, fmt.Errorf("open photo directory: %w", err)
+		return nil, storageError("open photo directory", err)
 	}
 	return &Files{root: root}, nil
 }
 
 // Close releases the root after HTTP requests have drained.
-func (f *Files) Close() error { return f.root.Close() }
+func (f *Files) Close() error { return storageError("close photo directory", f.root.Close()) }
 
 // Save writes and syncs both files before publishing the complete directory in one rename.
 func (f *Files) Save(ctx context.Context, id string, original, thumbnail []byte) (result error) {
@@ -41,11 +41,11 @@ func (f *Files) Save(ctx context.Context, id string, original, thumbnail []byte)
 	if _, err := f.root.Lstat(id); err == nil {
 		return auth.Unavailable
 	} else if !errors.Is(err, os.ErrNotExist) {
-		return fmt.Errorf("check photo destination: %w", err)
+		return storageError("check photo destination", err)
 	}
 	stage := ".staging-" + rand.Text()
 	if err := f.root.Mkdir(stage, 0700); err != nil {
-		return fmt.Errorf("create photo stage: %w", err)
+		return storageError("create photo stage", err)
 	}
 	published := false
 	defer func() {
@@ -67,7 +67,7 @@ func (f *Files) Save(ctx context.Context, id string, original, thumbnail []byte)
 	}
 	// A UUID is allocated per attempt; an existing nonempty destination cannot be replaced.
 	if err := f.root.Rename(stage, id); err != nil {
-		return fmt.Errorf("publish photo pair: %w", err)
+		return storageError("publish photo pair", err)
 	}
 	published = true
 	if err := f.syncDir("."); err != nil {
@@ -81,25 +81,25 @@ func (f *Files) write(ctx context.Context, path string, data []byte) (result err
 	}
 	file, err := f.root.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0600)
 	if err != nil {
-		return fmt.Errorf("create photo file: %w", err)
+		return storageError("create photo file", err)
 	}
-	defer func() { result = errors.Join(result, file.Close()) }()
+	defer func() { result = errors.Join(result, storageError("close photo file", file.Close())) }()
 	if _, err = file.Write(data); err != nil {
-		return fmt.Errorf("write photo file: %w", err)
+		return storageError("write photo file", err)
 	}
 	if err = file.Sync(); err != nil {
-		return fmt.Errorf("sync photo file: %w", err)
+		return storageError("sync photo file", err)
 	}
 	return ctx.Err()
 }
-func (f *Files) syncDir(path string) error {
+func (f *Files) syncDir(path string) (result error) {
 	dir, err := f.root.Open(path)
 	if err != nil {
-		return fmt.Errorf("open photo directory to sync: %w", err)
+		return storageError("open photo directory to sync", err)
 	}
-	defer func() { _ = dir.Close() }()
+	defer func() { result = errors.Join(result, storageError("close photo directory after sync", dir.Close())) }()
 	if err = dir.Sync(); err != nil {
-		return fmt.Errorf("sync photo directory: %w", err)
+		return storageError("sync photo directory", err)
 	}
 	return nil
 }
@@ -120,7 +120,7 @@ func (f *Files) removePair(dir string) error {
 		return nil
 	}
 	if err != nil {
-		return fmt.Errorf("inspect photo cleanup: %w", err)
+		return storageError("inspect photo cleanup", err)
 	}
 	if !info.IsDir() {
 		return auth.Unavailable
@@ -128,11 +128,19 @@ func (f *Files) removePair(dir string) error {
 	var result error
 	for _, name := range []string{"image", "thumbnail.jpg"} {
 		if err = f.root.Remove(dir + "/" + name); err != nil && !errors.Is(err, os.ErrNotExist) {
-			result = errors.Join(result, fmt.Errorf("remove photo file: %w", err))
+			result = errors.Join(result, storageError("remove photo file", err))
 		}
 	}
 	if err = f.root.Remove(dir); err != nil && !errors.Is(err, os.ErrNotExist) {
-		result = errors.Join(result, fmt.Errorf("remove photo directory: %w", err))
+		result = errors.Join(result, storageError("remove photo directory", err))
 	}
 	return result
+}
+
+// storageError preserves the OS cause while classifying operational failures at the adapter boundary.
+func storageError(operation string, err error) error {
+	if err == nil {
+		return nil
+	}
+	return fmt.Errorf("%s: %w: %w", operation, auth.Unavailable, err)
 }

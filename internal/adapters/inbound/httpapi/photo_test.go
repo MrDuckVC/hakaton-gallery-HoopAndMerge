@@ -9,14 +9,71 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 	"time"
 
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/photofiles"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
 	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/photo"
 	photocase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/photo"
 )
+
+func TestPhotoFilesystemFailureReturnsServiceUnavailable(t *testing.T) {
+	for _, mode := range []string{"permission", "removed_directory"} {
+		t.Run(mode, func(t *testing.T) {
+			dir := t.TempDir()
+			files, err := photofiles.Open(dir)
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer func() { _ = files.Close() }()
+			cause := os.ErrNotExist
+			if mode == "permission" {
+				cause = os.ErrPermission
+				t.Cleanup(func() {
+					if restoreErr := os.Chmod(dir, 0700); restoreErr != nil {
+						t.Error(restoreErr)
+					}
+				})
+				if err = os.Chmod(dir, 0555); err != nil {
+					t.Fatal(err)
+				}
+			} else if err = os.Remove(dir); err != nil {
+				t.Fatal(err)
+			}
+			err = files.Save(t.Context(), "abcdef12-1234-4123-8123-123456789abc", []byte("original"), []byte("thumbnail"))
+			if err == nil && mode == "permission" {
+				t.Skip("filesystem permissions do not restrict this process")
+			}
+			if !errors.Is(err, cause) {
+				t.Fatalf("filesystem cause lost: %v", err)
+			}
+			var pathErr *os.PathError
+			if !errors.As(err, &pathErr) {
+				t.Fatalf("filesystem error chain lost: %v", err)
+			}
+			if !errors.Is(err, auth.Unavailable) {
+				t.Errorf("filesystem error not classified as unavailable: %v", err)
+			}
+			server := NewServer("")
+			server.ConfigurePhotos(&photoHTTPFake{err: err})
+			response := httptest.NewRecorder()
+			server.Handler.ServeHTTP(response, multipartRequest(t, [][2]string{{"room_id", "room"}, {"movement_epoch", "1"}}, 1))
+			var body errorResponse
+			if err = json.Unmarshal(response.Body.Bytes(), &body); err != nil {
+				t.Fatal(err)
+			}
+			if response.Code != 503 || body.Error.Code != "SERVICE_UNAVAILABLE" {
+				t.Fatalf("status=%d body=%s", response.Code, response.Body.String())
+			}
+			if strings.Contains(response.Body.String(), dir) {
+				t.Fatal("filesystem path exposed in HTTP error")
+			}
+		})
+	}
+}
 
 type photoHTTPFake struct {
 	err      error
