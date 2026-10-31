@@ -79,7 +79,8 @@ func (t *Transport) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Exact Origin was checked above; coder's host-pattern rules are deliberately bypassed.
-	conn, err := ws.Accept(w, r, &ws.AcceptOptions{InsecureSkipVerify: true, CompressionMode: ws.CompressionDisabled})
+	handshake := &handshakeWriter{ResponseWriter: w}
+	conn, err := ws.Accept(handshake, r, &ws.AcceptOptions{InsecureSkipVerify: true, CompressionMode: ws.CompressionDisabled})
 	if err != nil {
 		return
 	}
@@ -92,6 +93,7 @@ func (t *Transport) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if t.makePeer != nil {
 		p = t.makePeer(conn)
 	}
+	p.abort = func() { cancel(); _ = handshake.network.Close() }
 	t.mu.Lock()
 	if t.stopping {
 		t.mu.Unlock()
@@ -151,7 +153,7 @@ func (t *Transport) read(ctx context.Context, conn *ws.Conn, p *peer, token, use
 		}
 		cmd, failure := decode(body)
 		if failure.Code != "" {
-			admission := t.service.Check(userID, id, game.Command{})
+			admission := t.service.Check(userID, id, rejectedCommand(cmd))
 			if admission.Drop {
 				continue
 			}
@@ -214,7 +216,7 @@ func (t *Transport) Shutdown(ctx context.Context) error {
 		case <-p.done:
 		case <-ctx.Done():
 			for _, remaining := range peers {
-				_ = remaining.conn.CloseNow()
+				remaining.abort()
 			}
 			return ctx.Err()
 		}

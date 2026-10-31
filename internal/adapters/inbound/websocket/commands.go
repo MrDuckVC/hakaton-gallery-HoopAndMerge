@@ -36,7 +36,9 @@ func decode(body []byte) (game.Command, game.Failure) {
 		c.RequestID = id
 	}
 	switch c.Type {
-	case "world.ready", "world.enter", "player.move", "chat.send", "exhibit.inspect", "guide.ask", "guide.cancel":
+	case "player.move":
+		c.RequestID = ""
+	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.ask", "guide.cancel":
 	default:
 		if c.Type == "" {
 			return fail("VALIDATION_ERROR")
@@ -267,4 +269,16 @@ func validUnicodeEscapes(body []byte) bool {
 		i += 6
 	}
 	return true
+}
+
+// rejectedCommand retains readable IDs only for recognized ordinary commands.
+// Invalid moves and guide asks still consume the aggregate error window, without
+// acquiring an ordinary request ID or bypassing future durable guide idempotency.
+func rejectedCommand(c game.Command) game.Command {
+	switch c.Type {
+	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.cancel":
+		return game.Command{Type: c.Type, RequestID: c.RequestID}
+	default:
+		return game.Command{}
+	}
 }

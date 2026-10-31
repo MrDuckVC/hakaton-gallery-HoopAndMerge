@@ -20,6 +20,7 @@ type socket interface {
 
 type peer struct {
 	conn      socket
+	abort     func()
 	mu        sync.Mutex
 	queue     [][]byte
 	bytes     int

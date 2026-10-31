@@ -122,3 +122,5 @@ Docker smoke сам создаёт отдельный временный мир,
 До подключения B05 world.ready/player.move/world.enter/exhibit.inspect не выполняются и получают GAME_NOT_READY; chat.send/guide.ask/guide.cancel возвращают SERVICE_UNAVAILABLE. Ошибки структуры, дедупликации и лимитов проверяются до неподключённого обработчика. Периодического players.state и сохранения перемещений пока нет.
 
 WS живёт независимо от десятисекундного HTTP deadline. Handshake, проверки БД и вызовы обработчиков ограничены 10 секундами; исходящая запись — 10 секундами. Ping — 20 секунд, pong deadline — 10 секунд. При shutdown upgrade/команды останавливаются, hijacked WS явно закрываются с 1012 в рамках общего deadline 15 секунд.
+
+Неверные заголовки WS handshake возвращают контрактный HTTP 400 VALIDATION_ERROR JSON; технические сообщения библиотеки наружу не передаются. При истечении shutdown deadline транспорт закрывает исходные hijacked TCP-сокеты, прерывая ожидание ответного Close без дополнительного пятисекундного ожидания coder/websocket.
