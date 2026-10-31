@@ -4,4 +4,6 @@ contract.md в docs/api — точная редакция API пользоват
 
 Порядок чтения: PROJECT_CONTEXT -> api/contract -> ARCHITECTURE -> DATA_MODEL -> DEVELOPMENT -> IMPLEMENTATION_PLAN -> TESTING -> DECISIONS. AGENTS.md — короткие инструкции, без дублирования этих файлов.
 
+REQUIREMENTS.md — исходное задание и уточнение организатора от 31.10.2026, топология, два режима показа и матрица приёмки. ISSUE_BACKLOG.md — разделение работ по областям, критерии готовности и ссылки на GitHub issues.
+
 При изменении модели данных сверять SQL и DATA_MODEL. При изменении wire сверять contract/OpenAPI/WS schemas/examples. При изменении команды — README/AGENTS/DEVELOPMENT/Makefile. Источник генерации машинных файлов tools/build-contracts.mjs; после редактирования перегенерировать и валидировать. tools/write-docs.mjs — первоначальный scaffold, не запускать поверх отредактированных документов.

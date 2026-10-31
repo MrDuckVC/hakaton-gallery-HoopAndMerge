@@ -8,8 +8,13 @@
 | Cookie session + one origin | Браузеры в LAN | Exact Origin, server expiry, один WS/account |
 | PostgreSQL | Выбранный командой стек | Unique idempotency, транзакции, durable queue |
 | Один Ollama worker | Laptop VRAM | FIFO8, явные timeout/queue failures |
+| Один серверный ноутбук, клиенты только браузер | Уточнение организатора 31.10.2026 11:47 | Backend/БД/ИИ/контент на RTX 4070 Laptop; frontend dist без внешних runtime-ресурсов |
+| Два режима офлайн-показа | Прямое требование организатора | LAN/Wi-Fi без интернета, затем localhost на сервере с выключенным Wi-Fi |
+| Выбор model tag по замерам на сервере | Уточнение пользователя о RTX 4070 Laptop | Измерить реальную VRAM и совместную нагрузку с Three.js; проверить основной и резервный варианты |
 | Generation как история | Восстановление после потери события | /generations и by-request, не /messages |
 | Photo original+thumbnail files | Размер и скорость | SQL/FS компенсации, приватные handlers |
 | Wire schemas из генератора | Согласованность двух repo | Проверять Markdown,schemas,fixtures вместе |
+| Forward-only goose, отдельная команда миграций | Решение пользователя для B01 | Сервер проверяет совместимость схемы только чтением; миграции применяются до запуска, повторный up сохраняет данные |
+| Ограниченный lifecycle B01 | Подсистемы игры ещё не реализованы | Порты stop/cancel/save/close в usecase; запуск не зависит от наличия мира/Ollama, общий shutdown deadline 15s |
 
 Для новых решений добавлять причину и последствия, не временные баги. Действующая семантика v1 закреплена в api/contract.md; изменения обязательных полей/событий требуют новой версии, не скрытых aliases.

@@ -34,6 +34,30 @@ linters:
             - '**/internal/domain/**/*.go'
             - '!$test'
           deny:
+            - pkg: net
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: os
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: io/fs
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: path/filepath
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: embed
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: database/sql
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/jackc/pgx
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/coder/websocket
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/ollama
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/pressly/goose
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/migrations
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
             - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase
               desc: Domain не зависит от usecase.
             - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters
@@ -46,6 +70,30 @@ linters:
             - '**/internal/usecase/**/*.go'
             - '!$test'
           deny:
+            - pkg: net
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: os
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: io/fs
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: path/filepath
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: embed
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: database/sql
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/jackc/pgx
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/coder/websocket
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/ollama
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/pressly/goose
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
+            - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/migrations
+              desc: Инфраструктура доступна только через порты внутренних слоёв.
             - pkg: github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters
               desc: Usecase не зависит от HTTP.
             - pkg: golang.org/x/crypto

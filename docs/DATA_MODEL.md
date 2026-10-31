@@ -1,6 +1,6 @@
-# Предлагаемая модель PostgreSQL
+# Модель PostgreSQL
 
-Это проект миграций, не утверждение о существующей БД. Внешние ID сериализуются строками; UUID внутри допустим. Все timestamps timestamptz. SQL параметризован. Владельца брать из сессии.
+B01 реализует `users`, `sessions`, `player_states` в `migrations/00001_users_sessions_player_states.sql`; остальные таблицы ниже — проект для задач их подсистем. `goose_db_version` — служебная история миграций. Внешние ID сериализуются строками; UUID внутри допустим. Все timestamps timestamptz. SQL параметризован. Владельца брать из сессии.
 
 | Таблица | Основные поля / ограничения |
 |---|---|
@@ -24,3 +24,10 @@ Photo fingerprint: SHA-256 проверенного исходного файл�
 Файловая система и SQL не имеют общей транзакции: staging -> decode+thumbnail -> atomic rename -> SQL commit -> доступ. При ошибке удалить собственные staged/final файлы; периодический cleanup сверяет references, не трогает чужие активные uploads. Фото становится видимо только после полного commit. memory_event PHOTO_CAPTURED создаётся в той же SQL транзакции. published=true фиксируется перед chat broadcast.
 
 Positions: save раз в5s и disconnect; door transition сохранить до ACK. cursor history по (created_at,id), привязан к user+guide; album аналогично user. Подписанный opaque cursor либо строгая server-side lookup/валидация, не доверять переданному user_id. Мир файловый, FK на room/guide заменяется startup/service validation. Миграции append-only, down с потерей данных только по прямому запросу.
+
+
+## Начальная схема B01
+
+Ключи users/sessions — UUID без расширений PostgreSQL, выдаются приложением. Username хранится lowercase с UNIQUE и CHECK `[a-z0-9_]{3,32}`; display_name 1–32 кодовые точки, avatar_color `#RRGGBB`. `password_hash` — непрозрачная непустая строка encoded KDF с параметрами/солью; hashing добавляет B02. Token hash — 32-байтный SHA-256 в bytea с UNIQUE; plaintext-токены не хранятся. sessions дополнительно содержит created_at, expires_at > created_at, индексы user_id и expires_at; revoked_at nullable. FK не удаляют данные каскадно.
+
+Player state хранит world_version/room_id, конечные x/z, y=0, yaw в [-pi,pi), pitch в [-pi/2,pi/2], updated_at. Поля epoch/ack_seq относятся к игровому соединению и пока не добавляются в постоянную схему. Команда `bin/migrate up` применяет SQL транзакционно, повторный запуск сохраняет данные; down не предоставляется. Backend читает точный набор применённых версий, включая начальную запись goose 0, и не инициализирует схему. Команды и отдельная тестовая БД — DEVELOPMENT.md.

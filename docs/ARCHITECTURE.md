@@ -51,3 +51,10 @@ cmd/server: config -> DB check -> world validation usecase -> recovery usecase -
 ## Архитектурная проверка
 
 Domain unit tests без БД/сети/файлов; usecase tests через fake ports; адаптеры проверяются отдельно integration tests. Контролировать импорты через go list и архитектурный тест либо depguard в фактической версии golangci-lint. PR с нарушением слоёв не принимается даже при проходящих функциональных тестах. Исключения требуют изменения архитектурного требования пользователем, а не записи о временном обходе.
+
+
+## Реализованная основа B01
+
+`internal/config` — внешний конфигурационный пакет composition root. `cmd/server` собирает pgxpool, read-only schema check и HTTP-адаптер; `cmd/migrate` — отдельная административная точка входа для forward-only goose. SQL встроен из `migrations/`. Domain/usecase не импортируют config, migrations или библиотеки SQL/HTTP.
+
+`internal/usecase/lifecycle` определяет порты StopAccepting, CancelGenerations, SavePositions, CloseConnections. Участники обязаны соблюдать context deadline; координатор продолжает cleanup после ошибок и ограничивает ожидание каждого участника общим контекстом. По истечении deadline последующие cleanup-вызовы запускаются best-effort с отменённым контекстом; процесс не ждёт зависшие реализации. Composition root ограничивает весь shutdown, включая HTTP drain/закрытие пула, 15 секундами и принудительно закрывает HTTP по deadline. Пока игровые участники не зарегистрированы; B03/B07 добавят world validation и recovery до listeners. Это не заменяет будущие сценарии сохранения и отмены пустыми реализациями.

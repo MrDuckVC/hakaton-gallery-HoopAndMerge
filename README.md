@@ -6,27 +6,33 @@ Backend многопользовательской 3D-галереи: посещ
 
 Репозиторий: https://github.com/MrDuckVC/hakaton-gallery-HoopAndMerge. Frontend разрабатывается отдельно.
 
+Единственный сервер — ноутбук с RTX 4070 Laptop: backend, PostgreSQL, Ollama и контент находятся на нём. На остальных ноутбуках нужен только браузер. Обязательны два показа: несколько игроков по Wi-Fi без интернета, затем игра с локальным ИИ в браузере на серверном ноутбуке с выключенным Wi-Fi. Модель выбирается по замерам на этом ноутбуке. Требования и приёмка — docs/REQUIREMENTS.md; задачи — docs/ISSUE_BACKLOG.md.
+
 ## Стек
 Go net/http, PostgreSQL, pgx/v5, coder/websocket, локальный Ollama. Версии фиксируются в go.mod/go.sum и docker-compose.yml. Один процесс Go обслуживает HTTP и WS, одна локальная модель — всех гидов.
 
 ## Запуск
 
-Инициализирован Go-модуль `github.com/MrDuckVC/hakaton-gallery-HoopAndMerge`, минимальная версия Go — 1.27.1. Внешних Go-зависимостей пока нет.
+Go-модуль `github.com/MrDuckVC/hakaton-gallery-HoopAndMerge`, Go >=1.27.1; pgx/v5 и goose закреплены в go.mod/go.sum.
 
 ```sh
+export PATH="/usr/local/go/bin:$PATH" # если требуется
+cp .env.example .env
+# Отредактируйте .env: пароли, origins, версия мира и заранее подготовленный model tag.
+set -a
+. ./.env
+set +a
+docker compose up -d --wait postgres
 make build
-make run
+make migrate-up
+./bin/gallery
 ```
 
-`cmd/server` пока сообщает об инициализации и завершается. HTTP/WS API, подключение PostgreSQL и Ollama ещё не реализованы; сетевой порт не открывается. `make build` создаёт `bin/gallery`.
+Сервер проверяет конфигурацию, соединение с PostgreSQL и точный набор применённых миграций, затем слушает `HTTP_ADDR`. Схему при старте не меняет. SIGINT/SIGTERM запускает завершение с общим deadline 15 секунд. `make migrate-status` показывает миграции; повторный `make migrate-up` сохраняет данные. Compose хранит PostgreSQL в постоянном named volume.
 
-Если Go установлен в `/usr/local/go`, добавьте его в PATH:
+B01 реализует запуск и lifecycle. Игровые HTTP/WS API, авторизация, мир и Ollama ещё не подключены; HTTP отвечает контрактным JSON `404 NOT_FOUND`. Проверяются настройки мира и модели, но их доступность пока не блокирует запуск. Frontend dist не раздаётся.
 
-```sh
-export PATH="/usr/local/go/bin:$PATH"
-```
-
-Docker-образ собирается командой `make docker-build` (см. docs/DEVELOPMENT.md). Compose и `.env.example` пока остаются заготовками. Параметры будущего запуска описаны в docs/DEVELOPMENT.md. Перед офлайн-демонстрацией потребуется подготовить БД, зависимости, модель и контент.
+Команды миграций, отдельная тестовая БД, Docker smoke-test и подготовка офлайн-работы — в docs/DEVELOPMENT.md. Docker-образ собирается через `make docker-build` и содержит `/gallery` и административный `/migrate`.
 
 ## API и документы
 - docs/api/contract.md — нормативный контракт пользователя; имеет приоритет над старыми планами.
@@ -47,10 +53,10 @@ make coverage
 make contracts
 ```
 
-Также доступны `make test`, `make vet`, `make fmt`. Для конкурентного кода — `go test -race ./...`. Тестируется сообщение точки входа о недоступности API. `make coverage` запускает тесты с race detector и требует суммарное покрытие всех Go-пакетов не ниже 60%; отчёт — `coverage.out`. Тестов бизнес-логики пока нет. `make lint` при первом запуске скачивает golangci-lint версии из Makefile; для офлайн-работы установите его заранее.
+Также доступны `make test`, `make vet`, `make fmt`. Для конкурентного кода — `go test -race ./...`. Тестируются конфигурация, ошибки запуска, lifecycle, HTTP-контракт и миграции. `make coverage` запускает тесты с race detector и требует суммарное покрытие всех Go-пакетов не ниже 60%; отчёт — `coverage.out`. Интеграционные тесты требуют отдельный `TEST_DATABASE_URL`; без него они явно пропускаются. `make lint` при первом запуске скачивает golangci-lint версии из Makefile; для офлайн-работы установите его заранее.
 
 `make contracts` генерирует и проверяет схемы API; Node нужен только этим инструментам.
 
-Проект содержит Go-каркас и документацию, но ещё не работающий игровой сервер и не готовый пакет мира. Примеры используют демонстрационные ID и размер картинки; реальный asset не включён. Карта документации — docs/INDEX.md.
+Проект содержит запускаемый backend с PostgreSQL и документацию, но ещё не работающий игровой сервер и не готовый пакет мира. Примеры используют демонстрационные ID и размер картинки; реальный asset не включён. Карта документации — docs/INDEX.md.
 
-GitHub Actions (`.github/workflows/ci.yml`) запускается на push, pull_request и вручную: форматирование, vet, race-тесты с порогом 60%, golangci-lint и Go-сборка. После успешных проверок собирается Docker-образ и проверяется запуск контейнера без сети. Образ не публикуется в registry.
+GitHub Actions (`.github/workflows/ci.yml`) запускается на push, pull_request и вручную: форматирование, vet, race-тесты с порогом 60%, golangci-lint и Go-сборка. После успешных проверок собирается Docker-образ и проверяется запуск контейнера с отдельной тестовой PostgreSQL и штатное завершение по SIGTERM. Образ не публикуется в registry.
