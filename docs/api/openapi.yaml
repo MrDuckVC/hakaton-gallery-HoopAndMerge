@@ -84,6 +84,38 @@
                 "minLength": 1
                 "maxLength": 128
                 "pattern": "^[\\x21-\\x7E]+$"
+        "413":
+          "description": "413"
+          "content":
+            "application/json":
+              "schema":
+                "$ref": "#/components/schemas/ErrorResponse"
+          "headers":
+            "Cache-Control":
+              "schema":
+                "const": "no-store"
+            "X-Request-ID":
+              "schema":
+                "type": "string"
+                "minLength": 1
+                "maxLength": 128
+                "pattern": "^[\\x21-\\x7E]+$"
+        "415":
+          "description": "415"
+          "content":
+            "application/json":
+              "schema":
+                "$ref": "#/components/schemas/ErrorResponse"
+          "headers":
+            "Cache-Control":
+              "schema":
+                "const": "no-store"
+            "X-Request-ID":
+              "schema":
+                "type": "string"
+                "minLength": 1
+                "maxLength": 128
+                "pattern": "^[\\x21-\\x7E]+$"
         "429":
           "description": "429"
           "content":
@@ -204,6 +236,38 @@
                 "pattern": "^[\\x21-\\x7E]+$"
         "403":
           "description": "403"
+          "content":
+            "application/json":
+              "schema":
+                "$ref": "#/components/schemas/ErrorResponse"
+          "headers":
+            "Cache-Control":
+              "schema":
+                "const": "no-store"
+            "X-Request-ID":
+              "schema":
+                "type": "string"
+                "minLength": 1
+                "maxLength": 128
+                "pattern": "^[\\x21-\\x7E]+$"
+        "413":
+          "description": "413"
+          "content":
+            "application/json":
+              "schema":
+                "$ref": "#/components/schemas/ErrorResponse"
+          "headers":
+            "Cache-Control":
+              "schema":
+                "const": "no-store"
+            "X-Request-ID":
+              "schema":
+                "type": "string"
+                "minLength": 1
+                "maxLength": 128
+                "pattern": "^[\\x21-\\x7E]+$"
+        "415":
+          "description": "415"
           "content":
             "application/json":
               "schema":
@@ -1738,18 +1802,16 @@
       "properties":
         "username":
           "type": "string"
-          "pattern": "^[A-Za-z0-9_]{3,32}$"
+          "description": "После Unicode White_Space trim: [A-Za-z0-9_]{3,32}; хранится и возвращается lowercase. Проверяет сервер."
         "display_name":
           "type": "string"
-          "minLength": 1
-          "maxLength": 32
+          "description": "1–32 Unicode-кодовые точки после Unicode White_Space trim. Проверяет сервер."
         "password":
           "type": "string"
           "minLength": 1
           "maxLength": 128
           "writeOnly": true
           "description": "8–128 байт UTF-8; без trim/нормализации. Байтовый минимум проверяет сервер."
-          "pattern": "^[\\x21-\\x7E]+$"
       "required":
         - "username"
         - "display_name"
@@ -1760,15 +1822,13 @@
       "properties":
         "username":
           "type": "string"
-          "minLength": 1
-          "maxLength": 32
+          "description": "После Unicode White_Space trim: [A-Za-z0-9_]{3,32}; хранится и возвращается lowercase. Проверяет сервер."
         "password":
           "type": "string"
           "minLength": 1
           "maxLength": 128
           "writeOnly": true
           "description": "8–128 байт UTF-8; без trim/нормализации."
-          "pattern": "^[\\x21-\\x7E]+$"
       "required":
         - "username"
         - "password"

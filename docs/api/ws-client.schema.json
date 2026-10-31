@@ -361,20 +361,18 @@
       "properties": {
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9_]{3,32}$"
+          "description": "После Unicode White_Space trim: [A-Za-z0-9_]{3,32}; хранится и возвращается lowercase. Проверяет сервер."
         },
         "display_name": {
           "type": "string",
-          "minLength": 1,
-          "maxLength": 32
+          "description": "1–32 Unicode-кодовые точки после Unicode White_Space trim. Проверяет сервер."
         },
         "password": {
           "type": "string",
           "minLength": 1,
           "maxLength": 128,
           "writeOnly": true,
-          "description": "8–128 байт UTF-8; без trim/нормализации. Байтовый минимум проверяет сервер.",
-          "pattern": "^[\\x21-\\x7E]+$"
+          "description": "8–128 байт UTF-8; без trim/нормализации. Байтовый минимум проверяет сервер."
         }
       },
       "required": [
@@ -389,16 +387,14 @@
       "properties": {
         "username": {
           "type": "string",
-          "minLength": 1,
-          "maxLength": 32
+          "description": "После Unicode White_Space trim: [A-Za-z0-9_]{3,32}; хранится и возвращается lowercase. Проверяет сервер."
         },
         "password": {
           "type": "string",
           "minLength": 1,
           "maxLength": 128,
           "writeOnly": true,
-          "description": "8–128 байт UTF-8; без trim/нормализации.",
-          "pattern": "^[\\x21-\\x7E]+$"
+          "description": "8–128 байт UTF-8; без trim/нормализации."
         }
       },
       "required": [
