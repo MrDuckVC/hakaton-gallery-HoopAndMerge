@@ -28,6 +28,14 @@ Positions: save раз в5s и disconnect; door transition сохранить д
 
 ## Начальная схема B01
 
-Ключи users/sessions — UUID без расширений PostgreSQL, выдаются приложением. Username хранится lowercase с UNIQUE и CHECK `[a-z0-9_]{3,32}`; display_name 1–32 кодовые точки, avatar_color `#RRGGBB`. `password_hash` — непрозрачная непустая строка encoded KDF с параметрами/солью; hashing добавляет B02. Token hash — 32-байтный SHA-256 в bytea с UNIQUE; plaintext-токены не хранятся. sessions дополнительно содержит created_at, expires_at > created_at, индексы user_id и expires_at; revoked_at nullable. FK не удаляют данные каскадно.
+Ключи users/sessions — UUID без расширений PostgreSQL, выдаются приложением. Username хранится lowercase с UNIQUE и CHECK `[a-z0-9_]{3,32}`; display_name 1–32 кодовые точки, avatar_color `#RRGGBB`. `password_hash` — непрозрачная непустая строка encoded KDF с параметрами/солью; B02 хранит `$pbkdf2-sha256$600000$<salt-base64>$<key-base64>`: HMAC-SHA-256, случайная соль 16 байт, ключ 32 байта. Token hash — 32-байтный SHA-256 в bytea с UNIQUE; plaintext-токены не хранятся. sessions дополнительно содержит created_at, expires_at > created_at, индексы user_id и expires_at; revoked_at nullable. FK не удаляют данные каскадно.
 
 Player state хранит world_version/room_id, конечные x/z, y=0, yaw в [-pi,pi), pitch в [-pi/2,pi/2], updated_at. Поля epoch/ack_seq относятся к игровому соединению и пока не добавляются в постоянную схему. Команда `bin/migrate up` применяет SQL транзакционно, повторный запуск сохраняет данные; down не предоставляется. Backend читает точный набор применённых версий, включая начальную запись goose 0, и не инициализирует схему. Команды и отдельная тестовая БД — DEVELOPMENT.md.
+
+## Операции B02
+
+Существующая миграция B01 покрывает B02 и остаётся неизменной. Новые UUID v4 и cookie-токены генерирует приложение. Токен — 32 случайных байта в base64url без padding, lookup — SHA-256 от cookie-строки. Срок и время создания сессии задаются одной парой UTC timestamps с разницей 24 часа, чтение не продлевает срок.
+
+Создание аккаунта+player_state+session и замена прежней cookie-сессии атомарны. Отзыв обновляет только строку с совпавшим token_hash, `revoked_at IS NULL` и `expires_at > now`; остальные сессии пользователя не меняются. Повторный logout безопасен. Ошибка UNIQUE username преобразуется в USERNAME_TAKEN, другие driver errors не раскрываются через API.
+
+Отсутствующий player_state восстанавливается через INSERT ON CONFLICT DO NOTHING. Запись исправления выполняется в транзакции с разделяемой блокировкой строки действующей сессии; отзыв сериализуется с этой записью, срок повторно проверяется перед commit. Исправление существующей позиции сравнивает прочитанный `updated_at` и обновляет его через `GREATEST(clock_timestamp(), updated_at + interval '1 microsecond')`; конфликт требует перечитывания. Будущие записи позиции B05 также должны изменять ревизию при каждом сохранении, чтобы `/me` не затёр более новое состояние.

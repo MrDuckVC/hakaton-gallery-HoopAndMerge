@@ -11,7 +11,11 @@ import (
 
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/httpapi"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/postgres"
+	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/security"
+	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/sessionevents"
+	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/world"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/config"
+	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/auth"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/lifecycle"
 )
 
@@ -33,7 +37,11 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 		pool.Close()
 		return fmt.Errorf("open HTTP listener: %w", err)
 	}
-	return serve(ctx, httpapi.NewServer(cfg.HTTPAddr), listener, lifecycle.Coordinator{}, logger, 15*time.Second, pool.Close)
+	server := httpapi.NewServer(cfg.HTTPAddr)
+	sessions := sessionevents.New()
+	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, world.Unavailable{}, sessions, time.Now)
+	server.ConfigureAuth(accounts, cfg.AllowedOrigins, cfg.CookieSecure)
+	return serve(ctx, server, listener, lifecycle.Coordinator{}, logger, 15*time.Second, pool.Close)
 }
 
 func serve(ctx context.Context, server *httpapi.Server, listener net.Listener, participants lifecycle.Coordinator, logger *slog.Logger, timeout time.Duration, closeStorage func()) error {

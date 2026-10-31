@@ -1,6 +1,6 @@
 # Локальная разработка и конфигурация
 
-B01: backend слушает HTTP, проверяет PostgreSQL/схему и обрабатывает SIGINT/SIGTERM. Игровые сценарии, WS, загрузка мира, раздача frontend и интеграция Ollama ещё не реализованы. Текущие HTTP-запросы возвращают JSON `404 NOT_FOUND` с `X-Request-ID` и `Cache-Control: no-store`.
+B01: backend слушает HTTP, проверяет PostgreSQL/схему и обрабатывает SIGINT/SIGTERM. B02 подключает API аккаунтов и cookie-сессии. Игровые сценарии, WS, загрузка мира, раздача frontend и интеграция Ollama ещё не реализованы. Все ответы приложения имеют `X-Request-ID` и `Cache-Control: no-store`; неизвестные маршруты возвращают JSON `404 NOT_FOUND`.
 
 ## Подготовка и запуск
 
@@ -39,11 +39,23 @@ make migrate-status                # либо ./bin/migrate status
 | OLLAMA_MODEL | Обязательный заранее подготовленный tag без пробелов; выбрать по A01 |
 | LOG_LEVEL | `info`; доступны `debug`, `info`, `warn`, `error` |
 
-Явно пустые значения отклоняются. `.env.example` — шаблон; `change-me`, адреса и model tag замените. Настройки мира/фото/cookie/origins/Ollama предназначены и для следующих подсистем; B01 не реализует их игровые возможности. Нет startup-проверки Ollama и файлов мира. При реализации B03/B07 добавить world validation и recovery до listeners согласно ARCHITECTURE.md.
+Явно пустые значения отклоняются. `.env.example` — шаблон; `change-me`, адреса и model tag замените. Настройки cookie/origins используются B02; настройки мира/фото/Ollama предназначены и для следующих подсистем. Нет startup-проверки Ollama и файлов мира. При реализации B03/B07 добавить world validation и recovery до listeners согласно ARCHITECTURE.md.
 
 Compose использует `postgres:18.6-bookworm`, постоянный volume на `/var/lib/postgresql`, healthcheck и порт только `127.0.0.1:${POSTGRES_PORT:-5432}`. `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` должны соответствовать `DATABASE_URL`. Изменение этих переменных не меняет credentials уже инициализированного volume.
 
-Startup deadline 10 секунд; DB connect/query timeout 5 секунд; максимум 10 соединений. HTTP: headers 5 секунд, read 15, write 30, idle 60. Shutdown — общий deadline 15 секунд с независимым контекстом: остановить listener/новые запросы, lifecycle-порты отмены генераций/сохранения позиций/закрытия WS, HTTP drain, закрытие пула. При ошибке выполняется последующая очистка; по deadline последующие lifecycle cleanup-вызовы и закрытие пула предпринимаются best-effort без ожидания зависших участников, HTTP закрывается принудительно, процесс завершается с ненулевым кодом. Сейчас игровые участники отсутствуют. Не держать SQL-транзакции при сетевом/file/LLM I/O.
+Startup deadline 10 секунд; DB connect/query timeout 5 секунд; максимум 10 соединений. HTTP: headers 5 секунд, read 15, write 30, idle 60; контекст обработки запроса ограничен 10 секундами. Shutdown — общий deadline 15 секунд с независимым контекстом: остановить listener/новые запросы, lifecycle-порты отмены генераций/сохранения позиций/закрытия WS, HTTP drain, закрытие пула. При ошибке выполняется последующая очистка; по deadline последующие lifecycle cleanup-вызовы и закрытие пула предпринимаются best-effort без ожидания зависших участников, HTTP закрывается принудительно, процесс завершается с ненулевым кодом. Сейчас игровые участники отсутствуют. Не держать SQL-транзакции при сетевом/file/LLM I/O.
+
+## Авторизация B02 и интеграция мира
+
+Маршруты: `POST /api/v1/auth/register`, `POST /api/v1/auth/login`, `POST /api/v1/auth/logout`, `GET /api/v1/me`. Для POST обязательно передавать точный разрешённый `Origin`, в том числе при запросах curl. CORS для сторонних origin не включён. Отсутствующий/`null` Origin отклоняется; та же проверка подготовлена для будущего WS upgrade.
+
+До B03 production использует `world.Unavailable`: register и авторизованный `/me` возвращают 503, не создавая фиктивное состояние. `/me` без действующей сессии возвращает 401. Login существующего аккаунта и logout доступны независимо от каталога. B03 должен внедрить реализацию порта `auth.World` вместо `world.Unavailable` в `cmd/server`: `Start` возвращает проверенный spawn с версией мира, `Valid` проверяет версию/зал/геометрию сохранённой позиции. Fixtures подключаются только в тестах.
+
+Login/register делят скользящий лимит 10 попыток за 60 секунд по IP из TCP `RemoteAddr`; `X-Forwarded-For` не доверяется. Лимит хранится в процессе и не сбрасывается новым HTTP-соединением, cookie или logout; перезапуск процесса его очищает. Отказ Origin выполняется раньше учёта попытки, допустимые по Origin запросы учитываются до разбора JSON. При reverse proxy несколько клиентов с одним upstream IP делят лимит: прямой LAN-доступ не требует доверенных forwarding headers.
+
+Cookie `museum_session` действует ровно 24 часа без продления, `HttpOnly; SameSite=Lax; Path=/; Max-Age=86400`. `Secure` включён по умолчанию; для локального HTTP явно задайте `COOKIE_SECURE=false`. Пароли и токены не логируются; PostgreSQL хранит encoded PBKDF2 verifier и SHA-256 токена. Замена отзывает только действующую сессию из переданной cookie, включая cookie другого аккаунта. Удаление cookie при logout происходит после успешного сохранения отзыва; ошибка БД возвращает 503.
+
+Порт наблюдения `auth.Service.Observe(ctx, session)` предназначен для B04: использовать контекст жизни игрового соединения, отменять подписку при отключении. Он регистрирует наблюдателя до повторной проверки БД. Hub доставляет `revoked` после commit или `expired` по неизменному deadline; закрытый канал без события означает отменённое наблюдение. B04 должен сопоставить причину с close 4001, проверять connection ID и повторно проверять сессию перед изменяющими командами. Сейчас WS transport отсутствует.
 
 ## Проверки и отдельная тестовая БД
 
@@ -82,7 +94,7 @@ Multi-stage Dockerfile: `golang:1.27.1`, статические `/gallery` и `/
 
 GitHub Actions: gofmt, vet, race/coverage с PostgreSQL integration tests, lint, build, генерация и проверка отсутствия drift контрактов, затем Docker build и smoke-test с отдельной PostgreSQL. Workflow не публикует образ и не выполняет deploy.
 
-До отключения интернета: `go mod download`, `make lint` для установки закреплённого линтера, `docker compose pull postgres`, `make build`, `make docker-build`; отдельно подготовить модель и контент по A01/C01/I01. Runtime B01 использует только PostgreSQL, без внешних API. Не выполнять `tools/write-docs.mjs` поверх ручных изменений. `world-check` пока не реализован.
+До отключения интернета: `go mod download`, `make lint` для установки закреплённого линтера, `docker compose pull postgres`, `make build`, `make docker-build`; отдельно подготовить модель и контент по A01/C01/I01. Runtime B01/B02 использует только PostgreSQL и стандартную криптографию Go, без внешних API. Не выполнять `tools/write-docs.mjs` поверх ручных изменений. `world-check` пока не реализован.
 
 Frontend остаётся в отдельном репозитории. Proxy `/api` должен поддерживать WS и сохранять Origin. Bind `0.0.0.0` не является браузерным origin; адреса LAN и localhost задаются явно. Пакеты мира/фото и раздача dist появятся в следующих задачах.
 

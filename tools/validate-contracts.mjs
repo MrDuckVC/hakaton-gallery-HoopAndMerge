@@ -31,7 +31,22 @@ function check(v,s,doc){
  }
 }
 refs(api,api);refs(client,client);refs(server,server);
+for (const name of ['RegisterRequest', 'LoginRequest']) {
+ const schema=api.components.schemas[name];
+ const credentials={username:'alice',password:' пароль '};
+ if(name==='RegisterRequest')credentials.display_name='Алиса';
+ check(credentials,schema,api);
+ credentials.password='😀😀'; // Eight UTF-8 bytes, two code points.
+ check(credentials,schema,api);
+ credentials.username='\u0085ALICE\u2003';
+ if(name==='RegisterRequest')credentials.display_name='  '+ '😀'.repeat(32)+'  ';
+ check(credentials,schema,api); // Public text constraints apply after Unicode trim.
+}
+const registerSchema=api.components.schemas.RegisterRequest;
+assert.throws(()=>check({username:'alice',display_name:'A\u0000B',password:'password'},registerSchema,api));
+check({username:'alice',display_name:'Алиса',password:'pass\u0000word'},registerSchema,api);
 const paths=api.paths;assert(!paths['/guides/{guide_id}/messages']);assert(paths['/guides/{guide_id}/generations/by-request/{request_id}']);assert(paths['/photos/{photo_id}/thumbnail']);
+for (const route of ['/auth/register','/auth/login']) for (const status of ['413','415']) assert(paths[route].post.responses[status],route+' missing '+status);
 const serverTypes=server.oneOf.map(x=>x.properties.type.const);assert(!serverTypes.includes('world.rooms_available'));assert(serverTypes.includes('guide.cancelled'));
 const operations=Object.values(paths).flatMap(x=>Object.values(x));assert.equal(new Set(operations.map(x=>x.operationId)).size,operations.length);
 for(const operation of operations)for(const parameter of operation.parameters??[]){if(parameter.in==='path')assert.equal(parameter.required,true);}

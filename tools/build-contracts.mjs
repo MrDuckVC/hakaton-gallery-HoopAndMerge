@@ -45,8 +45,8 @@ const body = schema => ({required:true,content:{'application/json':{schema}}});
 const param = (name,location,schema,required=true) => ({name,in:location,required,schema});
 const operation = (operationId,summary,responses,extra={}) => ({operationId,summary,responses,...extra});
 const P = {};
-P['/auth/register']={post:operation('register','Регистрация и создание сессии',{'201':{...success(ref('AuthResponse')),headers:{'Set-Cookie':{schema:str(),description:'museum_session; HttpOnly; SameSite=Lax; Path=/; Max-Age=86400; Secure при HTTPS'}}},...errors([400,403,409,429])},{security:[],requestBody:body(ref('RegisterRequest'))})};
-P['/auth/login']={post:operation('login','Вход и создание сессии',{'200':{...success(ref('AuthResponse')),headers:{'Set-Cookie':{schema:str()}}},...errors([400,401,403,429])},{security:[],requestBody:body(ref('LoginRequest'))})};
+P['/auth/register']={post:operation('register','Регистрация и создание сессии',{'201':{...success(ref('AuthResponse')),headers:{'Set-Cookie':{schema:str(),description:'museum_session; HttpOnly; SameSite=Lax; Path=/; Max-Age=86400; Secure при HTTPS'}}},...errors([400,403,409,413,415,429])},{security:[],requestBody:body(ref('RegisterRequest'))})};
+P['/auth/login']={post:operation('login','Вход и создание сессии',{'200':{...success(ref('AuthResponse')),headers:{'Set-Cookie':{schema:str()}}},...errors([400,401,403,413,415,429])},{security:[],requestBody:body(ref('LoginRequest'))})};
 P['/auth/logout']={post:operation('logout','Отзыв текущей сессии',{'204':{description:'Cookie удалена; повторный выход также успешен'},...errors([403])},{security:[]})};
 P['/me']={get:operation('getMe','Пользователь и сохранённая позиция',{'200':success(ref('MeResponse')),...errors([401])})};
 P['/world/manifest']={get:operation('getManifest','Версия мира и бюджет контента',{'200':success(ref('Manifest')),...errors([401])})};
@@ -111,6 +111,10 @@ const asciiID=()=>str({minLength:1,maxLength:128,pattern:'^[\\x21-\\x7E]+$'});
 const uuid=()=>str({format:'uuid',pattern:'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'});
 const safeInt=extra=>integer({minimum:0,maximum:9007199254740991,...extra});
 // JSON Schema minLength считает code points, пароль ограничивается байтами UTF-8.
+for (const name of ['RegisterRequest','LoginRequest']) {
+ S[name].properties.username=str({description:'После Unicode White_Space trim: [A-Za-z0-9_]{3,32}; хранится и возвращается lowercase. Проверяет сервер.'});
+}
+S.RegisterRequest.properties.display_name=str({pattern:'^[^\\u0000]*$',description:'1–32 Unicode-кодовые точки после Unicode White_Space trim; U+0000 запрещён (400 VALIDATION_ERROR). Длину после trim проверяет сервер.'});
 S.RegisterRequest.properties.password.minLength=1;
 S.RegisterRequest.properties.password.description='8–128 байт UTF-8; без trim/нормализации. Байтовый минимум проверяет сервер.';
 S.LoginRequest.properties.password.description='8–128 байт UTF-8; без trim/нормализации.';
@@ -194,7 +198,7 @@ function schemaV1(events,isClient){
  return JSON.parse(JSON.stringify({$schema:'https://json-schema.org/draft/2020-12/schema',description:'Структура событий. Условия состояний, trim, idempotency и корреляции см. contract.md.',oneOf:variants,$defs:S}).replaceAll('#/components/schemas/','#/$defs/'));
 }
 // Все ID в схемах ограничены ASCII, все integer безопасны для JS.
-function normalize(v){if(!v||typeof v!=='object')return; if(v.type==='integer')v.maximum??=9007199254740991; if(v.type==='string'&&v.minLength===1&&v.maxLength===128&&!v.pattern)v.pattern='^[\\x21-\\x7E]+$'; for(const child of Object.values(v))normalize(child);}
+function normalize(v){if(!v||typeof v!=='object')return; if(v.type==='integer')v.maximum??=9007199254740991; if(v.type==='string'&&v.minLength===1&&v.maxLength===128&&!v.pattern&&!v.writeOnly)v.pattern='^[\\x21-\\x7E]+$'; for(const child of Object.values(v))normalize(child);}
 normalize(api);normalize(clientV1);normalize(serverV1);
 write('docs/api/openapi.yaml',yaml(api)); json('docs/api/openapi.json',api);
 json('docs/api/ws-client.schema.json',schemaV1(clientV1,true));json('docs/api/ws-server.schema.json',schemaV1(serverV1,false));

@@ -4,7 +4,6 @@ package httpapi
 import (
 	"context"
 	"crypto/rand"
-	"encoding/json"
 	"errors"
 	"net"
 	"net/http"
@@ -25,16 +24,17 @@ type errorResponse struct {
 	Error errorBody `json:"error"`
 }
 type errorBody struct {
-	Code      string `json:"code"`
-	Message   string `json:"message"`
-	RequestID string `json:"request_id"`
+	Code         string `json:"code"`
+	Message      string `json:"message"`
+	RequestID    string `json:"request_id"`
+	RetryAfterMS int64  `json:"retry_after_ms,omitempty"`
 }
 
 // NewServer constructs the transport; routes are introduced by their subsystem tasks.
 func NewServer(addr string) *Server {
 	server := &Server{}
 	server.Server = &http.Server{
-		Addr: addr, Handler: http.HandlerFunc(server.fallback),
+		Addr: addr, Handler: server.common(http.HandlerFunc(server.fallback)),
 		ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second,
 		WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second,
 	}
@@ -42,16 +42,21 @@ func NewServer(addr string) *Server {
 }
 
 func (s *Server) fallback(w http.ResponseWriter, _ *http.Request) {
-	id := rand.Text()
-	w.Header().Set("X-Request-ID", id)
-	w.Header().Set("Cache-Control", "no-store")
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	status, code, message := http.StatusNotFound, "NOT_FOUND", "Ресурс не найден"
-	if s.stopping.Load() {
-		status, code, message = http.StatusServiceUnavailable, "SERVICE_UNAVAILABLE", "Сервер завершает работу"
-	}
-	w.WriteHeader(status)
-	_ = json.NewEncoder(w).Encode(errorResponse{Error: errorBody{Code: code, Message: message, RequestID: id}})
+	writeError(w, http.StatusNotFound, "NOT_FOUND", "Ресурс не найден", 0)
+}
+
+func (s *Server) common(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("X-Request-ID", rand.Text())
+		w.Header().Set("Cache-Control", "no-store")
+		if s.stopping.Load() {
+			writeError(w, http.StatusServiceUnavailable, "SERVICE_UNAVAILABLE", "Сервер завершает работу", 0)
+			return
+		}
+		ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
+		defer cancel()
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
 
 // Serve registers the listener before serving and rejects listeners after shutdown starts.
