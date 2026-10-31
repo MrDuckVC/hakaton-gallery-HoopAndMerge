@@ -28,6 +28,13 @@ func publicPlayer(p game.Player) worldwire.Player {
 func encode(e game.Event) ([]byte, error) {
 	var payload any
 	switch e.Type {
+	case "chat.message":
+		payload = publicChat(e.Chat)
+	case "exhibit.inspected":
+		payload = struct {
+			ExhibitID   string `json:"exhibit_id"`
+			InspectedAt string `json:"inspected_at"`
+		}{e.ExhibitID, e.InspectedAt.UTC().Format(time.RFC3339Nano)}
 	case "world.snapshot":
 		s := e.Snapshot
 		players := make([]worldwire.Player, len(s.Players))

@@ -33,7 +33,7 @@ func TestExactMigrationSet(t *testing.T) {
 		versions []int64
 		valid    bool
 	}{
-		{[]int64{0, 1}, true}, {nil, false}, {[]int64{0}, false}, {[]int64{0, 2}, false}, {[]int64{0, 1, 2}, false},
+		{[]int64{0, 1, 2}, true}, {nil, false}, {[]int64{0}, false}, {[]int64{0, 2}, false}, {[]int64{0, 1}, false}, {[]int64{0, 1, 2, 3}, false},
 	} {
 		err := compatibleVersions(tc.versions)
 		if (err == nil) != tc.valid {

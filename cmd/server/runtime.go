@@ -56,6 +56,7 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	server.ConfigureAuth(accounts, cfg.AllowedOrigins, cfg.CookieSecure)
 	connections := game.New(time.Now)
 	connections.Configure(catalog, postgres.NewGameStore(pool), game.NoQuestions{})
+	connections.ConfigureSocial(postgres.NewSocialStore(pool), game.UnavailablePhotos{}, security.Crypto{}.NewID)
 	loopCtx, stopLoop := context.WithCancel(context.Background())
 	loopDone := make(chan struct{})
 	go func() { defer close(loopDone); connections.Run(loopCtx) }()
