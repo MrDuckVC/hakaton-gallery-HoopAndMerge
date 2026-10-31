@@ -135,9 +135,9 @@ func (l *eventLog) CloseGuideConnection(_, _ string, _ int) {
 	l.closed++
 }
 
-type modelFunc func(context.Context, domain.Generation, func(string) error) error
+type modelFunc func(context.Context, ModelRequest, func(string) error) error
 
-func (f modelFunc) Stream(c context.Context, g domain.Generation, e func(string) error) error {
+func (f modelFunc) Stream(c context.Context, g ModelRequest, e func(string) error) error {
 	return f(c, g, e)
 }
 func fixture() (*Service, *memoryStore, *eventLog, Input) {
@@ -145,6 +145,7 @@ func fixture() (*Service, *memoryStore, *eventLog, Input) {
 	events := &eventLog{accept: true}
 	n := 0
 	s := New(store, guideWorld{}, nil, events, UnavailableModel{}, Clock{Now: time.Now, After: time.After}, func() string { n++; return fmt.Sprintf("id-%d", n) })
+	s.ConfigureContext(profileFixture{}, &contextFixture{})
 	return s, store, events, Input{Session: auth.Session{UserID: "user"}, ConnectionID: "c1", Ready: true}
 }
 func TestAskReplayBeforeReadyAndLimits(t *testing.T) {
@@ -197,13 +198,15 @@ func TestStreamAndStorageFailures(t *testing.T) {
 	}{
 		{"complete", "hello", "completed", nil, false},
 		{"unavailable", "partial", "AI_UNAVAILABLE", errors.New("model"), false},
+		{"model output limit", "partial", "AI_OUTPUT_LIMIT", auth.Code("AI_OUTPUT_LIMIT"), false},
+		{"model deadline", "partial", "AI_TIMEOUT", context.DeadlineExceeded, false},
 		{"storage", "hello", "", nil, true},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			s, store, events, in := fixture()
 			ctx := context.Background()
 			s.Ask(ctx, in, "ask", "guide", "q", "", func() Failure { return Failure{} })
-			s.model = modelFunc(func(_ context.Context, _ domain.Generation, emit func(string) error) error {
+			s.model = modelFunc(func(_ context.Context, _ ModelRequest, emit func(string) error) error {
 				if err := emit(tc.text); err != nil {
 					return err
 				}
@@ -247,7 +250,7 @@ func TestOutputLimitAndQueueDeadline(t *testing.T) {
 			s, store, events, in := fixture()
 			ctx := context.Background()
 			s.Ask(ctx, in, "ask", "guide", "q", "", func() Failure { return Failure{} })
-			s.model = modelFunc(func(_ context.Context, _ domain.Generation, emit func(string) error) error {
+			s.model = modelFunc(func(_ context.Context, _ ModelRequest, emit func(string) error) error {
 				return emit(strings.Repeat("界", size))
 			})
 			g, err := store.Claim(ctx, time.Now())
@@ -294,7 +297,7 @@ func TestRunningTimeoutAndCancellation(t *testing.T) {
 			timerCreated := make(chan time.Duration, 1)
 			s.clock.After = func(d time.Duration) <-chan time.Time { timerCreated <- d; return timer }
 			entered := make(chan struct{})
-			s.model = modelFunc(func(c context.Context, _ domain.Generation, emit func(string) error) error {
+			s.model = modelFunc(func(c context.Context, _ ModelRequest, emit func(string) error) error {
 				if err := emit("partial"); err != nil {
 					return err
 				}
@@ -492,7 +495,7 @@ func TestRunningDeadlineDuringDeltaReadIsNotStorageOutage(t *testing.T) {
 		}
 		return nil
 	}
-	s.model = modelFunc(func(_ context.Context, _ domain.Generation, emit func(string) error) error { return emit("delta") })
+	s.model = modelFunc(func(_ context.Context, _ ModelRequest, emit func(string) error) error { return emit("delta") })
 	done := make(chan struct{})
 	go func() { defer close(done); s.execute(ctx, g) }()
 	<-entered

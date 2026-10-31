@@ -8,12 +8,14 @@ import (
 	"maps"
 	"slices"
 
+	guide "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
 	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
 )
 
 // Catalog owns immutable content. No mutable reference escapes its public methods.
 type Catalog struct {
+	profiles            map[string]guide.Profile
 	manifest            domain.Manifest
 	start               player.State
 	rooms               map[string]domain.Room
@@ -39,6 +41,30 @@ func Load(ctx context.Context, source Source, sizer SnapshotSizer, version strin
 		return nil, fmt.Errorf("validate world: %w", err)
 	}
 	c := &Catalog{spawns: maps.Clone(in.Spawns), manifest: domain.Manifest{ID: in.ID, Version: in.Version}, start: in.Start, rooms: make(map[string]domain.Room), descriptors: make(map[string]File), assets: make(map[string]File), packages: make(map[string]domain.RoomPackage)}
+	c.profiles = make(map[string]guide.Profile, len(in.Profiles))
+	exhibits := make(map[string]bool)
+	for _, r := range in.Rooms {
+		for _, e := range r.Exhibits {
+			exhibits[e.ID] = true
+		}
+	}
+	for _, id := range in.Profiles {
+		p, ok := loaded.Profiles[id]
+		if !ok {
+			return nil, fmt.Errorf("missing profile %q", id)
+		}
+		if err := p.Validate(); err != nil {
+			return nil, fmt.Errorf("profile %q: %w", id, err)
+		}
+		for _, m := range p.Materials {
+			for _, ex := range m.ExhibitIDs {
+				if !exhibits[ex] {
+					return nil, fmt.Errorf("profile %q references unknown exhibit", id)
+				}
+			}
+		}
+		c.profiles[id] = p.Clone()
+	}
 	identities := make(map[string]bool)
 	add := func(f File) error {
 		if f.Identity == "" || len(f.Bytes) == 0 {
@@ -205,4 +231,25 @@ func (c *Catalog) HasGuide(id string) bool {
 		}
 	}
 	return false
+}
+
+// Profile returns server-only personality data, independent of room occupancy.
+func (c *Catalog) Profile(id string) (guide.Profile, error) {
+	p, ok := c.profiles[id]
+	if !ok {
+		return guide.Profile{}, domain.NotFound
+	}
+	return p.Clone(), nil
+}
+
+// Exhibit resolves saved action IDs against the current immutable content version.
+func (c *Catalog) Exhibit(id string) (domain.Exhibit, error) {
+	for _, r := range c.rooms {
+		for _, e := range r.Exhibits {
+			if e.ID == id {
+				return e, nil
+			}
+		}
+	}
+	return domain.Exhibit{}, domain.NotFound
 }

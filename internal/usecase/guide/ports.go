@@ -26,7 +26,7 @@ type Store interface {
 // Model emits added text synchronously and returns promptly on context cancellation.
 // Implementations must not invoke emit after returning.
 type Model interface {
-	Stream(context.Context, domain.Generation, func(string) error) error
+	Stream(context.Context, ModelRequest, func(string) error) error
 }
 
 // World provides immutable geometry and known personalities for private history.

@@ -10,6 +10,7 @@ import (
 	"os"
 	"strings"
 
+	guideDomain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/guide"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/player"
 	domain "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/domain/world"
 	usecase "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/usecase/world"
@@ -106,7 +107,7 @@ func (f Files) Load(ctx context.Context) (usecase.LoadedWorld, error) {
 	if err := decode(indexFile.Bytes, &idx); err != nil {
 		return out, fmt.Errorf("catalog.json: %w", err)
 	}
-	out = usecase.LoadedWorld{Input: domain.Input{ID: idx.ID, Version: idx.Version, Start: idx.Start.domain(idx.Version), Spawns: make(map[string]player.State)}, Rooms: make(map[string]usecase.File), Assets: make(map[string]usecase.File)}
+	out = usecase.LoadedWorld{Profiles: make(map[string]guideDomain.Profile), Input: domain.Input{ID: idx.ID, Version: idx.Version, Start: idx.Start.domain(idx.Version), Spawns: make(map[string]player.State)}, Rooms: make(map[string]usecase.File), Assets: make(map[string]usecase.File)}
 	for id, p := range idx.Spawns {
 		out.Input.Spawns[id] = p.domain(idx.Version)
 	}
@@ -152,13 +153,14 @@ func (f Files) Load(ctx context.Context) (usecase.LoadedWorld, error) {
 		if err != nil {
 			return out, err
 		}
-		var profile map[string]any
-		if err := decode(file.Bytes, &profile); err != nil {
-			return out, fmt.Errorf("profile %q: %w", ref.ID, err)
+		p, parseErr := ParseProfile(file.Bytes)
+		if parseErr != nil {
+			return out, fmt.Errorf("profile %q: %w", ref.ID, parseErr)
 		}
-		if len(profile) == 0 {
-			return out, errors.New("empty guide profile")
+		if _, exists := out.Profiles[ref.ID]; exists {
+			return out, errors.New("duplicate profile ID")
 		}
+		out.Profiles[ref.ID] = p
 		out.Input.Profiles = append(out.Input.Profiles, ref.ID)
 	}
 	return out, nil

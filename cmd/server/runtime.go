@@ -12,6 +12,7 @@ import (
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/httpapi"
 	wsapi "github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/websocket"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/inbound/worldwire"
+	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/ollama"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/postgres"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/security"
 	"github.com/MrDuckVC/hakaton-gallery-HoopAndMerge/internal/adapters/outbound/sessionevents"
@@ -48,7 +49,9 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	connections := game.New(time.Now)
 	sessions := sessionevents.New()
 	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, catalog, sessions, time.Now)
-	guides := guidecase.New(postgres.NewGuideStore(pool), catalog, accounts, connections, guidecase.UnavailableModel{}, guidecase.Clock{Now: time.Now, After: time.After}, security.Crypto{}.NewID)
+	guideStore := postgres.NewGuideStore(pool)
+	guides := guidecase.New(guideStore, catalog, accounts, connections, ollama.New(cfg.OllamaBaseURL, cfg.OllamaModel), guidecase.Clock{Now: time.Now, After: time.After}, security.Crypto{}.NewID)
+	guides.ConfigureContext(catalog, guideStore)
 	recoveryCtx, recoveryCancel := context.WithTimeout(ctx, 10*time.Second)
 	err = guides.Recover(recoveryCtx)
 	recoveryCancel()

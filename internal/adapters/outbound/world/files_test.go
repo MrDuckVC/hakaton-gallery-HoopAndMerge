@@ -17,7 +17,7 @@ func fixture(t *testing.T) string {
 	dir := t.TempDir()
 	index := `{"world_id":"world","world_version":"v1","rooms":[{"id":"r","file":"room.json"}],"assets":[{"id":"a","file":"a.jpg"}],"profiles":[{"id":"g","file":"profile.json"}],"start":{"room_id":"r","position":{"x":2,"y":0,"z":2},"rotation":{"yaw":0,"pitch":0}},"spawns":{}}`
 	write(t, dir, "catalog.json", []byte(index))
-	write(t, dir, "profile.json", []byte(`{"personality":"Guide"}`))
+	write(t, dir, "profile.json", []byte(`{"personality":"Guide","style":"Наблюдение","topic":"Живопись","constraints":["Без выдуманных цитат"],"materials":[]}`))
 	room := `{ "id":"r","world_version":"v1","title":"Зал","bounds":{"min":{"x":0,"y":0,"z":0},"max":{"x":10,"y":4,"z":10}},"surfaces":[],"doors":[],"exhibits":[],"guides":[] }` + "\n"
 	write(t, dir, "room.json", []byte(room))
 	var b bytes.Buffer
@@ -167,5 +167,28 @@ func TestNestedCaseVariantDoesNotOverrideGeometry(t *testing.T) {
 	var r room
 	if err := decode(data, &r); err == nil {
 		t.Fatal("nested case variant accepted")
+	}
+}
+
+func TestDemoProfilesStrictAndDistinct(t *testing.T) {
+	styles := make([]string, 0, 2)
+	for _, name := range []string{"leonardo", "vangogh"} {
+		data, err := os.ReadFile("../../../../examples/guides/" + name + ".json")
+		if err != nil {
+			t.Fatal(err)
+		}
+		p, err := ParseProfile(data)
+		if err != nil {
+			t.Fatal(err)
+		}
+		styles = append(styles, p.Style)
+		for _, bad := range [][]byte{[]byte(`{"personality":"only"}`), append(append([]byte(nil), data[:bytes.LastIndexByte(data, '}')]...), []byte(`,"extra":true}`)...)} {
+			if _, err = ParseProfile(bad); err == nil {
+				t.Fatal("accepted invalid profile")
+			}
+		}
+	}
+	if styles[0] == styles[1] {
+		t.Fatal("demo personalities are indistinguishable")
 	}
 }
