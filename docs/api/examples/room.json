@@ -1,0 +1,93 @@
+{
+  "id": "room_egypt_01",
+  "world_version": "world_v1",
+  "title": "Древний Египет",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": -12
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 0
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor_01",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": -6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#DCCFB8",
+      "collidable": true
+    },
+    {
+      "id": "wall_01",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": -12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#E8DFCF",
+      "collidable": true
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_01",
+      "title": "Египетский рельеф",
+      "description": "Учебный экспонат о правилах изображения человеческой фигуры.",
+      "image_asset_id": "asset_egypt_01",
+      "position": {
+        "x": 6,
+        "y": 1.8,
+        "z": -11.8
+      },
+      "rotation_y": 0,
+      "width_m": 1.5,
+      "height_m": 1,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_herodotus",
+      "display_name": "Геродот",
+      "subtitle": "Художественная реконструкция историка и путешественника",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": -6
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_egypt_01_02",
+      "target_room_id": "room_egypt_02",
+      "label": "Следующий зал",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": -6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "type": "world.snapshot",
+  "event_id": "evt_01",
+  "server_time": "2026-10-31T12:00:00Z",
+  "payload": {
+    "protocol_version": 1,
+    "world_version": "world_v1",
+    "self": {
+      "user_id": "usr_01",
+      "display_name": "Валентин",
+      "avatar_color": "#5B8DEF",
+      "room_id": "room_egypt_01",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": -3
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      },
+      "movement_epoch": 1,
+      "ack_seq": 0
+    },
+    "players": [
+      {
+        "user_id": "usr_02",
+        "display_name": "Анна",
+        "avatar_color": "#E8A34B",
+        "room_id": "room_egypt_01",
+        "position": {
+          "x": 5,
+          "y": 0,
+          "z": -4
+        },
+        "rotation": {
+          "yaw": 0,
+          "pitch": 0
+        },
+        "movement_epoch": 1,
+        "ack_seq": 0
+      }
+    ],
+    "current_room": {
+      "room_id": "room_egypt_01",
+      "descriptor_bytes": 1840,
+      "assets": [
+        {
+          "id": "asset_egypt_01",
+          "bytes": 180000,
+          "content_type": "image/webp"
+        }
+      ]
+    }
+  }
+}

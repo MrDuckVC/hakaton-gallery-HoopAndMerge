@@ -1,0 +1,1338 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Структура событий. Условия состояний, trim, idempotency и корреляции см. contract.md.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "world.ready"
+        },
+        "request_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "world_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            },
+            "movement_epoch": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "world_version",
+            "movement_epoch"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "request_id",
+        "payload"
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "world.enter"
+        },
+        "request_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "door_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            },
+            "movement_epoch": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "door_id",
+            "movement_epoch"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "request_id",
+        "payload"
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "player.move"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "movement_epoch": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "seq": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "position": {
+              "$ref": "#/$defs/Vector3"
+            },
+            "rotation": {
+              "$ref": "#/$defs/Rotation"
+            }
+          },
+          "required": [
+            "movement_epoch",
+            "seq",
+            "position",
+            "rotation"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "payload"
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "chat.send"
+        },
+        "request_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "text": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "photo_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            }
+          },
+          "required": []
+        }
+      },
+      "required": [
+        "type",
+        "request_id",
+        "payload"
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "exhibit.inspect"
+        },
+        "request_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "exhibit_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            }
+          },
+          "required": [
+            "exhibit_id"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "request_id",
+        "payload"
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "guide.ask"
+        },
+        "request_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "guide_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "exhibit_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            }
+          },
+          "required": [
+            "guide_id",
+            "text"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "request_id",
+        "payload"
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "guide.cancel"
+        },
+        "request_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "generation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            }
+          },
+          "required": [
+            "generation_id"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "request_id",
+        "payload"
+      ]
+    }
+  ],
+  "$defs": {
+    "Vector3": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z"
+      ]
+    },
+    "Rotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "yaw": {
+          "type": "number",
+          "minimum": -3.141592653589793,
+          "exclusiveMaximum": 3.141592653589793
+        },
+        "pitch": {
+          "type": "number",
+          "minimum": -1.5707963267948966,
+          "maximum": 1.5707963267948966
+        }
+      },
+      "required": [
+        "yaw",
+        "pitch"
+      ]
+    },
+    "User": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "username": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "avatar_color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "display_name",
+        "avatar_color"
+      ]
+    },
+    "AuthResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "user": {
+          "$ref": "#/$defs/User"
+        }
+      },
+      "required": [
+        "user"
+      ]
+    },
+    "RegisterRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "username": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]{3,32}$"
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "password": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "writeOnly": true,
+          "description": "8–128 байт UTF-8; без trim/нормализации. Байтовый минимум проверяет сервер.",
+          "pattern": "^[\\x21-\\x7E]+$"
+        }
+      },
+      "required": [
+        "username",
+        "display_name",
+        "password"
+      ]
+    },
+    "LoginRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "username": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "password": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "writeOnly": true,
+          "description": "8–128 байт UTF-8; без trim/нормализации.",
+          "pattern": "^[\\x21-\\x7E]+$"
+        }
+      },
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "PlayerState": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "room_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "position": {
+          "$ref": "#/$defs/Vector3",
+          "description": "Y=0; точка пола"
+        },
+        "rotation": {
+          "$ref": "#/$defs/Rotation"
+        }
+      },
+      "required": [
+        "room_id",
+        "position",
+        "rotation"
+      ]
+    },
+    "MeResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "user": {
+          "$ref": "#/$defs/User"
+        },
+        "player_state": {
+          "$ref": "#/$defs/PlayerState"
+        }
+      },
+      "required": [
+        "user",
+        "player_state"
+      ]
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "fields": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "retry_after_ms": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "request_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "request_id"
+          ]
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "MovementConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "send_rate_hz": {
+          "const": 10
+        },
+        "state_rate_hz": {
+          "const": 10
+        },
+        "max_speed_mps": {
+          "const": 4
+        },
+        "player_radius_m": {
+          "const": 0.3
+        },
+        "player_height_m": {
+          "const": 1.8
+        },
+        "camera_height_m": {
+          "const": 1.65
+        }
+      },
+      "required": [
+        "send_rate_hz",
+        "state_rate_hz",
+        "max_speed_mps",
+        "player_radius_m",
+        "player_height_m",
+        "camera_height_m"
+      ]
+    },
+    "Manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "world_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "world_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "total_content_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "client_cache_limit_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "max_loaded_rooms": {
+          "const": 1
+        },
+        "photo_reserve_bytes": {
+          "const": 3145728
+        },
+        "movement": {
+          "$ref": "#/$defs/MovementConfig"
+        }
+      },
+      "required": [
+        "world_id",
+        "world_version",
+        "total_content_bytes",
+        "client_cache_limit_bytes",
+        "max_loaded_rooms",
+        "photo_reserve_bytes",
+        "movement"
+      ]
+    },
+    "AssetInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "content_type": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/webp"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "bytes",
+        "content_type"
+      ]
+    },
+    "Bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "$ref": "#/$defs/Vector3"
+        },
+        "max": {
+          "$ref": "#/$defs/Vector3"
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ]
+    },
+    "Surface": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "position": {
+          "$ref": "#/$defs/Vector3"
+        },
+        "size": {
+          "$ref": "#/$defs/Vector3"
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "collidable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "position",
+        "size",
+        "color",
+        "collidable"
+      ]
+    },
+    "Exhibit": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "image_asset_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "position": {
+          "$ref": "#/$defs/Vector3"
+        },
+        "rotation_y": {
+          "type": "number"
+        },
+        "width_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "interaction_radius_m": {
+          "const": 3
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "image_asset_id",
+        "position",
+        "rotation_y",
+        "width_m",
+        "height_m",
+        "interaction_radius_m"
+      ]
+    },
+    "Guide": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "position": {
+          "$ref": "#/$defs/Vector3"
+        },
+        "rotation_y": {
+          "type": "number"
+        },
+        "interaction_radius_m": {
+          "const": 3
+        }
+      },
+      "required": [
+        "id",
+        "display_name",
+        "subtitle",
+        "position",
+        "rotation_y",
+        "interaction_radius_m"
+      ]
+    },
+    "Room": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "world_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "bounds": {
+          "$ref": "#/$defs/Bounds"
+        },
+        "surfaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Surface"
+          }
+        },
+        "exhibits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Exhibit"
+          }
+        },
+        "guides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Guide"
+          }
+        },
+        "doors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Door"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "world_version",
+        "title",
+        "bounds",
+        "surfaces",
+        "exhibits",
+        "guides",
+        "doors"
+      ]
+    },
+    "DialogMessage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "user",
+            "assistant"
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "role",
+        "text",
+        "created_at"
+      ]
+    },
+    "Photo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "owner_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "caption": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "room_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "exhibit_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "image_url": {
+          "type": "string"
+        },
+        "image_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "thumbnail_url": {
+          "type": "string"
+        },
+        "thumbnail_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 131072
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1920
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1080
+        }
+      },
+      "required": [
+        "id",
+        "owner_id",
+        "caption",
+        "room_id",
+        "exhibit_id",
+        "image_url",
+        "image_bytes",
+        "created_at",
+        "published",
+        "thumbnail_url",
+        "thumbnail_bytes",
+        "width",
+        "height"
+      ]
+    },
+    "PhotoPage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Photo"
+          }
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ]
+    },
+    "PhotoUpload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "image": {
+          "type": "string",
+          "format": "binary",
+          "description": "Один неподвижный JPEG/WebP <=2097152 bytes; весь multipart <=2162688 bytes."
+        },
+        "caption": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "room_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "exhibit_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "movement_epoch": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$",
+          "description": "Десятичное целое <=2^53-1"
+        }
+      },
+      "required": [
+        "image",
+        "room_id",
+        "movement_epoch"
+      ]
+    },
+    "Player": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "avatar_color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "room_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "position": {
+          "$ref": "#/$defs/Vector3",
+          "description": "Y=0; точка пола"
+        },
+        "rotation": {
+          "$ref": "#/$defs/Rotation"
+        },
+        "movement_epoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "ack_seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "user_id",
+        "display_name",
+        "avatar_color",
+        "room_id",
+        "position",
+        "rotation",
+        "movement_epoch",
+        "ack_seq"
+      ]
+    },
+    "ErrorBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "retry_after_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "RoomPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "room_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "descriptor_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "assets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AssetInfo"
+          }
+        }
+      },
+      "required": [
+        "room_id",
+        "descriptor_bytes",
+        "assets"
+      ]
+    },
+    "Door": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "target_room_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "label": {
+          "type": "string"
+        },
+        "position": {
+          "$ref": "#/$defs/Vector3"
+        },
+        "interaction_radius_m": {
+          "const": 1.5
+        }
+      },
+      "required": [
+        "id",
+        "target_room_id",
+        "label",
+        "position",
+        "interaction_radius_m"
+      ]
+    },
+    "Generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "request_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "guide_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "exhibit_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "queued",
+            "running",
+            "completed",
+            "failed"
+          ]
+        },
+        "user_message": {
+          "$ref": "#/$defs/DialogMessage"
+        },
+        "assistant_message": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DialogMessage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    "AI_TIMEOUT",
+                    "AI_UNAVAILABLE",
+                    "SERVER_RESTARTED",
+                    "CANCELLED",
+                    "AI_OUTPUT_LIMIT"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "retryable": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "retryable"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "request_id",
+        "guide_id",
+        "exhibit_id",
+        "status",
+        "user_message",
+        "assistant_message",
+        "error"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "assistant_message": {
+                "$ref": "#/$defs/DialogMessage"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "assistant_message": {
+                "type": "null"
+              },
+              "error": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "enum": [
+                      "AI_TIMEOUT",
+                      "AI_UNAVAILABLE",
+                      "SERVER_RESTARTED",
+                      "CANCELLED",
+                      "AI_OUTPUT_LIMIT"
+                    ]
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "retryable": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "code",
+                  "message",
+                  "retryable"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "queued",
+                  "running"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "assistant_message": {
+                "type": "null"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GenerationPage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Generation"
+          }
+        },
+        "next_before": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "items",
+        "next_before"
+      ]
+    }
+  }
+}
