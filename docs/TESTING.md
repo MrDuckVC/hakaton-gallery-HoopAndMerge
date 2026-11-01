@@ -259,3 +259,15 @@ TestTransportHeartbeat и regression повторены 50 раз под race/co
 увеличения production интервалов ping20с/pong10с. CI failure #41305284103 был
 воспроизведён отдельным RED-тестом, затем исправлен; это runtime fix, не увеличение
 допустимого времени ожидания теста.
+
+## S07: стоимость fixture под instrumentation
+
+После первого push оба CI-прогона упёрлись в общий 10-минутный timeout cmd/server
+во время JPEG-декодирования. Синтетический testworld использует настоящие
+896×896 grayscale JPEG quality100 вместо1024×1024 RGB quality95: бюджет с резервом
+фото по-прежнему проверяется production-валидатором, padding не добавлен.
+TestFixtureBoundsDecodedPixels ограничивает объём декодируемых пикселей. Из
+TestPrepareWorld убран повтор полного decode ради version mismatch: отрицательный
+кейс остаётся в usecase/world TestLoadFailures/version. Production C01, loader,
+валидация изображений и тайм-ауты не изменены. По поручению владельца повторяются
+только затронутые PrepareWorld/Sunday/fixture/version тесты и lint.

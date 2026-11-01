@@ -129,3 +129,21 @@ missing-pong тест упал на ожидании удаления peer. В c
 управляемый тест сначала воспроизвёл зависание; после underlying net.Conn abort
 проходит. Исходный heartbeat + regression: 50 повторов с race/coverpkg — PASS.
 Производственные ping/pong интервалы и секундный предел старого теста не увеличены.
+
+## Исправление первого CI после публикации
+
+Оба запуска618799b прошли heartbeat, но cmd/server достиг общего test timeout600с
+в JPEG Decode (TestPrepareWorld). Локальные87,31% выше не означали зелёный GitHub CI.
+Оптимизирован только синтетический fixture: grayscale896px/quality100, настоящий
+JPEG и прежние правила бюджета; C01 и production validator не изменены. Дублирующий
+полный decode ради wrong-version удалён из composition smoke; отрицательный кейс
+сохранён в usecase/world. По следующему поручению владельца — точечные тесты с
+race/coverage и lint, затем отдельный коммит и немедленный push; без полного
+повторного локального прогона. Старый offline-kit содержит прежние документы;
+production-бинарники этим test-only исправлением не меняются.
+
+Точечная проверка: `go test -race -covermode=atomic -coverpkg=./... ./cmd/server
+./internal/testworld ./internal/usecase/world -run
+'^(TestPrepareWorld|TestSundayCompositionIntegration|TestFixtureBoundsDecodedPixels|TestLoadFailures)$'
+-count=1` — PASS: cmd/server67,323с, fixture10,333с, usecase/world1,183с.
+`make lint` — PASS, 0 issues; `git diff --check` — PASS.
