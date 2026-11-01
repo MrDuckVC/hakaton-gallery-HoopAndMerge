@@ -1,0 +1,14 @@
+{
+  "clients": [
+    {
+      "user_id": "usr_01",
+      "display_name": "Посетитель",
+      "room_id": "room_leonardo_portrait",
+      "fps": 58.5,
+      "ping_ms": 12.3,
+      "visible": true,
+      "sampled_at": "2026-11-01T12:00:00Z",
+      "stale": false
+    }
+  ]
+}

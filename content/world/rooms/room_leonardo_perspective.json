@@ -1,0 +1,179 @@
+{
+  "id": "room_leonardo_perspective",
+  "world_version": "gallery_c01_v2",
+  "title": "03. Возрождение: Построение пространства",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_03_02",
+      "target_room_id": "room_leonardo_space",
+      "label": "02. Возрождение: Пейзаж за фигурой",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_03_04",
+      "target_room_id": "room_leonardo_light",
+      "label": "04. Возрождение: Светотень и объём",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_12133",
+      "title": "Благовещение",
+      "description": "Фра Филиппо Липпи. Благовещение. Датировка музея: c. 1435/1440. Техника: tempera on panel. National Gallery of Art, Washington, инв. 1943.4.35. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните архитектуру и расположение групп. Где взгляд находит путь в глубину?",
+      "image_asset_id": "nga_12133",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 1.849,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_24",
+      "title": "Поклонение волхвов",
+      "description": "Сандро Боттичелли. Поклонение волхвов. Датировка музея: c. 1478/1482. Техника: tempera and oil on poplar panel. National Gallery of Art, Washington, инв. 1937.1.22. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните архитектуру и расположение групп. Где взгляд находит путь в глубину?",
+      "image_asset_id": "nga_24",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 1.995612,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_41581",
+      "title": "Поклонение волхвов",
+      "description": "Фра Анджелико и Фра Филиппо Липпи. Поклонение волхвов. Датировка музея: c. 1440/1460. Техника: tempera on poplar panel. National Gallery of Art, Washington, инв. 1952.2.2. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните архитектуру и расположение групп. Где взгляд находит путь в глубину?",
+      "image_asset_id": "nga_41581",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 2.6,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_leonardo",
+      "display_name": "Леонардо да Винчи",
+      "subtitle": "Художественная реконструкция · Возрождение",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}

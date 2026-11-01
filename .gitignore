@@ -258,3 +258,7 @@ bin/*
 /data/
 *.test
 coverage.out
+
+# Offline content authoring tools
+__pycache__/
+*.pyc

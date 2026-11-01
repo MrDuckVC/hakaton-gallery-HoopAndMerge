@@ -1,3 +1,4 @@
+import { sundayContracts } from './sunday-contracts.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 const root = path.resolve(import.meta.dirname, '..');
@@ -45,8 +46,8 @@ const body = schema => ({required:true,content:{'application/json':{schema}}});
 const param = (name,location,schema,required=true) => ({name,in:location,required,schema});
 const operation = (operationId,summary,responses,extra={}) => ({operationId,summary,responses,...extra});
 const P = {};
-P['/auth/register']={post:operation('register','Регистрация и создание сессии',{'201':{...success(ref('AuthResponse')),headers:{'Set-Cookie':{schema:str(),description:'museum_session; HttpOnly; SameSite=Lax; Path=/; Max-Age=86400; Secure при HTTPS'}}},...errors([400,403,409,429])},{security:[],requestBody:body(ref('RegisterRequest'))})};
-P['/auth/login']={post:operation('login','Вход и создание сессии',{'200':{...success(ref('AuthResponse')),headers:{'Set-Cookie':{schema:str()}}},...errors([400,401,403,429])},{security:[],requestBody:body(ref('LoginRequest'))})};
+P['/auth/register']={post:operation('register','Регистрация и создание сессии',{'201':{...success(ref('AuthResponse')),headers:{'Set-Cookie':{schema:str(),description:'museum_session; HttpOnly; SameSite=Lax; Path=/; Max-Age=86400; Secure при HTTPS'}}},...errors([400,403,409,413,415,429])},{security:[],requestBody:body(ref('RegisterRequest'))})};
+P['/auth/login']={post:operation('login','Вход и создание сессии',{'200':{...success(ref('AuthResponse')),headers:{'Set-Cookie':{schema:str()}}},...errors([400,401,403,413,415,429])},{security:[],requestBody:body(ref('LoginRequest'))})};
 P['/auth/logout']={post:operation('logout','Отзыв текущей сессии',{'204':{description:'Cookie удалена; повторный выход также успешен'},...errors([403])},{security:[]})};
 P['/me']={get:operation('getMe','Пользователь и сохранённая позиция',{'200':success(ref('MeResponse')),...errors([401])})};
 P['/world/manifest']={get:operation('getManifest','Версия мира и бюджет контента',{'200':success(ref('Manifest')),...errors([401])})};
@@ -111,6 +112,10 @@ const asciiID=()=>str({minLength:1,maxLength:128,pattern:'^[\\x21-\\x7E]+$'});
 const uuid=()=>str({format:'uuid',pattern:'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'});
 const safeInt=extra=>integer({minimum:0,maximum:9007199254740991,...extra});
 // JSON Schema minLength считает code points, пароль ограничивается байтами UTF-8.
+for (const name of ['RegisterRequest','LoginRequest']) {
+ S[name].properties.username=str({description:'После Unicode White_Space trim: [A-Za-z0-9_]{3,32}; хранится и возвращается lowercase. Проверяет сервер.'});
+}
+S.RegisterRequest.properties.display_name=str({pattern:'^[^\\u0000]*$',description:'1–32 Unicode-кодовые точки после Unicode White_Space trim; U+0000 запрещён (400 VALIDATION_ERROR). Длину после trim проверяет сервер.'});
 S.RegisterRequest.properties.password.minLength=1;
 S.RegisterRequest.properties.password.description='8–128 байт UTF-8; без trim/нормализации. Байтовый минимум проверяет сервер.';
 S.LoginRequest.properties.password.description='8–128 байт UTF-8; без trim/нормализации.';
@@ -136,21 +141,38 @@ S.Generation.allOf=[
 ];
 Object.assign(S.Photo.properties,{published:{type:'boolean'},thumbnail_url:str(),thumbnail_bytes:safeInt({minimum:1,maximum:131072}),width:safeInt({minimum:1,maximum:1920}),height:safeInt({minimum:1,maximum:1080})}); S.Photo.required=Object.keys(S.Photo.properties);
 S.PhotoUpload.properties.movement_epoch=str({pattern:'^[1-9][0-9]*$',description:'Десятичное целое <=2^53-1'});S.PhotoUpload.required.push('movement_epoch');
+S.PhotoUpload.properties.caption=str({pattern:'^[^\\u0000]*$',description:'Не более 200 Unicode-кодовых точек после Unicode White_Space trim; U+0000 запрещён. Отсутствие означает пустую подпись.'});
 S.PhotoUpload.properties.image.description='Один неподвижный JPEG/WebP <=2097152 bytes; весь multipart <=2162688 bytes.';
 for(const obsolete of ['PublicPlayer','PlayerMotion','RoomAvailability','DialogPage'])delete S[obsolete];
 delete P['/guides/{guide_id}/messages'];
 const genParams=[param('guide_id','path',asciiID())];
 P['/guides/{guide_id}/generations']={get:operation('getGuideGenerations','Личная история генераций; внутри страницы от старых к новым',{'200':success(ref('GenerationPage')),...errors([400,401,404])},{parameters:[...genParams,param('limit','query',integer({minimum:1,maximum:50,default:20}),false),param('before','query',asciiID(),false)]})};
 P['/guides/{guide_id}/generations/by-request/{request_id}']={get:operation('getGenerationByRequest','Восстановить вопрос по устойчивому request_id',{'200':success(ref('Generation')),...errors([400,401,404])},{parameters:[...genParams,param('request_id','path',uuid())]})};
+P['/guides/{guide_id}/generations'].get.description='Только текущий пользователь, без требования WS и независимо от зала. Последние записи, внутри страницы от старых к новым по (created_at,id). before привязан к пользователю и гиду; неверный курсор — INVALID_CURSOR.';
+P['/guides/{guide_id}/generations/by-request/{request_id}'].get.description='Только текущий пользователь и указанный гид. Восстановление сохранённого вопроса без повторной генерации; отсутствующая или чужая запись — NOT_FOUND.';
 P['/photos'].post.parameters=[param('Idempotency-Key','header',uuid())];
+P['/photos'].post.description='Ровно один image; неизвестные и повторные multipart-поля запрещены. 201 после сохранения пары файлов, метаданных и PHOTO_CREATED. 200 replay проверяется до текущего ready/room; другой fingerprint — 409 IDEMPOTENCY_CONFLICT. Все POST, включая повторы и неверные запросы, учитываются после аутентификации в лимите 6/60 секунд на пользователя. Повреждённые/анимированные изображения и неверные размеры — 400; превышение байтов — 413; иной формат — 415. Миниатюра JPEG, исходный формат определяется декодированием.';
 P['/photos'].post.summary='Идемпотентная загрузка фото из готовой игровой сессии';
 P['/photos'].post.responses['200']=success(ref('Photo'),'Существующее фото при повторе того же ключа и содержимого');
 P['/photos'].get.parameters[0].schema={type:'integer',minimum:1,maximum:6,default:6};
 P['/photos/{photo_id}/thumbnail']={get:operation('getPhotoThumbnail','Миниатюра владельцу или после публикации',{'200':P['/photos/{photo_id}/image'].get.responses['200'],...errors([401,404])},{parameters:[param('photo_id','path',asciiID())]})};
 delete P['/photos/{photo_id}/image'].get.responses['403'];
+P['/photos'].get.description='Только фото текущей сессии, без игрового WS. Порядок (created_at,id) DESC; cursor непрозрачен, привязан к владельцу. Неверный, неизвестный или чужой cursor — 400 INVALID_CURSOR. Новые вставки не сдвигают следующие страницы; next_cursor=null в конце.';
+P['/photos/{photo_id}/thumbnail'].get.responses['200']={description:'JPEG-миниатюра сервера',content:{'image/jpeg':{schema:{type:'string',format:'binary'}}}};
+for(const path of ['/photos/{photo_id}/image','/photos/{photo_id}/thumbnail']) {
+ P[path].get.responses['400']=err('VALIDATION_ERROR');
+ P[path].get.description='Действующая сессия без игрового WS. Приватное фото доступно только владельцу; опубликованное — любому вошедшему. Чужое приватное и отсутствующее фото — 404 NOT_FOUND. Байты отдаются без преобразования; ошибка чтения или несовпадение размера — 503 SERVICE_UNAVAILABLE.';
+ P[path].get.responses['200'].headers={'Content-Length':{schema:safeInt({minimum:1}),description:'Точный размер файла, совпадает с соответствующим полем bytes в Photo'},'X-Content-Type-Options':{schema:{const:'nosniff'}}};
+}
+
 P['/world/assets/{asset_id}'].get.responses['200'].content=Object.fromEntries(['image/jpeg','image/webp'].map(t=>[t,{schema:{type:'string',format:'binary'}}]));
 P['/world/rooms/{room_id}'].get.responses['409']=err('GAME_NOT_READY / WORLD_VERSION_MISMATCH');
 P['/world/assets/{asset_id}'].get.responses['409']=err('GAME_NOT_READY / WORLD_VERSION_MISMATCH');
+for (const path of ['/world/rooms/{room_id}', '/world/assets/{asset_id}']) {
+ P[path].get.description='Действующая сессия и активный owning WS; только текущий зал. Загрузка разрешена до world.ready. Проверка при начале запроса; исходные байты без переформатирования. version обязателен и единственный: отсутствие/пустое/повтор — 400, другая версия — 409.';
+ P[path].get.responses['200'].headers={...P[path].get.responses['200'].headers,'Content-Length':{schema:safeInt({minimum:1}),description:'Точный размер исходного файла'},'X-Content-Type-Options':{schema:{const:'nosniff'}}};
+}
+P['/world/manifest'].get.description='Доступен любой действующей сессии без active WS и без параметра version. Размеры уникальных используемых файлов проверяются при startup; резерв фото 3145728 байт.';
 P['/ws'].get.responses['503']=err('SERVICE_UNAVAILABLE: максимум 32 игровых соединения');
 for(const item of Object.values(P))for(const op of Object.values(item)){
  op.responses['500']=err('INTERNAL_ERROR');op.responses['503']??=err('SERVICE_UNAVAILABLE');
@@ -169,7 +191,7 @@ const clientV1={
  'player.move':obj({movement_epoch:epoch,seq:safeInt({minimum:1}),position:ref('Vector3'),rotation:ref('Rotation')}),
  'chat.send':obj({text:str({maxLength:500}),photo_id:asciiID()},[]),
  'exhibit.inspect':obj({exhibit_id:asciiID()}),
- 'guide.ask':obj({guide_id:asciiID(),text:str({minLength:1,maxLength:2000}),exhibit_id:asciiID()},['guide_id','text']),
+ 'guide.ask':obj({guide_id:asciiID(),text:str({minLength:1,maxLength:2000,pattern:'^[^\u0000]*$'}),exhibit_id:asciiID()},['guide_id','text']),
  'guide.cancel':obj({generation_id:asciiID()})
 };
 const serverV1={
@@ -190,11 +212,12 @@ const serverV1={
  'error':ref('ErrorBody')
 };
 function schemaV1(events,isClient){
- const variants=Object.entries(events).map(([type,payload])=>obj({type:{const:type},...(isClient?(type==='player.move'?{}:{request_id:uuid()}):{event_id:asciiID(),server_time:date(),request_id:uuid()}),payload},isClient?(type==='player.move'?['type','payload']:['type','request_id','payload']):['type','event_id','server_time','payload']));
+ const variants=Object.entries(events).map(([type,payload])=>obj({type:{const:type},...(isClient?(['player.move','client.metrics','telemetry.pong'].includes(type)?{}:{request_id:uuid()}):{event_id:asciiID(),server_time:date(),request_id:uuid()}),payload},isClient?(['player.move','client.metrics','telemetry.pong'].includes(type)?['type','payload']:['type','request_id','payload']):['type','event_id','server_time','payload']));
  return JSON.parse(JSON.stringify({$schema:'https://json-schema.org/draft/2020-12/schema',description:'Структура событий. Условия состояний, trim, idempotency и корреляции см. contract.md.',oneOf:variants,$defs:S}).replaceAll('#/components/schemas/','#/$defs/'));
 }
 // Все ID в схемах ограничены ASCII, все integer безопасны для JS.
-function normalize(v){if(!v||typeof v!=='object')return; if(v.type==='integer')v.maximum??=9007199254740991; if(v.type==='string'&&v.minLength===1&&v.maxLength===128&&!v.pattern)v.pattern='^[\\x21-\\x7E]+$'; for(const child of Object.values(v))normalize(child);}
+function normalize(v){if(!v||typeof v!=='object')return; if(v.type==='integer')v.maximum??=9007199254740991; if(v.type==='string'&&v.minLength===1&&v.maxLength===128&&!v.pattern&&!v.writeOnly)v.pattern='^[\\x21-\\x7E]+$'; for(const child of Object.values(v))normalize(child);}
+sundayContracts({S,P,client:clientV1,server:serverV1,obj,ref,str,number,integer,arr,nullable,id:asciiID,uuid,date,write,json});
 normalize(api);normalize(clientV1);normalize(serverV1);
 write('docs/api/openapi.yaml',yaml(api)); json('docs/api/openapi.json',api);
 json('docs/api/ws-client.schema.json',schemaV1(clientV1,true));json('docs/api/ws-server.schema.json',schemaV1(serverV1,false));
@@ -208,3 +231,9 @@ json('docs/api/examples/players.state.json',envelope('players.state',{players:[{
 const askID='11111111-1111-4111-8111-111111111111';
 json('docs/api/examples/guide.completed.json',envelope('guide.completed',{generation:{id:'gen_01',request_id:askID,guide_id:'guide_herodotus',exhibit_id:'exhibit_01',status:'completed',user_message:{id:'dialog_01',role:'user',text:'Почему фигура изображена в профиль?',created_at:'2026-10-31T11:59:50Z'},assistant_message:{id:'dialog_02',role:'assistant',text:'Ты уже осмотрел рельеф. Части тела показаны с наиболее узнаваемых сторон: это помогает прочитать изображение.',created_at:'2026-10-31T12:00:00Z'},error:null}},askID));
 console.log('Applied normative API v1 revision.');
+
+json('docs/api/examples/photo.created.json',{id:'11111111-1111-4111-8111-111111111111',owner_id:'usr_01',caption:'Фото в галерее',room_id:room.id,exhibit_id:null,published:false,image_url:'/api/v1/photos/11111111-1111-4111-8111-111111111111/image',image_bytes:180000,thumbnail_url:'/api/v1/photos/11111111-1111-4111-8111-111111111111/thumbnail',thumbnail_bytes:12000,width:1280,height:720,created_at:'2026-01-01T12:00:00Z'});
+
+const createdPhoto=JSON.parse(fs.readFileSync(path.join(root,'docs/api/examples/photo.created.json'),'utf8'));
+json('docs/api/examples/photos.page.json',{items:[createdPhoto],next_cursor:null});
+json('docs/api/examples/chat.photo.json',envelope('chat.message',{message_id:'chat_photo_01',author:{user_id:createdPhoto.owner_id,display_name:'Валентин'},text:'',photo:{...createdPhoto,published:true}},askID));

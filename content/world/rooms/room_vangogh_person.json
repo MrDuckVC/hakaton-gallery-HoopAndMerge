@@ -1,0 +1,179 @@
+{
+  "id": "room_vangogh_person",
+  "world_version": "gallery_c01_v2",
+  "title": "18. Постимпрессионизм: Человек и цвет",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_18_17",
+      "target_room_id": "room_vangogh_self",
+      "label": "17. Постимпрессионизм: Автопортрет и художественный образ",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_18_19",
+      "target_room_id": "room_vangogh_still-life",
+      "label": "19. Постимпрессионизм: Натюрморт: цвет и предмет",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_46626",
+      "title": "Мусме",
+      "description": "Винсент ван Гог. Мусме. Датировка музея: 1888. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.151. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните цвет одежды и фона у трёх моделей. Что помогает выделить фигуру?",
+      "image_asset_id": "nga_46626",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 2.125445,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_46505",
+      "title": "Девушка в белом",
+      "description": "Винсент ван Гог. Девушка в белом. Датировка музея: 1890. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.30. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните цвет одежды и фона у трёх моделей. Что помогает выделить фигуру?",
+      "image_asset_id": "nga_46505",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 1.7623,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_46506",
+      "title": "Младенец Рулена",
+      "description": "Винсент ван Гог. Младенец Рулена. Датировка музея: 1888. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.31. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните цвет одежды и фона у трёх моделей. Что помогает выделить фигуру?",
+      "image_asset_id": "nga_46506",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 1.762263,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_vangogh",
+      "display_name": "Винсент ван Гог",
+      "subtitle": "Художественная реконструкция · Постимпрессионизм",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}

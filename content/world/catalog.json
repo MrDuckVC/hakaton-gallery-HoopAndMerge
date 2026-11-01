@@ -1,0 +1,972 @@
+{
+  "world_id": "painting_gallery",
+  "world_version": "gallery_c01_v2",
+  "rooms": [
+    {
+      "id": "room_leonardo_portrait",
+      "file": "rooms/room_leonardo_portrait.json"
+    },
+    {
+      "id": "room_leonardo_space",
+      "file": "rooms/room_leonardo_space.json"
+    },
+    {
+      "id": "room_leonardo_perspective",
+      "file": "rooms/room_leonardo_perspective.json"
+    },
+    {
+      "id": "room_leonardo_light",
+      "file": "rooms/room_leonardo_light.json"
+    },
+    {
+      "id": "room_leonardo_figure",
+      "file": "rooms/room_leonardo_figure.json"
+    },
+    {
+      "id": "room_leonardo_gesture",
+      "file": "rooms/room_leonardo_gesture.json"
+    },
+    {
+      "id": "room_leonardo_composition",
+      "file": "rooms/room_leonardo_composition.json"
+    },
+    {
+      "id": "room_leonardo_details",
+      "file": "rooms/room_leonardo_details.json"
+    },
+    {
+      "id": "room_monet_morning",
+      "file": "rooms/room_monet_morning.json"
+    },
+    {
+      "id": "room_monet_daylight",
+      "file": "rooms/room_monet_daylight.json"
+    },
+    {
+      "id": "room_monet_evening",
+      "file": "rooms/room_monet_evening.json"
+    },
+    {
+      "id": "room_monet_water",
+      "file": "rooms/room_monet_water.json"
+    },
+    {
+      "id": "room_monet_garden",
+      "file": "rooms/room_monet_garden.json"
+    },
+    {
+      "id": "room_monet_city",
+      "file": "rooms/room_monet_city.json"
+    },
+    {
+      "id": "room_monet_snow",
+      "file": "rooms/room_monet_snow.json"
+    },
+    {
+      "id": "room_monet_series",
+      "file": "rooms/room_monet_series.json"
+    },
+    {
+      "id": "room_vangogh_self",
+      "file": "rooms/room_vangogh_self.json"
+    },
+    {
+      "id": "room_vangogh_person",
+      "file": "rooms/room_vangogh_person.json"
+    },
+    {
+      "id": "room_vangogh_still-life",
+      "file": "rooms/room_vangogh_still-life.json"
+    },
+    {
+      "id": "room_vangogh_village",
+      "file": "rooms/room_vangogh_village.json"
+    },
+    {
+      "id": "room_vangogh_field",
+      "file": "rooms/room_vangogh_field.json"
+    },
+    {
+      "id": "room_vangogh_trees",
+      "file": "rooms/room_vangogh_trees.json"
+    },
+    {
+      "id": "room_vangogh_interior",
+      "file": "rooms/room_vangogh_interior.json"
+    },
+    {
+      "id": "room_vangogh_expression",
+      "file": "rooms/room_vangogh_expression.json"
+    }
+  ],
+  "assets": [
+    {
+      "id": "nga_50724",
+      "file": "assets/nga_50724.jpg"
+    },
+    {
+      "id": "nga_21",
+      "file": "assets/nga_21.jpg"
+    },
+    {
+      "id": "nga_12131",
+      "file": "assets/nga_12131.jpg"
+    },
+    {
+      "id": "nga_33254",
+      "file": "assets/nga_33254.jpg"
+    },
+    {
+      "id": "nga_1196",
+      "file": "assets/nga_1196.jpg"
+    },
+    {
+      "id": "nga_432",
+      "file": "assets/nga_432.jpg"
+    },
+    {
+      "id": "nga_12133",
+      "file": "assets/nga_12133.jpg"
+    },
+    {
+      "id": "nga_24",
+      "file": "assets/nga_24.jpg"
+    },
+    {
+      "id": "nga_41581",
+      "file": "assets/nga_41581.jpg"
+    },
+    {
+      "id": "nga_36",
+      "file": "assets/nga_36.jpg"
+    },
+    {
+      "id": "nga_323",
+      "file": "assets/nga_323.jpg"
+    },
+    {
+      "id": "nga_1177",
+      "file": "assets/nga_1177.jpg"
+    },
+    {
+      "id": "nga_28",
+      "file": "assets/nga_28.jpg"
+    },
+    {
+      "id": "nga_1145",
+      "file": "assets/nga_1145.jpg"
+    },
+    {
+      "id": "nga_301",
+      "file": "assets/nga_301.jpg"
+    },
+    {
+      "id": "nga_23",
+      "file": "assets/nga_23.jpg"
+    },
+    {
+      "id": "nga_27",
+      "file": "assets/nga_27.jpg"
+    },
+    {
+      "id": "nga_433",
+      "file": "assets/nga_433.jpg"
+    },
+    {
+      "id": "nga_26",
+      "file": "assets/nga_26.jpg"
+    },
+    {
+      "id": "nga_41583",
+      "file": "assets/nga_41583.jpg"
+    },
+    {
+      "id": "nga_515",
+      "file": "assets/nga_515.jpg"
+    },
+    {
+      "id": "nga_50725",
+      "file": "assets/nga_50725.jpg"
+    },
+    {
+      "id": "nga_358",
+      "file": "assets/nga_358.jpg"
+    },
+    {
+      "id": "nga_505",
+      "file": "assets/nga_505.jpg"
+    },
+    {
+      "id": "nga_45872",
+      "file": "assets/nga_45872.jpg"
+    },
+    {
+      "id": "nga_46673",
+      "file": "assets/nga_46673.jpg"
+    },
+    {
+      "id": "nga_52195",
+      "file": "assets/nga_52195.jpg"
+    },
+    {
+      "id": "nga_61379",
+      "file": "assets/nga_61379.jpg"
+    },
+    {
+      "id": "nga_52204",
+      "file": "assets/nga_52204.jpg"
+    },
+    {
+      "id": "nga_46681",
+      "file": "assets/nga_46681.jpg"
+    },
+    {
+      "id": "nga_46523",
+      "file": "assets/nga_46523.jpg"
+    },
+    {
+      "id": "nga_61377",
+      "file": "assets/nga_61377.jpg"
+    },
+    {
+      "id": "nga_61378",
+      "file": "assets/nga_61378.jpg"
+    },
+    {
+      "id": "nga_46655",
+      "file": "assets/nga_46655.jpg"
+    },
+    {
+      "id": "nga_61374",
+      "file": "assets/nga_61374.jpg"
+    },
+    {
+      "id": "nga_46689",
+      "file": "assets/nga_46689.jpg"
+    },
+    {
+      "id": "nga_74796",
+      "file": "assets/nga_74796.jpg"
+    },
+    {
+      "id": "nga_52189",
+      "file": "assets/nga_52189.jpg"
+    },
+    {
+      "id": "nga_72138",
+      "file": "assets/nga_72138.jpg"
+    },
+    {
+      "id": "nga_52187",
+      "file": "assets/nga_52187.jpg"
+    },
+    {
+      "id": "nga_46657",
+      "file": "assets/nga_46657.jpg"
+    },
+    {
+      "id": "nga_52202",
+      "file": "assets/nga_52202.jpg"
+    },
+    {
+      "id": "nga_62641",
+      "file": "assets/nga_62641.jpg"
+    },
+    {
+      "id": "nga_52209",
+      "file": "assets/nga_52209.jpg"
+    },
+    {
+      "id": "nga_46658",
+      "file": "assets/nga_46658.jpg"
+    },
+    {
+      "id": "nga_46524",
+      "file": "assets/nga_46524.jpg"
+    },
+    {
+      "id": "nga_46654",
+      "file": "assets/nga_46654.jpg"
+    },
+    {
+      "id": "nga_52188",
+      "file": "assets/nga_52188.jpg"
+    },
+    {
+      "id": "nga_106382",
+      "file": "assets/nga_106382.jpg"
+    },
+    {
+      "id": "nga_46625",
+      "file": "assets/nga_46625.jpg"
+    },
+    {
+      "id": "nga_66418",
+      "file": "assets/nga_66418.jpg"
+    },
+    {
+      "id": "nga_46626",
+      "file": "assets/nga_46626.jpg"
+    },
+    {
+      "id": "nga_46505",
+      "file": "assets/nga_46505.jpg"
+    },
+    {
+      "id": "nga_46506",
+      "file": "assets/nga_46506.jpg"
+    },
+    {
+      "id": "nga_72328",
+      "file": "assets/nga_72328.jpg"
+    },
+    {
+      "id": "nga_164923",
+      "file": "assets/nga_164923.jpg"
+    },
+    {
+      "id": "nga_45986",
+      "file": "assets/nga_45986.jpg"
+    },
+    {
+      "id": "nga_52178",
+      "file": "assets/nga_52178.jpg"
+    },
+    {
+      "id": "nga_46623",
+      "file": "assets/nga_46623.jpg"
+    },
+    {
+      "id": "nga_54129",
+      "file": "assets/nga_54129.jpg"
+    },
+    {
+      "id": "nga_163323",
+      "file": "assets/nga_163323.jpg"
+    },
+    {
+      "id": "nga_61371",
+      "file": "assets/nga_61371.jpg"
+    },
+    {
+      "id": "nga_53129",
+      "file": "assets/nga_53129.jpg"
+    },
+    {
+      "id": "nga_46627",
+      "file": "assets/nga_46627.jpg"
+    },
+    {
+      "id": "nga_45866",
+      "file": "assets/nga_45866.jpg"
+    },
+    {
+      "id": "nga_66406",
+      "file": "assets/nga_66406.jpg"
+    },
+    {
+      "id": "nga_52085",
+      "file": "assets/nga_52085.jpg"
+    },
+    {
+      "id": "nga_46579",
+      "file": "assets/nga_46579.jpg"
+    },
+    {
+      "id": "nga_53123",
+      "file": "assets/nga_53123.jpg"
+    },
+    {
+      "id": "nga_46624",
+      "file": "assets/nga_46624.jpg"
+    },
+    {
+      "id": "nga_52225",
+      "file": "assets/nga_52225.jpg"
+    },
+    {
+      "id": "nga_53139",
+      "file": "assets/nga_53139.jpg"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "guide_leonardo",
+      "file": "profiles/guide_leonardo.json"
+    },
+    {
+      "id": "guide_monet",
+      "file": "profiles/guide_monet.json"
+    },
+    {
+      "id": "guide_vangogh",
+      "file": "profiles/guide_vangogh.json"
+    }
+  ],
+  "start": {
+    "room_id": "room_leonardo_portrait",
+    "position": {
+      "x": 6,
+      "y": 0,
+      "z": 6
+    },
+    "rotation": {
+      "yaw": 0,
+      "pitch": 0
+    }
+  },
+  "spawns": {
+    "door_01_02": {
+      "room_id": "room_leonardo_space",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_02_01": {
+      "room_id": "room_leonardo_portrait",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_02_03": {
+      "room_id": "room_leonardo_perspective",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_03_02": {
+      "room_id": "room_leonardo_space",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_03_04": {
+      "room_id": "room_leonardo_light",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_04_03": {
+      "room_id": "room_leonardo_perspective",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_04_05": {
+      "room_id": "room_leonardo_figure",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_05_04": {
+      "room_id": "room_leonardo_light",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_05_06": {
+      "room_id": "room_leonardo_gesture",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_06_05": {
+      "room_id": "room_leonardo_figure",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_06_07": {
+      "room_id": "room_leonardo_composition",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_07_06": {
+      "room_id": "room_leonardo_gesture",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_07_08": {
+      "room_id": "room_leonardo_details",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_08_07": {
+      "room_id": "room_leonardo_composition",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_08_09": {
+      "room_id": "room_monet_morning",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_09_08": {
+      "room_id": "room_leonardo_details",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_09_10": {
+      "room_id": "room_monet_daylight",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_10_09": {
+      "room_id": "room_monet_morning",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_10_11": {
+      "room_id": "room_monet_evening",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_11_10": {
+      "room_id": "room_monet_daylight",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_11_12": {
+      "room_id": "room_monet_water",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_12_11": {
+      "room_id": "room_monet_evening",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_12_13": {
+      "room_id": "room_monet_garden",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_13_12": {
+      "room_id": "room_monet_water",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_13_14": {
+      "room_id": "room_monet_city",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_14_13": {
+      "room_id": "room_monet_garden",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_14_15": {
+      "room_id": "room_monet_snow",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_15_14": {
+      "room_id": "room_monet_city",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_15_16": {
+      "room_id": "room_monet_series",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_16_15": {
+      "room_id": "room_monet_snow",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_16_17": {
+      "room_id": "room_vangogh_self",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_17_16": {
+      "room_id": "room_monet_series",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_17_18": {
+      "room_id": "room_vangogh_person",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_18_17": {
+      "room_id": "room_vangogh_self",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_18_19": {
+      "room_id": "room_vangogh_still-life",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_19_18": {
+      "room_id": "room_vangogh_person",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_19_20": {
+      "room_id": "room_vangogh_village",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_20_19": {
+      "room_id": "room_vangogh_still-life",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_20_21": {
+      "room_id": "room_vangogh_field",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_21_20": {
+      "room_id": "room_vangogh_village",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_21_22": {
+      "room_id": "room_vangogh_trees",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_22_21": {
+      "room_id": "room_vangogh_field",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_22_23": {
+      "room_id": "room_vangogh_interior",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_23_22": {
+      "room_id": "room_vangogh_trees",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_23_24": {
+      "room_id": "room_vangogh_expression",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    },
+    "door_24_23": {
+      "room_id": "room_vangogh_interior",
+      "position": {
+        "x": 10,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "yaw": 0,
+        "pitch": 0
+      }
+    }
+  }
+}

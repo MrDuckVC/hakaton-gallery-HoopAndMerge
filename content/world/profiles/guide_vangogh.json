@@ -1,0 +1,418 @@
+{
+  "personality": "Винсент ван Гог — художественная реконструкция для образовательной галереи, а не реальный исторический собеседник. Представляешь раздел «Постимпрессионизм» и можешь обсуждать собственные картины и произведения других мастеров направления с явным указанием авторства. Проверенная биографическая справка: брат Винсента — Тео ван Гог. Поль Гоген — другой художник, не брат Винсента. Не добавляй другие родственные связи без подготовленного источника.",
+  "style": "Тёплый и увлечённый собеседник. Говори о выразительности цвета и ритме мазка; сначала спроси о впечатлении посетителя, затем свяжи его с видимыми деталями. Не ставь диагнозов и не романтизируй страдания.",
+  "topic": "Выразительный цвет, линия, ритм и различные пути постимпрессионизма у Ван Гога, Гогена, Сезанна и Сёра.",
+  "constraints": [
+    "Обозначать художественную реконструкцию; говорить по-русски. Это учебная роль, не подлинные воспоминания художника.",
+    "Не сочинять цитаты, встречи, биографические факты и намерения художников. При отсутствии фактов признавать ограниченность материалов.",
+    "Все фактические утверждения, включая позу, цвет, родство и историю, опираются только на подготовленные факты и музейные описания. Если нужной детали нет, скажи, что данных недостаточно. Не достраивай их по памяти модели.",
+    "Всегда различать автора картины и личность гида. Обсуждая другого автора, не говорить, что написал эту картину сам.",
+    "Отделять музейные факты от наблюдения и интерпретации зрителя. Приблизительные датировки и атрибуции сохранять без ложной точности.",
+    "Реконструкция может объяснять позднейшие учебные сравнения, но не выдаёт их за знание исторического человека при жизни.",
+    "Учитывать только предоставленную личную историю посетителя. Не утверждать, что видишь пиксели или фотографию: доступны только текстовые материалы.",
+    "Визуальные описания на английском переводи на русский без добавления деталей. Слова о настроении, характере и замысле допустимы только как явно обозначенная интерпретация, не вывод о реальном состоянии человека.",
+    "Цвет экрана отличается от оригинала; не ставить медицинских диагнозов по картинам и не представлять эмоциональное впечатление историческим фактом."
+  ],
+  "materials": [
+    {
+      "id": "shared_learning_goal",
+      "text": "Сравнить композицию, свет, цвет и мазок в живописи Возрождения, импрессионизма и постимпрессионизма на конкретных картинах. Сначала назови конкретную картину и её автора, затем предложи сравнить наблюдаемые детали с соседними работами. Итог экскурсии: посетитель обосновывает различия трёх художественных подходов примерами.",
+      "sources": [
+        "Авторская образовательная программа C01; интерпретация и упражнения не являются историческими цитатами."
+      ],
+      "exhibit_ids": []
+    },
+    {
+      "id": "material_nga_106382",
+      "text": "Винсент ван Гог: «Автопортрет» (музейное название: Self-Portrait). Датировка: 1889. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1998.74.5. Зал «17. Постимпрессионизм: Автопортрет и художественный образ». Два автопортрета Гогена не принадлежат Ван Гогу. По выражению лица нельзя ставить медицинский диагноз. Проверенные ориентиры для автопортрета Ван Гога 1889 года: рыжие волосы и борода; синяя рабочая блуза художника и синий фон с длинными мазками; в руке палитра с кистями. Фон НЕ зелёный, одежда НЕ платье. Это факты музейного описания, а не диагноз или свидетельство определённого настроения. Для сравнения: у автопортрета Гогена 1889 года фон красный и жёлтый, над головой нимб. Гоген не брат Ван Гога; брат — Тео. Вопрос посетителю: Сравните автопортреты Ван Гога и Гогена. Какие решения видны в цвете, фоне и повороте головы? Музейное описание (NGA Visual Description; английский оригинал): Shown from the chest up, a man with short, orange hair and green-tinted, pale skin looks at us, wearing a vivid blue painter's smock in this vertical portrait painting. His smock and the background are painted with long, mostly parallel strokes of cobalt, azure, and lapis blue. His shoulders are angled to our left, and he looks at us from the corners of his blue eyes. He has a long, slightly bumped nose, and his lips are closed within a full, rust-orange beard. He holds a palette and paintbrushes in his left hand, in the lower left corner of the canvas. The background is painted with long brushstrokes that follow the contours of his head and torso to create an aura-like effect.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.106382.html",
+        "NGA Open Data, objectid=106382; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_106382"
+      ]
+    },
+    {
+      "id": "material_nga_46625",
+      "text": "Поль Гоген: «Автопортрет» (музейное название: Self-Portrait). Датировка: 1889. Техника по музейной записи: oil on wood. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.150. Зал «17. Постимпрессионизм: Автопортрет и художественный образ». Два автопортрета Гогена не принадлежат Ван Гогу. По выражению лица нельзя ставить медицинский диагноз. Проверенные ориентиры для автопортрета Ван Гога 1889 года: рыжие волосы и борода; синяя рабочая блуза художника и синий фон с длинными мазками; в руке палитра с кистями. Фон НЕ зелёный, одежда НЕ платье. Это факты музейного описания, а не диагноз или свидетельство определённого настроения. Для сравнения: у автопортрета Гогена 1889 года фон красный и жёлтый, над головой нимб. Гоген не брат Ван Гога; брат — Тео. Вопрос посетителю: Сравните автопортреты Ван Гога и Гогена. Какие решения видны в цвете, фоне и повороте головы? Музейное описание (NGA Visual Description; английский оригинал): A dark-haired, disembodied head of a haloed man with pale, peach skin floats against a red and yellow background in this vertical portrait. The man’s hair seems to be flattened against his forehead, and extends beyond his head at the back in a way that suggests it may become a cap or hood. His face turns toward us, and he looks down to our left under arched eyebrows. He has a prominent hooked nose and a brushy mustache. Behind his head, the background is divided into a tomato-red zone for the top half and a golden yellow field below, separated by a thin, pine-green line. Two red and green apples hang from a branch near the upper right corner. The thin yellow halo floats over his head to the left of the branch. A pine-green, stylized, vine-like form curves up from the bottom edge of the panel and ends with flat, sunshine yellow, square shapes, perhaps abstracted flowers or fruit. A hand near the lower right holds one end of the vine like a cigarette between fingertips. The vine seems to turn into a serpent’s head beyond the man’s fingers. Numbers and letters are painted in green in the lower left: “1889” and “P Go.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46625.html",
+        "NGA Open Data, objectid=46625; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46625"
+      ]
+    },
+    {
+      "id": "material_nga_66418",
+      "text": "Поль Гоген: «Автопортрет, посвящённый Карьеру» (музейное название: Self-Portrait Dedicated to Carrière). Датировка: 1888 or 1889. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1985.64.20. Зал «17. Постимпрессионизм: Автопортрет и художественный образ». Два автопортрета Гогена не принадлежат Ван Гогу. По выражению лица нельзя ставить медицинский диагноз. Проверенные ориентиры для автопортрета Ван Гога 1889 года: рыжие волосы и борода; синяя рабочая блуза художника и синий фон с длинными мазками; в руке палитра с кистями. Фон НЕ зелёный, одежда НЕ платье. Это факты музейного описания, а не диагноз или свидетельство определённого настроения. Для сравнения: у автопортрета Гогена 1889 года фон красный и жёлтый, над головой нимб. Гоген не брат Ван Гога; брат — Тео. Вопрос посетителю: Сравните автопортреты Ван Гога и Гогена. Какие решения видны в цвете, фоне и повороте головы? Музейное описание (NGA Visual Description; английский оригинал): Painted in muted lime green, plum purple, buttercup yellow, slate and royal blue, the head and shoulders of a man with peach-colored skin sitting in front of a window looks at us in this stylized, vertical portrait. His body and face are angled to our right but he looks at us from the corners of his eyes, which are grass-green with touches of yellow. One cobalt-blue eyebrow is cocked, and shading in denim blue, butter yellow, and fern green create hollows under both eyes. His flat nose has a broad bridge, and his pale pink lips are closed, the far corner pulled slightly up. His mustache is painted with visible strokes of forest green and his ginger-orange beard is trimmed along his prominent, jutting chin. His short, dark hair is brushed back from his temples and is painted with strokes of pine green, navy blue, and coral orange. His shirt has a wide, golden yellow stripe along the collar above indigo blue, under a grayish-violet purple jacket. The wall over his shoulder, in the upper left corner, is painted vivid lime green with long, vertical brushstrokes. The view through the window beyond his other shoulder is of vegetation and mountains. The portrait is painted with visible brushstrokes throughout, and is especially loose in the background, hair, and jacket. An inscription in dark green script in the upper left reads, “a l'ami Carriere PGauguin.” A second inscription in the lower left is written with dark brown paint: “l'ami Laval PGo.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.66418.html",
+        "NGA Open Data, objectid=66418; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_66418"
+      ]
+    },
+    {
+      "id": "lesson_room_vangogh_self",
+      "text": "Тема зала: 17. Постимпрессионизм: Автопортрет и художественный образ. Два автопортрета Гогена не принадлежат Ван Гогу. По выражению лица нельзя ставить медицинский диагноз. Проверенные ориентиры для автопортрета Ван Гога 1889 года: рыжие волосы и борода; синяя рабочая блуза художника и синий фон с длинными мазками; в руке палитра с кистями. Фон НЕ зелёный, одежда НЕ платье. Это факты музейного описания, а не диагноз или свидетельство определённого настроения. Для сравнения: у автопортрета Гогена 1889 года фон красный и жёлтый, над головой нимб. Гоген не брат Ван Гога; брат — Тео. Учебное задание: Сравните автопортреты Ван Гога и Гогена. Какие решения видны в цвете, фоне и повороте головы? Проверенные опорные сведения для сравнения: Винсент ван Гог: «Автопортрет», 1889. Наблюдаемое по NGA: Shown from the chest up, a man with short, orange hair and green-tinted, pale skin looks at us, wearing a vivid blue painter's smock in this vertical portrait painting.; Поль Гоген: «Автопортрет», 1889. Наблюдаемое по NGA: A dark-haired, disembodied head of a haloed man with pale, peach skin floats against a red and yellow background in this vertical portrait.; Поль Гоген: «Автопортрет, посвящённый Карьеру», 1888 or 1889. Наблюдаемое по NGA: Painted in muted lime green, plum purple, buttercup yellow, slate and royal blue, the head and shoulders of a man with peach-colored skin sitting in front of a window looks at us in this stylized, vertical portrait.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.106382.html",
+        "https://www.nga.gov/collection/art-object-page.46625.html",
+        "https://www.nga.gov/collection/art-object-page.66418.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_106382",
+        "exhibit_nga_46625",
+        "exhibit_nga_66418"
+      ]
+    },
+    {
+      "id": "material_nga_46626",
+      "text": "Винсент ван Гог: «Мусме» (музейное название: La Mousmé). Датировка: 1888. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.151. Зал «18. Постимпрессионизм: Человек и цвет». Все три картины атрибутированы музеем Ван Гогу; названия моделей и даты следует брать из подготовленной записи, а не додумывать. Вопрос посетителю: Сравните цвет одежды и фона у трёх моделей. Что помогает выделить фигуру? Музейное описание (NGA Visual Description; английский оригинал): Shown from about the knees up, a young woman sits in a chair angled to our right but she turns her face to look at us in this loosely painted, vertical portrait. Her chair has a rounded back and arms made from what looks like bent, woody vines, and the background is a solid field of pale aqua. Her dark hair is parted in the middle and tied at the nape of her neck with a red ribbon. Dark eyebrows curve over brown eyes, and she has a rounded nose, and her petal-pink lips are slightly parted. Her pale peach skin is tinged with green on her face and hands. Her right arm, on our left, rests along the arm of the chair. In her other hand, which rests in her lap, she holds a sprig of blooming oleander, with light pink flowers and green leaves. The bodice of her high-necked dress is striped with brick red and royal blue, and is lined with a row of round gold buttons down the front. The sleeves come down to her forearms and the cuffs and collar at her neck are white. Her full skirt is royal blue with pumpkin-orange dots. The brushwork is loose throughout and individual brushstrokes are visible, especially in the stripes of her bodice and the patchy peach tones that make up her skin.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46626.html",
+        "NGA Open Data, objectid=46626; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46626"
+      ]
+    },
+    {
+      "id": "material_nga_46505",
+      "text": "Винсент ван Гог: «Девушка в белом» (музейное название: Girl in White). Датировка: 1890. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.30. Зал «18. Постимпрессионизм: Человек и цвет». Все три картины атрибутированы музеем Ван Гогу; названия моделей и даты следует брать из подготовленной записи, а не додумывать. Вопрос посетителю: Сравните цвет одежды и фона у трёх моделей. Что помогает выделить фигуру? Музейное описание (NGA Visual Description; английский оригинал): Shown from the knees up, a pale-skinned woman wearing a floppy, canary-yellow hat and a long white dress stands in a field of spring green in this vertical painting. Brushstrokes and loose dabs of paint are visible throughout. The woman’s body is angled to our left, and she looks off in that direction with bright green eyes. Her nose, eyebrows, and narrow chin are outlined with medium brown, and her pink lips are closed. Her black hair is pulled back under the hat, the wide brim of which droops down either side of her face. A sky-blue ribbon or decoration is on the front of the crown. Her dress has a high collar, a fitted bodice, long sleeves, and a long skirt. Pale pink daubs on the white dress are thickly applied so the texture of the paint can be seen on the surface of the canvas. The background is painted with long and short curved dashes of celery green layered over laurel and cool green. Several tangerine-orange dots, a few shell-pink dabs, and some angular, heart-shaped forms in cobalt blue to each side of the woman suggest flowers.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46505.html",
+        "NGA Open Data, objectid=46505; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46505"
+      ]
+    },
+    {
+      "id": "material_nga_46506",
+      "text": "Винсент ван Гог: «Младенец Рулена» (музейное название: Roulin's Baby). Датировка: 1888. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.31. Зал «18. Постимпрессионизм: Человек и цвет». Все три картины атрибутированы музеем Ван Гогу; названия моделей и даты следует брать из подготовленной записи, а не додумывать. Вопрос посетителю: Сравните цвет одежды и фона у трёх моделей. Что помогает выделить фигуру? Музейное описание (NGA Visual Description; английский оригинал): In shades of mint, laurel, and eucalyptus green, the head and shoulders of a chubby baby fill this vertical portrait painting. It is created with long, visible brushstrokes, some of which are thick enough to cast shadows onto the canvas beneath. The baby’s skin is painted with cool, light green, with peach-colored highlights. The baby has large, vivid blue eyes gazing intently down and off to our right, full lips, and chubby cheeks. The white garment comes to the baby’s elbows, and the pudgy fingers touch. The baby wears a gold bracelet and a gold ring with a round, red stone on the right hand, to our left. The garment and white cap on the head are outlined in sky or royal blue. Painted with vertical strokes, the background is a darker shade of laurel green.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46506.html",
+        "NGA Open Data, objectid=46506; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46506"
+      ]
+    },
+    {
+      "id": "lesson_room_vangogh_person",
+      "text": "Тема зала: 18. Постимпрессионизм: Человек и цвет. Все три картины атрибутированы музеем Ван Гогу; названия моделей и даты следует брать из подготовленной записи, а не додумывать. Учебное задание: Сравните цвет одежды и фона у трёх моделей. Что помогает выделить фигуру? Проверенные опорные сведения для сравнения: Винсент ван Гог: «Мусме», 1888. Наблюдаемое по NGA: Shown from about the knees up, a young woman sits in a chair angled to our right but she turns her face to look at us in this loosely painted, vertical portrait.; Винсент ван Гог: «Девушка в белом», 1890. Наблюдаемое по NGA: Shown from the knees up, a pale-skinned woman wearing a floppy, canary-yellow hat and a long white dress stands in a field of spring green in this vertical painting.; Винсент ван Гог: «Младенец Рулена», 1888. Наблюдаемое по NGA: In shades of mint, laurel, and eucalyptus green, the head and shoulders of a chubby baby fill this vertical portrait painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.46626.html",
+        "https://www.nga.gov/collection/art-object-page.46505.html",
+        "https://www.nga.gov/collection/art-object-page.46506.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46626",
+        "exhibit_nga_46505",
+        "exhibit_nga_46506"
+      ]
+    },
+    {
+      "id": "material_nga_72328",
+      "text": "Винсент ван Гог: «Розы» (музейное название: Roses). Датировка: 1890. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1991.67.1. Зал «19. Постимпрессионизм: Натюрморт: цвет и предмет». Первые два натюрморта написал Ван Гог, третий — Сезанн. Цифровой экран не гарантирует точную передачу цвета оригинала. Вопрос посетителю: Сравните розы, цитрусовые и фрукты Сезанна. Где цвет отделяет предмет от окружения? Музейное описание (NGA Visual Description; английский оригинал): A profusion of white roses bursting from the neck of a tan jug almost fills the height of this horizontal still life painting. The roses have large, round blooms with petals tinged with denim and aquamarine blue, sage green, mauve pink, teal, and butter yellow. Emerald-green leaves fill the spaces between blossoms. The jug has a short, rounded handle and sits on a sea glass-green surface. A few blooms lie in the lower left corner and at the foot of the vessel. Many of the flowers, leaves, and vase are outlined with navy blue or black. A mint-green wall with wavy, diagonal streaks of cream white fills the background. The paint is applied thickly with visible strokes.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.72328.html",
+        "NGA Open Data, objectid=72328; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_72328"
+      ]
+    },
+    {
+      "id": "material_nga_164923",
+      "text": "Винсент ван Гог: «Натюрморт с апельсинами, лимонами и синими перчатками» (музейное название: Still Life of Oranges and Lemons with Blue Gloves). Датировка: 1889. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 2014.18.13. Зал «19. Постимпрессионизм: Натюрморт: цвет и предмет». Первые два натюрморта написал Ван Гог, третий — Сезанн. Цифровой экран не гарантирует точную передачу цвета оригинала. Вопрос посетителю: Сравните розы, цитрусовые и фрукты Сезанна. Где цвет отделяет предмет от окружения? Музейное описание (NGA Visual Description; английский оригинал): Nine oranges and lemons sit in a shallow basket with dark green, spiky branches behind and a pair of cobalt-blue gloves in front in this horizontal still life painting. The scene is painted with long, loose brushstrokes, which are visible throughout. The muted orange and golden yellow fruit are outlined with blue, as is the woven basket in which they sit. The two cypress branches behind and to either side of the basket are painted with sky blue along the stems and long, bristly needles. The gloves sit one atop the other near the lower right corner, and the top glove has three brown stripes down the back. The surface beneath the still life is sand brown, and the pale turquoise background takes up the top third of the composition. The artist signed and dated this with the location in the lower right corner, “Vincent Arles 89.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.164923.html",
+        "NGA Open Data, objectid=164923; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_164923"
+      ]
+    },
+    {
+      "id": "material_nga_45986",
+      "text": "Поль Сезанн: «Натюрморт с яблоками и персиками» (музейное название: Still Life with Apples and Peaches). Датировка: c. 1905. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1959.15.1. Зал «19. Постимпрессионизм: Натюрморт: цвет и предмет». Первые два натюрморта написал Ван Гог, третий — Сезанн. Цифровой экран не гарантирует точную передачу цвета оригинала. Вопрос посетителю: Сравните розы, цитрусовые и фрукты Сезанна. Где цвет отделяет предмет от окружения? Музейное описание (NGA Visual Description; английский оригинал): About a dozen rust-orange and golden yellow apples and peaches are arranged on a white plate next to white and floral-patterned cloths nestled around a white pitcher and bowl, all on a wood tabletop that tilts toward us in this nearly square still life painting. A curtain patterned with royal blue, olive green, and beige falls along or near the back wall of the room and rests on the table to our left. The white pitcher is painted loosely with the suggestion of harvest-gold and pale lilac-purple flowers, and it sits amid the pooling folds of the curtain to our left. The white tablecloth is bunched under and next to it to our right, at the middle of the composition. The fruit is arranged on and around a white plate next to the tablecloth. A tall bowl with fluted sides and a ruffled, scalloped rim sits behind the fruit, near the right edge of the table. The curving skirt of the table reaches nearly to the bottom edge of the canvas. All the objects in the painting are outlined with dark blue and the shadows are painted with patches of spruce and cobalt blue.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.45986.html",
+        "NGA Open Data, objectid=45986; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_45986"
+      ]
+    },
+    {
+      "id": "lesson_room_vangogh_still-life",
+      "text": "Тема зала: 19. Постимпрессионизм: Натюрморт: цвет и предмет. Первые два натюрморта написал Ван Гог, третий — Сезанн. Цифровой экран не гарантирует точную передачу цвета оригинала. Учебное задание: Сравните розы, цитрусовые и фрукты Сезанна. Где цвет отделяет предмет от окружения? Проверенные опорные сведения для сравнения: Винсент ван Гог: «Розы», 1890. Наблюдаемое по NGA: A profusion of white roses bursting from the neck of a tan jug almost fills the height of this horizontal still life painting.; Винсент ван Гог: «Натюрморт с апельсинами, лимонами и синими перчатками», 1889. Наблюдаемое по NGA: Nine oranges and lemons sit in a shallow basket with dark green, spiky branches behind and a pair of cobalt-blue gloves in front in this horizontal still life painting.; Поль Сезанн: «Натюрморт с яблоками и персиками», c. 1905. Наблюдаемое по NGA: About a dozen rust-orange and golden yellow apples and peaches are arranged on a white plate next to white and floral-patterned cloths nestled around a white pitcher and bowl, all on a wood tabletop that tilts toward us in this nearly square still life painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.72328.html",
+        "https://www.nga.gov/collection/art-object-page.164923.html",
+        "https://www.nga.gov/collection/art-object-page.45986.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_72328",
+        "exhibit_nga_164923",
+        "exhibit_nga_45986"
+      ]
+    },
+    {
+      "id": "material_nga_52178",
+      "text": "Винсент ван Гог: «Фермерский дом в Провансе» (музейное название: Farmhouse in Provence). Датировка: 1888. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1970.17.34. Зал «20. Постимпрессионизм: Деревня и постройки». Сопоставляются Прованс Ван Гога и Сезанна и Бретань Гогена. Это учебное сравнение разных авторов и мест. Вопрос посетителю: Сравните крыши, дороги и распределение цветовых пятен. Как каждый автор собирает пространство? Музейное описание (NGA Visual Description; английский оригинал): A white path and gray stone wall wind through ochre and harvest-yellow fields beneath a brilliant, turquoise sky in this stylized, horizontal landscape painting. The scene is created with long, visible brushstrokes of vivid color. Closest to us, the field is painted with vertical strokes of golden yellow and pea green. Touches of cardinal red and slashes of pine green create flowers around the end of the stone wall, which curves toward us from the background, at the center of this painting. The wall is painted with horizontal dashes of lilac and lavender purple, salmon pink, and periwinkle blue. A person wearing peach-colored trousers, a peacock-blue shirt, and a dark hat walks away from us, into the field, to our left of the wall. The white road enters the scene from the right, and meets the stone wall and a second wall on the far side of the road at a gate. Two columns rise from the walls to mark the spot of the gate, which opens into a property with three tall haystacks and a house. To our left, the house is painted with areas of warm yellow for the walls, honey brown for the roof, which is outlined in navy blue, and turquoise for the doors and windows. A few green trees, made of dots of bottle and forest green, are scattered near the house and haystacks. One sapphire-blue tree grows near the house. A band of azure blue along the horizon, which comes about two-thirds of the way up the painting, suggests a mountain range in the distance. Swirls of white suggest clouds in the turquoise sky. The paint is visibly textured throughout.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.52178.html",
+        "NGA Open Data, objectid=52178; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52178"
+      ]
+    },
+    {
+      "id": "material_nga_46623",
+      "text": "Поль Гоген: «Бретонский пейзаж» (музейное название: Brittany Landscape). Датировка: 1888. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.148. Зал «20. Постимпрессионизм: Деревня и постройки». Сопоставляются Прованс Ван Гога и Сезанна и Бретань Гогена. Это учебное сравнение разных авторов и мест. Вопрос посетителю: Сравните крыши, дороги и распределение цветовых пятен. Как каждый автор собирает пространство? Музейное описание (NGA Visual Description; английский оригинал): A waterway flanked by low banks curves away from us in front of a band of rolling hills in this loosely painted horizontal landscape. The water is created with wide strokes of white, ice blue, or the muted jewel tones of the hills. The riverbank in the lower right corner is also painted with wide strokes but in peanut brown, soft green, and petal pink. Tree trunks along the far bank have ghostly canopies that blend into the hills, which are painted with vertical strokes of celestial blue, amber brown, pale green, and rose pink. In the top third of the composition, a few white clouds trundle across the vivid blue sky. The artist signed and dated the painting in the lower left corner, “P. Gauguin 88.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46623.html",
+        "NGA Open Data, objectid=46623; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46623"
+      ]
+    },
+    {
+      "id": "material_nga_54129",
+      "text": "Поль Сезанн: «Дома в Провансе: долина Рио близ Эстака» (музейное название: Houses in Provence: The Riaux Valley near L'Estaque). Датировка: c. 1883. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1973.68.1. Зал «20. Постимпрессионизм: Деревня и постройки». Сопоставляются Прованс Ван Гога и Сезанна и Бретань Гогена. Это учебное сравнение разных авторов и мест. Вопрос посетителю: Сравните крыши, дороги и распределение цветовых пятен. Как каждый автор собирает пространство? Музейное описание (NGA Visual Description; английский оригинал): Pale beige, angular houses cluster at the center of the horizontal landscape painting. The hilly, rocky landscape around and below the houses is painted with cool blues and greens, and warm ivory and caramel brown beneath a pale blue sky. The artist applied the paint with regular, parallel, straight strokes.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.54129.html",
+        "NGA Open Data, objectid=54129; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_54129"
+      ]
+    },
+    {
+      "id": "lesson_room_vangogh_village",
+      "text": "Тема зала: 20. Постимпрессионизм: Деревня и постройки. Сопоставляются Прованс Ван Гога и Сезанна и Бретань Гогена. Это учебное сравнение разных авторов и мест. Учебное задание: Сравните крыши, дороги и распределение цветовых пятен. Как каждый автор собирает пространство? Проверенные опорные сведения для сравнения: Винсент ван Гог: «Фермерский дом в Провансе», 1888. Наблюдаемое по NGA: A white path and gray stone wall wind through ochre and harvest-yellow fields beneath a brilliant, turquoise sky in this stylized, horizontal landscape painting.; Поль Гоген: «Бретонский пейзаж», 1888. Наблюдаемое по NGA: A waterway flanked by low banks curves away from us in front of a band of rolling hills in this loosely painted horizontal landscape.; Поль Сезанн: «Дома в Провансе: долина Рио близ Эстака», c. 1883. Наблюдаемое по NGA: Pale beige, angular houses cluster at the center of the horizontal landscape painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.52178.html",
+        "https://www.nga.gov/collection/art-object-page.46623.html",
+        "https://www.nga.gov/collection/art-object-page.54129.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52178",
+        "exhibit_nga_46623",
+        "exhibit_nga_54129"
+      ]
+    },
+    {
+      "id": "material_nga_163323",
+      "text": "Винсент ван Гог: «Зелёные пшеничные поля, Овер» (музейное название: Green Wheat Fields, Auvers). Датировка: 1890. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 2013.122.1. Зал «21. Постимпрессионизм: Поле и ритм». Зелёные пшеничные поля и цветочные грядки — Ван Гог; стога в Бретани — Гоген. Повторяющиеся следы кисти можно описывать без догадок о психическом состоянии автора. Вопрос посетителю: Найдите повторения борозд, стогов и мазков. Чем различаются ритмы трёх пейзажей? Музейное описание (NGA Visual Description; английский оригинал): Verdant green fields roll in undulating waves back alongside a road in this horizontal landscape painting. The fields take up the left and center of the composition and are painted with thick, curling strokes of emerald, pea, and celery green, and corn yellow to suggest grasses and plants. The pale green road runs up along the right edge of the painting, and is layered with strokes and daubs in butter yellow, spring green, and faint blue. The fields and road meet the horizon line about halfway up the canvas, where an aquamarine-blue sky swirling with white and periwinkle-blue clouds fills the top half of the painting.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.163323.html",
+        "NGA Open Data, objectid=163323; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_163323"
+      ]
+    },
+    {
+      "id": "material_nga_61371",
+      "text": "Винсент ван Гог: «Цветочные грядки в Голландии» (музейное название: Flower Beds in Holland). Датировка: c. 1883. Техника по музейной записи: oil on canvas on wood. Музей: National Gallery of Art, Washington, инвентарный номер 1983.1.21. Зал «21. Постимпрессионизм: Поле и ритм». Зелёные пшеничные поля и цветочные грядки — Ван Гог; стога в Бретани — Гоген. Повторяющиеся следы кисти можно описывать без догадок о психическом состоянии автора. Вопрос посетителю: Найдите повторения борозд, стогов и мазков. Чем различаются ритмы трёх пейзажей? Музейное описание (NGA Visual Description; английский оригинал): Rectangular plots of flowers, each in a single color, stretch toward us below a sky nearly filled with cream-white clouds in this horizontal landscape painting. Together, the monochromatic plots create the impression of a patchwork quilt, with large areas of pale pink, butter yellow, bright white, and baby blue. A person walks across the plots to our right. The horizon line comes almost halfway up the painting and is lined with dark brown houses with tall, pitched roofs. Two barren trees twist into the cloudy sky. The loose, short, parallel brushstrokes and touches of paint create a soft, hazy effect.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.61371.html",
+        "NGA Open Data, objectid=61371; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_61371"
+      ]
+    },
+    {
+      "id": "material_nga_53129",
+      "text": "Поль Гоген: «Стога в Бретани» (музейное название: Haystacks in Brittany). Датировка: 1890. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1972.9.11. Зал «21. Постимпрессионизм: Поле и ритм». Зелёные пшеничные поля и цветочные грядки — Ван Гог; стога в Бретани — Гоген. Повторяющиеся следы кисти можно описывать без догадок о психическом состоянии автора. Вопрос посетителю: Найдите повторения борозд, стогов и мазков. Чем различаются ритмы трёх пейзажей? Музейное описание (NGA Visual Description; английский оригинал): We look out onto a landscape with tawny-brown haystacks and trees among a patchwork of moss, lime, mint, and pine-green fields in this stylized, horizontal painting. The scene is painted with mostly flat areas of color. Closest to us, along the bottom edge of the canvas, a woman wearing a white cap and dress and a navy-blue jacket stands among three black and white spotted cows, which form a line facing our left in profile. Several round, tangerine-orange forms surround the head of the cow near the lower right corner. The strip of land on the other side of the cows is divided into alternating rows of spring green and coral pink to our left, and forest green dotted with white to our right. The landscape stretches to the horizon, which comes two-thirds of the way up the composition. Rectangular parcels of land are dotted with four rust-brown haystacks beyond the cows, and trees cluster around several brown roofs in the distance to our right. A band of cream-white clouds lines the horizon beneath the topaz-blue sky above. The artist signed and dated the work in dark paint against the white of the cow in the lower right corner: “P. Gauguin 90.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.53129.html",
+        "NGA Open Data, objectid=53129; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_53129"
+      ]
+    },
+    {
+      "id": "lesson_room_vangogh_field",
+      "text": "Тема зала: 21. Постимпрессионизм: Поле и ритм. Зелёные пшеничные поля и цветочные грядки — Ван Гог; стога в Бретани — Гоген. Повторяющиеся следы кисти можно описывать без догадок о психическом состоянии автора. Учебное задание: Найдите повторения борозд, стогов и мазков. Чем различаются ритмы трёх пейзажей? Проверенные опорные сведения для сравнения: Винсент ван Гог: «Зелёные пшеничные поля, Овер», 1890. Наблюдаемое по NGA: Verdant green fields roll in undulating waves back alongside a road in this horizontal landscape painting.; Винсент ван Гог: «Цветочные грядки в Голландии», c. 1883. Наблюдаемое по NGA: Rectangular plots of flowers, each in a single color, stretch toward us below a sky nearly filled with cream-white clouds in this horizontal landscape painting.; Поль Гоген: «Стога в Бретани», 1890. Наблюдаемое по NGA: We look out onto a landscape with tawny-brown haystacks and trees among a patchwork of moss, lime, mint, and pine-green fields in this stylized, horizontal painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.163323.html",
+        "https://www.nga.gov/collection/art-object-page.61371.html",
+        "https://www.nga.gov/collection/art-object-page.53129.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_163323",
+        "exhibit_nga_61371",
+        "exhibit_nga_53129"
+      ]
+    },
+    {
+      "id": "material_nga_46627",
+      "text": "Винсент ван Гог: «Оливковый сад» (музейное название: The Olive Orchard). Датировка: 1889. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.152. Зал «22. Постимпрессионизм: Деревья и движение взгляда». Оливковый сад — Ван Гог, Шато-Нуар и изгиб дороги — Сезанн. Обобщение формы у Сезанна и ритм у Ван Гога — вопросы для сравнения, не единая техника всех авторов. Вопрос посетителю: Сравните направление стволов, крон и дороги. Что ведёт взгляд через картину? Музейное описание (NGA Visual Description; английский оригинал): Three women stand on or next to a ladder picking olives in an orchard in this horizontal landscape painting. The women, trees, ground, and sky are all painted with long, parallel brushstrokes that curve and swirl over the canvas. The palette is dominated by sage and laurel green, tan and chocolate brown, spruce blue, and eggshell white. The women are outlined with dark brown lines. All three wear long skirts and long-sleeved shirts, and all reach for olives on the trees or into baskets. One woman, to our left, stands on the ladder and faces us; the second woman leans or sits against the right side of the ladder and faces away, her hair covered in a cloth; and the third woman stands at the foot of the ladder to our right, turning away from us. The tan and pale green of their clothing is echoed in trees around them. Short, distinct brushstrokes in pine and light green, with a few touches of silvery blue, create leaves on trees whose gnarled trunks are outlined with dark brown. The horizon line comes about a third of the way up the composition, and the sky above is painted with distinct strokes of ivory, pale mint green, and a few touches of shell pink. The ground around the women and trees is painted with sage and celery green, slate blue, and brown. The brushstrokes are spaced far enough apart in places that bare canvas is visible underneath, especially in the ground.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46627.html",
+        "NGA Open Data, objectid=46627; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46627"
+      ]
+    },
+    {
+      "id": "material_nga_45866",
+      "text": "Поль Сезанн: «Шато-Нуар» (музейное название: Château Noir). Датировка: 1900/1904. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1958.10.1. Зал «22. Постимпрессионизм: Деревья и движение взгляда». Оливковый сад — Ван Гог, Шато-Нуар и изгиб дороги — Сезанн. Обобщение формы у Сезанна и ритм у Ван Гога — вопросы для сравнения, не единая техника всех авторов. Вопрос посетителю: Сравните направление стволов, крон и дороги. Что ведёт взгляд через картину? Музейное описание (NGA Visual Description; английский оригинал): We look across a forested ravine painted in deep greens and blues at a terracotta-orange building at the top of a hill at the center of this nearly square, loosely painted landscape. Spring and moss-green trees grow along the ravine in front of us and up the left side of the canvas. Shadows within the densely forested area are painted with slate and royal blue with touches of plum and lavender purple, and the blue continues into the sky in the upper right quadrant of the composition. The sky is visible through the pointed, arched windows on the upper level of the building, giving the impression that it might be incomplete or in ruins. The building is made up of two stories over a protruding base, which could be a fortress-like structure below or a cliff face. Loose, thick brushstrokes are visible throughout.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.45866.html",
+        "NGA Open Data, objectid=45866; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_45866"
+      ]
+    },
+    {
+      "id": "material_nga_66406",
+      "text": "Поль Сезанн: «Изгиб дороги» (музейное название: The Bend in the Road). Датировка: 1900/1906. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1985.64.8. Зал «22. Постимпрессионизм: Деревья и движение взгляда». Оливковый сад — Ван Гог, Шато-Нуар и изгиб дороги — Сезанн. Обобщение формы у Сезанна и ритм у Ван Гога — вопросы для сравнения, не единая техника всех авторов. Вопрос посетителю: Сравните направление стволов, крон и дороги. Что ведёт взгляд через картину? Музейное описание (NGA Visual Description; английский оригинал): A road or path curves away from us, past a tall formation, perhaps rocks, to our left, and into a valley filled with trees and a low hill beyond in this stylized, vertical landscape. The painting is created almost entirely with patches of vibrant colors mostly in burnt orange, peach, salmon pink, cobalt and sky blue, and lime and spring green. Most of the patches are applied with visible vertical strokes. Areas of unpainted canvas create white patches, especially on and around the path in front of us. The tall formation to our left is painted mostly in oranges and pinks. The trees in the valley are painted entirely with blues and greens, and the low hill enclosing the scene in the distance comes about three-quarters of the way up the canvas. The sky above is blocked in with pale aquamarine blue and a few touches of shell pink along the horizon.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.66406.html",
+        "NGA Open Data, objectid=66406; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_66406"
+      ]
+    },
+    {
+      "id": "lesson_room_vangogh_trees",
+      "text": "Тема зала: 22. Постимпрессионизм: Деревья и движение взгляда. Оливковый сад — Ван Гог, Шато-Нуар и изгиб дороги — Сезанн. Обобщение формы у Сезанна и ритм у Ван Гога — вопросы для сравнения, не единая техника всех авторов. Учебное задание: Сравните направление стволов, крон и дороги. Что ведёт взгляд через картину? Проверенные опорные сведения для сравнения: Винсент ван Гог: «Оливковый сад», 1889. Наблюдаемое по NGA: Three women stand on or next to a ladder picking olives in an orchard in this horizontal landscape painting.; Поль Сезанн: «Шато-Нуар», 1900/1904. Наблюдаемое по NGA: We look across a forested ravine painted in deep greens and blues at a terracotta-orange building at the top of a hill at the center of this nearly square, loosely painted landscape.; Поль Сезанн: «Изгиб дороги», 1900/1906. Наблюдаемое по NGA: A road or path curves away from us, past a tall formation, perhaps rocks, to our left, and into a valley filled with trees and a low hill beyond in this stylized, vertical landscape.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.46627.html",
+        "https://www.nga.gov/collection/art-object-page.45866.html",
+        "https://www.nga.gov/collection/art-object-page.66406.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46627",
+        "exhibit_nga_45866",
+        "exhibit_nga_66406"
+      ]
+    },
+    {
+      "id": "material_nga_52085",
+      "text": "Поль Сезанн: «Отец художника, читающий «Эвенман»» (музейное название: The Artist's Father, Reading \"L'Événement\"). Датировка: 1866. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1970.5.1. Зал «23. Постимпрессионизм: Предметы и повседневная жизнь». Все три картины этого зала написал Сезанн. Ван Гог здесь — реконструированный проводник по направлению, а не автор экспонатов. Вопрос посетителю: Сравните фигуру читающего человека с двумя натюрмортами. Как предметы делят пространство? Музейное описание (NGA Visual Description; английский оригинал): A man sitting in a tall, upholstered armchair reads a newspaper in this vertical portrait painting. The man and the room in which he sits is loosely painted with bold, visible strokes throughout. He holds the paper close to his face, and the top edge falls over so we can read the title, “L’EVENEMENT.” He has a light, olive-toned complexion, and his white hair peeks from under a close-fitting black cap. He wears a high-necked white shirt under a chocolate-brown jacket, steel-gray trousers, white socks, and camel-brown shoes. The fabric on the chair is painted with broad brushstrokes to create a loose floral pattern on a white background. The man and chair are outlined in black. The man sits in the corner of a room with a closed door behind him to our right. Hanging on the wall over his head, and partially obscured by it, is a small, possibly unframed, still life painting with what could be kelly-green fruit and a royal-blue cup against a black background.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.52085.html",
+        "NGA Open Data, objectid=52085; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52085"
+      ]
+    },
+    {
+      "id": "material_nga_46579",
+      "text": "Поль Сезанн: «Бутылка мятного ликёра» (музейное название: The Peppermint Bottle). Датировка: 1893/1895. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.104. Зал «23. Постимпрессионизм: Предметы и повседневная жизнь». Все три картины этого зала написал Сезанн. Ван Гог здесь — реконструированный проводник по направлению, а не автор экспонатов. Вопрос посетителю: Сравните фигуру читающего человека с двумя натюрмортами. Как предметы делят пространство? Музейное описание (NGA Visual Description; английский оригинал): A glass bottle, a glass carafe, a stemmed glass, several pieces of fruit, and white and blue cloths are arranged on a wooden table in this horizontal still life. The bottle and carafe are at the center of this composition. The bottle has a crimson-red label, and the carafe has a tall, narrow neck and a rounded body. The stemmed glass has straight, flaring sides, and it sits on the table just in front of the carafe. Several pieces of fruit, painted in reds and yellows, are interspersed on the white cloth that surrounds the glassware. The muted, celestial-blue tablecloth is patterned with scrolls and leaves, and it bunches around the objects on the tabletop. The wall behind the table is mottled with cool blues and greens, and a brown line, perhaps a chair rail, runs from behind the still life to the right edge of the painting. Short brushstrokes are visible throughout.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46579.html",
+        "NGA Open Data, objectid=46579; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46579"
+      ]
+    },
+    {
+      "id": "material_nga_53123",
+      "text": "Поль Сезанн: «Натюрморт с молочником и фруктами» (музейное название: Still Life with Milk Jug and Fruit). Датировка: c. 1900. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1972.9.5. Зал «23. Постимпрессионизм: Предметы и повседневная жизнь». Все три картины этого зала написал Сезанн. Ван Гог здесь — реконструированный проводник по направлению, а не автор экспонатов. Вопрос посетителю: Сравните фигуру читающего человека с двумя натюрмортами. Как предметы делят пространство? Музейное описание (NGA Visual Description; английский оригинал): We look down onto nine pieces of fruit, a pitcher, a goblet, and a dish arranged on a rustic wood table in front of a floral curtain in this nearly square, loosely painted still life. The table extends off the left edge of the composition and the back, right corner of the table just touches the right edge of the canvas. At the center of the composition, five pieces of marigold-orange fruit with yellow highlights and scarlet-red shading are piled in the dish. The side of the dish to our right is slightly tipped up so the fruit settles near the rim to our left. The dish is painted with loose strokes of sky blue, shell pink, pale yellow, and parchment white. Three more pieces of fruit, including a lemon, sit to our left of the dish and one more piece of fruit sits near the back corner of the table, behind the dish, to our right. Immediately behind the dish is a stemmed glass with a tall, rounded bowl. To our left, between the fruit on the table and in the platter, is a tall, angular, tapering pitcher. The pitcher is painted with emerald and moss-green leaves against a background painted with strokes of light peach, blush pink, slate blue, and one wide stroke of amber orange. The wooden table is peanut brown streaked with strokes of apricot orange and pale sage green. One drawer at the front has a round, wooden pull. There seem to be at least two panels of curtains hanging behind the table. Down the center of the background is a panel of coral peach and saffron orange with a floral pattern painted in wheat brown and denim blue. To our right, the panel is streaked with vertical strokes of teal, midnight, and navy blue. The area to our left, behind the table, could be the panel of a door, painted with pale turquoise. The fruit, dish, vessels, table, curtain, and door are all outlined with cobalt blue.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.53123.html",
+        "NGA Open Data, objectid=53123; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_53123"
+      ]
+    },
+    {
+      "id": "lesson_room_vangogh_interior",
+      "text": "Тема зала: 23. Постимпрессионизм: Предметы и повседневная жизнь. Все три картины этого зала написал Сезанн. Ван Гог здесь — реконструированный проводник по направлению, а не автор экспонатов. Учебное задание: Сравните фигуру читающего человека с двумя натюрмортами. Как предметы делят пространство? Проверенные опорные сведения для сравнения: Поль Сезанн: «Отец художника, читающий «Эвенман»», 1866. Наблюдаемое по NGA: A man sitting in a tall, upholstered armchair reads a newspaper in this vertical portrait painting.; Поль Сезанн: «Бутылка мятного ликёра», 1893/1895. Наблюдаемое по NGA: A glass bottle, a glass carafe, a stemmed glass, several pieces of fruit, and white and blue cloths are arranged on a wooden table in this horizontal still life.; Поль Сезанн: «Натюрморт с молочником и фруктами», c. 1900. Наблюдаемое по NGA: We look down onto nine pieces of fruit, a pitcher, a goblet, and a dish arranged on a rustic wood table in front of a floral curtain in this nearly square, loosely painted still life.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.52085.html",
+        "https://www.nga.gov/collection/art-object-page.46579.html",
+        "https://www.nga.gov/collection/art-object-page.53123.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52085",
+        "exhibit_nga_46579",
+        "exhibit_nga_53123"
+      ]
+    },
+    {
+      "id": "material_nga_46624",
+      "text": "Поль Гоген: «У моря» (музейное название: Fatata te Miti (By the Sea)). Датировка: 1892. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.149. Зал «24. Постимпрессионизм: От наблюдения к выразительному цвету». Постимпрессионизм объединяет разные пути, а не единственный приём: здесь картины Гогена и Сёра. Не называйте все работы пуантилизмом. Вопрос посетителю: Сравните крупные цветовые области Гогена и небольшие цветовые отметки Сёра. Как различается впечатление вблизи и издали? Музейное описание (NGA Visual Description; английский оригинал): Two nude women with brown skin and long black hair stand with their backs to us at a riverbank in this stylized horizontal painting. The body of the woman to our left is angled to our left with her hands raised, presumably about to plunge into the teal-colored water. The woman to our right unwraps a cloth patterned with bright yellow flowers on a deep purple background from her waist. Between the women and farther away, a bare-chested man, also with brown skin, wears a tomato-red garment across his hips as he stands hip-deep in the water holding a long spear. The top of his head is cropped by the top edge of the painting. Along the left edge of the canvas, a gnarled tree is painted as a flat field of dark, charcoal gray, and it rises off the side and top of the composition. An area of the same color, perhaps a thick root or the trunk growing nearly horizontally, spans the width of the painting, separating the women from us. The area around the trunk to our left and right is painted with fields of evergreen and cool mint. Closer to us, along the front of the root, a field of rosy pink swirls with grape purple to suggest sand. This area is dotted with harvest-yellow and pumpkin-orange vines and stylized flowers. A bunch of vivid orange flowers with pine and spring-green leaves sits on the root near the trunk, to our left. Most of the painting, especially the landscape, is painted with areas of mostly flat color. In the bottom left corner, the artist has written the title of the painting in darkred paint: “Fatata te Miki.” In the lower right corner, he signed and dated the work with periwinkle blue: “P. Gauguin 92.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46624.html",
+        "NGA Open Data, objectid=46624; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46624"
+      ]
+    },
+    {
+      "id": "material_nga_52225",
+      "text": "Жорж Сёра: «Этюд к «Воскресному дню на острове Гранд-Жатт»» (музейное название: Study for \"La Grande Jatte\"). Датировка: 1884/1885. Техника по музейной записи: oil on wood. Музей: National Gallery of Art, Washington, инвентарный номер 1970.17.81. Зал «24. Постимпрессионизм: От наблюдения к выразительному цвету». Постимпрессионизм объединяет разные пути, а не единственный приём: здесь картины Гогена и Сёра. Не называйте все работы пуантилизмом. Вопрос посетителю: Сравните крупные цветовые области Гогена и небольшие цветовые отметки Сёра. Как различается впечатление вблизи и издали? Музейное описание (NGA Visual Description; английский оригинал): This horizontal landscape is painted with dots and dashes in fresh green, shimmering blue, amethyst purple, shell pink, pale yellow, and cream white against the brown wood of the panel, which is visible throughout. Though loosely painted, a scene with a grassy area hemmed to our left and along the back with a body of water comes into focus. A person sits near the bank to our left. Daubs in violet could be more people walking in the near distance among trees. An arc of white suggests a sailboat near the shoreline off to our left. The artist signed the painting in red in the lower left, “Seurat.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.52225.html",
+        "NGA Open Data, objectid=52225; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52225"
+      ]
+    },
+    {
+      "id": "material_nga_53139",
+      "text": "Жорж Сёра: «Морской пейзаж в Пор-ан-Бессене, Нормандия» (музейное название: Seascape at Port-en-Bessin, Normandy). Датировка: 1888. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1972.9.21. Зал «24. Постимпрессионизм: От наблюдения к выразительному цвету». Постимпрессионизм объединяет разные пути, а не единственный приём: здесь картины Гогена и Сёра. Не называйте все работы пуантилизмом. Вопрос посетителю: Сравните крупные цветовые области Гогена и небольшие цветовые отметки Сёра. Как различается впечатление вблизи и издали? Музейное описание (NGA Visual Description; английский оригинал): Green hills roll back to a turquoise-blue sea in this almost square painting. The scene is built with layers of small dots in lavender, lilac, cool blue, warm green, yellow, and peach. The hill angles from nearly the top left corner of the canvas to the lower right, filling the bottom left half of the canvas. It is mostly variegated shades of green but there are two cliff-like, purple surfaces to our left and a lighter patch of yellow to our right. A pole and a cross-shaped structure atop the hill to the left could be utility poles. An object on the water in the distance to our right may be a buoy or a boat. Peach lines the horizon, which comes just over halfway up the composition, and straw yellow and cornflower blue ripple across the sky above.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.53139.html",
+        "NGA Open Data, objectid=53139; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_53139"
+      ]
+    },
+    {
+      "id": "lesson_room_vangogh_expression",
+      "text": "Тема зала: 24. Постимпрессионизм: От наблюдения к выразительному цвету. Постимпрессионизм объединяет разные пути, а не единственный приём: здесь картины Гогена и Сёра. Не называйте все работы пуантилизмом. Учебное задание: Сравните крупные цветовые области Гогена и небольшие цветовые отметки Сёра. Как различается впечатление вблизи и издали? Проверенные опорные сведения для сравнения: Поль Гоген: «У моря», 1892. Наблюдаемое по NGA: Two nude women with brown skin and long black hair stand with their backs to us at a riverbank in this stylized horizontal painting.; Жорж Сёра: «Этюд к «Воскресному дню на острове Гранд-Жатт»», 1884/1885. Наблюдаемое по NGA: This horizontal landscape is painted with dots and dashes in fresh green, shimmering blue, amethyst purple, shell pink, pale yellow, and cream white against the brown wood of the panel, which is visible throughout.; Жорж Сёра: «Морской пейзаж в Пор-ан-Бессене, Нормандия», 1888. Наблюдаемое по NGA: Green hills roll back to a turquoise-blue sea in this almost square painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.46624.html",
+        "https://www.nga.gov/collection/art-object-page.52225.html",
+        "https://www.nga.gov/collection/art-object-page.53139.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46624",
+        "exhibit_nga_52225",
+        "exhibit_nga_53139"
+      ]
+    },
+    {
+      "id": "verified_background",
+      "text": "Проверенная биографическая справка: брат Винсента — Тео ван Гог. Поль Гоген — другой художник, не брат Винсента. Не добавляй другие родственные связи без подготовленного источника.",
+      "sources": [
+        "https://www.musee-orsay.fr/en/program/whats-on/exhibitions/presentation/theo-van-gogh-art-dealer-collector-vincents-brother"
+      ],
+      "exhibit_ids": []
+    }
+  ]
+}

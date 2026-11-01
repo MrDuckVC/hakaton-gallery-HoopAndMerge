@@ -1,0 +1,66 @@
+{
+  "type": "world.runtime",
+  "event_id": "evt_sunday_world_runtime",
+  "server_time": "2026-11-01T12:00:00Z",
+  "payload": {
+    "world_version": "gallery_c01_v2",
+    "room_id": "room_leonardo_portrait",
+    "revision": 1,
+    "config": {
+      "accent_color": "#D9D2C3",
+      "lighting": "neutral",
+      "guide_placements": [
+        {
+          "guide_id": "guide_leonardo",
+          "position": {
+            "x": 6,
+            "y": 0,
+            "z": 7.5
+          },
+          "rotation_y": 0
+        }
+      ],
+      "lamp_slots": [
+        {
+          "slot_id": "a",
+          "position": {
+            "x": 3,
+            "y": 0,
+            "z": 4
+          }
+        },
+        {
+          "slot_id": "b",
+          "position": {
+            "x": 9,
+            "y": 0,
+            "z": 4
+          }
+        }
+      ],
+      "npc_count": 5,
+      "installation_visible": false
+    },
+    "guides": [
+      {
+        "guide_id": "guide_leonardo",
+        "display_name": "Леонардо",
+        "subtitle": "Учебная реконструкция",
+        "position": {
+          "x": 6,
+          "y": 0,
+          "z": 7.5
+        },
+        "rotation_y": 0
+      }
+    ],
+    "lamp": {
+      "object_id": "lamp_01",
+      "slot_id": "a",
+      "holder_user_id": null,
+      "yaw": 0,
+      "head_pitch": 0,
+      "on": true
+    }
+  }
+}

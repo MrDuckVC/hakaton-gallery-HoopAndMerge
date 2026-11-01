@@ -18,7 +18,7 @@ function check(v,s,doc){
   for(const k of s.required??[])assert(Object.hasOwn(v,k),'missing '+k);
   for(const [k,x]of Object.entries(v)){if(s.properties?.[k])check(x,s.properties[k],doc);else if(s.additionalProperties===false)assert.fail('unknown '+k);else if(typeof s.additionalProperties==='object')check(x,s.additionalProperties,doc);}
  }
- if(s.type==='array'){assert(Array.isArray(v));for(const x of v)check(x,s.items,doc);}
+ if(s.type==='array'){assert(Array.isArray(v));if(s.minItems!==undefined)assert(v.length>=s.minItems);if(s.maxItems!==undefined)assert(v.length<=s.maxItems);if(s.uniqueItems)assert.equal(new Set(v.map(x=>JSON.stringify(x))).size,v.length);for(const x of v)check(x,s.items,doc);}
  if(s.type==='string'){
   assert.equal(typeof v,'string');const len=Array.from(v).length;
   if(s.minLength!==undefined)assert(len>=s.minLength);if(s.maxLength!==undefined)assert(len<=s.maxLength);if(s.pattern)assert(new RegExp(s.pattern,'u').test(v),'pattern');
@@ -31,7 +31,22 @@ function check(v,s,doc){
  }
 }
 refs(api,api);refs(client,client);refs(server,server);
+for (const name of ['RegisterRequest', 'LoginRequest']) {
+ const schema=api.components.schemas[name];
+ const credentials={username:'alice',password:' пароль '};
+ if(name==='RegisterRequest')credentials.display_name='Алиса';
+ check(credentials,schema,api);
+ credentials.password='😀😀'; // Eight UTF-8 bytes, two code points.
+ check(credentials,schema,api);
+ credentials.username='\u0085ALICE\u2003';
+ if(name==='RegisterRequest')credentials.display_name='  '+ '😀'.repeat(32)+'  ';
+ check(credentials,schema,api); // Public text constraints apply after Unicode trim.
+}
+const registerSchema=api.components.schemas.RegisterRequest;
+assert.throws(()=>check({username:'alice',display_name:'A\u0000B',password:'password'},registerSchema,api));
+check({username:'alice',display_name:'Алиса',password:'pass\u0000word'},registerSchema,api);
 const paths=api.paths;assert(!paths['/guides/{guide_id}/messages']);assert(paths['/guides/{guide_id}/generations/by-request/{request_id}']);assert(paths['/photos/{photo_id}/thumbnail']);
+for (const route of ['/auth/register','/auth/login']) for (const status of ['413','415']) assert(paths[route].post.responses[status],route+' missing '+status);
 const serverTypes=server.oneOf.map(x=>x.properties.type.const);assert(!serverTypes.includes('world.rooms_available'));assert(serverTypes.includes('guide.cancelled'));
 const operations=Object.values(paths).flatMap(x=>Object.values(x));assert.equal(new Set(operations.map(x=>x.operationId)).size,operations.length);
 for(const operation of operations)for(const parameter of operation.parameters??[]){if(parameter.in==='path')assert.equal(parameter.required,true);}
@@ -40,6 +55,8 @@ for(const name of ['world.snapshot','players.state','guide.completed'])check(rea
 const snapshot=read('docs/api/examples/world.snapshot.json');assert.equal(snapshot.payload.current_room.descriptor_bytes,fs.statSync(path.join(root,'docs/api/examples/room.json')).size);
 const uuid='11111111-1111-4111-8111-111111111111';
 check({type:'world.ready',request_id:uuid,payload:{world_version:'world_v1',movement_epoch:1}},client,client);
+check({type:'guide.ask',request_id:uuid,payload:{guide_id:'guide',text:'question 0 🌍'}},client,client);
+assert.throws(()=>check({type:'guide.ask',request_id:uuid,payload:{guide_id:'guide',text:'q\u0000x'}},client,client));
 check({type:'player.move',payload:{movement_epoch:1,seq:1,position:{x:1,y:0,z:-1},rotation:{yaw:0,pitch:0}}},client,client);
 assert.throws(()=>check({type:'move',payload:{}},client,client));
 assert.throws(()=>check({type:'player.move',payload:{seq:1,position:{x:1,y:0,z:-1},rotation:{yaw:0,pitch:0}}},client,client));
@@ -49,3 +66,58 @@ function yaml(value,depth=0){const pad='  '.repeat(depth);if(Array.isArray(value
 assert.equal(fs.readFileSync(path.join(root,'docs/api/openapi.yaml'),'utf8'),yaml(api));
 console.log('PASS: references, operation IDs, YAML/JSON parity, four fixtures, ready/move, legacy rejection, room byte size, AGENTS '+length+'/6000 chars.');
 console.log('This is a focused local check, not a full OpenAPI/JSON Schema conformance validator or backend runtime test.');
+
+check(read('docs/api/examples/photo.created.json'),api.components.schemas.Photo,api);
+const uploadSchema=api.components.schemas.PhotoUpload;
+check({image:'fixture bytes',room_id:'room',movement_epoch:'1',caption:'  '+ 'я'.repeat(200)+'  '},uploadSchema,api);
+assert.throws(()=>check({image:'x',room_id:'room',movement_epoch:'1',caption:'a\u0000b'},uploadSchema,api));
+for(const movement_epoch of ['0','01','1.0','1e3','-1'])assert.throws(()=>check({image:'x',room_id:'room',movement_epoch},uploadSchema,api));
+assert.throws(()=>check({image:'x',room_id:'room',movement_epoch:'1',unknown:'x'},uploadSchema,api));
+assert(paths['/photos'].post.responses['200']);
+
+check(read('docs/api/examples/photos.page.json'),api.components.schemas.PhotoPage,api);
+check(read('docs/api/examples/chat.photo.json'),server,server);
+assert.deepEqual(paths['/photos'].get.parameters[0].schema,{type:'integer',minimum:1,maximum:6,default:6});
+assert.deepEqual(Object.keys(paths['/photos/{photo_id}/thumbnail'].get.responses['200'].content),['image/jpeg']);
+for(const route of ['/photos/{photo_id}/image','/photos/{photo_id}/thumbnail']) {
+ const headers=paths[route].get.responses['200'].headers;
+ assert.equal(headers['X-Content-Type-Options'].schema.const,'nosniff');
+ assert.equal(headers['Cache-Control'].schema.const,'no-store');
+ assert(headers['Content-Length']);
+ assert(!paths[route].get.responses['403']);
+}
+console.log('PASS: photo album/chat fixtures, pagination limits, JPEG thumbnail and protected file headers.');
+
+// Sunday is a target extension; validate its complete frontend handoff fixtures.
+const sundayDir=path.join(root,'docs/api/examples/sunday');
+for(const file of fs.readdirSync(sundayDir).filter(x=>x.endsWith('.json'))){
+ const value=read('docs/api/examples/sunday/'+file);
+ const isClient=file.startsWith('client.')||file.startsWith('telemetry.pong')||file.startsWith('room.sync')||file.startsWith('object.act.')||file==='guide.action.json';
+ if(value.type){const schema=isClient?client:server;check(value,schema,schema);}
+ else {const name={'admin.clients.json':'SundayClients','admin.room.update.json':'SundayRoomUpdate','admin.guide.json':'SundayAdminGuide','admin.guide.update.json':'SundayGuideUpdate'}[file];assert(name,'unmapped fixture '+file);check(value,api.components.schemas[name],api);}
+}
+const sundayCommand=(type,payload)=>({type,request_id:uuid,payload});
+check({type:'client.metrics',payload:{fps:null,visible:true}},client,client);
+assert.throws(()=>check({type:'client.metrics',request_id:uuid,payload:{fps:60,visible:true}},client,client));
+assert.throws(()=>check({type:'client.metrics',payload:{fps:60,visible:false}},client,client));
+assert.throws(()=>check({type:'client.metrics',payload:{fps:1001,visible:true}},client,client));
+assert.throws(()=>check({type:'telemetry.pong',payload:{nonce:'short'}},client,client));
+assert.throws(()=>check({type:'object.act',payload:{object_id:'lamp_01',action:'take',movement_epoch:1,expected_revision:1}},client,client));
+assert.throws(()=>check(sundayCommand('object.act',{object_id:'lamp_01',action:'take',movement_epoch:1,expected_revision:1,on:true}),client,client));
+assert.throws(()=>check(sundayCommand('object.act',{object_id:'lamp_01',action:'aim',movement_epoch:1,expected_revision:1,yaw:0,head_pitch:2}),client,client));
+const npcs=read('docs/api/examples/sunday/npc.state.json');assert.equal(npcs.payload.npcs.length,5);check(npcs,server,server);
+npcs.payload.npcs=Array.from({length:10},(_,i)=>({...npcs.payload.npcs[0],npc_id:'npc_'+String(i).padStart(2,'0')}));
+check(npcs,server,server);npcs.payload.npcs.push(npcs.payload.npcs[0]);assert.throws(()=>check(npcs,server,server));
+const currentWorld=read('content/world/catalog.json');
+const runtime=read('docs/api/examples/sunday/world.runtime.json').payload;
+assert.equal(runtime.config.npc_count,5);
+assert.equal(runtime.world_version,currentWorld.world_version);
+assert(currentWorld.rooms.some(x=>x.id===runtime.room_id));
+assert(Buffer.byteLength(JSON.stringify(runtime))<=32768);
+assert(Buffer.byteLength(JSON.stringify(read('docs/api/examples/sunday/npc.state.json').payload))<=24576);
+for(const room of currentWorld.rooms){const dto=read('content/world/'+room.file);assert(dto.guides.length<=3);}
+
+const npcConfig=structuredClone(runtime.config);
+for(const count of [0,10]){npcConfig.npc_count=count;check(npcConfig,api.components.schemas.SundayRoomConfig,api);}
+for(const count of [-1,11,40]){npcConfig.npc_count=count;assert.throws(()=>check(npcConfig,api.components.schemas.SundayRoomConfig,api));}
+console.log('PASS: Sunday HTTP/WS fixtures, telemetry exemptions/nullability, lamp action unions, limits, real C01 room and bounded snapshots.');

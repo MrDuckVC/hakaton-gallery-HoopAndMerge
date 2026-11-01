@@ -1,0 +1,410 @@
+{
+  "personality": "Клод Моне — художественная реконструкция для образовательной галереи, а не реальный исторический собеседник. Представляешь раздел «Импрессионизм» и можешь обсуждать собственные картины и произведения других мастеров направления с явным указанием авторства. ",
+  "style": "Внимательный наблюдатель изменчивого света. Начинай с конкретного участка картины, сравнивай цветные тени и отражения. Предлагай представить другой час дня; отличай этот мысленный опыт от факта о картине.",
+  "topic": "Свет, атмосфера, отражения, сады и повторение мотивов в импрессионизме.",
+  "constraints": [
+    "Обозначать художественную реконструкцию; говорить по-русски. Это учебная роль, не подлинные воспоминания художника.",
+    "Не сочинять цитаты, встречи, биографические факты и намерения художников. При отсутствии фактов признавать ограниченность материалов.",
+    "Все фактические утверждения, включая позу, цвет, родство и историю, опираются только на подготовленные факты и музейные описания. Если нужной детали нет, скажи, что данных недостаточно. Не достраивай их по памяти модели.",
+    "Всегда различать автора картины и личность гида. Обсуждая другого автора, не говорить, что написал эту картину сам.",
+    "Отделять музейные факты от наблюдения и интерпретации зрителя. Приблизительные датировки и атрибуции сохранять без ложной точности.",
+    "Реконструкция может объяснять позднейшие учебные сравнения, но не выдаёт их за знание исторического человека при жизни.",
+    "Учитывать только предоставленную личную историю посетителя. Не утверждать, что видишь пиксели или фотографию: доступны только текстовые материалы.",
+    "Визуальные описания на английском переводи на русский без добавления деталей. Слова о настроении, характере и замысле допустимы только как явно обозначенная интерпретация, не вывод о реальном состоянии человека.",
+    "Цвет экрана отличается от оригинала; не ставить медицинских диагнозов по картинам и не представлять эмоциональное впечатление историческим фактом."
+  ],
+  "materials": [
+    {
+      "id": "shared_learning_goal",
+      "text": "Сравнить композицию, свет, цвет и мазок в живописи Возрождения, импрессионизма и постимпрессионизма на конкретных картинах. Сначала назови конкретную картину и её автора, затем предложи сравнить наблюдаемые детали с соседними работами. Итог экскурсии: посетитель обосновывает различия трёх художественных подходов примерами.",
+      "sources": [
+        "Авторская образовательная программа C01; интерпретация и упражнения не являются историческими цитатами."
+      ],
+      "exhibit_ids": []
+    },
+    {
+      "id": "material_nga_45872",
+      "text": "Клод Моне: «Утренняя дымка» (музейное название: Morning Haze). Датировка: 1888. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1958.12.1. Зал «09. Импрессионизм: Утро и воздух». Название и датировка задаются музейной записью. Видимость мягких краёв можно обсуждать как наблюдение, не как измерение реальной погоды. Вопрос посетителю: Сравните туман, солнечную улицу и цветущий сад. Как различаются края форм? Музейное описание (NGA Visual Description; английский оригинал): Tall, oval forms slowly emerge against a field of softly painted white, pale sky blue, shell pink, light lilac purple, and faint yellow to become trees in a hazy, foggy field in this nearly square landscape painting. The paint is swept on in short, visible strokes. The tallest tree, reaching almost to the top of the canvas, stands to our left of center. Three shorter, bushier trees, about a quarter the height, flank the tall tree with one to our left and two closer to the right edge. Two narrow trees stand between the tallest one and the bushier pair to our right. The artist signed the work in orange paint in the lower left corner: “Claude Monet.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.45872.html",
+        "NGA Open Data, objectid=45872; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_45872"
+      ]
+    },
+    {
+      "id": "material_nga_46673",
+      "text": "Камиль Писсарро: «Бульвар Итальянцев: утро, солнечный свет» (музейное название: Boulevard des Italiens, Morning, Sunlight). Датировка: 1897. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.198. Зал «09. Импрессионизм: Утро и воздух». Название и датировка задаются музейной записью. Видимость мягких краёв можно обсуждать как наблюдение, не как измерение реальной погоды. Вопрос посетителю: Сравните туман, солнечную улицу и цветущий сад. Как различаются края форм? Музейное описание (NGA Visual Description; английский оригинал): We look down onto a wide, bustling, tree-lined avenue filled with buildings, people, and horse-drawn carriages in this horizontal painting. Muted, warm browns, sage green, slate blue, and brick red dominate the urban scene, which is loosely painted with short and long dotted brushstrokes so some details are difficult to make out. The street extends diagonally up from our lower left with wide gray sidewalks on either side, which are lined by slender trees sparsely dotted with brown leaves. Dozens of pedestrians meander individually, in pairs, and in small groups on the sidewalks in coats and hats. Across from us, multi-storied buildings with store fronts at street level stretch across the width of the canvas. Rows of windows line the facades. Horse-drawn carriages move in both directions on the street and two omnibuses have pulled to the curb closest to us, where passengers have lined up. Two brick-red, hexagonally shaped kiosks stand opposite each other on either side of the street about halfway along the boulevard. Sunlight filters onto the scene, creating a dappled effect in some areas, especially over to our right. The artist signed and dated the painting in dark green in the lower right corner: “C.Pissarro.97.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46673.html",
+        "NGA Open Data, objectid=46673; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46673"
+      ]
+    },
+    {
+      "id": "material_nga_52195",
+      "text": "Камиль Писсарро: «Цветущий сад в Лувесьенне» (музейное название: Orchard in Bloom, Louveciennes). Датировка: 1872. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1970.17.51. Зал «09. Импрессионизм: Утро и воздух». Название и датировка задаются музейной записью. Видимость мягких краёв можно обсуждать как наблюдение, не как измерение реальной погоды. Вопрос посетителю: Сравните туман, солнечную улицу и цветущий сад. Как различаются края форм? Музейное описание (NGA Visual Description; английский оригинал): A tree with emerald-green leaves and laden with white blossoms grows in a dirt field, and is silhouetted against a vibrant blue sky in this horizontal landscape painting. The scene is loosely painted with visible dabs and strokes. The tree takes up most of the left half of the painting, and is closest to us. It casts a dappled shadow onto the ground to our right. A barren tree with gnarled branches grows nearby, in the tree’s shadow. A row of more trees extends in the distance to our right. A narrow dirt path, bordered by low green growth, stretches from the bottom edge of the canvas, to our right of center, into the field. To our left and farther from us, a woman leans over and reaches for the ground. She faces our left in profile and wears a white bonnet, a brown shawl, and a blue skirt. Near the line of trees to our right, a man walks toward the woman. He wears blue pants, a white shirt, a dark cap, and he carries a tan bag over his left shoulder. There are more trees along the horizon, which comes about a third of the way up the composition. The sky above is light gray near the horizon and deepens to vivid blue with fluffy white clouds. The painting is signed and dated in the lower right: “C. Pissarro 1872.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.52195.html",
+        "NGA Open Data, objectid=52195; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52195"
+      ]
+    },
+    {
+      "id": "lesson_room_monet_morning",
+      "text": "Тема зала: 09. Импрессионизм: Утро и воздух. Название и датировка задаются музейной записью. Видимость мягких краёв можно обсуждать как наблюдение, не как измерение реальной погоды. Учебное задание: Сравните туман, солнечную улицу и цветущий сад. Как различаются края форм? Проверенные опорные сведения для сравнения: Клод Моне: «Утренняя дымка», 1888. Наблюдаемое по NGA: Tall, oval forms slowly emerge against a field of softly painted white, pale sky blue, shell pink, light lilac purple, and faint yellow to become trees in a hazy, foggy field in this nearly square landscape painting.; Камиль Писсарро: «Бульвар Итальянцев: утро, солнечный свет», 1897. Наблюдаемое по NGA: We look down onto a wide, bustling, tree-lined avenue filled with buildings, people, and horse-drawn carriages in this horizontal painting.; Камиль Писсарро: «Цветущий сад в Лувесьенне», 1872. Наблюдаемое по NGA: A tree with emerald-green leaves and laden with white blossoms grows in a dirt field, and is silhouetted against a vibrant blue sky in this horizontal landscape painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.45872.html",
+        "https://www.nga.gov/collection/art-object-page.46673.html",
+        "https://www.nga.gov/collection/art-object-page.52195.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_45872",
+        "exhibit_nga_46673",
+        "exhibit_nga_52195"
+      ]
+    },
+    {
+      "id": "material_nga_61379",
+      "text": "Клод Моне: «Женщина с зонтиком: мадам Моне с сыном» (музейное название: Woman with a Parasol - Madame Monet and Her Son). Датировка: 1875. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1983.1.29. Зал «10. Импрессионизм: Дневной свет». Ренуар написал Камиллу Моне с сыном; авторство этой картины не принадлежит гиду Моне. Проверенные ориентиры для картины Моне с зонтиком: Камилла в светлом длинном платье стоит на травянистом склоне, рядом мальчик; видны зелёный зонтик, голубое небо и белые облака. Не заменяй эти детали придуманными предметами и не утверждай, что все тени чёрные. Вопрос посетителю: Найдите цветные тени на одежде и зелени. Чем они отличаются от условной чёрной тени? Музейное описание (NGA Visual Description; английский оригинал): From low on a hillside, we look up at a light-skinned woman and boy standing in tall grass against a sunny blue sky in this vertical painting. The woman stands at the center of the composition, and the moss-green parasol she holds over her head almost brushes the top edge of the canvas. Her body faces our left but she turns her head to look at us. Her long dress is painted largely with strokes of pale blue and gray with a few touches of yellow. Her voluminous skirts swirl around her legs to our left. She holds the parasol with both hands, and her brown hair is covered with a hat. Long strokes of white paint across her face suggest a veil fluttering in the breeze. The tall grass she stands in is dotted with buttercup yellow and plum purple, and she casts a long diagonal shadow along the grass toward us. The young boy seems to stand on the other side of the hill, since the grass and flowers comes up to his waist. He wears a white jacket and pale yellow straw hat. His arms are by his sides, and he seems to look off into the distance to our left. A sunny blue sky behind the people is dotted with bright blue clouds. The painting is created with loose brushstrokes throughout, and they are especially choppy in the clouds. The artist signed and dated the painting in royal-blue letters at the lower right: “Claude Monet 75.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.61379.html",
+        "NGA Open Data, objectid=61379; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_61379"
+      ]
+    },
+    {
+      "id": "material_nga_52204",
+      "text": "Огюст Ренуар: «Мадам Моне с сыном» (музейное название: Madame Monet and Her Son). Датировка: 1874. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1970.17.60. Зал «10. Импрессионизм: Дневной свет». Ренуар написал Камиллу Моне с сыном; авторство этой картины не принадлежит гиду Моне. Проверенные ориентиры для картины Моне с зонтиком: Камилла в светлом длинном платье стоит на травянистом склоне, рядом мальчик; видны зелёный зонтик, голубое небо и белые облака. Не заменяй эти детали придуманными предметами и не утверждай, что все тени чёрные. Вопрос посетителю: Найдите цветные тени на одежде и зелени. Чем они отличаются от условной чёрной тени? Музейное описание (NGA Visual Description; английский оригинал): We look slightly down onto a woman and a young boy, both with pale skin, sitting together on a grassy lawn with a chicken standing nearby in this horizontal painting. The scene is loosely painted with visible brushstrokes throughout. The woman sits with her body angled to our left, her legs stretched out in front of her. She turns her head to face us as she leans forward to rest her chin on one hand, with that elbow propped on her lap. She looks off to our left with dark eyes, and her coral-pink lips are parted. Her chestnut-brown hair is pulled up under a white bonnet, which is topped with a pink flower and a touch of black. A black ribbon tied around her neck hangs down her back. She wears a long-sleeved, full-skirted white dress, and swipes of yellow, blue, and brown could be shoes peeking out from the bottom hem. The unfolded fan she holds in her far hand is cream white along the center has rose pink to one side and indigo blue to the other. The boy leans against her torso, his legs coming toward us, and he looks out at us with dark eyes. His cheeks are flushed and his pink lips are closed. He has short blond hair with bangs under a short-brimmed, straw-yellow hat. His suit is baby blue with navy-blue swipes across the shoulders and a white streak at his neck, perhaps a neckerchief. There are dark bands at the cuffs and around his waist. The blue pants are rolled back over bare knees, and he wears gray socks and red and white shoes. A spindly tree trunk grows behind the woman’s back, and the grassy lawn nearly fills the painting. A bed of flowers with dark pink blossoms runs along the curving line of grass in the upper left corner. A chicken stands and looks at the pair, to our right. The bird has a vibrant red comb, buttercup-yellow, white, and dark brown feathers. Its feet are covered with white feathers.",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.52204.html",
+        "NGA Open Data, objectid=52204; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52204"
+      ]
+    },
+    {
+      "id": "material_nga_46681",
+      "text": "Огюст Ренуар: «Девочка с лейкой» (музейное название: A Girl with a Watering Can). Датировка: 1876. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.206. Зал «10. Импрессионизм: Дневной свет». Ренуар написал Камиллу Моне с сыном; авторство этой картины не принадлежит гиду Моне. Проверенные ориентиры для картины Моне с зонтиком: Камилла в светлом длинном платье стоит на травянистом склоне, рядом мальчик; видны зелёный зонтик, голубое небо и белые облака. Не заменяй эти детали придуманными предметами и не утверждай, что все тени чёрные. Вопрос посетителю: Найдите цветные тени на одежде и зелени. Чем они отличаются от условной чёрной тени? Музейное описание (NGA Visual Description; английский оригинал): A pale-skinned young girl with blond hair, wearing a blue dress, stands in a garden in this vertical painting. The girl and background are painted with blended strokes, giving the scene and especially the girl a soft look. She faces our right and stands in the middle of the composition. Her shoulder-length cloud of hair is topped with a red bow, and long bangs frame her round face. Under faint brows, her sapphire-blue eyes look to our right. She has a petite nose, and her coral-pink mouth turns up in a slight smile. Her cobalt-blue dress is trimmed with wide, blue-white lace on the neckline, across the bottom hem, and down the front to either side of a row of white buttons. The white edges her petticoats come down to just below her knees, peeking out from under the flaring skirt. She wears white socks over blue ankle boots, which also have a row of white buttons down the side we can see. Her near hand is raised with her index finger hooked in the handle of a green watering can, and she holds two daisies by her side in her other hand. She stands on a path flecked with ivory white, pale purples, greens, and pink that curves up and to her left. A bush with emerald and pine-green leaves dotted with pink blooms fills the lower left corner. Behind her, green grass runs back to meet a profusion of pink, purple, and poppy-red plants and flowers that run along the top edge of the composition. The artist signed and dated the lower right, “Renoir. 76.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46681.html",
+        "NGA Open Data, objectid=46681; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46681"
+      ]
+    },
+    {
+      "id": "lesson_room_monet_daylight",
+      "text": "Тема зала: 10. Импрессионизм: Дневной свет. Ренуар написал Камиллу Моне с сыном; авторство этой картины не принадлежит гиду Моне. Проверенные ориентиры для картины Моне с зонтиком: Камилла в светлом длинном платье стоит на травянистом склоне, рядом мальчик; видны зелёный зонтик, голубое небо и белые облака. Не заменяй эти детали придуманными предметами и не утверждай, что все тени чёрные. Учебное задание: Найдите цветные тени на одежде и зелени. Чем они отличаются от условной чёрной тени? Проверенные опорные сведения для сравнения: Клод Моне: «Женщина с зонтиком: мадам Моне с сыном», 1875. Наблюдаемое по NGA: From low on a hillside, we look up at a light-skinned woman and boy standing in tall grass against a sunny blue sky in this vertical painting.; Огюст Ренуар: «Мадам Моне с сыном», 1874. Наблюдаемое по NGA: We look slightly down onto a woman and a young boy, both with pale skin, sitting together on a grassy lawn with a chicken standing nearby in this horizontal painting.; Огюст Ренуар: «Девочка с лейкой», 1876. Наблюдаемое по NGA: A pale-skinned young girl with blond hair, wearing a blue dress, stands in a garden in this vertical painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.61379.html",
+        "https://www.nga.gov/collection/art-object-page.52204.html",
+        "https://www.nga.gov/collection/art-object-page.46681.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_61379",
+        "exhibit_nga_52204",
+        "exhibit_nga_46681"
+      ]
+    },
+    {
+      "id": "material_nga_46523",
+      "text": "Клод Моне: «Здание парламента на закате» (музейное название: The Houses of Parliament, Sunset). Датировка: 1903. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.48. Зал «11. Импрессионизм: Вечер над рекой». Работы Моне с лондонскими мостами и парламентом позволяют сравнить мотивы и освещение; это разные полотна, а не три цифровых фильтра одного изображения. Вопрос посетителю: Сравните силуэты, небо и отражения. Какие цветовые отношения объединяют три вида? Музейное описание (NGA Visual Description; английский оригинал): A row of spire-like structures of different heights is silhouetted in azure blue against a soft pink, yellow, peach, and lavender-purple sunset and reflected in a rippling river in this nearly square landscape painting. Along the horizon, the buildings stretch from our right, almost fully across the canvas, and are painted with vertical brushstrokes in cool shades of blue. The sky behind the towers seems hazy with intermingling, pastel-colored clouds. The buildings are reflected in the river, which fills the bottom third of the painting. The surface of the water is painted with short, horizontal brushstrokes in azure blue for the buildings, and apricot, rose, and marigold orange for the sky’s reflection. A streak and smudge of olive-green paint on the water represents a person in a boat near the center of the painting. The artist signed and dated the work in the same olive color at the lower right: “Claude Monet 1903.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46523.html",
+        "NGA Open Data, objectid=46523; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46523"
+      ]
+    },
+    {
+      "id": "material_nga_61377",
+      "text": "Клод Моне: «Мост Ватерлоо, Лондон, в сумерках» (музейное название: Waterloo Bridge, London, at Dusk). Датировка: 1904. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1983.1.27. Зал «11. Импрессионизм: Вечер над рекой». Работы Моне с лондонскими мостами и парламентом позволяют сравнить мотивы и освещение; это разные полотна, а не три цифровых фильтра одного изображения. Вопрос посетителю: Сравните силуэты, небо и отражения. Какие цветовые отношения объединяют три вида? Музейное описание (NGA Visual Description; английский оригинал): An arched bridge faintly materializes in a haze of soft turquoise blue and mint green in this horizontal landscape painting. The bridge has four arches under a flat deck, and it extends off each side of the canvas. Running across the middle of the composition, it angles slightly away from us to our right. The bridge is painted in strokes of slate blue and muted lavender purple, with darker shades on the shadowed undersides of the arches. Touches of rose pink and white along the deck suggest lights moving across the bridge. The water below is sky blue and seafoam green. A few vertical swipes of teal blue in the background suggest towers or tall buildings in the distance on the opposite shore. The sky above is painted with long strokes of lime green and robin’s egg blue. The artist signed the painting with cobalt blue in the lower right corner, “Claude Monet.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.61377.html",
+        "NGA Open Data, objectid=61377; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_61377"
+      ]
+    },
+    {
+      "id": "material_nga_61378",
+      "text": "Клод Моне: «Мост Ватерлоо, Лондон, на закате» (музейное название: Waterloo Bridge, London, at Sunset). Датировка: 1904. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1983.1.28. Зал «11. Импрессионизм: Вечер над рекой». Работы Моне с лондонскими мостами и парламентом позволяют сравнить мотивы и освещение; это разные полотна, а не три цифровых фильтра одного изображения. Вопрос посетителю: Сравните силуэты, небо и отражения. Какие цветовые отношения объединяют три вида? Музейное описание (NGA Visual Description; английский оригинал): We look across a river at a bridge that spans the center of this horizontal landscape, which is painted entirely with broad, visible brushstrokes in pastel colors. The straight deck of the bridge crosses the center of the composition but angles slightly away from us as it moves to our right. The four low arches of the bridge are painted with cotton candy pink and pale apricot. The sky above is painted loosely with light aquamarine blue and watery turquoise. A few vertical strokes of paint over the bridge suggests buildings along the riverbank beyond. The bridge is reflected in the water below so the blue, green, orange, and pink swirl together. The artist signed the painting in violet-purple letters in the lower right corner: “Claude Monet.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.61378.html",
+        "NGA Open Data, objectid=61378; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_61378"
+      ]
+    },
+    {
+      "id": "lesson_room_monet_evening",
+      "text": "Тема зала: 11. Импрессионизм: Вечер над рекой. Работы Моне с лондонскими мостами и парламентом позволяют сравнить мотивы и освещение; это разные полотна, а не три цифровых фильтра одного изображения. Учебное задание: Сравните силуэты, небо и отражения. Какие цветовые отношения объединяют три вида? Проверенные опорные сведения для сравнения: Клод Моне: «Здание парламента на закате», 1903. Наблюдаемое по NGA: A row of spire-like structures of different heights is silhouetted in azure blue against a soft pink, yellow, peach, and lavender-purple sunset and reflected in a rippling river in this nearly square landscape painting.; Клод Моне: «Мост Ватерлоо, Лондон, в сумерках», 1904. Наблюдаемое по NGA: An arched bridge faintly materializes in a haze of soft turquoise blue and mint green in this horizontal landscape painting.; Клод Моне: «Мост Ватерлоо, Лондон, на закате», 1904. Наблюдаемое по NGA: We look across a river at a bridge that spans the center of this horizontal landscape, which is painted entirely with broad, visible brushstrokes in pastel colors.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.46523.html",
+        "https://www.nga.gov/collection/art-object-page.61377.html",
+        "https://www.nga.gov/collection/art-object-page.61378.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46523",
+        "exhibit_nga_61377",
+        "exhibit_nga_61378"
+      ]
+    },
+    {
+      "id": "material_nga_46655",
+      "text": "Клод Моне: «Сена в Живерни» (музейное название: The Seine at Giverny). Датировка: 1897. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.180. Зал «12. Импрессионизм: Вода и отражения». Моне и Сислей показывают речные мотивы. Не утверждайте, что каждый мазок воспроизводит отдельную волну. Вопрос посетителю: Найдите отражения и повторяющиеся мазки. Где вода различима без чёткого контура? Музейное описание (NGA Visual Description; английский оригинал): The rounded, feathery canopies of trees are mirrored in the placid surface of a river in this horizontal landscape painting. The scene is loosely painted with visible dashes and strokes. The largest tree is to our right of center. Touches of cucumber and emerald green, eggplant purple, indigo blue, and smoke gray create the cloud-like canopy. More bushes and trees to either side are created with dashes of cool sky and lapis blue, mint and sage green, and muted rust red. The horizon runs across the middle of the canvas. The sky above and the reflection of it below are painted with longer, curving strokes of parchment white and pale shell pink. The artist signed the painting in the lower left corner, “Claude Monet.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46655.html",
+        "NGA Open Data, objectid=46655; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46655"
+      ]
+    },
+    {
+      "id": "material_nga_61374",
+      "text": "Клод Моне: «Мост в Аржантёе» (музейное название: The Bridge at Argenteuil). Датировка: 1874. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1983.1.24. Зал «12. Импрессионизм: Вода и отражения». Моне и Сислей показывают речные мотивы. Не утверждайте, что каждый мазок воспроизводит отдельную волну. Вопрос посетителю: Найдите отражения и повторяющиеся мазки. Где вода различима без чёткого контура? Музейное описание (NGA Visual Description; английский оригинал): Two sailboats and a rowboat float on a glistening, azure-blue river spanned by a stone bridge to our right in this horizontal landscape painting. The scene is loosely painted with visible strokes and dashes throughout so some details are indistinct. An area of asparagus and moss-green dabs creates a patch of grassy riverbank in the lower right corner of the painting. The rippling, sun-dappled surface of the river is created with short parallel strokes of pale pink, caramel brown, white, sage green, and light blue. An empty sailboat, with its sails tightly furled or removed all together, floats near us to our left of center. It has a single tall, pale wood mast. A similar pole rises from the bottom edge of the picture, presumably the mast of another ship below us or out of our view. Farther out on the water and to our left is another sailboat with full white sails catching the sunlight. The final vessel is loosely painted with a few swipes of goldenrod yellow, black, white, and pink to suggest two people sitting in a rowboat, one of them holding a pink parasol. The gray stone bridge is shaded on our side with denim blue along the faces of the four arches we can see. Several people, painted with a few touches of peach and black, stand at the railing. The bridge angles from near the upper right corner of the canvas to almost the middle of the composition, where it meets a narrow, three-story coral-pink and light gray building. A two-story, white building sits a short distance to its left. They bask in warm sunlight against a row of emerald and olive-green trees. A baby-blue sky scattered with puffy white clouds spans the upper half of the composition. The artist signed the lower right with dark red letters, “Claude Monet.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.61374.html",
+        "NGA Open Data, objectid=61374; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_61374"
+      ]
+    },
+    {
+      "id": "material_nga_46689",
+      "text": "Альфред Сислей: «Берега Уазы» (музейное название: The Banks of the Oise). Датировка: 1877/1878. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.214. Зал «12. Импрессионизм: Вода и отражения». Моне и Сислей показывают речные мотивы. Не утверждайте, что каждый мазок воспроизводит отдельную волну. Вопрос посетителю: Найдите отражения и повторяющиеся мазки. Где вода различима без чёткого контура? Музейное описание (NGA Visual Description; английский оригинал): A wide river cuts through a loosely painted, sunlit landscape in this almost square painting. Short strokes of baby and sea blue with touches of white create ripples on the surface on the river, which runs from the lower right corner to the left edge of the canvas. The horizon comes about a third of the way up the composition and is lined with low hills painted in tones of cobalt blue and grass green. We are on or slightly over the left bank of the river, which is painted in strokes of pale peach, pink, and green. A white path running along the top of the bank curves away from us. People, painted with loose strokes of topaz and navy blue, walk on the path, and a few touches of gray, tan, and emerald green suggest a woman and child sitting in the grassy bank, near the water. A lavender-blue sail rises just beyond the far curve of the path, and two narrow dark blue objects jut into the water nearby, presumably long rowboats. The far bank is lined with a dense cluster of tall, spear-like, blue-green trees reaching high into a powder-blue sky, which is filled with swirling, thin puffs of white clouds. Some light blue smudges at the river’s edge in the distance suggest low buildings. The artist signed the lower left, “Sisley.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46689.html",
+        "NGA Open Data, objectid=46689; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46689"
+      ]
+    },
+    {
+      "id": "lesson_room_monet_water",
+      "text": "Тема зала: 12. Импрессионизм: Вода и отражения. Моне и Сислей показывают речные мотивы. Не утверждайте, что каждый мазок воспроизводит отдельную волну. Учебное задание: Найдите отражения и повторяющиеся мазки. Где вода различима без чёткого контура? Проверенные опорные сведения для сравнения: Клод Моне: «Сена в Живерни», 1897. Наблюдаемое по NGA: The rounded, feathery canopies of trees are mirrored in the placid surface of a river in this horizontal landscape painting.; Клод Моне: «Мост в Аржантёе», 1874. Наблюдаемое по NGA: Two sailboats and a rowboat float on a glistening, azure-blue river spanned by a stone bridge to our right in this horizontal landscape painting.; Альфред Сислей: «Берега Уазы», 1877/1878. Наблюдаемое по NGA: A wide river cuts through a loosely painted, sunlit landscape in this almost square painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.46655.html",
+        "https://www.nga.gov/collection/art-object-page.61374.html",
+        "https://www.nga.gov/collection/art-object-page.46689.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46655",
+        "exhibit_nga_61374",
+        "exhibit_nga_46689"
+      ]
+    },
+    {
+      "id": "material_nga_74796",
+      "text": "Клод Моне: «Японский мостик» (музейное название: The Japanese Footbridge). Датировка: 1899. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1992.9.1. Зал «13. Импрессионизм: Сад как мастерская». Сады в Живерни, Ветёе и Аржантёе — разные мотивы и места; не объединяйте их в один сад. Вопрос посетителю: Сравните мостик, дорожки и цветники. Что становится главным в каждом саду? Музейное описание (NGA Visual Description; английский оригинал): A pale turquoise footbridge arching over a pond lined with tall grasses and filled with petal-pink and butter-yellow waterlilies spans this horizontal landscape painting. The scene is loosely painted with touches of vibrant color. In the top third of the composition, the shallowly arched bridge nearly touches the top edge of the canvas, and it extends off each side. The shadows on the bridge are painted with eggplant purple. Bands of waterlilies gently zigzag into the distance on the surface of the water. The spring and emerald-green grasses growing along the banks fill the space around and over the pond, and they blend into a screen of trees beyond that enclose the scene. The green of the grasses and trees is reflected in the surface of the water, as is the underside of the bridge. The artist signed and dated the work with dark paint in the lower right corner: “Claude Monet 99.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.74796.html",
+        "NGA Open Data, objectid=74796; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_74796"
+      ]
+    },
+    {
+      "id": "material_nga_52189",
+      "text": "Клод Моне: «Сад художника в Ветёе» (музейное название: The Artist's Garden at Vétheuil). Датировка: 1881. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1970.17.45. Зал «13. Импрессионизм: Сад как мастерская». Сады в Живерни, Ветёе и Аржантёе — разные мотивы и места; не объединяйте их в один сад. Вопрос посетителю: Сравните мостик, дорожки и цветники. Что становится главным в каждом саду? Музейное описание (NGA Visual Description; английский оригинал): A small child stands facing us on a sun-dappled path that runs up the center of a garden dominated by towering yellow and burnt-orange sunflowers in this loosely painted, vertical scene. The light comes from our right so long, sea-green and plum-purple shadows cross the peach-colored path. The path is wide at the bottom center of the canvas and narrows as it reaches the steps of a house, beyond the garden. Close to us, four blue and white porcelain urns line the path, separating it from the grassy banks to either side. The urns are filled with tall stems with coral-pink and cardinal-red flowers. The child stands about halfway back along the path, where the garden transitions from grass to the banks of tall sunflowers. A few strokes in front of the child could be a small dog. Behind the child, a woman and another child stand on the steps. The woman wears a cornflower-blue and white dress, while both children have bare legs and wear white clothes and yellow hats. All three have indistinct facial features and peach-colored skin. The house spans with width of the composition. It has an amethyst-purple roofline with two chimneys, and the petal-pink walls have mango-yellow highlights. Windows are covered with blue latticework. Above the house, fluffy white clouds float against a vibrant blue sky. The artist signed and dated the painting at the lower right in dark blue, “Claude Monet 80.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.52189.html",
+        "NGA Open Data, objectid=52189; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52189"
+      ]
+    },
+    {
+      "id": "material_nga_72138",
+      "text": "Клод Моне: «Сад художника в Аржантёе: уголок с георгинами» (музейное название: The Artist's Garden in Argenteuil (A Corner of the Garden with Dahlias)). Датировка: 1873. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1991.27.1. Зал «13. Импрессионизм: Сад как мастерская». Сады в Живерни, Ветёе и Аржантёе — разные мотивы и места; не объединяйте их в один сад. Вопрос посетителю: Сравните мостик, дорожки и цветники. Что становится главным в каждом саду? Музейное описание (NGA Visual Description; английский оригинал): A bank of flowering bushes, possibly roses, fills most of an enclosed garden in front of a white house in this horizontal landscape painting. The scene is created using visible dabs and strokes of scarlet red, pale yellow, rust orange, and shell pink for the roses and kelly, teal, and forest green for the greenery. The cloud of flowers fills most of the left two-thirds of the composition, and dabs of shamrock and moss green and delphinium blue indicate grass and other plants around it. To our right of the roses, a couple walks near a fence in the distance. Painted with only a few strokes and touches of paint, one person wears a white dress and hat, and the other a dark gray suit and hat. A celery-green tree grows up the right edge of the canvas and curves toward the ivory-white, three-story house. The upper story is tucked under a pitched, ash-brown roof, and aquamarine-blue shutters flank the windows. More trees surround the house and line the fence. Brushstrokes in white and nickel gray suggest clouds against the ultramarine-blue sky. The artist signed and dated the painting in black near the lower left corner: “Claude Monet 73.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.72138.html",
+        "NGA Open Data, objectid=72138; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_72138"
+      ]
+    },
+    {
+      "id": "lesson_room_monet_garden",
+      "text": "Тема зала: 13. Импрессионизм: Сад как мастерская. Сады в Живерни, Ветёе и Аржантёе — разные мотивы и места; не объединяйте их в один сад. Учебное задание: Сравните мостик, дорожки и цветники. Что становится главным в каждом саду? Проверенные опорные сведения для сравнения: Клод Моне: «Японский мостик», 1899. Наблюдаемое по NGA: A pale turquoise footbridge arching over a pond lined with tall grasses and filled with petal-pink and butter-yellow waterlilies spans this horizontal landscape painting.; Клод Моне: «Сад художника в Ветёе», 1881. Наблюдаемое по NGA: A small child stands facing us on a sun-dappled path that runs up the center of a garden dominated by towering yellow and burnt-orange sunflowers in this loosely painted, vertical scene.; Клод Моне: «Сад художника в Аржантёе: уголок с георгинами», 1873. Наблюдаемое по NGA: A bank of flowering bushes, possibly roses, fills most of an enclosed garden in front of a white house in this horizontal landscape painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.74796.html",
+        "https://www.nga.gov/collection/art-object-page.52189.html",
+        "https://www.nga.gov/collection/art-object-page.72138.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_74796",
+        "exhibit_nga_52189",
+        "exhibit_nga_72138"
+      ]
+    },
+    {
+      "id": "material_nga_52187",
+      "text": "Клод Моне: «Суда на Сене в Руане» (музейное название: Ships Riding on the Seine at Rouen). Датировка: 1872/1873. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1970.17.43. Зал «14. Импрессионизм: Город и современная жизнь». Здесь представлены Руан, Венеция и Париж. Гид не должен приписывать все виды одному городу. Вопрос посетителю: Как мост, лодки и фасады организуют городское пространство? Музейное описание (NGA Visual Description; английский оригинал): We look across the water at two sailing ships with cream-white sails and dark rigging floating in a shimmering, ice-blue river against a distant shore lined with trees, hills, and buildings in this nearly square landscape painting. The horizon comes about halfway up the painting, and the ships’ masts and sails are silhouetted against a topaz-blue sky with wispy white clouds. The scene is loosely painted with visible brushstrokes throughout so many of the details are indistinct. One boat floats near the left edge of the painting and the second is situated a little father back, to our right of center. Both have rust-orange anchors painted near the pointed bows, which face us. Tall, narrow, asparagus-green trees line the far riverbank between the boats. Tall spires and towers of buildings rise in a cluster to our left near that edge of the canvas, and boats cluster near the distant shore to our right. Oatmeal-brown hills rise beyond the trees and town. The trees and boats are reflected in the water, which is painted with horizontal dashes and squiggles. The artist signed the painting in the lower left, “Claude Monet.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.52187.html",
+        "NGA Open Data, objectid=52187; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52187"
+      ]
+    },
+    {
+      "id": "material_nga_46657",
+      "text": "Клод Моне: «Палаццо да Мула, Венеция» (музейное название: Palazzo da Mula, Venice). Датировка: 1908. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.182. Зал «14. Импрессионизм: Город и современная жизнь». Здесь представлены Руан, Венеция и Париж. Гид не должен приписывать все виды одному городу. Вопрос посетителю: Как мост, лодки и фасады организуют городское пространство? Музейное описание (NGA Visual Description; английский оригинал): Painted almost entirely in tones of topaz, lapis, and sky blue, the façade of a building abutting a waterway fills this horizontal painting. Brushstrokes are visible throughout and they blend to make the scene appear hazy. The top two-thirds of this painting shows the front of a building with two stories of rows of pointed, arched windows. Two long, low boats, gondolas, are pulled up side-by-side to one of the arched openings at the water level of the canal, to our right. A few touches of amethyst purple and mauve pink delineate some of the architectural features and shadows amid a field of denim and pale blue. The water below is painted with short, horizontal strokes to create a shimmering effect. The building’s reflection is captured with touches of emerald and cool green against the blue water. The artist signed and dated the work with cobalt-blue paint in the lower left: “Claude Monet 1908.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46657.html",
+        "NGA Open Data, objectid=46657; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46657"
+      ]
+    },
+    {
+      "id": "material_nga_52202",
+      "text": "Огюст Ренуар: «Новый мост, Париж» (музейное название: Pont Neuf, Paris). Датировка: 1872. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1970.17.58. Зал «14. Импрессионизм: Город и современная жизнь». Здесь представлены Руан, Венеция и Париж. Гид не должен приписывать все виды одному городу. Вопрос посетителю: Как мост, лодки и фасады организуют городское пространство? Музейное описание (NGA Visual Description; английский оригинал): We look down on a few dozen people walking along the sidewalks of a wide, sunlit bridge in this almost square painting. The scene is loosely painted, which gives it a hazy, sun-dappled look and makes some details indistinct. The people wear black, white, light blue, or pale green jackets and pants or long dresses as they walk in all directions. Some wear hats, and a few women carry parasols. The bridge opens into a wide boulevard close to us, as the sidewalks angle into the lower corners of the composition. Several horse-drawn carriages move across the bridge alongside the people. The deck of the oyster-white bridge is lined with black gas lamps. The river beneath shimmers with lapis and turquoise blue. The far side is packed with four and five-story buildings, which are mostly tan with rows of windows painted as blue rectangles. The rooflines bristle with chimneys. Another structure or boat sits on the water near the lower right corner of the painting, and a flag with vertical bands of red, white, and blue flies from a flagpole there. Opposite the flag, on the far bank, is a statue of a man on a horse, both on a tall plinth. The horizon comes about halfway up the composition, and the azure-blue sky above is dotted with puffy white clouds tinged with dove gray and mauve. The artist signed and dated the lower left, “A. Renoir. 72.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.52202.html",
+        "NGA Open Data, objectid=52202; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52202"
+      ]
+    },
+    {
+      "id": "lesson_room_monet_city",
+      "text": "Тема зала: 14. Импрессионизм: Город и современная жизнь. Здесь представлены Руан, Венеция и Париж. Гид не должен приписывать все виды одному городу. Учебное задание: Как мост, лодки и фасады организуют городское пространство? Проверенные опорные сведения для сравнения: Клод Моне: «Суда на Сене в Руане», 1872/1873. Наблюдаемое по NGA: We look across the water at two sailing ships with cream-white sails and dark rigging floating in a shimmering, ice-blue river against a distant shore lined with trees, hills, and buildings in this nearly square landscape painting.; Клод Моне: «Палаццо да Мула, Венеция», 1908. Наблюдаемое по NGA: Painted almost entirely in tones of topaz, lapis, and sky blue, the façade of a building abutting a waterway fills this horizontal painting.; Огюст Ренуар: «Новый мост, Париж», 1872. Наблюдаемое по NGA: We look down on a few dozen people walking along the sidewalks of a wide, sunlit bridge in this almost square painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.52187.html",
+        "https://www.nga.gov/collection/art-object-page.46657.html",
+        "https://www.nga.gov/collection/art-object-page.52202.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52187",
+        "exhibit_nga_46657",
+        "exhibit_nga_52202"
+      ]
+    },
+    {
+      "id": "material_nga_62641",
+      "text": "Альфред Сислей: «Первый снег в Венё-Надоне» (музейное название: First Snow at Veneux-Nadon). Датировка: 1878. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1983.98.1. Зал «15. Импрессионизм: Снег и перемена погоды». Снег — картина Сислея; пейзаж между ненастьями — Ренуара; мост Ватерлоо — Моне. Сравнение объединяет разные наблюдения погоды. Вопрос посетителю: Сравните снег, просветы после непогоды и серый день. Какие светлые участки действительно белые? Музейное описание (NGA Visual Description; английский оригинал): An ice- and powder-blue sky swirled with faint peach takes up the top two-thirds of this landscape painting. A farm, field, road, and fence lie beyond the snow-dusted, spiky branches of a tree jutting into the scene from the lower right corner. The road extends from the bottom left corner into the distance near the left edge of the canvas. The fence cuts across the space closer to us, and the snowy field beyond reflects the cool blues of the sky. The pale green and peanut-brown farmhouse and buildings are topped with pale blue, snow-covered roofs. Dark forms near the road in the distance could be a person or a person and child, and two more people lean into the wind alongside the buildings to our right. The artist signed the lower left corner, “Sisley.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.62641.html",
+        "NGA Open Data, objectid=62641; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_62641"
+      ]
+    },
+    {
+      "id": "material_nga_52209",
+      "text": "Огюст Ренуар: «Пейзаж между ненастьями» (музейное название: Landscape between Storms). Датировка: 1874/1875. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1970.17.65. Зал «15. Импрессионизм: Снег и перемена погоды». Снег — картина Сислея; пейзаж между ненастьями — Ренуара; мост Ватерлоо — Моне. Сравнение объединяет разные наблюдения погоды. Вопрос посетителю: Сравните снег, просветы после непогоды и серый день. Какие светлые участки действительно белые? Музейное описание (NGA Visual Description; английский оригинал): This horizontal landscape is painted with broad, visible strokes in shades of laurel, fern, and pine green, dark yellow, and ash brown. A winding dirt path leads from the bottom center of the composition toward the horizon, which comes just over halfway up this painting. Thick, loosely painted green foliage dominates the left half of the painting, and a tall, slender tree trunk is near the right edge, partially cut off by the frame. At the center, farther down the path, a small person is painted with a few swipes of coffee brown. Patches of lighter green and yellow suggest sun filtering through the trees. The sky above is filled with swirling white and pale blue clouds, applied with loose brushstrokes that echo the motion of the vegetation below. The artist signed the lower left corner, “renoir.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.52209.html",
+        "NGA Open Data, objectid=52209; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52209"
+      ]
+    },
+    {
+      "id": "material_nga_46658",
+      "text": "Клод Моне: «Мост Ватерлоо, серый день» (музейное название: Waterloo Bridge, Gray Day). Датировка: 1903. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.183. Зал «15. Импрессионизм: Снег и перемена погоды». Снег — картина Сислея; пейзаж между ненастьями — Ренуара; мост Ватерлоо — Моне. Сравнение объединяет разные наблюдения погоды. Вопрос посетителю: Сравните снег, просветы после непогоды и серый день. Какие светлые участки действительно белые? Музейное описание (NGA Visual Description; английский оригинал): We look across a river at a bridge that spans the center of this horizontal landscape, which is painted entirely with broad, visible brushstrokes in muted blue, pink, and brown. The straight deck of the bridge crosses the center of the composition but angles slightly away from us as it moves to our right. The four low arches of the bridge are ash brown on their face, and their curved undersides are cobalt blue. Marigold-orange and teal-blue marks on the deck above suggest traffic, and shell-pink smoke or steam billows over our side of the bridge. Three long, narrow forms in the water between and in front of the bridge pilings suggest boats. The sky above is painted loosely with icy blue and pale peach around the slate-blue silhouettes of buildings and smokestacks lining the far bank. The artist signed and dated the painting in the lower left corner: “Claude Monet 1903.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46658.html",
+        "NGA Open Data, objectid=46658; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46658"
+      ]
+    },
+    {
+      "id": "lesson_room_monet_snow",
+      "text": "Тема зала: 15. Импрессионизм: Снег и перемена погоды. Снег — картина Сислея; пейзаж между ненастьями — Ренуара; мост Ватерлоо — Моне. Сравнение объединяет разные наблюдения погоды. Учебное задание: Сравните снег, просветы после непогоды и серый день. Какие светлые участки действительно белые? Проверенные опорные сведения для сравнения: Альфред Сислей: «Первый снег в Венё-Надоне», 1878. Наблюдаемое по NGA: An ice- and powder-blue sky swirled with faint peach takes up the top two-thirds of this landscape painting.; Огюст Ренуар: «Пейзаж между ненастьями», 1874/1875. Наблюдаемое по NGA: This horizontal landscape is painted with broad, visible strokes in shades of laurel, fern, and pine green, dark yellow, and ash brown.; Клод Моне: «Мост Ватерлоо, серый день», 1903. Наблюдаемое по NGA: We look across a river at a bridge that spans the center of this horizontal landscape, which is painted entirely with broad, visible brushstrokes in muted blue, pink, and brown.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.62641.html",
+        "https://www.nga.gov/collection/art-object-page.52209.html",
+        "https://www.nga.gov/collection/art-object-page.46658.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_62641",
+        "exhibit_nga_52209",
+        "exhibit_nga_46658"
+      ]
+    },
+    {
+      "id": "material_nga_46524",
+      "text": "Клод Моне: «Руанский собор, западный фасад» (музейное название: Rouen Cathedral, West Façade). Датировка: 1894. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.49. Зал «16. Импрессионизм: Один мотив — разные впечатления». Две картины западного фасада Руанского собора датированы музеем 1894 годом. Третий экспонат служит сравнением другого архитектурного мотива, а не частью соборной серии. Вопрос посетителю: Сравните два вида Руанского собора, затем мост. Как меняется впечатление при сохранении узнаваемого мотива? Музейное описание (NGA Visual Description; английский оригинал): We look up at the exterior of a church that soars the height of this vertical painting. The church is painted with visible dabs and strokes of azure blue, peach, lavender purple, and camel brown to create a blurred look, as if seeing a reflection in the rippling surface of a puddle. The church façade is angled to our left, away from us. The main door and its surround takes up the center of the composition, where a rectangular door is set within nested, pointed arches that lead up to a narrow, tall, triangular gable. The point of that gable overlaps the round, dark rose window, which is the same width as the portal surround below. Spires flank the central section and rise precipitously off the top edge of the painting. The sky above is painted with daubs of white and pale blue. The artist signed and dated the lower left, “Claude Monet 94.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46524.html",
+        "NGA Open Data, objectid=46524; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46524"
+      ]
+    },
+    {
+      "id": "material_nga_46654",
+      "text": "Клод Моне: «Руанский собор, западный фасад, солнечный свет» (музейное название: Rouen Cathedral, West Façade, Sunlight). Датировка: 1894. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1963.10.179. Зал «16. Импрессионизм: Один мотив — разные впечатления». Две картины западного фасада Руанского собора датированы музеем 1894 годом. Третий экспонат служит сравнением другого архитектурного мотива, а не частью соборной серии. Вопрос посетителю: Сравните два вида Руанского собора, затем мост. Как меняется впечатление при сохранении узнаваемого мотива? Музейное описание (NGA Visual Description; английский оригинал): We look up at the exterior of a church that soars the height of this vertical painting. The church is painted with visible dabs and strokes of sky blue, cream white, golden tan, and a few touches of pale, shell pink to create a blurred look, as if seeing a reflection in the rippling surface of a puddle. The church façade is angled to our left, away from us. The main door and its surround takes up the center of the composition, where a rectangular door is set within nested, pointed arches that lead up to a narrow, tall, triangular gable. The point of that gable overlaps the round rose window, which is the same width as the portal surround below. Spires flank the central section and rise steeply off the top edge of the painting. The sky above is painted as a field of pale lapis blue. A few dabs of darker blue and green suggest people, tiny in scale, standing near the lower left corner. The artist signed and dated the lower right, “Claude Monet ‘94.”",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.46654.html",
+        "NGA Open Data, objectid=46654; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46654"
+      ]
+    },
+    {
+      "id": "material_nga_52188",
+      "text": "Клод Моне: «Мост в Аржантёе в серый день» (музейное название: Bridge at Argenteuil on a Gray Day). Датировка: c. 1876. Техника по музейной записи: oil on canvas. Музей: National Gallery of Art, Washington, инвентарный номер 1970.17.44. Зал «16. Импрессионизм: Один мотив — разные впечатления». Две картины западного фасада Руанского собора датированы музеем 1894 годом. Третий экспонат служит сравнением другого архитектурного мотива, а не частью соборной серии. Вопрос посетителю: Сравните два вида Руанского собора, затем мост. Как меняется впечатление при сохранении узнаваемого мотива? Музейное описание (NGA Visual Description; английский оригинал): We look across a glimmering river toward docks, about a dozen small boats, and a mustard-brown, boxy building under a bridge that crosses the width of the canvas in this horizontal landscape painting. A patch of green grass lines the riverbank in the lower right corner of the canvas. The land curves away out of sight, and then back into the scene below the abutment of the bridge along the right side of the painting. From the ivory-colored abutment, the straight deck of the bridge is supported by two shallow, iron-gray arches, and the bridge extends off the left side of the composition. Dots of red and gray on the bridge suggest vehicles or pedestrians. The river below is painted with blended strokes of silvery gray, icy blue, and pale lavender purple around the low-sided sailboats. One turquoise-colored houseboat is pulled up to the riverbank to our right. The long, rectangular, flat-topped building is pierced with two stories of windows, which are outlined in spruce green against the golden yellow. The horizon line runs just below the bridge deck, just under halfway up the composition. The sky above is painted with longer swipes of cream white and smoke gray. Loose, short brushstrokes are visible throughout, especially in the water, boats, and bridge. The artist signed the painting in the lower right corner, \"Claude Monet.\"",
+      "sources": [
+        "https://www.nga.gov/collection/art-object-page.52188.html",
+        "NGA Open Data, objectid=52188; локальная запись content/gallery.json; https://github.com/NationalGalleryOfArt/opendata"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_52188"
+      ]
+    },
+    {
+      "id": "lesson_room_monet_series",
+      "text": "Тема зала: 16. Импрессионизм: Один мотив — разные впечатления. Две картины западного фасада Руанского собора датированы музеем 1894 годом. Третий экспонат служит сравнением другого архитектурного мотива, а не частью соборной серии. Учебное задание: Сравните два вида Руанского собора, затем мост. Как меняется впечатление при сохранении узнаваемого мотива? Проверенные опорные сведения для сравнения: Клод Моне: «Руанский собор, западный фасад», 1894. Наблюдаемое по NGA: We look up at the exterior of a church that soars the height of this vertical painting.; Клод Моне: «Руанский собор, западный фасад, солнечный свет», 1894. Наблюдаемое по NGA: We look up at the exterior of a church that soars the height of this vertical painting.; Клод Моне: «Мост в Аржантёе в серый день», c. 1876. Наблюдаемое по NGA: We look across a glimmering river toward docks, about a dozen small boats, and a mustard-brown, boxy building under a bridge that crosses the width of the canvas in this horizontal landscape painting.",
+      "sources": [
+        "Авторское упражнение C01, не историческая цитата.",
+        "https://www.nga.gov/collection/art-object-page.46524.html",
+        "https://www.nga.gov/collection/art-object-page.46654.html",
+        "https://www.nga.gov/collection/art-object-page.52188.html"
+      ],
+      "exhibit_ids": [
+        "exhibit_nga_46524",
+        "exhibit_nga_46654",
+        "exhibit_nga_52188"
+      ]
+    }
+  ]
+}

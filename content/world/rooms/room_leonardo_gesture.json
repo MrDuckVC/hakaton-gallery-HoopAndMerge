@@ -1,0 +1,179 @@
+{
+  "id": "room_leonardo_gesture",
+  "world_version": "gallery_c01_v2",
+  "title": "06. Возрождение: Жест и отношения",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_06_05",
+      "target_room_id": "room_leonardo_figure",
+      "label": "05. Возрождение: Фигура в пространстве",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_06_07",
+      "target_room_id": "room_leonardo_composition",
+      "label": "07. Возрождение: Равновесие композиции",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_23",
+      "title": "Мадонна с младенцем",
+      "description": "Сандро Боттичелли. Мадонна с младенцем. Датировка музея: c. 1470. Техника: tempera on panel. National Gallery of Art, Washington, инв. 1937.1.21. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните руки и направления взглядов. Как персонажи оказываются связаны между собой?",
+      "image_asset_id": "nga_23",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 1.891793,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_27",
+      "title": "Большая Мадонна Каупера",
+      "description": "Рафаэль. Большая Мадонна Каупера. Датировка музея: 1508. Техника: oil on panel. National Gallery of Art, Washington, инв. 1937.1.25. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните руки и направления взглядов. Как персонажи оказываются связаны между собой?",
+      "image_asset_id": "nga_27",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 1.836269,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_433",
+      "title": "Мадонна с младенцем",
+      "description": "Фра Филиппо Липпи. Мадонна с младенцем. Датировка музея: c. 1440. Техника: tempera on poplar panel. National Gallery of Art, Washington, инв. 1939.1.290. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните руки и направления взглядов. Как персонажи оказываются связаны между собой?",
+      "image_asset_id": "nga_433",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 1.665422,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_leonardo",
+      "display_name": "Леонардо да Винчи",
+      "subtitle": "Художественная реконструкция · Возрождение",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}

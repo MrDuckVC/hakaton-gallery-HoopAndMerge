@@ -1,0 +1,179 @@
+{
+  "id": "room_vangogh_field",
+  "world_version": "gallery_c01_v2",
+  "title": "21. Постимпрессионизм: Поле и ритм",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_21_20",
+      "target_room_id": "room_vangogh_village",
+      "label": "20. Постимпрессионизм: Деревня и постройки",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_21_22",
+      "target_room_id": "room_vangogh_trees",
+      "label": "22. Постимпрессионизм: Деревья и движение взгляда",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_163323",
+      "title": "Зелёные пшеничные поля, Овер",
+      "description": "Винсент ван Гог. Зелёные пшеничные поля, Овер. Датировка музея: 1890. Техника: oil on canvas. National Gallery of Art, Washington, инв. 2013.122.1. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Найдите повторения борозд, стогов и мазков. Чем различаются ритмы трёх пейзажей?",
+      "image_asset_id": "nga_163323",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.354482,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_61371",
+      "title": "Цветочные грядки в Голландии",
+      "description": "Винсент ван Гог. Цветочные грядки в Голландии. Датировка музея: c. 1883. Техника: oil on canvas on wood. National Gallery of Art, Washington, инв. 1983.1.21. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Найдите повторения борозд, стогов и мазков. Чем различаются ритмы трёх пейзажей?",
+      "image_asset_id": "nga_61371",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.196239,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_53129",
+      "title": "Стога в Бретани",
+      "description": "Поль Гоген. Стога в Бретани. Датировка музея: 1890. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1972.9.11. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Найдите повторения борозд, стогов и мазков. Чем различаются ритмы трёх пейзажей?",
+      "image_asset_id": "nga_53129",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.390828,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_vangogh",
+      "display_name": "Винсент ван Гог",
+      "subtitle": "Художественная реконструкция · Постимпрессионизм",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}

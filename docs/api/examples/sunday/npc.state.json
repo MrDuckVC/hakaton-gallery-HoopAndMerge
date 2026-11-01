@@ -1,0 +1,73 @@
+{
+  "type": "npc.state",
+  "event_id": "evt_sunday_npc_state",
+  "server_time": "2026-11-01T12:00:00Z",
+  "payload": {
+    "world_version": "gallery_c01_v2",
+    "room_id": "room_leonardo_portrait",
+    "room_instance_id": "room_instance_01",
+    "seq": 1,
+    "npcs": [
+      {
+        "npc_id": "npc_00",
+        "position": {
+          "x": 2,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 0
+      },
+      {
+        "npc_id": "npc_01",
+        "position": {
+          "x": 3,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 0.5
+      },
+      {
+        "npc_id": "npc_02",
+        "position": {
+          "x": 4,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 1
+      },
+      {
+        "npc_id": "npc_03",
+        "position": {
+          "x": 5,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 1.5
+      },
+      {
+        "npc_id": "npc_04",
+        "position": {
+          "x": 6,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 2
+      }
+    ]
+  }
+}
