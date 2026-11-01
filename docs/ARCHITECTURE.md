@@ -160,3 +160,18 @@ Game содержит один cleanup worker и map грязных комнат
 закрытиях во время I/O. Ошибки сохраняют backoff даже при concurrent invalidation.
 Startup выполняет recovery до listener, lifecycle освобождает объекты до закрытия WS
 и storage. При аварийном завершении следующая startup recovery снимает stale holder.
+
+## S03 — телеметрия подключений
+
+`usecase/game` хранит FPS, visible, sampled_at, outstanding nonce, RTT и два
+скользящих окна внутри owning connection. Clock внедрён; `time.Now` сохраняет
+монотонную составляющую для интервалов. Существующий игровой tick планирует probe
+через bounded Sink, а HTTP consumer-owned порт читает копии публичных измерений.
+Arrival pong и соответствующий nonce фиксируются до SQL-аутентификации; только после
+её успеха и повторной проверки connection ID обновляется RTT. Задержка проверки роли/
+сессии в БД в RTT не входит, позднее завершение не погашает следующий nonce и не
+переписывает более новый результат.
+JSON DTO остаются в inbound-адаптерах; auth/admin membership проверяются прежними
+портами. Телеметрия не требует SQL или пользовательского persistence gate.
+Ended соединение исключается из admin snapshot до завершающего SQL-cleanup;
+replacement создаёт новое состояние, старые callbacks проверяют connection ID.

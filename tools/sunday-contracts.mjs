@@ -35,7 +35,7 @@ export function sundayContracts({S,P,client,server,obj,ref,str,number,integer,ar
   obj({...commandBase,action:{const:'aim'},yaw,head_pitch:num(-Math.PI/3,Math.PI/3)}),
   obj({...commandBase,action:{const:'power'},on:bool})]});
  const guideAction=named('GuideAction',obj({guide_id:id(),text:text(200),movement_epoch:int(1),expected_revision:int(1)}));
- const metrics=named('Metrics',{oneOf:[obj({fps:num(0,1000),visible:{const:true}}),obj({fps:{type:'null'},visible:{const:false}})]});
+ const metrics=named('Metrics',{oneOf:[obj({fps:nullable(num(0,1000)),visible:{const:true}}),obj({fps:{type:'null'},visible:{const:false}})]});
  const nonce=obj({nonce:str({minLength:16,maxLength:128,pattern:'^[A-Za-z0-9_-]+$'})});
  const effect=e(['show_installation','hide_installation','warm_light','cool_light']);
  Object.assign(client,{'room.sync':obj({}),'object.act':actions,'guide.action':guideAction,'client.metrics':metrics,'telemetry.pong':nonce});
@@ -51,7 +51,8 @@ export function sundayContracts({S,P,client,server,obj,ref,str,number,integer,ar
   responses['429'].headers['Retry-After']={schema:int(1)};
   const parameters=[...route.matchAll(/\{([^}]+)\}/g)].map(([,name])=>({name,in:'path',required:true,schema:id()}));
   const implemented=route==='/admin/me'||route==='/admin/rooms'||route==='/admin/rooms/{room_id}';
-  const operation={operationId,summary:operationId,tags:[implemented?'Sunday S01':'Sunday target (not implemented)'],description:(implemented?'S01 реализован.':'Целевой контракт, ещё не реализован.')+' Только admin cookie; семантика/лимиты в sunday.md.',responses,parameters};
+  const telemetry=route==='/admin/clients';
+  const operation={operationId,summary:operationId,tags:[telemetry?'Sunday S03':implemented?'Sunday S01':'Sunday target (not implemented)'],description:(telemetry?'S03 реализован.':implemented?'S01 реализован.':'Целевой контракт, ещё не реализован.')+' Только admin cookie; семантика/лимиты в sunday.md.',responses,parameters};
   if(input){operation.requestBody={required:true,content:{'application/json':{schema:input}}};operation.description+=' PUT: exact Origin, body <=65536 bytes, CAS expected_revision.';}
   P[route]??={};P[route][method]=operation;
  }
@@ -98,6 +99,7 @@ export function sundayContracts({S,P,client,server,obj,ref,str,number,integer,ar
  example('guide.action.completed',event('guide.action.completed',{guide_id:guideID,effect:'show_installation',runtime:{...runtimeExample,revision:2,config:{...runtimeExample.config,installation_visible:true}}},true));
  example('client.metrics',command('client.metrics',{fps:58.5,visible:true}));
  example('client.metrics.hidden',command('client.metrics',{fps:null,visible:false}));
+ example('client.metrics.unavailable',command('client.metrics',{fps:null,visible:true}));
  for(const name of ['telemetry.probe','telemetry.pong'])example(name,name.endsWith('probe')?event(name,{nonce:'challenge_1234567890'}):command(name,{nonce:'challenge_1234567890'}));
  example('admin.clients',{clients:[{user_id:'usr_01',display_name:'Посетитель',room_id:roomID,fps:58.5,ping_ms:12.3,visible:true,sampled_at:'2026-11-01T12:00:00Z',stale:false}]});
  example('admin.room.update',{world_version:'gallery_c01_v1',expected_revision:1,config:{...runtimeExample.config,lighting:'warm'}});

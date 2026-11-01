@@ -353,3 +353,15 @@ go test ./internal/adapters/outbound/postgres -run TestLamp -v
 ```
 
 Фактические результаты и ограничения — [S04_ACCEPTANCE.md](S04_ACCEPTANCE.md).
+
+## S03 — административная телеметрия
+
+Новых миграций и переменных окружения нет. С действующей admin cookie запрос
+`GET /api/v1/admin/clients` возвращает только текущие FPS/ping и состояние образца;
+WS у администратора не требуется. Клиент присылает `client.metrics` раз в 2 с и
+немедленно отвечает `telemetry.pong` на nonce серверного probe. Оба события без
+request_id и доступны до ready; остальные правила — [api/sunday.md](api/sunday.md), §7.
+UI polling раз в 2 с находится в отдельном frontend. FPS заявлен браузером;
+RTT относится к обмену с браузером, а не скорости SQL/Ollama. При disconnect/restart
+измерения исчезают. Автоматические проверки — штатные test/race/coverage/contracts;
+реальный LAN/rAF/фоновый браузер проверяется при S07.

@@ -13,6 +13,7 @@ import (
 )
 
 type connection struct {
+	telemetry  telemetry
 	id         string
 	identity   Identity
 	sink       Sink
@@ -192,7 +193,7 @@ func (s *Service) attachPrepared(ticket string, sink Sink, r reservation, room *
 		old.sink.Close(4009)
 		s.broadcastLocked(Event{Type: "player.left", UserID: userID}, userID)
 	}
-	s.active[userID] = &connection{id: ticket, identity: r.identity, sink: sink, seen: make(map[string]struct{}), epoch: 1}
+	s.active[userID] = &connection{id: ticket, identity: r.identity, sink: sink, seen: make(map[string]struct{}), epoch: 1, telemetry: telemetry{nextProbe: s.now().Add(5 * time.Second)}}
 	s.broadcastLocked(Event{Type: "player.joined", Player: presence(r.identity)}, userID)
 	return nil
 }
@@ -339,6 +340,13 @@ func (s *Service) Check(userID, id string, cmd Command) Failure {
 	}
 
 	now := s.now()
+	if telemetryType(cmd.Type) {
+		window := &c.telemetry.metrics
+		if cmd.Type == "telemetry.pong" {
+			window = &c.telemetry.pongs
+		}
+		return Failure{Drop: allow(window, now, time.Second, 2) > 0}
+	}
 	// Expired inactive records are discarded without resetting any live window.
 	for key, w := range s.limits {
 		if now.Sub(w.last) >= time.Minute {

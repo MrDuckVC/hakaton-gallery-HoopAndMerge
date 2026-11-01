@@ -36,7 +36,7 @@ func decode(body []byte) (game.Command, game.Failure) {
 		c.RequestID = id
 	}
 	switch c.Type {
-	case "player.move":
+	case "player.move", "client.metrics", "telemetry.pong":
 		c.RequestID = ""
 	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.ask", "guide.cancel", "room.sync", "object.act":
 	default:
@@ -48,7 +48,7 @@ func decode(body []byte) (game.Command, game.Failure) {
 	if !keys(root, []string{"type", "payload"}, "request_id") {
 		return fail("VALIDATION_ERROR")
 	}
-	if c.Type == "player.move" {
+	if c.Type == "player.move" || telemetryCommandType(c.Type) {
 		if _, exists := root["request_id"]; exists {
 			return fail("VALIDATION_ERROR")
 		}
@@ -61,6 +61,17 @@ func decode(body []byte) (game.Command, game.Failure) {
 	}
 	valid := false
 	switch c.Type {
+	case "client.metrics":
+		c.Metrics.Visible, ok = p["visible"].(bool)
+		valid = keys(p, []string{"fps", "visible"}) && ok
+		if p["fps"] != nil {
+			fps, numeric := number(p["fps"])
+			valid = valid && numeric && c.Metrics.Visible && fps >= 0 && fps <= 1000
+			c.Metrics.FPS = &fps
+		}
+	case "telemetry.pong":
+		c.Nonce, ok = p["nonce"].(string)
+		valid = keys(p, []string{"nonce"}) && ok && validNonce(c.Nonce)
 	case "object.act":
 		valid = decodeObject(p, &c)
 	case "room.sync":
@@ -108,6 +119,22 @@ func decode(body []byte) (game.Command, game.Failure) {
 		return fail("VALIDATION_ERROR")
 	}
 	return c, game.Failure{}
+}
+
+func telemetryCommandType(kind string) bool {
+	return kind == "client.metrics" || kind == "telemetry.pong"
+}
+
+func validNonce(nonce string) bool {
+	if len(nonce) < 16 || len(nonce) > 128 {
+		return false
+	}
+	for _, c := range nonce {
+		if (c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c < '0' || c > '9') && c != '_' && c != '-' {
+			return false
+		}
+	}
+	return true
 }
 func keys(m map[string]any, required []string, optional ...string) bool {
 	for _, k := range required {

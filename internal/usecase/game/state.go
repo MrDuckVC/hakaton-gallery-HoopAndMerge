@@ -46,6 +46,9 @@ func (s *Service) acquire(ctx context.Context, userID string) (func(), error) {
 
 // Handle owns game command semantics after transport authentication and rate admission.
 func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Failure {
+	if telemetryType(cmd.Type) {
+		return s.handleTelemetry(userID, id, cmd)
+	}
 	release, err := s.acquire(ctx, userID)
 	if err != nil {
 		return Failure{Drop: true}
@@ -356,6 +359,7 @@ func (s *Service) run(ctx context.Context, stateTicks, saveTicks <-chan time.Tim
 			return
 		case <-stateTicks:
 			s.PublishState()
+			s.PublishTelemetry()
 		case <-saveTicks:
 			if stopping() {
 				continue

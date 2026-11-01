@@ -21,7 +21,7 @@ export type SundayNPC = { npc_id: string; position: SundayVec3; yaw: number; sta
 export type SundayNPCState = { world_version: string; room_id: string; room_instance_id: string; seq: number; npcs: Array<SundayNPC> };
 export type SundayObjectAct = ({ object_id: "lamp_01"; movement_epoch: number; expected_revision: number; action: "take" }) | ({ object_id: "lamp_01"; movement_epoch: number; expected_revision: number; action: "place"; slot_id: "a" | "b" }) | ({ object_id: "lamp_01"; movement_epoch: number; expected_revision: number; action: "aim"; yaw: number; head_pitch: number }) | ({ object_id: "lamp_01"; movement_epoch: number; expected_revision: number; action: "power"; on: boolean });
 export type SundayGuideAction = { guide_id: string; text: string; movement_epoch: number; expected_revision: number };
-export type SundayMetrics = ({ fps: number; visible: true }) | ({ fps: null; visible: false });
+export type SundayMetrics = ({ fps: (number) | (null); visible: true }) | ({ fps: null; visible: false });
 export type SundayClientEvent =
   { type: "room.sync"; request_id: string; payload: {  } } |
   { type: "object.act"; request_id: string; payload: SundayObjectAct } |
