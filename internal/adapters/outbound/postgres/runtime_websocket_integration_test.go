@@ -80,6 +80,9 @@ func TestRuntimeHTTPWebSocketDurabilityIntegration(t *testing.T) {
 	questions := guidecase.New(NewGuideStore(pool), runtime, accounts, registry, nil, guidecase.Clock{Now: time.Now, After: time.After}, crypto.NewID)
 	registry.Configure(runtime, NewGameStore(pool), questions)
 	registry.ConfigureRuntime(runtime)
+	if err := registry.ConfigureNPCs(catalog.Rooms(), crypto.NewID); err != nil {
+		t.Fatal(err)
+	}
 	registry.ConfigureGuides(questions)
 	transport := wsapi.New(registry, accounts, catalog, registry, []string{"http://allowed"})
 	server := httpapi.NewServer("")
@@ -120,6 +123,14 @@ func TestRuntimeHTTPWebSocketDurabilityIntegration(t *testing.T) {
 		if err = json.Unmarshal(event.Payload, &initial); err != nil || initial.Revision != 1 {
 			t.Fatal(initial, err)
 		}
+		npcEvent := read(conn, "npc.state")
+		var npcs struct {
+			Seq  int64             `json:"seq"`
+			NPCs []json.RawMessage `json:"npcs"`
+		}
+		if err = json.Unmarshal(npcEvent.Payload, &npcs); err != nil || npcs.Seq < 1 || len(npcs.NPCs) != 10 {
+			t.Fatal(string(npcEvent.Payload), err)
+		}
 		return conn
 	}
 	alice, err := accounts.Register(ctx, "runtime_alice", "Alice", "password123", "")
@@ -146,6 +157,7 @@ func TestRuntimeHTTPWebSocketDurabilityIntegration(t *testing.T) {
 	}
 	config := domain.Seed(catalog.Rooms()[0]).Config
 	config.Lighting = "warm"
+	config.NPCCount = 0
 	config.GuidePlacements[0].Position = player.Vector{X: 2, Z: 4.5}
 	publicConfig := runtimewire.Public(domain.Room{Overlay: domain.Overlay{Config: config}}).Config
 	put := func(revision int64) (int, []byte, error) {
@@ -213,6 +225,15 @@ func TestRuntimeHTTPWebSocketDurabilityIntegration(t *testing.T) {
 			t.Fatalf("broadcast=%s, committed=%+v err=%v", event.Payload, committed, err)
 		}
 	}
+	for _, conn := range []*ws.Conn{a, b} {
+		npcEvent := read(conn, "npc.state")
+		var npcs struct {
+			NPCs []json.RawMessage `json:"npcs"`
+		}
+		if err = json.Unmarshal(npcEvent.Payload, &npcs); err != nil || npcs.NPCs == nil || len(npcs.NPCs) != 0 {
+			t.Fatal(string(npcEvent.Payload), err)
+		}
+	}
 	if committed.Guides[0].Position.X != 2 || committed.Guides[0].Position.Z != 4.5 {
 		t.Fatal(committed.Guides)
 	}
@@ -253,6 +274,9 @@ func TestRuntimeHTTPWebSocketDurabilityIntegration(t *testing.T) {
 		var got runtimewire.Room
 		if err = json.Unmarshal(event.Payload, &got); err != nil || event.RequestID != id || !reflect.DeepEqual(got, committed) {
 			t.Fatalf("sync=%+v runtime=%s err=%v", event, event.Payload, err)
+		}
+		if event := read(conn, "npc.state"); event.RequestID != id {
+			t.Fatal(event)
 		}
 	}
 }

@@ -137,8 +137,8 @@ SQL rows и публичные DTO преобразуют postgres/runtime и in
 SQL выполняется вне game mutex, затем callback ставит snapshot/entered и runtime
 в единственную очередь, удерживая room gate. Поэтому конкурентный commit не теряется
 между чтением и подключением/переходом. Порядок: user gate → room gate → game mutex;
-runtime publisher берёт только game mutex. Optional RoomSnapshots добавляет S05 NPC
-после runtime в той же очереди; симуляция в S01 отсутствует.
+runtime publisher берёт только game mutex. S05 добавляет полный NPC-снимок
+после runtime в той же очереди; игровая usecase владеет симуляцией.
 
 Game и guide получают effective Geometry от runtime service. Immutable Package/Spawn,
 файловые downloads и бюджет остаются у базового каталога; public guide positions
@@ -191,3 +191,19 @@ Generation с private ProfileSnapshot. Context.Build использует это
 prepared materials — в файловом каталоге, terminal+memory — в прежнем Finish.
 Composition root подключает оба profile store/reader порта до Initialize/listener.
 Подробности выбора и recovery — [DECISIONS.md](DECISIONS.md), раздел S02.
+
+## S05 — детерминированные посетители
+
+`domain/npc` содержит FSM и prevalidated patrol plans. Подготовка ограниченной
+сетки использует существующий world.Sweep и исключает door areas; композиция
+передаёт неизменяемые Rooms и генератор instance ID в game.ConfigureNPCs до listener.
+`usecase/game` владеет активными симуляциями под прежним registry mutex: изменение
+ownership и удаление пустой комнаты атомарны, поздний callback сверяет connection ID.
+SQL/LLM и room gates в NPC tick не вызываются; движение идёт по готовым отрезкам.
+Никаких reverse callbacks/дополнительных mutex симуляции нет.
+
+Типизированный game.NPCSnapshot содержит detached NPC states. Inbound websocket
+создаёт wire DTO и проверяет payload ≤24 КиБ, затем использует прежний bounded Sink
+и единственный writer. Полный runtime и соответствующий NPC snapshot ставятся
+последовательно под game mutex. Принятый текст chat регистрирует реакцию только
+после успешного фото-I/O и повторной проверки текущего подключения.

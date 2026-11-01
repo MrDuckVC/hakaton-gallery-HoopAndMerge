@@ -183,6 +183,7 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 		defer s.mu.Unlock()
 		if current := s.active[userID]; current == c && !c.ended {
 			c.identity.State = next
+			s.pruneNPCLocked()
 			c.reloadPose = false
 			c.identity.Package = pkg
 			c.epoch++
@@ -360,6 +361,7 @@ func (s *Service) run(ctx context.Context, stateTicks, saveTicks <-chan time.Tim
 		case <-stateTicks:
 			s.PublishState()
 			s.PublishTelemetry()
+			s.PublishNPCs()
 		case <-saveTicks:
 			if stopping() {
 				continue

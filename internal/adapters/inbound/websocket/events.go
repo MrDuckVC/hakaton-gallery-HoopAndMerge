@@ -3,6 +3,7 @@ package websocket
 import (
 	"crypto/rand"
 	"encoding/json"
+	"errors"
 	"time"
 
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/guidewire"
@@ -30,6 +31,15 @@ func publicPlayer(p game.Player) worldwire.Player {
 func encode(e game.Event) ([]byte, error) {
 	var payload any
 	switch e.Type {
+	case "npc.state":
+		payload = publicNPCs(e.NPCs)
+		encoded, err := json.Marshal(payload)
+		if err != nil {
+			return nil, err
+		}
+		if len(encoded) > 24*1024 {
+			return nil, errors.New("NPC snapshot exceeds 24 KiB")
+		}
 	case "telemetry.probe":
 		payload = struct {
 			Nonce string `json:"nonce"`

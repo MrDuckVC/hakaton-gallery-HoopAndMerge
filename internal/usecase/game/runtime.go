@@ -12,21 +12,19 @@ type Runtime interface {
 	WithRoom(context.Context, string, func(runtime.Room) error) error
 }
 
-// RoomSnapshots is the optional room simulation boundary. S05 supplies NPC state.
-// EnqueueSnapshot performs bounded memory operations only and queues a complete
-// snapshot with the supplied request ID through the existing ordered sink.
-type RoomSnapshots interface {
-	EnqueueSnapshot(roomID, requestID string, sink Sink) bool
-}
-
-// ConfigureRoomSnapshots connects simulation snapshots before serving.
-func (s *Service) ConfigureRoomSnapshots(snapshots RoomSnapshots) { s.roomSnapshots = snapshots }
-
 func (s *Service) enqueueRuntimeLocked(sink Sink, room runtime.Room, requestID string) bool {
 	if !sink.Enqueue(Event{Type: "world.runtime", RequestID: requestID, Runtime: room}) {
 		return false
 	}
-	return s.roomSnapshots == nil || s.roomSnapshots.EnqueueSnapshot(room.RoomID, requestID, sink)
+	snapshot, ok := s.npcSnapshotLocked(room)
+	if !ok {
+		sink.Close(1012)
+		return false
+	}
+	if !s.enqueueNPCLocked(sink, snapshot, requestID) {
+		return false
+	}
+	return true
 }
 
 // ConfigureRuntime installs room snapshots before accepting connections.
@@ -37,9 +35,19 @@ func (s *Service) ConfigureRuntime(source Runtime) { s.runtime = source }
 func (s *Service) PublishRuntime(room runtime.Room) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	s.pruneNPCLocked()
+	var snapshot *NPCSnapshot
 	for _, c := range s.active {
 		if !c.ended && c.identity.State.RoomID == room.RoomID && c.identity.State.WorldVersion == room.WorldVersion {
-			s.enqueueRuntimeLocked(c.sink, room, "")
+			if snapshot == nil {
+				var ok bool
+				snapshot, ok = s.npcSnapshotLocked(room)
+				if !ok {
+					return
+				}
+			}
+			c.sink.Enqueue(Event{Type: "world.runtime", Runtime: room})
+			s.enqueueNPCLocked(c.sink, snapshot, "")
 		}
 	}
 }
@@ -52,7 +60,7 @@ func (s *Service) InvalidateRuntime(roomID string) {
 	for _, c := range s.active {
 		if !c.ended && c.identity.State.RoomID == roomID {
 			s.markLampDirtyLocked(roomID)
-			c.ended = true
+			s.endLocked(c)
 			c.reloadPose = true
 			c.ready = false
 			c.sink.Close(1011)

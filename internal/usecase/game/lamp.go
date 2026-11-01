@@ -75,16 +75,23 @@ func (s *Service) objectAct(ctx context.Context, userID, id string, cmd Command)
 	err := s.objects.Act(ctx, roomID, actor, cmd.Object, guard, func(room domain.Room) {
 		s.mu.Lock()
 		defer s.mu.Unlock()
+		snapshot, ok := s.npcSnapshotLocked(room)
+		if !ok {
+			return
+		}
 		if s.active[userID] == c && !c.ended && !s.stopping {
 			c.sink.Enqueue(Event{Type: "object.acted", RequestID: cmd.RequestID, ObjectAction: cmd.Object.Action, Runtime: room})
+			s.enqueueNPCLocked(c.sink, snapshot, "")
 		} else {
 			s.markLampDirtyLocked(roomID)
 		}
 		for user, other := range s.active {
 			if user != userID && !other.ended && other.identity.State.RoomID == roomID && other.identity.State.WorldVersion == room.WorldVersion {
 				other.sink.Enqueue(Event{Type: "world.runtime", Runtime: room})
+				s.enqueueNPCLocked(other.sink, snapshot, "")
 			}
 		}
+		s.pruneNPCLocked()
 	})
 	return objectFailure(err)
 }

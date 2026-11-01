@@ -190,3 +190,24 @@ room.sync, replacement и восстановление профиля новым
 из 10 записей; 11-я запись запрещена. SQL-тест миграции 00008 стартует со схемы
 00007, проверяет counts 0/10/11/40, разные WORLD_VERSION, сохранение config/lamp/holder,
 повышение revisions только изменённых комнат, повторный up и startup после миграции.
+
+## S05: NPC-посетители
+
+Domain fake-clock tests проверяют детерминированные маршруты, 10/0, движение 0.12 м
+за шаг 200 мс, idle, talking/3 с/продление, радиус 3 м и tie-break по user_id,
+стены и области дверей, полный шаг при развороте и строгую границу idle <1 м.
+Отдельный тест подготавливает маршруты всех 24 залов C01.
+Game tests покрывают initial/sync ordering до ready, 5 Гц, общий broadcast seq,
+count→0, пустые комнаты, reconnect/replacement/late detach, переход между залами,
+неуспешный/пустой/photo-only chat и отсутствие реакции до окончания публикации.
+Блокированный photo I/O не блокирует NPC tick; invalidation отменяет поздний chat.
+Движение игроков и detached snapshots проверяются независимо от NPC mutations.
+Исчерпание seq закрывает владельцев с 1012 на tick/sync/runtime/attach, не выдавая
+небезопасных JSON-чисел.
+
+Настоящий WS проверяет initial/runtime/NPC, sync request_id и tick без request_id.
+Wire tests проверяют 10/0, snake_case, полный список и close1011 при payload>24 КиБ.
+RuntimeHTTPWebSocketDurabilityIntegration на отдельной TEST_DATABASE_URL проверяет
+initial 10, admin CAS→0, одинаковую доставку [] owning WS и sync после SQL rollback.
+Штатные race/lint/coverage и contract tools остаются обязательными; физический
+LAN/offline показ и frontend-анимации этой автоматизацией не подтверждаются.

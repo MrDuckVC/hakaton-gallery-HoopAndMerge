@@ -61,11 +61,11 @@ FPS/ping доступны только GET /api/v1/admin/clients, не players.s
 Тайм-аут queued — 120 секунд, running — 90 секунд; output limit — 8000 кодовых точек. До B08 модель явно недоступна: после accepted/started приходит failed с AI_UNAVAILABLE. При ошибке хранения результата WS закрывается 1011; восстановление переводит оставшиеся pending в SERVER_RESTARTED и уведомляет ещё подключённых владельцев. До открытия listener выполняется та же recovery-операция.
 
 
-## Sunday v1: S01 runtime и S04 светильник
+## Sunday v1: runtime, светильник и NPC
 
 Нормативные правила: [sunday.md](sunday.md), типы [sunday.types.ts](sunday.types.ts).
-Реализованы world.runtime, room.sync, object.act и object.acted. NPC-снимок подключается задачей S05 через
-упорядоченный порт game.RoomSnapshots; до S07 capability sunday_v1 отсутствует.
+Реализованы world.runtime, room.sync, object.act, object.acted и npc.state.
+До S07 capability sunday_v1 отсутствует.
 Новые client events: room.sync, object.act, guide.action, client.metrics, telemetry.pong.
 Новые server events: world.runtime, npc.state, object.acted, guide.action.completed, telemetry.probe.
 Первым остаётся world.snapshot; runtime/NPC текущего зала идут после snapshot/entered.
@@ -89,3 +89,15 @@ world.runtime с новой публичной идентичностью. Recon
 Worker фиксирует профиль и revision в транзакции queued→running, поэтому текущий
 ответ использует прежний снимок, следующий — новые настройки. Приватный снимок
 и revision профиля не добавляются в публичные события генерации.
+
+S05: сразу после snapshot/runtime и entered/runtime сервер передаёт полный
+`npc.state {world_version,room_id,room_instance_id,seq,npcs}`. Затем owning WS,
+включая not-ready, получают состояние зала 5 Гц; `room.sync` возвращает runtime,
+затем NPC с тем же request_id. На остальных снимках request_id отсутствует.
+Список содержит 0–10 элементов (`npc_00..npc_09`), при count=0 — `[]`; payload
+не больше 24 КиБ. Состояния walking/idle/talking, speed_mps=0.6/0/0, phase∈[0,2π).
+Общий снимок одной рассылки имеет одинаковый seq для всех получателей. Внутри
+instance seq возрастает; после опустошения комнаты новый вход создаёт другой
+instance и seq=1. Replacement при непрерывном владении сохраняет instance.
+Клиент отбрасывает старые room/version/instance/seq, интерполирует 200 мс и
+анимирует конечности локально. Единственный writer и очередь 1 МиБ сохраняются.
