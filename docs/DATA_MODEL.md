@@ -73,17 +73,11 @@ photos.id — UUID v4 в каноническом text, совместимом �
 
 Публикация блокирует строку фото FOR UPDATE в короткой транзакции, вызывает проверку владельца из usecase, устанавливает published=true и возвращает метаданные только после COMMIT. Действующая сессия проверяется под блокировкой до операции и повторно перед COMMIT. Повтор уже опубликованного фото успешен; новая память и история чата не создаются. Ошибка COMMIT не разрешает broadcast, даже если итог транзакции неопределён; повтор безопасен. Обратного сценария публикации нет. Схема B09 остаётся без изменений.
 
-## Планируемая Sunday-схема (миграция ещё не создана/не применена)
+## Sunday-схема
 
-Нормативная семантика — [api/sunday.md](api/sunday.md). Добавить forward-only миграцию
-после 00005: membership администратора по user_id; room overlays с ключом
-(world_version,room_id), revision/config/lamp и приватным holder connection ID;
-guide overrides с ключом (world_version,guide_id), revision/settings. Обновления CAS,
-profile+revision затронутых комнат атомарны. FK пользователей для membership/holder;
-валидность room/guide/material IDs проверяет usecase по загруженному миру.
-NPC/FPS/ping не сохраняются в SQL. При startup убрать stale holders до listener.
-Это описание будущей модели, не утверждение о наличии таблиц.
-
+Нормативная семантика — [api/sunday.md](api/sunday.md). S01 (00006) хранит
+membership и room overlays, S02 (00007) — guide overrides. NPC/FPS/ping в SQL
+не сохраняются. Валидность room/guide/material IDs проверяется по текущему каталогу.
 
 ## S01: сохраняемый runtime и администраторы (00006)
 
@@ -130,3 +124,19 @@ Lifecycle release сравнивает world/room/user/connection и revision, �
 поздний release старого соединения не изменяют нового владельца. Конфликт revision
 требует перечитывания; повтор возможен только для прежней пары user/connection.
 Startup очищает stale holders текущего мира до listener; overlays старых версий не удаляет.
+
+## S02: overrides профилей гидов (00007)
+
+`guide_overrides(world_version, guide_id, revision, settings jsonb, updated_at)`:
+составной первичный ключ по версии мира и личности; revision от 2 до safe integer.
+Отсутствие строки означает seed revision=1 из файлового профиля и публичной C01
+идентичности, с выбором всех материалов. Settings хранит только редактируемые поля
+Sunday §3 и ID собственных материалов, без копий текстов знаний/приватной памяти.
+
+Profile CAS и повышение room revisions при смене имени/subtitle выполняются одной
+транзакцией. Существующие config/lamp/holder не заменяются. При первой смене имени
+room seed материализуется как revision=2; последующие revisions увеличиваются на 1.
+Обновление профиля берёт строку guide_scheduler FOR UPDATE, как Claim: worker
+читает effective profile+revision до commit queued→running. Снимок хранится только
+в выполняемом задании, не в wire или новой истории prompts. После рестарта pending
+завершаются прежней recovery-операцией SERVER_RESTARTED. Terminal+memory не меняются.

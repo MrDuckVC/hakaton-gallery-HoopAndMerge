@@ -2657,8 +2657,8 @@
       "operationId": "getAdminGuides"
       "summary": "getAdminGuides"
       "tags":
-        - "Sunday target (not implemented)"
-      "description": "Целевой контракт, ещё не реализован. Только admin cookie; семантика/лимиты в sunday.md."
+        - "Sunday S02"
+      "description": "S02 реализован. Только admin cookie; семантика/лимиты в sunday.md."
       "responses":
         "200":
           "description": "Успешно"
@@ -2816,8 +2816,8 @@
       "operationId": "getAdminGuide"
       "summary": "getAdminGuide"
       "tags":
-        - "Sunday target (not implemented)"
-      "description": "Целевой контракт, ещё не реализован. Только admin cookie; семантика/лимиты в sunday.md."
+        - "Sunday S02"
+      "description": "S02 реализован. Только admin cookie; семантика/лимиты в sunday.md."
       "responses":
         "200":
           "description": "Успешно"
@@ -2982,8 +2982,8 @@
       "operationId": "updateAdminGuide"
       "summary": "updateAdminGuide"
       "tags":
-        - "Sunday target (not implemented)"
-      "description": "Целевой контракт, ещё не реализован. Только admin cookie; семантика/лимиты в sunday.md. PUT: exact Origin, body <=65536 bytes, CAS expected_revision."
+        - "Sunday S02"
+      "description": "S02 реализован. Только admin cookie; семантика/лимиты в sunday.md. PUT: exact Origin, body <=65536 bytes, CAS expected_revision."
       "responses":
         "200":
           "description": "Успешно"

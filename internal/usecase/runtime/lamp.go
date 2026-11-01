@@ -37,7 +37,7 @@ func (s *Service) Act(ctx context.Context, id string, actor domain.ObjectActor, 
 	if err != nil {
 		return err
 	}
-	result := domain.Effective(r, next)
+	result := s.effective(r, next)
 	n, err := s.sizer.RuntimeBytes(result)
 	if err != nil || n <= 0 || n > domain.MaxRuntimeBytes {
 		return auth.Validation
@@ -125,7 +125,7 @@ func (s *Service) cleanLamp(ctx context.Context, id string, stale func(domain.La
 		next.Lamp.HolderConnectionID = ""
 		err = s.commitLamp(ctx, r, current.Overlay, next)
 		if err == nil {
-			s.publisher.PublishRuntime(domain.Effective(r, next))
+			s.publisher.PublishRuntime(s.effective(r, next))
 			return nil
 		}
 		// Conflicts and unknown COMMIT require a fresh read, never a RAM rollback.

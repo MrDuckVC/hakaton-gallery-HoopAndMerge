@@ -65,9 +65,15 @@ func (c Context) Build(ctx context.Context, g domain.Generation) (ModelRequest, 
 	if c.Profiles == nil || c.Reader == nil {
 		return ModelRequest{}, auth.Unavailable
 	}
-	p, err := c.Profiles.Profile(g.GuideID)
-	if err != nil {
-		return ModelRequest{}, err
+	var p domain.Profile
+	var err error
+	if g.ProfileSnapshot != nil {
+		p = g.ProfileSnapshot.Profile.Clone()
+	} else {
+		p, err = c.Profiles.Profile(g.GuideID)
+		if err != nil {
+			return ModelRequest{}, err
+		}
 	}
 	if err = p.Validate(); err != nil {
 		return ModelRequest{}, err

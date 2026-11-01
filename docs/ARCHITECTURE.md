@@ -175,3 +175,19 @@ JSON DTO остаются в inbound-адаптерах; auth/admin membership �
 портами. Телеметрия не требует SQL или пользовательского persistence gate.
 Ended соединение исключается из admin snapshot до завершающего SQL-cleanup;
 replacement создаёт новое состояние, старые callbacks проверяют connection ID.
+
+## S02 — профили и публичная идентичность
+
+`domain/guide` задаёт Settings, Override и detached Snapshot, нормализацию и выбор
+материалов из собственного профиля. `usecase/runtime` определяет ProfileCatalog/
+ProfileStore и координирует profile CAS с существующими gates затронутых комнат.
+SQL-транзакция адаптера сохраняет override и room revisions вместе; после commit
+кеши effective identity обновляются до публикации runtime. Все room/lamp/geometry
+пути используют общий resolver публичных имени/subtitle, не C01 напрямую.
+
+GuideStore.Claim под scheduler SQL lock читает текущий override и возвращает
+Generation с private ProfileSnapshot. Context.Build использует этот снимок;
+публичные inbound DTO его исключают. Fixed instructions остаются в usecase,
+prepared materials — в файловом каталоге, terminal+memory — в прежнем Finish.
+Composition root подключает оба profile store/reader порта до Initialize/listener.
+Подробности выбора и recovery — [DECISIONS.md](DECISIONS.md), раздел S02.

@@ -9,6 +9,7 @@ import (
 	"sync"
 
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	guide "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/guide"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
 	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/runtime"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
@@ -17,14 +18,18 @@ import (
 // Service serializes each room through a context-aware channel gate. The cache
 // mutex protects memory only, and is never held across SQL or publication.
 type Service struct {
-	catalog   Catalog
-	store     Store
-	roles     RoleStore
-	publisher Publisher
-	sizer     Sizer
-	mu        sync.RWMutex
-	cache     map[string]domain.Overlay
-	gates     map[string]chan struct{}
+	catalog        Catalog
+	store          Store
+	roles          RoleStore
+	publisher      Publisher
+	sizer          Sizer
+	mu             sync.RWMutex
+	cache          map[string]domain.Overlay
+	gates          map[string]chan struct{}
+	profileCatalog ProfileCatalog
+	profileStore   ProfileStore
+	seeds          map[string]guide.Override
+	identities     map[string]guide.Settings
 }
 
 // New connects the runtime ports; Initialize must complete before serving.
@@ -34,6 +39,9 @@ func New(c Catalog, store Store, roles RoleStore, publisher Publisher, sizer Siz
 
 // Initialize validates seeds and durable overlays without changing world files or schema.
 func (s *Service) Initialize(ctx context.Context) error {
+	if err := s.seedProfiles(); err != nil {
+		return err
+	}
 	for _, r := range s.catalog.Rooms() {
 		if err := domain.ValidateOverlay(r, s.catalog.SpawnPositions(r.ID), domain.Seed(r)); err != nil {
 			return fmt.Errorf("room %q has unsafe Sunday seed: %w", r.ID, err)
@@ -107,7 +115,10 @@ func (s *Service) read(ctx context.Context, r world.Room) (domain.Room, error) {
 	if err = domain.ValidateOverlay(r, s.catalog.SpawnPositions(r.ID), o); err != nil {
 		return domain.Room{}, fmt.Errorf("invalid persisted room runtime: %w", auth.Unavailable)
 	}
-	result := domain.Effective(r, o)
+	if err = s.refreshIdentities(ctx, r); err != nil {
+		return domain.Room{}, err
+	}
+	result := s.effective(r, o)
 	n, err := s.sizer.RuntimeBytes(result)
 	if err != nil || n <= 0 || n > domain.MaxRuntimeBytes {
 		return domain.Room{}, fmt.Errorf("invalid persisted runtime size: %w", auth.Unavailable)
@@ -182,7 +193,7 @@ func (s *Service) Update(ctx context.Context, id, version string, expected int64
 	next.Revision++
 	next.Config = config
 	next = next.Clone()
-	result := domain.Effective(r, next)
+	result := s.effective(r, next)
 	n, err := s.sizer.RuntimeBytes(result)
 	if err != nil || n <= 0 || n > domain.MaxRuntimeBytes {
 		return domain.Room{}, auth.Validation
@@ -225,7 +236,7 @@ func (s *Service) Geometry(id string) (world.Room, error) {
 	if !ok {
 		return world.Room{}, auth.Unavailable
 	}
-	r.Guides = domain.Effective(r, o).Guides
+	r.Guides = s.effective(r, o).Guides
 	return r, nil
 }
 

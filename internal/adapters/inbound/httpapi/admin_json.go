@@ -23,12 +23,11 @@ type roomUpdateInput struct {
 	config   domain.Config
 }
 
-func readRoomUpdate(w http.ResponseWriter, r *http.Request) (roomUpdateInput, bool) {
-	var input roomUpdateInput
+func readAdminObject(w http.ResponseWriter, r *http.Request) (map[string]any, bool) {
 	media, params, err := mime.ParseMediaType(r.Header.Get("Content-Type"))
 	if err != nil || media != "application/json" || (params["charset"] != "" && !strings.EqualFold(params["charset"], "utf-8")) {
 		writeError(w, 415, "UNSUPPORTED_MEDIA_TYPE", "Требуется JSON UTF-8", 0)
-		return input, false
+		return nil, false
 	}
 	body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 65536))
 	if err != nil {
@@ -38,17 +37,29 @@ func readRoomUpdate(w http.ResponseWriter, r *http.Request) (roomUpdateInput, bo
 		} else {
 			writeError(w, 400, "INVALID_JSON", "Некорректный JSON", 0)
 		}
-		return input, false
+		return nil, false
 	}
 	if !utf8.Valid(body) || !validUnicodeEscapes(body) || !json.Valid(body) {
 		writeError(w, 400, "INVALID_JSON", "Некорректный JSON UTF-8", 0)
-		return input, false
+		return nil, false
 	}
 	decoder := json.NewDecoder(bytes.NewReader(body))
 	decoder.UseNumber()
 	value, err := uniqueAdminValue(decoder)
 	root, ok := value.(map[string]any)
-	if err != nil || !ok || !adminKeys(root, "world_version", "expected_revision", "config") {
+	if err != nil || !ok {
+		writeError(w, 400, "VALIDATION_ERROR", "Некорректные поля", 0)
+		return nil, false
+	}
+	return root, true
+}
+func readRoomUpdate(w http.ResponseWriter, r *http.Request) (roomUpdateInput, bool) {
+	var input roomUpdateInput
+	root, ok := readAdminObject(w, r)
+	if !ok {
+		return input, false
+	}
+	if !adminKeys(root, "world_version", "expected_revision", "config") {
 		writeError(w, 400, "VALIDATION_ERROR", "Некорректные поля", 0)
 		return input, false
 	}

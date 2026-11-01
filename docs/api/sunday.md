@@ -1,6 +1,6 @@
 # Sunday v1 — нормативное расширение API галереи
 
-Статус: **S01 runtime/admin rooms, S03 FPS+ping и S04 светильник реализованы; остальные части — целевой контракт**. Дата 01.11.2026.
+Статус: **S01 runtime/admin rooms, S02 admin guides, S03 FPS+ping и S04 светильник реализованы; остальные части — целевой контракт**. Дата 01.11.2026.
 `world.runtime` и `room.sync` доступны; снимок NPC подключается в S05 через порт
 `game.RoomSnapshots`, после runtime и с тем же request_id для sync. До S05 сервер
 не выдаёт фиктивный NPC snapshot. Capability `sunday_v1` включается только в S07.

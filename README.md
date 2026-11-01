@@ -101,5 +101,5 @@ S01 реализует сохраняемый runtime залов, редакти
 назначение роли командой `./bin/admin grant --username NAME` после отдельного применения
 миграции 00006. `world.runtime` следует за snapshot/entered; `room.sync` перечитывает БД.
 S04 реализует интерактивные команды светильника и восстановление holder после сбоев;
-новые миграции/config не нужны. S03 реализует client.metrics, telemetry.probe/pong и GET /api/v1/admin/clients только для admin. Измерения живут в RAM текущего соединения; новые миграции/config не нужны. Профили гидов, NPC и guide.action остаются задачами S02/S05/S06. `sunday_v1` не объявляется до интеграции S07.
+новые миграции/config не нужны. S03 реализует client.metrics, telemetry.probe/pong и GET /api/v1/admin/clients только для admin. Измерения живут в RAM текущего соединения; новые миграции/config не нужны. S02 реализует admin guides и снимок профиля при старте running; перед запуском отдельно примените новую миграцию 00007. NPC и guide.action остаются задачами S05/S06. `sunday_v1` не объявляется до интеграции S07.
 Основа №2–14 не переписывается. Задачи и порядок — [SUNDAY_BACKLOG.md](docs/SUNDAY_BACKLOG.md).

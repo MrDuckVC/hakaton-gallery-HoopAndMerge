@@ -66,6 +66,7 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, catalog, sessions, time.Now)
 	runtimeStore := postgres.NewRuntimeStore(pool)
 	rooms := runtimecase.New(catalog, runtimeStore, runtimeStore, connections, runtimewire.Sizer{})
+	rooms.ConfigureProfiles(catalog, runtimeStore)
 	connections.ConfigureObjects(rooms)
 	runtimeCtx, runtimeCancel := context.WithTimeout(ctx, 15*time.Second)
 	err = rooms.Initialize(runtimeCtx)
@@ -76,6 +77,7 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	}
 	connections.ConfigureRuntime(rooms)
 	guideStore := postgres.NewGuideStore(pool)
+	guideStore.ConfigureProfiles(cfg.WorldVersion, catalog)
 	guides := guidecase.New(guideStore, rooms, accounts, connections, ollama.New(cfg.OllamaBaseURL, cfg.OllamaModel), guidecase.Clock{Now: time.Now, After: time.After}, security.Crypto{}.NewID)
 	guides.ConfigureContext(catalog, guideStore)
 	recoveryCtx, recoveryCancel := context.WithTimeout(ctx, 10*time.Second)
@@ -102,6 +104,7 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	server.ConfigureFrontend(frontend)
 	server.ConfigureAuth(accounts, cfg.AllowedOrigins, cfg.CookieSecure)
 	server.ConfigureRuntime(rooms, accounts, cfg.AllowedOrigins)
+	server.ConfigureAdminGuides(rooms)
 	server.ConfigureClients(connections)
 	connections.Configure(rooms, postgres.NewGameStore(pool), guides)
 	connections.ConfigureGuides(guides)

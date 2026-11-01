@@ -52,7 +52,8 @@ export function sundayContracts({S,P,client,server,obj,ref,str,number,integer,ar
   const parameters=[...route.matchAll(/\{([^}]+)\}/g)].map(([,name])=>({name,in:'path',required:true,schema:id()}));
   const implemented=route==='/admin/me'||route==='/admin/rooms'||route==='/admin/rooms/{room_id}';
   const telemetry=route==='/admin/clients';
-  const operation={operationId,summary:operationId,tags:[telemetry?'Sunday S03':implemented?'Sunday S01':'Sunday target (not implemented)'],description:(telemetry?'S03 реализован.':implemented?'S01 реализован.':'Целевой контракт, ещё не реализован.')+' Только admin cookie; семантика/лимиты в sunday.md.',responses,parameters};
+  const profiles=route==='/admin/guides'||route==='/admin/guides/{guide_id}';
+  const operation={operationId,summary:operationId,tags:[profiles?'Sunday S02':telemetry?'Sunday S03':implemented?'Sunday S01':'Sunday target (not implemented)'],description:(profiles?'S02 реализован.':telemetry?'S03 реализован.':implemented?'S01 реализован.':'Целевой контракт, ещё не реализован.')+' Только admin cookie; семантика/лимиты в sunday.md.',responses,parameters};
   if(input){operation.requestBody={required:true,content:{'application/json':{schema:input}}};operation.description+=' PUT: exact Origin, body <=65536 bytes, CAS expected_revision.';}
   P[route]??={};P[route][method]=operation;
  }

@@ -180,3 +180,17 @@ func TestMaterialRankingAndOldestHistoryTruncation(t *testing.T) {
 		t.Fatal("must retain only latest full pair under cap", len(req.Messages))
 	}
 }
+
+func TestContextUsesClaimedProfileSnapshot(t *testing.T) {
+	p, _ := profileFixture{}.Profile("g")
+	p.Personality = "captured original"
+	g := domain.Generation{UserID: "u", GuideID: "g", UserMessage: domain.Message{Text: "question"}, ProfileSnapshot: &domain.Snapshot{Profile: p.Clone(), Revision: 2}}
+	c := Context{Profiles: profileFixture{}, Reader: &contextFixture{}}
+	req, err := c.Build(t.Context(), g)
+	if err != nil || !strings.Contains(req.Messages[0].Content, "captured original") {
+		t.Fatal(req, err)
+	}
+	if !strings.Contains(req.Messages[0].Content, instructions) {
+		t.Fatal("fixed system rules lost")
+	}
+}

@@ -137,7 +137,7 @@ HTTP-тесты проверяют корень, GET/HEAD, MIME, SPA navigation,
 
 ## Целевой Sunday: матрица приёмки
 
-S01, S03 и S04 реализованы; фактические проверки светильника — [S04_ACCEPTANCE.md](S04_ACCEPTANCE.md).
+S01, S02, S03 и S04 реализованы; фактические проверки светильника — [S04_ACCEPTANCE.md](S04_ACCEPTANCE.md).
 Остальные части [api/sunday.md](api/sunday.md) остаются целевыми. Матрица:
 - admin: 401/403, точный Origin для PUT, 64 КиБ, неизвестные поля, role только из БД;
 - два конкурентных room/profile PUT: один commit, второй REVISION_CONFLICT, без partial broadcast;
@@ -171,3 +171,16 @@ RTT остаётся 12 мс; смена challenge за время SQL и поз
 не теряют следующий nonce и не переписывают новый RTT. До успешной аутентификации
 публичные измерения не меняются.
 Реальное измерение rAF и polling 2 с проверяются в отдельном frontend/S07.
+
+## S02 — административные профили
+
+Domain/usecase проверяют Unicode trim/границы, суммарные 4000 кодовых точек,
+собственные уникальные материалы, seed со всеми материалами, неоднозначные имена,
+конкурентный CAS, смену имени во всех залах и отказ без broadcast при SQL/unknown COMMIT.
+HTTP проверяет сессию/роль, DTO/excerpt и отсутствие sources, строгий JSON и общий
+лимит PUT для rooms/guides. Сборщик контекста использует private Claim snapshot.
+SQL-интеграции проверяют CAS, version isolation, rollback уже записанной комнаты
+при конфликте следующей, снимок до/после running и сохранение/изоляцию памяти.
+Сквозной HTTP/WS-тест проверяет not-ready broadcast, rollback без лишних событий,
+room.sync, replacement и восстановление профиля новым runtime service.
+Все SQL-тесты используют только отдельный TEST_DATABASE_URL и свои schemas.
