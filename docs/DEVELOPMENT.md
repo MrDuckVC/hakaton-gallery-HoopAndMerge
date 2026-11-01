@@ -37,7 +37,7 @@ make migrate-status                # либо ./bin/migrate status
 | WORLD_VERSION | Обязательный ID, 1–128 печатных ASCII-символов без пробелов |
 | PHOTO_DIR | `./data/photos` |
 | OLLAMA_BASE_URL | `http://127.0.0.1:11434`, HTTP(S), без credentials/query/fragment |
-| OLLAMA_MODEL | Обязательный заранее подготовленный tag без пробелов; выбрать по A01 |
+| OLLAMA_MODEL | Обязательный заранее подготовленный tag; шаблон A01 — `gallery-guide-main:a01`, ручной резерв — `gallery-guide-reserve:a01` |
 | LOG_LEVEL | `info`; доступны `debug`, `info`, `warn`, `error` |
 
 Явно пустые значения отклоняются. `.env.example` — шаблон; `change-me`, адреса и model tag замените. Настройки cookie/origins используются B02; настройки фото предназначены для следующей подсистемы. OLLAMA_BASE_URL/OLLAMA_MODEL используются B08, recovery генераций выполняется до listener; B03 уже валидирует мир до открытия listener согласно ARCHITECTURE.md.
@@ -149,6 +149,77 @@ WS живёт независимо от десятисекундного HTTP de
 ## B08 — локальный Ollama
 
 Запустите заранее подготовленный Ollama на серверном ноутбуке, задайте OLLAMA_BASE_URL и точный OLLAMA_MODEL из A01. Backend не загружает модели и не блокирует startup при недоступном Ollama. Новые миграции B08 не нужны; штатный `make migrate-up` сохраняется. Все профили мира теперь обязаны соответствовать [GUIDES.md](GUIDES.md); старый произвольный JSON-профиль не принимается. Перед обновлением подготовьте профили и новую WORLD_VERSION. Сквозные автоматические проверки используют только TEST_DATABASE_URL отдельной тестовой БД; ручной двухрежимный показ и его текущий статус описаны там же.
+
+## A01 — подготовка Ollama в WSL Ubuntu
+
+Измерения и границы подтверждённого выбора — [MODEL_BENCHMARK.md](MODEL_BENCHMARK.md).
+Обычную нагрузку приложений сохранять, режим питания/GPU записывать; не подменять
+фактическую доступную VRAM паспортными характеристиками. Команды ниже выполнять
+из корня backend до отключения интернета. Нужны curl, sha256sum, tar с zstd;
+распаковщик zstd установить заранее средствами Ubuntu. Во время выполнения A01
+архив распакован через системную libzstd, без изменения установленных пакетов.
+
+```sh
+mkdir -p bin/ollama-runtime data/ollama/models
+curl -fL --retry 3 \
+  https://github.com/ollama/ollama/releases/download/v0.40.13/ollama-linux-amd64.tar.zst \
+  -o /tmp/ollama-v0.40.13.tar.zst
+echo 'c9490e0f520be21271d969e6703f012268b1d39f8b70dd58854e5bfef7a75bb6  /tmp/ollama-v0.40.13.tar.zst' | sha256sum -c -
+tar --zstd -xf /tmp/ollama-v0.40.13.tar.zst -C bin/ollama-runtime
+export PATH="$PWD/bin/ollama-runtime/bin:$PATH"
+export OLLAMA_HOST=127.0.0.1:11434
+export OLLAMA_MODELS="$PWD/data/ollama/models"
+export OLLAMA_NO_CLOUD=1
+export OLLAMA_NUM_PARALLEL=1
+export OLLAMA_MAX_LOADED_MODELS=1
+ollama serve
+```
+
+Запускать Ollama в отдельном терминале. Не устанавливать NVIDIA Linux-драйвер
+в WSL поверх Windows-драйвера. Проверить `nvidia-smi`, `ollama --version`,
+`curl --fail http://127.0.0.1:11434/api/version`. Настройки OLLAMA_* процесса
+serve не читаются автоматически из backend .env. Ollama слушает только loopback;
+для клиентов LAN открывается backend, прямой доступ к Ollama не нужен.
+
+В другом терминале экспортировать тот же PATH и подготовить модели. Размеры
+до скачивания: 2 620 788 260 + 1 929 912 432 + 986 061 892 байта для трёх
+кандидатов; архив Ollama — 1 525 346 571 байт, распакованный runtime около 2,4 ГиБ.
+Локальные производные tags используют общие blobs, не копируют веса повторно.
+
+```sh
+ollama pull qwen3:4b-q4_K_M
+ollama pull qwen2.5:3b-instruct-q4_K_M
+ollama pull qwen2.5:1.5b-instruct-q4_K_M
+ollama list
+curl --fail http://127.0.0.1:11434/api/tags
+# Сверить базовые digest с MODEL_BENCHMARK.md до создания производных tags.
+ollama create gallery-guide-main:a01 -f configs/ollama/main.Modelfile
+ollama create gallery-guide-reserve:a01 -f configs/ollama/reserve.Modelfile
+ollama show gallery-guide-main:a01 --parameters
+ollama show gallery-guide-reserve:a01 --parameters
+```
+
+При другом digest повторить матрицу A01 до использования результатов этого отчёта.
+
+Для воспроизведения сравнения создать аналогичные tags с num_ctx 8192 и 16384
+для каждой базовой модели. Важны явный tag, digest, Q4_K_M, контекст и temperature;
+не использовать latest. Команды измерений — [tools/modelbench](../tools/modelbench/README.md).
+Проверять размещение и фактическое окно через `ollama ps` во время генерации.
+
+Офлайн-переключение не скачивает модель: штатно остановить backend, выполнить
+`ollama stop gallery-guide-main:a01`, задать
+`OLLAMA_MODEL=gallery-guide-reserve:a01` в экспортируемом окружении/.env и снова
+запустить backend. Для возврата поменять tags местами. При новом запуске .env
+должен быть заново экспортирован. Backend не перечитывает настройку на лету,
+не выбирает резерв автоматически; незавершённые генерации обрабатываются штатным
+shutdown/recovery. Контекст/temperature из Modelfile применяются и к backend.
+
+До отключения интернета проверить оба tags командой
+`B08_OLLAMA_MODEL=<tag> go test ./internal/adapters/outbound/ollama -run '^TestLocalModelFixtures$' -count=1 -v`.
+Повторить после реального отключения интернета и после выключения Wi-Fi
+через localhost; сохранить результаты и состояние сети. Для доступа из WSL
+достаточно локального API; URL B08_OLLAMA_URL при необходимости задаётся отдельно.
+Наличие OLLAMA_NO_CLOUD=1 или локального URL не заменяет офлайн-показ.
 
 
 ## Фотографии B09
