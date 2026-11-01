@@ -60,6 +60,8 @@ type Event struct {
 	Type, RequestID string
 	Nonce           string
 	ObjectAction    string
+	GuideID         string
+	GuideEffect     runtime.GuideEffect
 	Snapshot        Snapshot
 	Player          Player
 	Players         []Player
@@ -89,7 +91,7 @@ type Command struct {
 	Nonce                                                                                  string
 	Object                                                                                 runtime.ObjectAction
 	Type, RequestID, WorldVersion, DoorID, Text, PhotoID, ExhibitID, GuideID, GenerationID string
-	MovementEpoch, Seq                                                                     int64
+	MovementEpoch, Seq, ExpectedRevision                                                   int64
 	Position                                                                               player.Vector
 	Rotation                                                                               player.Rotation
 }

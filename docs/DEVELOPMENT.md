@@ -418,3 +418,20 @@ go test -race ./internal/adapters/inbound/websocket -run TestNPC
 # С отдельной TEST_DATABASE_URL, как описано выше:
 go test ./internal/adapters/outbound/postgres -run TestRuntimeHTTPWebSocketDurabilityIntegration
 ```
+
+
+## S06 — изменение экспозиции через гида
+
+Новые миграции, переменные окружения и ассеты не нужны. После world.ready отправьте
+`guide.action` по [Sunday §6](api/sunday.md#6-просьбы-к-гиду-guideaction) с текущими
+movement_epoch и expected_revision. Для повторного show нужен новый UUID и новая
+revision. После ошибки перечитайте runtime через room.sync; не повторяйте автоматически
+команду после reconnect. Учебный стенд остаётся одним объектом «Цвет и свет» в (6,0,3).
+Проверки на отдельной тестовой БД (TEST_DATABASE_URL по разделу проверок):
+
+```sh
+go test ./internal/domain/runtime ./internal/usecase/runtime ./internal/usecase/game ./internal/adapters/inbound/websocket -run TestGuideAction
+go test ./internal/adapters/outbound/postgres -run TestGuideActionWebSocketDurabilityAndConversationIntegration -v
+```
+
+Полный test/race/coverage прогон включает эти проверки и регрессии B07/B08.

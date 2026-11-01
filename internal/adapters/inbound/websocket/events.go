@@ -44,6 +44,12 @@ func encode(e game.Event) ([]byte, error) {
 		payload = struct {
 			Nonce string `json:"nonce"`
 		}{e.Nonce}
+	case "guide.action.completed":
+		payload = struct {
+			GuideID string           `json:"guide_id"`
+			Effect  string           `json:"effect"`
+			Runtime runtimewire.Room `json:"runtime"`
+		}{e.GuideID, string(e.GuideEffect), runtimewire.Public(e.Runtime)}
 	case "object.acted":
 		payload = struct {
 			Action  string           `json:"action"`

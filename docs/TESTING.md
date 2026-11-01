@@ -211,3 +211,20 @@ RuntimeHTTPWebSocketDurabilityIntegration на отдельной TEST_DATABASE_
 initial 10, admin CAS→0, одинаковую доставку [] owning WS и sync после SQL rollback.
 Штатные race/lint/coverage и contract tools остаются обязательными; физический
 LAN/offline показ и frontend-анимации этой автоматизацией не подтверждаются.
+
+
+## S06: локальные действия гидов
+
+Domain tests покрывают девять точных фраз, Unicode lower/trim/пробелы/пунктуацию,
+неподдерживаемые просьбы, длину/NUL, effective placement, границу 3 м, LOS,
+CAS/overflow, detached input и сохранность holder лампы. Runtime tests проверяют
+commit до callback, отказ guard/SQL/CAS/size, неопределённый commit, отмену,
+повтор show и конкуренцию action/admin/lamp за одну revision.
+Game/wire tests проверяют owning/ready/epoch, поздний callback, корреляцию и
+broadcast, строгий payload, UUID-дедупликацию и окно 3/10 с после reconnect.
+TestGuideActionWebSocketDurabilityAndConversationIntegration на отдельной
+TEST_DATABASE_URL связывает настоящий WS/SQL с двумя игроками: все эффекты,
+повтор show/UUID, failed SQL без broadcast, reconnect и новый runtime service.
+Отсутствие generations/memory events/summary и вызовов модели проверяется отдельно;
+та же фраза в guide.ask проходит прежнюю очередь/модель и сохраняет память.
+Физический LAN/offline показ и frontend-отрисовка остаются ручной проверкой S07.

@@ -38,7 +38,7 @@ func decode(body []byte) (game.Command, game.Failure) {
 	switch c.Type {
 	case "player.move", "client.metrics", "telemetry.pong":
 		c.RequestID = ""
-	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.ask", "guide.cancel", "room.sync", "object.act":
+	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.ask", "guide.cancel", "room.sync", "object.act", "guide.action":
 	default:
 		if c.Type == "" {
 			return fail("VALIDATION_ERROR")
@@ -106,6 +106,12 @@ func decode(body []byte) (game.Command, game.Failure) {
 	case "exhibit.inspect":
 		c.ExhibitID, _ = p["exhibit_id"].(string)
 		valid = keys(p, []string{"exhibit_id"}) && world.ValidID(c.ExhibitID)
+	case "guide.action":
+		c.GuideID, _ = p["guide_id"].(string)
+		c.Text, ok = text(p, "text", 200, true)
+		c.MovementEpoch = integer(p["movement_epoch"])
+		c.ExpectedRevision = integer(p["expected_revision"])
+		valid = keys(p, []string{"guide_id", "text", "movement_epoch", "expected_revision"}) && world.ValidID(c.GuideID) && ok && !strings.ContainsRune(c.Text, 0) && c.MovementEpoch > 0 && c.ExpectedRevision > 0
 	case "guide.ask":
 		c.GuideID, _ = p["guide_id"].(string)
 		c.Text, ok = text(p, "text", 2000, true)
@@ -307,7 +313,7 @@ func validUnicodeEscapes(body []byte) bool {
 // acquiring an ordinary request ID or bypassing future durable guide idempotency.
 func rejectedCommand(c game.Command) game.Command {
 	switch c.Type {
-	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.cancel", "room.sync", "object.act":
+	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.cancel", "room.sync", "object.act", "guide.action":
 		return game.Command{Type: c.Type, RequestID: c.RequestID}
 	default:
 		return game.Command{}

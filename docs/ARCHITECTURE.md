@@ -207,3 +207,17 @@ SQL/LLM и room gates в NPC tick не вызываются; движение и
 и единственный writer. Полный runtime и соответствующий NPC snapshot ставятся
 последовательно под game mutex. Принятый текст chat регистрирует реакцию только
 после успешного фото-I/O и повторной проверки текущего подключения.
+
+
+## S06 — локальный классификатор действий гидов
+
+`domain/runtime` содержит точную классификацию Sunday-фраз и чистое применение
+эффекта к detached overlay с проверкой effective placement/LOS/CAS. Game определяет
+отдельный порт GuideActions, владеет ready/epoch/connection ID и окном 3/10 с/user.
+Composition root подключает runtime service отдельно от GuideCommands B07/B08.
+Runtime Action использует прежний room gate, durable read и общий commitOverlay:
+holder-aware SQL CAS сохраняет лампу целиком, включая holder другого игрока.
+Режим освещения и видимость установки меняются даже при переносимой лампе.
+Допуск повторно проверяется перед SQL; кеш и bounded уведомления обновляются после
+commit. При неопределённом COMMIT действуют прежние invalidation/recovery S04.
+Guide generation store, scheduler, память и Ollama в этом пути не участвуют.
