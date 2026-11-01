@@ -22,6 +22,7 @@ const (
 	CommitUnknown    Code = "COMMIT_UNKNOWN"
 	Forbidden        Code = "FORBIDDEN"
 	MaxRuntimeBytes       = 32768
+	MaxNPCCount           = 10
 )
 
 // GuidePlacement replaces one existing guide's immutable placement.
@@ -73,7 +74,7 @@ func Seed(r world.Room) Overlay {
 	for i, g := range r.Guides {
 		placements[i] = GuidePlacement{GuideID: g.ID, Position: g.Position, RotationY: g.Rotation}
 	}
-	return Overlay{WorldVersion: r.Version, RoomID: r.ID, Revision: 1, Config: Config{AccentColor: "#D9D2C3", Lighting: "neutral", GuidePlacements: placements, LampSlots: []LampSlot{{SlotID: "a", Position: player.Vector{X: 3, Z: 4}}, {SlotID: "b", Position: player.Vector{X: 9, Z: 4}}}, NPCCount: 40}, Lamp: Lamp{ObjectID: "lamp_01", SlotID: "a", On: true}}
+	return Overlay{WorldVersion: r.Version, RoomID: r.ID, Revision: 1, Config: Config{AccentColor: "#D9D2C3", Lighting: "neutral", GuidePlacements: placements, LampSlots: []LampSlot{{SlotID: "a", Position: player.Vector{X: 3, Z: 4}}, {SlotID: "b", Position: player.Vector{X: 9, Z: 4}}}, NPCCount: MaxNPCCount}, Lamp: Lamp{ObjectID: "lamp_01", SlotID: "a", On: true}}
 }
 
 // Clone returns mutable configuration storage belonging only to the caller.
@@ -141,7 +142,7 @@ func safeInstallation(r world.Room, p player.Vector) bool {
 
 // ValidateConfig checks full replacement structure and current immutable geometry.
 func ValidateConfig(r world.Room, spawns []player.Vector, c Config) error {
-	if len(c.AccentColor) != 7 || c.AccentColor[0] != '#' || c.NPCCount < 0 || c.NPCCount > 40 {
+	if len(c.AccentColor) != 7 || c.AccentColor[0] != '#' || c.NPCCount < 0 || c.NPCCount > MaxNPCCount {
 		return auth.Validation
 	}
 	for _, b := range c.AccentColor[1:] {

@@ -12,7 +12,7 @@ import (
 )
 
 func TestPublicRuntimePrivateFieldsAndExactSizer(t *testing.T) {
-	state := domain.Room{Overlay: domain.Overlay{WorldVersion: "world", RoomID: "room", Revision: 2, Config: domain.Config{AccentColor: "#FFFFFF", Lighting: "warm", GuidePlacements: []domain.GuidePlacement{{GuideID: "guide", Position: player.Vector{X: 6, Z: 7.5}, RotationY: 1}}, LampSlots: []domain.LampSlot{{SlotID: "a", Position: player.Vector{X: 3, Z: 4}}, {SlotID: "b", Position: player.Vector{X: 9, Z: 4}}}, NPCCount: 40}, Lamp: domain.Lamp{ObjectID: "lamp_01", SlotID: "a", On: true, HolderConnectionID: "private-connection"}}, Guides: []world.Guide{{ID: "guide", DisplayName: "Леонардо", Subtitle: "Учебная реконструкция", Position: player.Vector{X: 6, Z: 7.5}, Rotation: 1}}}
+	state := domain.Room{Overlay: domain.Overlay{WorldVersion: "world", RoomID: "room", Revision: 2, Config: domain.Config{AccentColor: "#FFFFFF", Lighting: "warm", GuidePlacements: []domain.GuidePlacement{{GuideID: "guide", Position: player.Vector{X: 6, Z: 7.5}, RotationY: 1}}, LampSlots: []domain.LampSlot{{SlotID: "a", Position: player.Vector{X: 3, Z: 4}}, {SlotID: "b", Position: player.Vector{X: 9, Z: 4}}}, NPCCount: 10}, Lamp: domain.Lamp{ObjectID: "lamp_01", SlotID: "a", On: true, HolderConnectionID: "private-connection"}}, Guides: []world.Guide{{ID: "guide", DisplayName: "Леонардо", Subtitle: "Учебная реконструкция", Position: player.Vector{X: 6, Z: 7.5}, Rotation: 1}}}
 	for _, holder := range []string{"", "user"} {
 		state.Lamp.HolderUserID = holder
 		result := Public(state)

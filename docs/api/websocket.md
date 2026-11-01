@@ -81,3 +81,11 @@ S04: `object.act` принимает только union take/place/aim/power и�
 После commit отправитель получает `object.acted {action,runtime}` с request_id,
 остальные owning WS зала — `world.runtime` без request_id. No-op тоже повышает revision.
 Release публикует обычный полный runtime; приватный connection ID не входит в DTO.
+
+S02: смена имени/subtitle профиля атомарно повышает revisions всех залов этой
+личности. После commit каждый owning WS, включая not-ready, получает полный
+world.runtime с новой публичной идентичностью. Reconnect/room.sync читают SQL;
+правки инструкций без смены имени/subtitle не создают runtime-событий.
+Worker фиксирует профиль и revision в транзакции queued→running, поэтому текущий
+ответ использует прежний снимок, следующий — новые настройки. Приватный снимок
+и revision профиля не добавляются в публичные события генерации.

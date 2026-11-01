@@ -16,7 +16,7 @@ import (
 
 func testOverlay() runtime.Overlay {
 	return runtime.Overlay{WorldVersion: "v1", RoomID: "room1", Revision: 2,
-		Config: runtime.Config{AccentColor: "#D9D2C3", Lighting: "neutral", GuidePlacements: []runtime.GuidePlacement{{GuideID: "guide1", Position: player.Vector{X: 6, Z: 7.5}}}, LampSlots: []runtime.LampSlot{{SlotID: "a", Position: player.Vector{X: 3, Z: 4}}, {SlotID: "b", Position: player.Vector{X: 9, Z: 4}}}, NPCCount: 40},
+		Config: runtime.Config{AccentColor: "#D9D2C3", Lighting: "neutral", GuidePlacements: []runtime.GuidePlacement{{GuideID: "guide1", Position: player.Vector{X: 6, Z: 7.5}}}, LampSlots: []runtime.LampSlot{{SlotID: "a", Position: player.Vector{X: 3, Z: 4}}, {SlotID: "b", Position: player.Vector{X: 9, Z: 4}}}, NPCCount: 10},
 		Lamp:   runtime.Lamp{ObjectID: "lamp_01", SlotID: "a", On: true}}
 }
 

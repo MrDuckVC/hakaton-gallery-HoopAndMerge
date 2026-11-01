@@ -58,6 +58,8 @@ type Generation struct {
 	CreatedAt                                                                    time.Time
 	StartedAt                                                                    *time.Time
 	FinishedAt                                                                   *time.Time
+	// ProfileSnapshot is internal execution data, excluded by explicit public wire mapping.
+	ProfileSnapshot *Snapshot
 }
 
 // Terminal reports immutable states.

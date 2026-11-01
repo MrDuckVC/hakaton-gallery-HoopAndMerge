@@ -29,6 +29,7 @@ type RuntimeSessions interface {
 }
 type adminRoutes struct {
 	service  Runtime
+	guides   AdminGuides
 	sessions RuntimeSessions
 	origins  map[string]bool
 	limiter  *adminLimiter
@@ -66,6 +67,9 @@ func (s *Server) serveAdmin(w http.ResponseWriter, r *http.Request) bool {
 			writeError(w, 429, "RATE_LIMITED", "Слишком много изменений", wait)
 			return true
 		}
+	}
+	if s.serveAdminGuides(w, r) {
+		return true
 	}
 	switch {
 	case r.Method == http.MethodGet && r.URL.Path == "/api/v1/admin/clients":

@@ -30,7 +30,7 @@ func TestConfigRejectsUnsafeAndIncompletePlacement(t *testing.T) {
 		"rotation":                   func(c *Config) { c.GuidePlacements[0].RotationY = math.Inf(1) },
 		"rotation at upper bound":    func(c *Config) { c.GuidePlacements[0].RotationY = math.Pi },
 		"rotation below lower bound": func(c *Config) { c.GuidePlacements[0].RotationY = -math.Pi - .001 },
-		"npc count":                  func(c *Config) { c.NPCCount = 41 },
+		"npc count":                  func(c *Config) { c.NPCCount = 11 },
 		"color":                      func(c *Config) { c.AccentColor = "#GG1122" },
 		"lighting":                   func(c *Config) { c.Lighting = "red" },
 	}
@@ -75,5 +75,21 @@ func TestGuideYawLowerBoundAccepted(t *testing.T) {
 	c.GuidePlacements[0].RotationY = -math.Pi
 	if err := ValidateConfig(r, nil, c); err != nil {
 		t.Fatalf("lower yaw bound rejected: %v", err)
+	}
+}
+
+func TestNPCCountLimitAndSeed(t *testing.T) {
+	room := fixtureRoom()
+	if got := Seed(room).Config.NPCCount; got != 10 {
+		t.Fatalf("seed NPC count=%d, want 10", got)
+	}
+	for _, count := range []int{-1, 0, 10, 11, 40} {
+		c := Seed(room).Config
+		c.NPCCount = count
+		err := ValidateConfig(room, nil, c)
+		wantValid := count >= 0 && count <= 10
+		if (err == nil) != wantValid {
+			t.Errorf("NPC count=%d err=%v", count, err)
+		}
 	}
 }

@@ -1,6 +1,6 @@
 # Sunday: новые backend-задачи
 
-Согласованный объём: [api/sunday.md](api/sunday.md). S01 реализует runtime залов и admin rooms; результаты и границы — [S01_ACCEPTANCE.md](S01_ACCEPTANCE.md).
+Согласованный объём: [api/sunday.md](api/sunday.md). S01 реализует runtime залов и admin rooms; результаты и границы — [S01_ACCEPTANCE.md](S01_ACCEPTANCE.md). S02 добавляет профили гидов; проверки — [S02_ACCEPTANCE.md](S02_ACCEPTANCE.md).
 Основа №2–14 выполнена; I01 из issue-14 используется как есть, review исправлен.
 Frontend берётся из main отдельного репозитория, задачи frontend по этому поручению не создаются.
 
@@ -28,7 +28,7 @@ S07 дополняет #20/#21 проверкой расширения и обн
 1. Прочитать [api/sunday.md](api/sunday.md) или полный текст в эпике GitHub.
 2. Скопировать [api/sunday.types.ts](api/sunday.types.ts) в отдельный frontend; объединить
    SundayClientEvent/SundayServerEvent с существующими union types.
-3. Использовать [api/examples/sunday](api/examples/sunday) для mocks: runtime,40NPC,4 lamp
+3. Использовать [api/examples/sunday](api/examples/sunday) для mocks: runtime,10 NPC,4 lamp
    actions, admin PUT, guide.action и FPS/ping. Backend пока capability не объявляет.
 4. Сцена: full runtime после snapshot/entered, dispose прежнего зала, дождаться runtime+assets
    до ready. Анимация частей гида/лампы/NPC локальная; серверных костей нет.

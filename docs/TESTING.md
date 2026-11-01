@@ -137,7 +137,7 @@ HTTP-тесты проверяют корень, GET/HEAD, MIME, SPA navigation,
 
 ## Целевой Sunday: матрица приёмки
 
-S01, S03 и S04 реализованы; фактические проверки светильника — [S04_ACCEPTANCE.md](S04_ACCEPTANCE.md).
+S01, S02, S03 и S04 реализованы; фактические проверки светильника — [S04_ACCEPTANCE.md](S04_ACCEPTANCE.md).
 Остальные части [api/sunday.md](api/sunday.md) остаются целевыми. Матрица:
 - admin: 401/403, точный Origin для PUT, 64 КиБ, неизвестные поля, role только из БД;
 - два конкурентных room/profile PUT: один commit, второй REVISION_CONFLICT, без partial broadcast;
@@ -147,7 +147,7 @@ S01, S03 и S04 реализованы; фактические проверки 
   replacement/door/SQL-сбой/неопределённый commit/restart, lazy cleanup без сброса нового owner;
 - telemetry: fake clock 2/5/6 с, visible=false, неверный nonce, stale, старый callback,
   без участия в обычном лимите/UUID, SQL и других метриках;
-- NPC: fake clock/seed, 40/0, остановка/чат/3 с, стены, отсутствие LLM/SQL tick,
+- NPC: fake clock/seed, 10/0, остановка/чат/3 с, стены, отсутствие LLM/SQL tick,
   полные snapshots, новый instance при новом lifecycle комнаты;
 - guide.action: только перечисленные фразы, без LLM/SQL из текста, CAS/LOS/ready,
   повтор show без новых объектов, обычный ask работает независимо;
@@ -171,3 +171,22 @@ RTT остаётся 12 мс; смена challenge за время SQL и поз
 не теряют следующий nonce и не переписывают новый RTT. До успешной аутентификации
 публичные измерения не меняются.
 Реальное измерение rAF и polling 2 с проверяются в отдельном frontend/S07.
+
+## S02 — административные профили
+
+Domain/usecase проверяют Unicode trim/границы, суммарные 4000 кодовых точек,
+собственные уникальные материалы, seed со всеми материалами, неоднозначные имена,
+конкурентный CAS, смену имени во всех залах и отказ без broadcast при SQL/unknown COMMIT.
+HTTP проверяет сессию/роль, DTO/excerpt и отсутствие sources, строгий JSON и общий
+лимит PUT для rooms/guides. Сборщик контекста использует private Claim snapshot.
+SQL-интеграции проверяют CAS, version isolation, rollback уже записанной комнаты
+при конфликте следующей, снимок до/после running и сохранение/изоляцию памяти.
+Сквозной HTTP/WS-тест проверяет not-ready broadcast, rollback без лишних событий,
+room.sync, replacement и восстановление профиля новым runtime service.
+Все SQL-тесты используют только отдельный TEST_DATABASE_URL и свои schemas.
+
+Лимит посетителей: seed=10; domain/admin PUT допускают npc_count=0/10 и
+отклоняют 11/40. Контрактный валидатор проверяет тот же диапазон и NPC snapshot
+из 10 записей; 11-я запись запрещена. SQL-тест миграции 00008 стартует со схемы
+00007, проверяет counts 0/10/11/40, разные WORLD_VERSION, сохранение config/lamp/holder,
+повышение revisions только изменённых комнат, повторный up и startup после миграции.

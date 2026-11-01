@@ -15,10 +15,14 @@ import (
 )
 
 // GuideStore provides serialized admission and transactional completion with memory.
-type GuideStore struct{ pool *pgxpool.Pool }
+type GuideStore struct {
+	pool         *pgxpool.Pool
+	profiles     usecase.Profiles
+	worldVersion string
+}
 
 // NewGuideStore uses the process-owned connection pool.
-func NewGuideStore(pool *pgxpool.Pool) *GuideStore { return &GuideStore{pool} }
+func NewGuideStore(pool *pgxpool.Pool) *GuideStore { return &GuideStore{pool: pool} }
 
 const generationColumns = `id::text,user_id::text,request_correlation_id,guide_id,COALESCE(exhibit_id,''),normalized_payload_hash,status,user_text,user_message_id::text,user_created_at,assistant_text,assistant_message_id::text,assistant_created_at,error_code,error_message,error_retryable,created_at,started_at,finished_at,origin_connection_id`
 
@@ -124,6 +128,27 @@ func (s *GuideStore) Claim(ctx context.Context, now time.Time) (domain.Generatio
 	if err != nil {
 		return g, err
 	}
+	if s.profiles != nil {
+		base, e := s.profiles.Profile(g.GuideID)
+		if e != nil {
+			return domain.Generation{}, e
+		}
+		o, exists, e := readProfile(ctx, tx, s.worldVersion, g.GuideID)
+		if e != nil {
+			return domain.Generation{}, e
+		}
+		revision := int64(1)
+		if exists {
+			settings, validationErr := domain.NormalizeSettings(o.Settings, base)
+			if validationErr != nil {
+				return domain.Generation{}, auth.Unavailable
+			}
+			base = settings.Effective(base)
+			revision = o.Revision
+		}
+		g.ProfileSnapshot = &domain.Snapshot{Profile: base.Clone(), Revision: revision}
+	}
+
 	if err = tx.Commit(ctx); err != nil {
 		return g, auth.Unavailable
 	}
@@ -285,3 +310,9 @@ func (s *GuideStore) Recover(ctx context.Context, now time.Time) error {
 }
 
 var _ usecase.Store = (*GuideStore)(nil)
+
+// ConfigureProfiles installs immutable source profiles before starting the worker.
+func (s *GuideStore) ConfigureProfiles(version string, profiles usecase.Profiles) {
+	s.worldVersion = version
+	s.profiles = profiles
+}
