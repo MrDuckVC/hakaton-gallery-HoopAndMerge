@@ -25,6 +25,7 @@ type Server struct {
 	photoLibrary PhotoLibrary
 	websocket    http.Handler
 	frontend     *Frontend
+	admin        *adminRoutes
 }
 
 type errorResponse struct {
@@ -52,6 +53,9 @@ func NewServer(addr string) *Server {
 func (s *Server) ConfigureWebSocket(handler http.Handler) { s.websocket = handler }
 
 func (s *Server) fallback(w http.ResponseWriter, r *http.Request) {
+	if s.serveAdmin(w, r) {
+		return
+	}
 	if s.websocket != nil && r.Method == http.MethodGet && r.URL.Path == "/api/v1/ws" {
 		s.websocket.ServeHTTP(w, r)
 		return

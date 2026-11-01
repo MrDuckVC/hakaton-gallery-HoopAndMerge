@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/httpapi"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/runtimewire"
 	wsapi "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/websocket"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/worldwire"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/outbound/images"
@@ -26,6 +27,7 @@ import (
 	guidecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/lifecycle"
 	photocase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/photo"
+	runtimecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/runtime"
 	worldcase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/world"
 )
 
@@ -62,8 +64,18 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	connections := game.New(time.Now)
 	sessions := sessionevents.New()
 	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, catalog, sessions, time.Now)
+	runtimeStore := postgres.NewRuntimeStore(pool)
+	rooms := runtimecase.New(catalog, runtimeStore, runtimeStore, connections, runtimewire.Sizer{})
+	runtimeCtx, runtimeCancel := context.WithTimeout(ctx, 15*time.Second)
+	err = rooms.Initialize(runtimeCtx)
+	runtimeCancel()
+	if err != nil {
+		pool.Close()
+		return fmt.Errorf("prepare room runtime: %w", err)
+	}
+	connections.ConfigureRuntime(rooms)
 	guideStore := postgres.NewGuideStore(pool)
-	guides := guidecase.New(guideStore, catalog, accounts, connections, ollama.New(cfg.OllamaBaseURL, cfg.OllamaModel), guidecase.Clock{Now: time.Now, After: time.After}, security.Crypto{}.NewID)
+	guides := guidecase.New(guideStore, rooms, accounts, connections, ollama.New(cfg.OllamaBaseURL, cfg.OllamaModel), guidecase.Clock{Now: time.Now, After: time.After}, security.Crypto{}.NewID)
 	guides.ConfigureContext(catalog, guideStore)
 	recoveryCtx, recoveryCancel := context.WithTimeout(ctx, 10*time.Second)
 	err = guides.Recover(recoveryCtx)
@@ -88,7 +100,8 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	server := httpapi.NewServer(cfg.HTTPAddr)
 	server.ConfigureFrontend(frontend)
 	server.ConfigureAuth(accounts, cfg.AllowedOrigins, cfg.CookieSecure)
-	connections.Configure(catalog, postgres.NewGameStore(pool), guides)
+	server.ConfigureRuntime(rooms, accounts, cfg.AllowedOrigins)
+	connections.Configure(rooms, postgres.NewGameStore(pool), guides)
 	connections.ConfigureGuides(guides)
 	server.ConfigureGuides(guides)
 	photoStore := postgres.NewPhotoStore(pool)

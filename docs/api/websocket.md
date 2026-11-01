@@ -52,9 +52,11 @@ Guide: accepted содержит Generation; затем started, delta*, complet
 Тайм-аут queued — 120 секунд, running — 90 секунд; output limit — 8000 кодовых точек. До B08 модель явно недоступна: после accepted/started приходит failed с AI_UNAVAILABLE. При ошибке хранения результата WS закрывается 1011; восстановление переводит оставшиеся pending в SERVER_RESTARTED и уведомляет ещё подключённых владельцев. До открытия listener выполняется та же recovery-операция.
 
 
-## Целевой Sunday v1 (ещё не реализован)
+## Sunday v1: S01 runtime, остальные события целевые
 
 Нормативные правила: [sunday.md](sunday.md), типы [sunday.types.ts](sunday.types.ts).
+Реализованы world.runtime и room.sync. NPC-снимок подключается задачей S05 через
+упорядоченный порт game.RoomSnapshots; до S07 capability sunday_v1 отсутствует.
 Новые client events: room.sync, object.act, guide.action, client.metrics, telemetry.pong.
 Новые server events: world.runtime, npc.state, object.acted, guide.action.completed, telemetry.probe.
 Первым остаётся world.snapshot; runtime/NPC текущего зала идут после snapshot/entered.

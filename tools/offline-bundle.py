@@ -91,7 +91,7 @@ def prepare(root, dist, runtime, store, photo_dir=None):
     if root.exists() or root.is_symlink():
         raise ValueError("output exists; choose a new directory")
     for file in (dist / "index.html", dist / "build-info.json", REPO / "bin/gallery",
-                 REPO / "bin/migrate", runtime / "bin/ollama"):
+                 REPO / "bin/migrate", REPO / "bin/admin", runtime / "bin/ollama"):
         if not file.is_file():
             raise ValueError(f"missing prerequisite: {file}")
     build = json.loads((dist / "build-info.json").read_text())
@@ -110,6 +110,7 @@ def prepare(root, dist, runtime, store, photo_dir=None):
     # A failed preparation leaves an incomplete new output for inspection, never a valid manifest.
     for source, target in ((REPO / "bin/gallery", "bin/gallery"),
                            (REPO / "bin/migrate", "bin/migrate"),
+                           (REPO / "bin/admin", "bin/admin"),
                            (REPO / "docker-compose.yml", "docker-compose.yml"),
                            (REPO / ".env.example", ".env.example")):
         destination = root / target

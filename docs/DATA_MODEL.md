@@ -83,3 +83,35 @@ profile+revision затронутых комнат атомарны. FK поль
 валидность room/guide/material IDs проверяет usecase по загруженному миру.
 NPC/FPS/ping не сохраняются в SQL. При startup убрать stale holders до listener.
 Это описание будущей модели, не утверждение о наличии таблиц.
+
+
+## S01: сохраняемый runtime и администраторы (00006)
+
+`admin_memberships(user_id uuid PRIMARY KEY REFERENCES users(id), granted_at timestamptz)`
+хранит членство независимо от публичного User и сессии. Новые аккаунты не admin.
+`admin grant --username NAME` добавляет существующий user_id с ON CONFLICT DO NOTHING;
+HTTP каждый раз проверяет текущую сессию и членство.
+
+`room_overlays`:
+
+| Поле | Правило |
+|---|---|
+| world_version, room_id | составной PK, непустые ASCII ID до 128 символов |
+| revision | bigint, 1..9007199254740991 |
+| config | обязательный JSONB object: полная RoomConfig |
+| lamp | обязательный JSONB object: lamp_01, slot a/b, holder_user_id/holder_connection_id nullable, yaw/head_pitch/on |
+| updated_at | timestamptz, время успешного изменения |
+
+Связи с каталогом, геометрию и семантику config/lamp проверяет domain/runtime;
+файловые ID не имеют SQL FK. Private holder_connection_id хранится только в БД,
+в HTTP/WS отсутствует. Позиции NPC не относятся к этой таблице.
+
+Отсутствующая строка — нормативный seed revision=1; первое изменение атомарно
+вставляет revision=2. INSERT ON CONFLICT/UPDATE ... WHERE revision=expected
+обеспечивает одного победителя CAS даже для первого изменения и разных экземпляров
+адаптера. Для expected>1 отсутствующая строка — конфликт. config/lamp/revision
+фиксируются в явной транзакции; Room PUT сохраняет slot/углы/on и отклоняет held lamp.
+Состояние публикуется только после подтверждённого COMMIT. Неизвестный результат
+COMMIT приводит к 503/WS1011 и перечитыванию, без записи старого состояния из RAM.
+Ревизии и overlays разных WORLD_VERSION не смешиваются и не удаляются автоматически.
+Миграция применяется отдельно через migrate up, rollback/down не предусмотрен.

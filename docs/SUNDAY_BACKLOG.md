@@ -1,6 +1,6 @@
 # Sunday: новые backend-задачи
 
-Согласованный объём: [api/sunday.md](api/sunday.md). Runtime ещё не реализован.
+Согласованный объём: [api/sunday.md](api/sunday.md). S01 реализует runtime залов и admin rooms; результаты и границы — [S01_ACCEPTANCE.md](S01_ACCEPTANCE.md).
 Основа №2–14 выполнена; I01 из issue-14 используется как есть, review исправлен.
 Frontend берётся из main отдельного репозитория, задачи frontend по этому поручению не создаются.
 

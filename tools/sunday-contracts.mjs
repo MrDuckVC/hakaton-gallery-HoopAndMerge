@@ -50,7 +50,8 @@ export function sundayContracts({S,P,client,server,obj,ref,str,number,integer,ar
   for(const response of Object.values(responses))response.headers={'Cache-Control':{schema:{const:'no-store'}},'X-Request-ID':{schema:id()}};
   responses['429'].headers['Retry-After']={schema:int(1)};
   const parameters=[...route.matchAll(/\{([^}]+)\}/g)].map(([,name])=>({name,in:'path',required:true,schema:id()}));
-  const operation={operationId,summary:operationId,tags:['Sunday target (not implemented)'],description:'Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md.',responses,parameters};
+  const implemented=route==='/admin/me'||route==='/admin/rooms'||route==='/admin/rooms/{room_id}';
+  const operation={operationId,summary:operationId,tags:[implemented?'Sunday S01':'Sunday target (not implemented)'],description:(implemented?'S01 реализован.':'Целевой контракт, ещё не реализован.')+' Только admin cookie; семантика/лимиты в sunday.md.',responses,parameters};
   if(input){operation.requestBody={required:true,content:{'application/json':{schema:input}}};operation.description+=' PUT: exact Origin, body <=65536 bytes, CAS expected_revision.';}
   P[route]??={};P[route][method]=operation;
  }

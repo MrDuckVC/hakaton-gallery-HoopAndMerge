@@ -253,3 +253,32 @@ func (c *Catalog) Exhibit(id string) (domain.Exhibit, error) {
 	}
 	return domain.Exhibit{}, domain.NotFound
 }
+
+// Rooms returns independent room geometry in deterministic ID order.
+func (c *Catalog) Rooms() []domain.Room {
+	ids := make([]string, 0, len(c.rooms))
+	for id := range c.rooms {
+		ids = append(ids, id)
+	}
+	slices.Sort(ids)
+	rooms := make([]domain.Room, 0, len(ids))
+	for _, id := range ids {
+		r, _ := c.Geometry(id)
+		rooms = append(rooms, r)
+	}
+	return rooms
+}
+
+// SpawnPositions includes the start and every incoming directed-door spawn.
+func (c *Catalog) SpawnPositions(roomID string) []player.Vector {
+	positions := make([]player.Vector, 0, len(c.spawns)+1)
+	if c.start.RoomID == roomID {
+		positions = append(positions, c.start.Position)
+	}
+	for _, spawn := range c.spawns {
+		if spawn.RoomID == roomID {
+			positions = append(positions, spawn.Position)
+		}
+	}
+	return positions
+}

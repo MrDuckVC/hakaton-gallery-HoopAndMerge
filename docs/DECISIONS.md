@@ -137,3 +137,16 @@ Compose, frontend dist раздаёт сам backend. Это заменяет о
 видимость учебного стенда. Статический C01 неизменен; новые состояния в SQL overlays,
 полные WS snapshots с CAS revision. Целевой контракт [api/sunday.md](api/sunday.md),
 реализация отдельными задачами; сгенерированные схемы не означают готовности runtime.
+
+
+## S01 — CAS и восстановление room overlay
+
+01.11.2026, задача #37: отсутствие строки room_overlays представляет seed revision=1;
+первый CAS вставляет revision=2. Это сохраняет начальный контракт без записи defaults
+при startup. SQL CAS остаётся авторитетным, context-aware room gate упорядочивает
+локальные чтения и WS публикацию без mutex на I/O. Snapshot/entered и следующий runtime
+ставятся под этим gate, чтобы concurrent admin PUT не потерялся между attach и broadcast.
+Ошибочный ответ COMMIT не означает rollback: cache инвалидируется, owning WS1011,
+reconnect перечитывает БД. Публичный User не получает роль; отдельное membership
+проверяется каждый HTTP-запрос. S01 оставляет точку подключения NPC S05 после runtime
+и не объявляет sunday_v1 до S07.
