@@ -121,3 +121,16 @@ Usecase/HTTP-тесты проверяют доступ без WS, private/owner
 ## C01 — поставляемый мир
 
 `go test ./tools/worldcheck` загружает реальные JPEG и строгий каталог C01 штатным валидатором. Проверяются отчёт размеров/hash, бюджет с резервом фото, метаданные/права, отсутствие дублирующих изображений, материалы каждого экспоната и три профиля, безопасные spawns, свободные пути и LOS к каждой двери/картине/гиду. Тесты не используют сеть или SQL; полное декодирование 72 изображений занимает заметное время. Опциональный `TestLocalModelGallery` проверяет настоящую модель на подготовленных профилях и не запускается без C01_OLLAMA_MODEL. Команды и ручные критерии — [content/README.md](content/README.md), фактическая приёмка — [content/ACCEPTANCE.md](content/ACCEPTANCE.md).
+
+## I01 — frontend и офлайн-комплект
+
+HTTP-тесты проверяют корень, GET/HEAD, MIME, SPA navigation, отсутствие assets,
+защиту hidden/traversal/symlink, API 404 и отдельную маршрутизацию WS. Config
+проверяет отсутствие FRONTEND_DIST_DIR и ошибки явно заданного пути; startup
+проверяет dist до БД/listener. Интеграция использует отдельную тестовую PostgreSQL.
+`python3 -B -m unittest discover -s tools -p test_offline_bundle.py` проверяет
+отказ перезаписи существующего комплекта, порчу/отсутствие/добавление файлов,
+недостающие/повреждённые веса и symlinks за пределы комплекта. CI выполняет эти
+проверки вместе с существующими build/vet/race/coverage/lint/contracts/Docker smoke.
+Ручные сценарии и фактические ограничения — [DEMO.md](DEMO.md),
+[I01_ACCEPTANCE.md](I01_ACCEPTANCE.md).

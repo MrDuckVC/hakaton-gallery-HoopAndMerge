@@ -60,6 +60,11 @@ jobs:
           make contracts
           git diff --exit-code -- docs/api
 
+      - name: Check offline kit tools
+        run: |
+          sh -n tools/build-frontend.sh
+          python3 -B -m unittest discover -s tools -p test_offline_bundle.py
+
       - name: Check offline gallery authoring
         run: |
           python3 -B -m unittest discover -s tools -p test_prepare_gallery.py

@@ -7,10 +7,14 @@ network=${SMOKE_DOCKER_NETWORK:-host}
 container="gallery-b01-smoke-$$"
 response_file=$(mktemp)
 world_dir=$(mktemp -d)
+frontend_dir=$(mktemp -d)
+printf '<!doctype html><title>I01 local frontend</title>\n' > "$frontend_dir/index.html"
+chmod 755 "$frontend_dir"
+chmod 644 "$frontend_dir/index.html"
 cleanup() {
     docker rm --force "$container" >/dev/null 2>&1 || true
     rm -f "$response_file"
-    rm -rf "$world_dir"
+    rm -rf "$world_dir" "$frontend_dir"
 }
 trap cleanup EXIT HUP INT TERM
 # This synthetic world is only for this smoke run; never a production fallback.
@@ -27,6 +31,7 @@ docker run --detach --name "$container" --network "$network" "$@" \
     --env ALLOWED_ORIGINS=http://localhost:18080 --env COOKIE_SECURE=false \
     --mount "type=bind,source=$world_dir,target=/world,readonly" \
     --tmpfs /photos:rw,uid=65532,gid=65532,mode=0700 --env PHOTO_DIR=/photos \
+    --mount "type=bind,source=$frontend_dir,target=/frontend,readonly" --env FRONTEND_DIST_DIR=/frontend \
     --env WORLD_DIR=/world --env WORLD_VERSION=smoke_v1 --env OLLAMA_MODEL=smoke:unused "$image" >/dev/null
 attempt=0
 while :; do
@@ -40,6 +45,11 @@ while :; do
     fi
     sleep 0.1
 done
+curl --fail --silent --max-time 3 http://127.0.0.1:18080/ > "$response_file"
+if ! grep -q 'I01 local frontend' "$response_file"; then
+    echo 'Frontend Docker smoke test failed' >&2
+    exit 1
+fi
 docker stop --time 20 "$container" >/dev/null
 docker logs "$container"
 [ "$(docker inspect --format '{{.State.ExitCode}}' "$container")" = 0 ]

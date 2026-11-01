@@ -251,3 +251,11 @@ func TestSIGTERMIntegration(t *testing.T) {
 		t.Fatalf("missing graceful completion log: %s", text)
 	}
 }
+
+func TestInvalidFrontendFailsBeforeDatabase(t *testing.T) {
+	cfg := config.Config{FrontendDistDir: t.TempDir(), DatabaseURL: "postgres://unused:unused@127.0.0.1:1/unused"}
+	err := run(t.Context(), cfg, slog.New(slog.NewTextHandler(&bytes.Buffer{}, nil)))
+	if err == nil || !strings.Contains(err.Error(), "frontend index") {
+		t.Fatalf("expected frontend validation before database/listener: %v", err)
+	}
+}

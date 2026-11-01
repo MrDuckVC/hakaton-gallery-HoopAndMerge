@@ -7,6 +7,7 @@ import (
 	"errors"
 	"net"
 	"net/http"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -23,6 +24,7 @@ type Server struct {
 	photos       Photos
 	photoLibrary PhotoLibrary
 	websocket    http.Handler
+	frontend     *Frontend
 }
 
 type errorResponse struct {
@@ -64,6 +66,10 @@ func (s *Server) fallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if s.serveWorld(w, r) {
+		return
+	}
+	if s.frontend != nil && (r.Method == http.MethodGet || r.Method == http.MethodHead) && r.URL.Path != "/api" && !strings.HasPrefix(r.URL.Path, "/api/") {
+		s.frontend.ServeHTTP(w, r)
 		return
 	}
 	writeError(w, http.StatusNotFound, "NOT_FOUND", "Ресурс не найден", 0)

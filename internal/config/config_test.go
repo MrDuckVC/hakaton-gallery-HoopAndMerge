@@ -86,3 +86,22 @@ func TestInvalidConfigDoesNotExposeValues(t *testing.T) {
 		})
 	}
 }
+
+func TestFrontendDistConfiguration(t *testing.T) {
+	env := validEnv()
+	cfg, err := loadEnv(env)
+	if err != nil || cfg.FrontendDistDir != "" {
+		t.Fatalf("optional frontend: %v", err)
+	}
+	env["FRONTEND_DIST_DIR"] = "../frontend/dist"
+	cfg, err = loadEnv(env)
+	if err != nil || cfg.FrontendDistDir != "../frontend/dist" {
+		t.Fatalf("frontend override: %v", err)
+	}
+	for _, value := range []string{"", " ", "bad\x00path", "bad\npath"} {
+		env["FRONTEND_DIST_DIR"] = value
+		if _, err = loadEnv(env); err == nil || !strings.Contains(err.Error(), "FRONTEND_DIST_DIR") {
+			t.Fatalf("accepted invalid dist path %q: %v", value, err)
+		}
+	}
+}

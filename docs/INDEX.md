@@ -14,3 +14,6 @@ REQUIREMENTS.md — исходное задание и уточнение орг
 - [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) — лицензия WebP decoder и масштабирования миниатюр B09.
 
 content/README.md — готовая галерея C01, её маршрут, источники/права, профили и пересборка; content/budget.json — точные размеры, hashes и запасы всех пакетов; content/ACCEPTANCE.md — проведённые проверки и ограничения показа.
+
+- [DEMO.md](DEMO.md) — I01: подготовка офлайн-комплекта, host/Compose запуск, LAN и localhost без Wi-Fi.
+- [I01_ACCEPTANCE.md](I01_ACCEPTANCE.md) — фактические проверки инфраструктуры и оставшиеся аппаратные сценарии.

@@ -19,6 +19,8 @@ Go-модуль `github.com/MrDuckVC/hakaton-gallery-HopeAndMerge`, Go >=1.27.1;
 export PATH="/usr/local/go/bin:$PATH" # если требуется
 cp .env.example .env
 # Отредактируйте .env: пароли, origins, версия мира и заранее подготовленный model tag.
+# Сначала соберите frontend: sh tools/build-frontend.sh ./data/frontend
+# Для API-only разработки удалите FRONTEND_DIST_DIR из .env.
 # Готовый мир C01 уже в content/world; WORLD_VERSION=gallery_c01_v1.
 set -a
 . ./.env
@@ -33,9 +35,19 @@ make migrate-up
 
 B01 реализует запуск и lifecycle; B02 — аккаунты и cookie-сессии; B03 — проверяемый локальный каталог и `/api/v1/world/manifest`, `/api/v1/world/rooms/{room_id}`, `/api/v1/world/assets/{asset_id}`. До открытия HTTP listener проверяются геометрия, ссылки, spawns, точные размеры, бюджет с резервом фото и максимальный snapshot. Без валидного WORLD_DIR запуск завершается ошибкой. Формат контента — docs/WORLD_CONTENT.md.
 
-Manifest доступен действующей сессии. Для rooms/assets нужны version и активный owning WS с совпадающими пользователем и сессией; login сам по себе владения не даёт. Каталог уже обеспечивает настоящий spawn для register и `/me`. B04 подключает `/api/v1/ws`, snapshot, presence и замену соединения. B08 подключает локальный Ollama; раздача frontend dist ещё не подключена.
+Manifest доступен действующей сессии. Для rooms/assets нужны version и активный owning WS с совпадающими пользователем и сессией; login сам по себе владения не даёт. Каталог уже обеспечивает настоящий spawn для register и `/me`. B04 подключает `/api/v1/ws`, snapshot, presence и замену соединения. B08 подключает локальный Ollama; I01 раздаёт отдельно собранный frontend dist через тот же Go HTTP listener.
 
 Команды миграций, отдельная тестовая БД, Docker smoke-test и подготовка офлайн-работы — в docs/DEVELOPMENT.md. Docker-образ собирается через `make docker-build` и содержит `/gallery` и административный `/migrate`.
+
+## Офлайн-показ I01
+
+[docs/DEMO.md](docs/DEMO.md) содержит подготовку комплекта, холодный запуск,
+LAN-показ и localhost с выключенным Wi-Fi. Go раздаёт frontend, API и WS на
+одном origin; PostgreSQL в Compose, Ollama с GPU на хосте. Подготовка frontend
+из отдельного репозитория закреплена на commit ветки `fix/day2-first-demo`.
+`python3 tools/offline-bundle.py prepare --frontend-dist ./data/frontend --output ./data/offline/i01`
+собирает комплект без рабочих секретов/фото/БД, `verify` проверяет его hashes.
+Статус проверок — [docs/I01_ACCEPTANCE.md](docs/I01_ACCEPTANCE.md).
 
 ## API и документы
 - docs/api/contract.md — нормативный контракт пользователя; имеет приоритет над старыми планами.

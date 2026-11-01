@@ -30,6 +30,15 @@ import (
 )
 
 func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
+	var frontend *httpapi.Frontend
+	if cfg.FrontendDistDir != "" {
+		var err error
+		frontend, err = httpapi.NewFrontend(cfg.FrontendDistDir)
+		if err != nil {
+			return err
+		}
+		defer func() { _ = frontend.Close() }()
+	}
 	startupCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	pool, err := postgres.Open(startupCtx, cfg.DatabaseURL)
 	if err != nil {
@@ -77,6 +86,7 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 		return fmt.Errorf("open HTTP listener: %w", err)
 	}
 	server := httpapi.NewServer(cfg.HTTPAddr)
+	server.ConfigureFrontend(frontend)
 	server.ConfigureAuth(accounts, cfg.AllowedOrigins, cfg.CookieSecure)
 	connections.Configure(catalog, postgres.NewGameStore(pool), guides)
 	connections.ConfigureGuides(guides)
