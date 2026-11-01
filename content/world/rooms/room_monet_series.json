@@ -1,0 +1,179 @@
+{
+  "id": "room_monet_series",
+  "world_version": "gallery_c01_v1",
+  "title": "Импрессионизм: Один мотив — разные впечатления",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_16_15",
+      "target_room_id": "room_monet_snow",
+      "label": "Снег и перемена погоды",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_16_17",
+      "target_room_id": "room_vangogh_self",
+      "label": "Автопортрет и художественный образ",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_46524",
+      "title": "Руанский собор, западный фасад",
+      "description": "Клод Моне. Руанский собор, западный фасад. Датировка музея: 1894. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.49. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните два вида Руанского собора, затем мост. Как меняется впечатление при сохранении узнаваемого мотива?",
+      "image_asset_id": "nga_46524",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 1.681472,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_46654",
+      "title": "Руанский собор, западный фасад, солнечный свет",
+      "description": "Клод Моне. Руанский собор, западный фасад, солнечный свет. Датировка музея: 1894. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.179. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните два вида Руанского собора, затем мост. Как меняется впечатление при сохранении узнаваемого мотива?",
+      "image_asset_id": "nga_46654",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 1.70339,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_52188",
+      "title": "Мост в Аржантёе в серый день",
+      "description": "Клод Моне. Мост в Аржантёе в серый день. Датировка музея: c. 1876. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1970.17.44. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните два вида Руанского собора, затем мост. Как меняется впечатление при сохранении узнаваемого мотива?",
+      "image_asset_id": "nga_52188",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.259503,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_monet",
+      "display_name": "Клод Моне",
+      "subtitle": "Художественная реконструкция · Импрессионизм",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}

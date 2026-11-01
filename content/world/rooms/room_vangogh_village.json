@@ -1,0 +1,179 @@
+{
+  "id": "room_vangogh_village",
+  "world_version": "gallery_c01_v1",
+  "title": "Постимпрессионизм: Деревня и постройки",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_20_19",
+      "target_room_id": "room_vangogh_still-life",
+      "label": "Натюрморт: цвет и предмет",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_20_21",
+      "target_room_id": "room_vangogh_field",
+      "label": "Поле и ритм",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_52178",
+      "title": "Фермерский дом в Провансе",
+      "description": "Винсент ван Гог. Фермерский дом в Провансе. Датировка музея: 1888. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1970.17.34. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните крыши, дороги и распределение цветовых пятен. Как каждый автор собирает пространство?",
+      "image_asset_id": "nga_52178",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.250072,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_46623",
+      "title": "Бретонский пейзаж",
+      "description": "Поль Гоген. Бретонский пейзаж. Датировка музея: 1888. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.148. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните крыши, дороги и распределение цветовых пятен. Как каждый автор собирает пространство?",
+      "image_asset_id": "nga_46623",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.379572,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_54129",
+      "title": "Дома в Провансе: долина Рио близ Эстака",
+      "description": "Поль Сезанн. Дома в Провансе: долина Рио близ Эстака. Датировка музея: c. 1883. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1973.68.1. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните крыши, дороги и распределение цветовых пятен. Как каждый автор собирает пространство?",
+      "image_asset_id": "nga_54129",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.376559,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_vangogh",
+      "display_name": "Винсент ван Гог",
+      "subtitle": "Художественная реконструкция · Постимпрессионизм",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}

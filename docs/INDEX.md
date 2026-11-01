@@ -12,3 +12,5 @@ REQUIREMENTS.md — исходное задание и уточнение орг
 - [MODEL_BENCHMARK.md](MODEL_BENCHMARK.md) — A01: оборудование, измерения и статус выбора моделей.
 
 - [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) — лицензия WebP decoder и масштабирования миниатюр B09.
+
+content/README.md — готовая галерея C01, её маршрут, источники/права, профили и пересборка; content/budget.json — точные размеры, hashes и запасы всех пакетов; content/ACCEPTANCE.md — проведённые проверки и ограничения показа.

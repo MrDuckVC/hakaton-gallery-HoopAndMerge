@@ -1,0 +1,179 @@
+{
+  "id": "room_vangogh_still-life",
+  "world_version": "gallery_c01_v1",
+  "title": "Постимпрессионизм: Натюрморт: цвет и предмет",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_19_18",
+      "target_room_id": "room_vangogh_person",
+      "label": "Человек и цвет",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_19_20",
+      "target_room_id": "room_vangogh_village",
+      "label": "Деревня и постройки",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_72328",
+      "title": "Розы",
+      "description": "Винсент ван Гог. Розы. Датировка музея: 1890. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1991.67.1. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните розы, цитрусовые и фрукты Сезанна. Где цвет отделяет предмет от окружения?",
+      "image_asset_id": "nga_72328",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.384109,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_164923",
+      "title": "Натюрморт с апельсинами, лимонами и синими перчатками",
+      "description": "Винсент ван Гог. Натюрморт с апельсинами, лимонами и синими перчатками. Датировка музея: 1889. Техника: oil on canvas. National Gallery of Art, Washington, инв. 2014.18.13. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните розы, цитрусовые и фрукты Сезанна. Где цвет отделяет предмет от окружения?",
+      "image_asset_id": "nga_164923",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.309563,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_45986",
+      "title": "Натюрморт с яблоками и персиками",
+      "description": "Поль Сезанн. Натюрморт с яблоками и персиками. Датировка музея: c. 1905. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1959.15.1. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните розы, цитрусовые и фрукты Сезанна. Где цвет отделяет предмет от окружения?",
+      "image_asset_id": "nga_45986",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.40237,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_vangogh",
+      "display_name": "Винсент ван Гог",
+      "subtitle": "Художественная реконструкция · Постимпрессионизм",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}

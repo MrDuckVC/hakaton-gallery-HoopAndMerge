@@ -60,6 +60,12 @@ jobs:
           make contracts
           git diff --exit-code -- docs/api
 
+      - name: Check offline gallery authoring
+        run: |
+          python3 -B -m unittest discover -s tools -p test_prepare_gallery.py
+          python3 tools/prepare-gallery.py --output "$RUNNER_TEMP/gallery-c01-rebuilt"
+          diff -qr content/world "$RUNNER_TEMP/gallery-c01-rebuilt"
+
   docker:
     name: Build Docker image
     needs: checks

@@ -1,0 +1,179 @@
+{
+  "id": "room_vangogh_trees",
+  "world_version": "gallery_c01_v1",
+  "title": "Постимпрессионизм: Деревья и движение взгляда",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_22_21",
+      "target_room_id": "room_vangogh_field",
+      "label": "Поле и ритм",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_22_23",
+      "target_room_id": "room_vangogh_interior",
+      "label": "Предметы и повседневная жизнь",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_46627",
+      "title": "Оливковый сад",
+      "description": "Винсент ван Гог. Оливковый сад. Датировка музея: 1889. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.152. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните направление стволов, крон и дороги. Что ведёт взгляд через картину?",
+      "image_asset_id": "nga_46627",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.36681,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_45866",
+      "title": "Шато-Нуар",
+      "description": "Поль Сезанн. Шато-Нуар. Датировка музея: 1900/1904. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1958.10.1. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните направление стволов, крон и дороги. Что ведёт взгляд через картину?",
+      "image_asset_id": "nga_45866",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.29252,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_66406",
+      "title": "Изгиб дороги",
+      "description": "Поль Сезанн. Изгиб дороги. Датировка музея: 1900/1906. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1985.64.8. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните направление стволов, крон и дороги. Что ведёт взгляд через картину?",
+      "image_asset_id": "nga_66406",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 2.093225,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_vangogh",
+      "display_name": "Винсент ван Гог",
+      "subtitle": "Художественная реконструкция · Постимпрессионизм",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}

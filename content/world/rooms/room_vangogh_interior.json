@@ -1,0 +1,179 @@
+{
+  "id": "room_vangogh_interior",
+  "world_version": "gallery_c01_v1",
+  "title": "Постимпрессионизм: Предметы и повседневная жизнь",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_23_22",
+      "target_room_id": "room_vangogh_trees",
+      "label": "Деревья и движение взгляда",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_23_24",
+      "target_room_id": "room_vangogh_expression",
+      "label": "От наблюдения к выразительному цвету",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_52085",
+      "title": "Отец художника, читающий «Эвенман»",
+      "description": "Поль Сезанн. Отец художника, читающий «Эвенман». Датировка музея: 1866. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1970.5.1. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните фигуру читающего человека с двумя натюрмортами. Как предметы делят пространство?",
+      "image_asset_id": "nga_52085",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 1.542759,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_46579",
+      "title": "Бутылка мятного ликёра",
+      "description": "Поль Сезанн. Бутылка мятного ликёра. Датировка музея: 1893/1895. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.104. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните фигуру читающего человека с двумя натюрмортами. Как предметы делят пространство?",
+      "image_asset_id": "nga_46579",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.395851,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_53123",
+      "title": "Натюрморт с молочником и фруктами",
+      "description": "Поль Сезанн. Натюрморт с молочником и фруктами. Датировка музея: c. 1900. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1972.9.5. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните фигуру читающего человека с двумя натюрмортами. Как предметы делят пространство?",
+      "image_asset_id": "nga_53123",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.516866,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_vangogh",
+      "display_name": "Винсент ван Гог",
+      "subtitle": "Художественная реконструкция · Постимпрессионизм",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}

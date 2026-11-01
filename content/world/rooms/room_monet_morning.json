@@ -1,0 +1,179 @@
+{
+  "id": "room_monet_morning",
+  "world_version": "gallery_c01_v1",
+  "title": "Импрессионизм: Утро и воздух",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_09_08",
+      "target_room_id": "room_leonardo_details",
+      "label": "Деталь и материал",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_09_10",
+      "target_room_id": "room_monet_daylight",
+      "label": "Дневной свет",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_45872",
+      "title": "Утренняя дымка",
+      "description": "Клод Моне. Утренняя дымка. Датировка музея: 1888. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1958.12.1. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните туман, солнечную улицу и цветущий сад. Как различаются края форм?",
+      "image_asset_id": "nga_45872",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.385953,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_46673",
+      "title": "Бульвар Итальянцев: утро, солнечный свет",
+      "description": "Камиль Писсарро. Бульвар Итальянцев: утро, солнечный свет. Датировка музея: 1897. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.198. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните туман, солнечную улицу и цветущий сад. Как различаются края форм?",
+      "image_asset_id": "nga_46673",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.398996,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_52195",
+      "title": "Цветущий сад в Лувесьенне",
+      "description": "Камиль Писсарро. Цветущий сад в Лувесьенне. Датировка музея: 1872. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1970.17.51. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните туман, солнечную улицу и цветущий сад. Как различаются края форм?",
+      "image_asset_id": "nga_52195",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.45657,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_monet",
+      "display_name": "Клод Моне",
+      "subtitle": "Художественная реконструкция · Импрессионизм",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}
