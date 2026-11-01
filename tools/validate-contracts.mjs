@@ -18,7 +18,7 @@ function check(v,s,doc){
   for(const k of s.required??[])assert(Object.hasOwn(v,k),'missing '+k);
   for(const [k,x]of Object.entries(v)){if(s.properties?.[k])check(x,s.properties[k],doc);else if(s.additionalProperties===false)assert.fail('unknown '+k);else if(typeof s.additionalProperties==='object')check(x,s.additionalProperties,doc);}
  }
- if(s.type==='array'){assert(Array.isArray(v));for(const x of v)check(x,s.items,doc);}
+ if(s.type==='array'){assert(Array.isArray(v));if(s.minItems!==undefined)assert(v.length>=s.minItems);if(s.maxItems!==undefined)assert(v.length<=s.maxItems);if(s.uniqueItems)assert.equal(new Set(v.map(x=>JSON.stringify(x))).size,v.length);for(const x of v)check(x,s.items,doc);}
  if(s.type==='string'){
   assert.equal(typeof v,'string');const len=Array.from(v).length;
   if(s.minLength!==undefined)assert(len>=s.minLength);if(s.maxLength!==undefined)assert(len<=s.maxLength);if(s.pattern)assert(new RegExp(s.pattern,'u').test(v),'pattern');
@@ -87,3 +87,28 @@ for(const route of ['/photos/{photo_id}/image','/photos/{photo_id}/thumbnail']) 
  assert(!paths[route].get.responses['403']);
 }
 console.log('PASS: photo album/chat fixtures, pagination limits, JPEG thumbnail and protected file headers.');
+
+// Sunday is a target extension; validate its complete frontend handoff fixtures.
+const sundayDir=path.join(root,'docs/api/examples/sunday');
+for(const file of fs.readdirSync(sundayDir).filter(x=>x.endsWith('.json'))){
+ const value=read('docs/api/examples/sunday/'+file);
+ const isClient=file.startsWith('client.')||file.startsWith('telemetry.pong')||file.startsWith('room.sync')||file.startsWith('object.act.')||file==='guide.action.json';
+ if(value.type){const schema=isClient?client:server;check(value,schema,schema);}
+ else {const name={'admin.clients.json':'SundayClients','admin.room.update.json':'SundayRoomUpdate','admin.guide.json':'SundayAdminGuide','admin.guide.update.json':'SundayGuideUpdate'}[file];assert(name,'unmapped fixture '+file);check(value,api.components.schemas[name],api);}
+}
+const sundayCommand=(type,payload)=>({type,request_id:uuid,payload});
+assert.throws(()=>check({type:'client.metrics',request_id:uuid,payload:{fps:60,visible:true}},client,client));
+assert.throws(()=>check({type:'client.metrics',payload:{fps:60,visible:false}},client,client));
+assert.throws(()=>check({type:'client.metrics',payload:{fps:1001,visible:true}},client,client));
+assert.throws(()=>check({type:'telemetry.pong',payload:{nonce:'short'}},client,client));
+assert.throws(()=>check({type:'object.act',payload:{object_id:'lamp_01',action:'take',movement_epoch:1,expected_revision:1}},client,client));
+assert.throws(()=>check(sundayCommand('object.act',{object_id:'lamp_01',action:'take',movement_epoch:1,expected_revision:1,on:true}),client,client));
+assert.throws(()=>check(sundayCommand('object.act',{object_id:'lamp_01',action:'aim',movement_epoch:1,expected_revision:1,yaw:0,head_pitch:2}),client,client));
+const npcs=read('docs/api/examples/sunday/npc.state.json');check(npcs,server,server);npcs.payload.npcs.push(npcs.payload.npcs[0]);assert.throws(()=>check(npcs,server,server));
+const currentWorld=read('content/world/catalog.json');
+const runtime=read('docs/api/examples/sunday/world.runtime.json').payload;
+assert(currentWorld.rooms.some(x=>x.id===runtime.room_id));
+assert(Buffer.byteLength(JSON.stringify(runtime))<=32768);
+assert(Buffer.byteLength(JSON.stringify(read('docs/api/examples/sunday/npc.state.json').payload))<=24576);
+for(const room of currentWorld.rooms){const dto=read('content/world/'+room.file);assert(dto.guides.length<=3);}
+console.log('PASS: Sunday HTTP/WS fixtures, telemetry exemptions/nullability, lamp action unions, limits, real C01 room and bounded snapshots.');

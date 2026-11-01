@@ -267,3 +267,11 @@ index.html. Отсутствующие assets и неизвестный `/api` �
 Node нужен backend только для tools/build-contracts.mjs и validate-contracts.mjs.
 Команды запуска из комплекта, firewall, WSL NAT/mirrored networking и сохранение
 существующего volume/фото — [DEMO.md](DEMO.md). Go runtime lifecycle не изменяется.
+
+## Sunday: целевые изменения, ещё не реализованы
+
+Подготовленные контракты: [api/sunday.md](api/sunday.md), задачи [SUNDAY_BACKLOG.md](SUNDAY_BACKLOG.md).
+После реализации S01 появятся новая отдельная миграция и `./bin/admin grant --username NAME`
+для уже существующего аккаунта; сейчас эту команду не запускать — бинарника ещё нет.
+I01 Host + Compose/существующие PHOTO_DIR/volumes сохраняются. S07 добавит новый binary
+в сборку/комплект и обновит закреплённый frontend main SHA после общей интеграции.

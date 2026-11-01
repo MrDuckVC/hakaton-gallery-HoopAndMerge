@@ -1,3 +1,4 @@
+import { sundayContracts } from './sunday-contracts.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 const root = path.resolve(import.meta.dirname, '..');
@@ -211,11 +212,12 @@ const serverV1={
  'error':ref('ErrorBody')
 };
 function schemaV1(events,isClient){
- const variants=Object.entries(events).map(([type,payload])=>obj({type:{const:type},...(isClient?(type==='player.move'?{}:{request_id:uuid()}):{event_id:asciiID(),server_time:date(),request_id:uuid()}),payload},isClient?(type==='player.move'?['type','payload']:['type','request_id','payload']):['type','event_id','server_time','payload']));
+ const variants=Object.entries(events).map(([type,payload])=>obj({type:{const:type},...(isClient?(['player.move','client.metrics','telemetry.pong'].includes(type)?{}:{request_id:uuid()}):{event_id:asciiID(),server_time:date(),request_id:uuid()}),payload},isClient?(['player.move','client.metrics','telemetry.pong'].includes(type)?['type','payload']:['type','request_id','payload']):['type','event_id','server_time','payload']));
  return JSON.parse(JSON.stringify({$schema:'https://json-schema.org/draft/2020-12/schema',description:'Структура событий. Условия состояний, trim, idempotency и корреляции см. contract.md.',oneOf:variants,$defs:S}).replaceAll('#/components/schemas/','#/$defs/'));
 }
 // Все ID в схемах ограничены ASCII, все integer безопасны для JS.
 function normalize(v){if(!v||typeof v!=='object')return; if(v.type==='integer')v.maximum??=9007199254740991; if(v.type==='string'&&v.minLength===1&&v.maxLength===128&&!v.pattern&&!v.writeOnly)v.pattern='^[\\x21-\\x7E]+$'; for(const child of Object.values(v))normalize(child);}
+sundayContracts({S,P,client:clientV1,server:serverV1,obj,ref,str,number,integer,arr,nullable,id:asciiID,uuid,date,write,json});
 normalize(api);normalize(clientV1);normalize(serverV1);
 write('docs/api/openapi.yaml',yaml(api)); json('docs/api/openapi.json',api);
 json('docs/api/ws-client.schema.json',schemaV1(clientV1,true));json('docs/api/ws-server.schema.json',schemaV1(serverV1,false));

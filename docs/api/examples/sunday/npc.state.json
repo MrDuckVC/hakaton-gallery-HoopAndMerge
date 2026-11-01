@@ -1,0 +1,493 @@
+{
+  "type": "npc.state",
+  "event_id": "evt_sunday_npc_state",
+  "server_time": "2026-11-01T12:00:00Z",
+  "payload": {
+    "world_version": "gallery_c01_v1",
+    "room_id": "room_leonardo_portrait",
+    "room_instance_id": "room_instance_01",
+    "seq": 1,
+    "npcs": [
+      {
+        "npc_id": "npc_00",
+        "position": {
+          "x": 2,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 0
+      },
+      {
+        "npc_id": "npc_01",
+        "position": {
+          "x": 3,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 0.5
+      },
+      {
+        "npc_id": "npc_02",
+        "position": {
+          "x": 4,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 1
+      },
+      {
+        "npc_id": "npc_03",
+        "position": {
+          "x": 5,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 1.5
+      },
+      {
+        "npc_id": "npc_04",
+        "position": {
+          "x": 6,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 2
+      },
+      {
+        "npc_id": "npc_05",
+        "position": {
+          "x": 7,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 2.5
+      },
+      {
+        "npc_id": "npc_06",
+        "position": {
+          "x": 8,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 3
+      },
+      {
+        "npc_id": "npc_07",
+        "position": {
+          "x": 9,
+          "y": 0,
+          "z": 3
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 3.5
+      },
+      {
+        "npc_id": "npc_08",
+        "position": {
+          "x": 2,
+          "y": 0,
+          "z": 3.7
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 4
+      },
+      {
+        "npc_id": "npc_09",
+        "position": {
+          "x": 3,
+          "y": 0,
+          "z": 3.7
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 4.5
+      },
+      {
+        "npc_id": "npc_10",
+        "position": {
+          "x": 4,
+          "y": 0,
+          "z": 3.7
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 5
+      },
+      {
+        "npc_id": "npc_11",
+        "position": {
+          "x": 5,
+          "y": 0,
+          "z": 3.7
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 5.5
+      },
+      {
+        "npc_id": "npc_12",
+        "position": {
+          "x": 6,
+          "y": 0,
+          "z": 3.7
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 6
+      },
+      {
+        "npc_id": "npc_13",
+        "position": {
+          "x": 7,
+          "y": 0,
+          "z": 3.7
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 0.21681469282041377
+      },
+      {
+        "npc_id": "npc_14",
+        "position": {
+          "x": 8,
+          "y": 0,
+          "z": 3.7
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 0.7168146928204138
+      },
+      {
+        "npc_id": "npc_15",
+        "position": {
+          "x": 9,
+          "y": 0,
+          "z": 3.7
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 1.2168146928204138
+      },
+      {
+        "npc_id": "npc_16",
+        "position": {
+          "x": 2,
+          "y": 0,
+          "z": 4.4
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 1.7168146928204138
+      },
+      {
+        "npc_id": "npc_17",
+        "position": {
+          "x": 3,
+          "y": 0,
+          "z": 4.4
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 2.2168146928204138
+      },
+      {
+        "npc_id": "npc_18",
+        "position": {
+          "x": 4,
+          "y": 0,
+          "z": 4.4
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 2.7168146928204138
+      },
+      {
+        "npc_id": "npc_19",
+        "position": {
+          "x": 5,
+          "y": 0,
+          "z": 4.4
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 3.2168146928204138
+      },
+      {
+        "npc_id": "npc_20",
+        "position": {
+          "x": 6,
+          "y": 0,
+          "z": 4.4
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 3.7168146928204138
+      },
+      {
+        "npc_id": "npc_21",
+        "position": {
+          "x": 7,
+          "y": 0,
+          "z": 4.4
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 4.216814692820414
+      },
+      {
+        "npc_id": "npc_22",
+        "position": {
+          "x": 8,
+          "y": 0,
+          "z": 4.4
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 4.716814692820414
+      },
+      {
+        "npc_id": "npc_23",
+        "position": {
+          "x": 9,
+          "y": 0,
+          "z": 4.4
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 5.216814692820414
+      },
+      {
+        "npc_id": "npc_24",
+        "position": {
+          "x": 2,
+          "y": 0,
+          "z": 5.1
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 5.716814692820414
+      },
+      {
+        "npc_id": "npc_25",
+        "position": {
+          "x": 3,
+          "y": 0,
+          "z": 5.1
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 6.216814692820414
+      },
+      {
+        "npc_id": "npc_26",
+        "position": {
+          "x": 4,
+          "y": 0,
+          "z": 5.1
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 0.43362938564082754
+      },
+      {
+        "npc_id": "npc_27",
+        "position": {
+          "x": 5,
+          "y": 0,
+          "z": 5.1
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 0.9336293856408275
+      },
+      {
+        "npc_id": "npc_28",
+        "position": {
+          "x": 6,
+          "y": 0,
+          "z": 5.1
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 1.4336293856408275
+      },
+      {
+        "npc_id": "npc_29",
+        "position": {
+          "x": 7,
+          "y": 0,
+          "z": 5.1
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 1.9336293856408275
+      },
+      {
+        "npc_id": "npc_30",
+        "position": {
+          "x": 8,
+          "y": 0,
+          "z": 5.1
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 2.4336293856408275
+      },
+      {
+        "npc_id": "npc_31",
+        "position": {
+          "x": 9,
+          "y": 0,
+          "z": 5.1
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 2.9336293856408275
+      },
+      {
+        "npc_id": "npc_32",
+        "position": {
+          "x": 2,
+          "y": 0,
+          "z": 5.8
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 3.4336293856408275
+      },
+      {
+        "npc_id": "npc_33",
+        "position": {
+          "x": 3,
+          "y": 0,
+          "z": 5.8
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 3.9336293856408275
+      },
+      {
+        "npc_id": "npc_34",
+        "position": {
+          "x": 4,
+          "y": 0,
+          "z": 5.8
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 4.4336293856408275
+      },
+      {
+        "npc_id": "npc_35",
+        "position": {
+          "x": 5,
+          "y": 0,
+          "z": 5.8
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 4.9336293856408275
+      },
+      {
+        "npc_id": "npc_36",
+        "position": {
+          "x": 6,
+          "y": 0,
+          "z": 5.8
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 5.4336293856408275
+      },
+      {
+        "npc_id": "npc_37",
+        "position": {
+          "x": 7,
+          "y": 0,
+          "z": 5.8
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 5.9336293856408275
+      },
+      {
+        "npc_id": "npc_38",
+        "position": {
+          "x": 8,
+          "y": 0,
+          "z": 5.8
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 0.1504440784612413
+      },
+      {
+        "npc_id": "npc_39",
+        "position": {
+          "x": 9,
+          "y": 0,
+          "z": 5.8
+        },
+        "yaw": 0,
+        "state": "walking",
+        "speed_mps": 0.6,
+        "phase": 0.6504440784612413
+      }
+    ]
+  }
+}

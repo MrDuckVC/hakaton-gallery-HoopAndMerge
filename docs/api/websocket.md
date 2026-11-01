@@ -50,3 +50,14 @@ Guide: accepted содержит Generation; затем started, delta*, complet
 Транзакционная FIFO допускает одного running и восемь queued; частичный индекс запрещает два pending на пользователя. Accepted ставится в единственную writer queue до захвата вопроса worker. Completed и память сохраняются атомарно; частичный текст существует только в worker и delta. Cancel выигрывает терминальную операцию через CAS и отправляет failed перед cancelled. Door, disconnect, replacement и отзыв сессии используют порт отмены с connection ID.
 
 Тайм-аут queued — 120 секунд, running — 90 секунд; output limit — 8000 кодовых точек. До B08 модель явно недоступна: после accepted/started приходит failed с AI_UNAVAILABLE. При ошибке хранения результата WS закрывается 1011; восстановление переводит оставшиеся pending в SERVER_RESTARTED и уведомляет ещё подключённых владельцев. До открытия listener выполняется та же recovery-операция.
+
+
+## Целевой Sunday v1 (ещё не реализован)
+
+Нормативные правила: [sunday.md](sunday.md), типы [sunday.types.ts](sunday.types.ts).
+Новые client events: room.sync, object.act, guide.action, client.metrics, telemetry.pong.
+Новые server events: world.runtime, npc.state, object.acted, guide.action.completed, telemetry.probe.
+Первым остаётся world.snapshot; runtime/NPC текущего зала идут после snapshot/entered.
+Metrics/pong без request_id и вне обычного лимита команд; остальные новые команды
+имеют UUID и обычную дедупликацию. Полные runtime snapshots + CAS revision, без новых
+геометрических файлов/смены WORLD_VERSION при правке оформления.

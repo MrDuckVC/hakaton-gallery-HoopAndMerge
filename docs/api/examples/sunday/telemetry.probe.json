@@ -1,0 +1,8 @@
+{
+  "type": "telemetry.probe",
+  "event_id": "evt_sunday_telemetry_probe",
+  "server_time": "2026-11-01T12:00:00Z",
+  "payload": {
+    "nonce": "challenge_1234567890"
+  }
+}

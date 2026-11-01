@@ -2757,6 +2757,2130 @@
         ],
         "description": "Действующая сессия без игрового WS. Приватное фото доступно только владельцу; опубликованное — любому вошедшему. Чужое приватное и отсутствующее фото — 404 NOT_FOUND. Байты отдаются без преобразования; ошибка чтения или несовпадение размера — 503 SERVICE_UNAVAILABLE."
       }
+    },
+    "/admin/me": {
+      "get": {
+        "operationId": "getAdminMe",
+        "summary": "getAdminMe",
+        "tags": [
+          "Sunday target (not implemented)"
+        ],
+        "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md.",
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SundayAdminMe"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/admin/clients": {
+      "get": {
+        "operationId": "getAdminClients",
+        "summary": "getAdminClients",
+        "tags": [
+          "Sunday target (not implemented)"
+        ],
+        "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md.",
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SundayClients"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/admin/rooms": {
+      "get": {
+        "operationId": "getAdminRooms",
+        "summary": "getAdminRooms",
+        "tags": [
+          "Sunday target (not implemented)"
+        ],
+        "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md.",
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SundayRooms"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/admin/rooms/{room_id}": {
+      "get": {
+        "operationId": "getAdminRoom",
+        "summary": "getAdminRoom",
+        "tags": [
+          "Sunday target (not implemented)"
+        ],
+        "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md.",
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SundayRoomRuntime"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "updateAdminRoom",
+        "summary": "updateAdminRoom",
+        "tags": [
+          "Sunday target (not implemented)"
+        ],
+        "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md. PUT: exact Origin, body <=65536 bytes, CAS expected_revision.",
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SundayRoomRuntime"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SundayRoomUpdate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/guides": {
+      "get": {
+        "operationId": "getAdminGuides",
+        "summary": "getAdminGuides",
+        "tags": [
+          "Sunday target (not implemented)"
+        ],
+        "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md.",
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SundayGuides"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/admin/guides/{guide_id}": {
+      "get": {
+        "operationId": "getAdminGuide",
+        "summary": "getAdminGuide",
+        "tags": [
+          "Sunday target (not implemented)"
+        ],
+        "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md.",
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SundayAdminGuide"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guide_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "updateAdminGuide",
+        "summary": "updateAdminGuide",
+        "tags": [
+          "Sunday target (not implemented)"
+        ],
+        "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md. PUT: exact Origin, body <=65536 bytes, CAS expected_revision.",
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SundayAdminGuide"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Коды и условия — sunday.md",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guide_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SundayGuideUpdate"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3045,6 +5169,14 @@
           },
           "movement": {
             "$ref": "#/components/schemas/MovementConfig"
+          },
+          "extensions": {
+            "type": "array",
+            "items": {
+              "const": "sunday_v1"
+            },
+            "maxItems": 1,
+            "uniqueItems": true
           }
         },
         "required": [
@@ -3823,6 +5955,933 @@
         "required": [
           "items",
           "next_before"
+        ]
+      },
+      "SundayVec3": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "const": 0
+          },
+          "z": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      "SundayGuidePlacement": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "guide_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "position": {
+            "$ref": "#/components/schemas/SundayVec3"
+          },
+          "rotation_y": {
+            "type": "number",
+            "minimum": -3.141592653589793,
+            "exclusiveMaximum": 3.141592653589793
+          }
+        },
+        "required": [
+          "guide_id",
+          "position",
+          "rotation_y"
+        ]
+      },
+      "SundayLampSlot": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slot_id": {
+            "type": "string",
+            "enum": [
+              "a",
+              "b"
+            ]
+          },
+          "position": {
+            "$ref": "#/components/schemas/SundayVec3"
+          }
+        },
+        "required": [
+          "slot_id",
+          "position"
+        ]
+      },
+      "SundayRoomConfig": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accent_color": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$"
+          },
+          "lighting": {
+            "type": "string",
+            "enum": [
+              "neutral",
+              "warm",
+              "cool"
+            ]
+          },
+          "guide_placements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SundayGuidePlacement"
+            },
+            "minItems": 0,
+            "maxItems": 3
+          },
+          "lamp_slots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SundayLampSlot"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "npc_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 40
+          },
+          "installation_visible": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "accent_color",
+          "lighting",
+          "guide_placements",
+          "lamp_slots",
+          "npc_count",
+          "installation_visible"
+        ]
+      },
+      "SundayPublicGuide": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "guide_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[^\\u0000]*$"
+          },
+          "subtitle": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "pattern": "^[^\\u0000]*$"
+          },
+          "position": {
+            "$ref": "#/components/schemas/SundayVec3"
+          },
+          "rotation_y": {
+            "type": "number",
+            "minimum": -3.141592653589793,
+            "exclusiveMaximum": 3.141592653589793
+          }
+        },
+        "required": [
+          "guide_id",
+          "display_name",
+          "subtitle",
+          "position",
+          "rotation_y"
+        ]
+      },
+      "SundayLamp": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "object_id": {
+            "const": "lamp_01"
+          },
+          "slot_id": {
+            "type": "string",
+            "enum": [
+              "a",
+              "b"
+            ]
+          },
+          "holder_user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[\\x21-\\x7E]+$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "yaw": {
+            "type": "number",
+            "minimum": -3.141592653589793,
+            "exclusiveMaximum": 3.141592653589793
+          },
+          "head_pitch": {
+            "type": "number",
+            "minimum": -1.0471975511965976,
+            "maximum": 1.0471975511965976
+          },
+          "on": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "object_id",
+          "slot_id",
+          "holder_user_id",
+          "yaw",
+          "head_pitch",
+          "on"
+        ]
+      },
+      "SundayRoomRuntime": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "world_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "room_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "config": {
+            "$ref": "#/components/schemas/SundayRoomConfig"
+          },
+          "guides": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SundayPublicGuide"
+            },
+            "minItems": 0,
+            "maxItems": 3
+          },
+          "lamp": {
+            "$ref": "#/components/schemas/SundayLamp"
+          }
+        },
+        "required": [
+          "world_version",
+          "room_id",
+          "revision",
+          "config",
+          "guides",
+          "lamp"
+        ]
+      },
+      "SundayGuideSettings": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "display_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[^\\u0000]*$"
+          },
+          "subtitle": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "pattern": "^[^\\u0000]*$"
+          },
+          "personality": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "pattern": "^[^\\u0000]*$"
+          },
+          "style": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "pattern": "^[^\\u0000]*$"
+          },
+          "topic": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "pattern": "^[^\\u0000]*$"
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000,
+              "pattern": "^[^\\u0000]*$"
+            },
+            "minItems": 1,
+            "maxItems": 20
+          },
+          "material_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            },
+            "minItems": 0,
+            "maxItems": 100,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "display_name",
+          "subtitle",
+          "personality",
+          "style",
+          "topic",
+          "constraints",
+          "material_ids"
+        ]
+      },
+      "SundayMaterialChoice": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "excerpt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "pattern": "^[^\\u0000]*$"
+          },
+          "exhibit_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[\\x21-\\x7E]+$"
+            },
+            "minItems": 0,
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "id",
+          "excerpt",
+          "exhibit_ids"
+        ]
+      },
+      "SundayAdminGuide": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "world_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "guide_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "settings": {
+            "$ref": "#/components/schemas/SundayGuideSettings"
+          },
+          "available_materials": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SundayMaterialChoice"
+            },
+            "minItems": 0,
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "world_version",
+          "guide_id",
+          "revision",
+          "settings",
+          "available_materials"
+        ]
+      },
+      "SundayRoomUpdate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "world_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "config": {
+            "$ref": "#/components/schemas/SundayRoomConfig"
+          }
+        },
+        "required": [
+          "world_version",
+          "expected_revision",
+          "config"
+        ]
+      },
+      "SundayGuideUpdate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "world_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "settings": {
+            "$ref": "#/components/schemas/SundayGuideSettings"
+          }
+        },
+        "required": [
+          "world_version",
+          "expected_revision",
+          "settings"
+        ]
+      },
+      "SundayAdminMe": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "role": {
+            "const": "admin"
+          }
+        },
+        "required": [
+          "user_id",
+          "role"
+        ]
+      },
+      "SundayClientMetric": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "room_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "fps": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "ping_ms": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "visible": {
+            "type": "boolean"
+          },
+          "sampled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stale": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "user_id",
+          "display_name",
+          "room_id",
+          "fps",
+          "ping_ms",
+          "visible",
+          "sampled_at",
+          "stale"
+        ]
+      },
+      "SundayClients": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "clients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SundayClientMetric"
+            },
+            "minItems": 0,
+            "maxItems": 32
+          }
+        },
+        "required": [
+          "clients"
+        ]
+      },
+      "SundayRooms": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rooms": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "room_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "room_id",
+                "title",
+                "revision"
+              ]
+            }
+          }
+        },
+        "required": [
+          "rooms"
+        ]
+      },
+      "SundayGuides": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "guides": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "guide_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[\\x21-\\x7E]+$"
+                },
+                "display_name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64,
+                  "pattern": "^[^\\u0000]*$"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "guide_id",
+                "display_name",
+                "revision"
+              ]
+            }
+          }
+        },
+        "required": [
+          "guides"
+        ]
+      },
+      "SundayNPC": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "npc_id": {
+            "type": "string",
+            "pattern": "^npc_[0-3][0-9]$"
+          },
+          "position": {
+            "$ref": "#/components/schemas/SundayVec3"
+          },
+          "yaw": {
+            "type": "number",
+            "minimum": -3.141592653589793,
+            "exclusiveMaximum": 3.141592653589793
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "walking",
+              "idle",
+              "talking"
+            ]
+          },
+          "speed_mps": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.6
+          },
+          "phase": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMaximum": 6.283185307179586
+          }
+        },
+        "required": [
+          "npc_id",
+          "position",
+          "yaw",
+          "state",
+          "speed_mps",
+          "phase"
+        ]
+      },
+      "SundayNPCState": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "world_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "room_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "room_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "seq": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "npcs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SundayNPC"
+            },
+            "minItems": 0,
+            "maxItems": 40
+          }
+        },
+        "required": [
+          "world_version",
+          "room_id",
+          "room_instance_id",
+          "seq",
+          "npcs"
+        ]
+      },
+      "SundayObjectAct": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "object_id": {
+                "const": "lamp_01"
+              },
+              "movement_epoch": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "expected_revision": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "action": {
+                "const": "take"
+              }
+            },
+            "required": [
+              "object_id",
+              "movement_epoch",
+              "expected_revision",
+              "action"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "object_id": {
+                "const": "lamp_01"
+              },
+              "movement_epoch": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "expected_revision": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "action": {
+                "const": "place"
+              },
+              "slot_id": {
+                "type": "string",
+                "enum": [
+                  "a",
+                  "b"
+                ]
+              }
+            },
+            "required": [
+              "object_id",
+              "movement_epoch",
+              "expected_revision",
+              "action",
+              "slot_id"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "object_id": {
+                "const": "lamp_01"
+              },
+              "movement_epoch": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "expected_revision": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "action": {
+                "const": "aim"
+              },
+              "yaw": {
+                "type": "number",
+                "minimum": -3.141592653589793,
+                "exclusiveMaximum": 3.141592653589793
+              },
+              "head_pitch": {
+                "type": "number",
+                "minimum": -1.0471975511965976,
+                "maximum": 1.0471975511965976
+              }
+            },
+            "required": [
+              "object_id",
+              "movement_epoch",
+              "expected_revision",
+              "action",
+              "yaw",
+              "head_pitch"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "object_id": {
+                "const": "lamp_01"
+              },
+              "movement_epoch": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "expected_revision": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "action": {
+                "const": "power"
+              },
+              "on": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "object_id",
+              "movement_epoch",
+              "expected_revision",
+              "action",
+              "on"
+            ]
+          }
+        ]
+      },
+      "SundayGuideAction": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "guide_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[\\x21-\\x7E]+$"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "pattern": "^[^\\u0000]*$"
+          },
+          "movement_epoch": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "guide_id",
+          "text",
+          "movement_epoch",
+          "expected_revision"
+        ]
+      },
+      "SundayMetrics": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "fps": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              "visible": {
+                "const": true
+              }
+            },
+            "required": [
+              "fps",
+              "visible"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "fps": {
+                "type": "null"
+              },
+              "visible": {
+                "const": false
+              }
+            },
+            "required": [
+              "fps",
+              "visible"
+            ]
+          }
         ]
       }
     }

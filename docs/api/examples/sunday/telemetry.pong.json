@@ -1,0 +1,6 @@
+{
+  "type": "telemetry.pong",
+  "payload": {
+    "nonce": "challenge_1234567890"
+  }
+}

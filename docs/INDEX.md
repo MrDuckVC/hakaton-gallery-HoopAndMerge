@@ -17,3 +17,8 @@ content/README.md — готовая галерея C01, её маршрут, и
 
 - [DEMO.md](DEMO.md) — I01: подготовка офлайн-комплекта, host/Compose запуск, LAN и localhost без Wi-Fi.
 - [I01_ACCEPTANCE.md](I01_ACCEPTANCE.md) — фактические проверки инфраструктуры и оставшиеся аппаратные сценарии.
+
+- [api/sunday.md](api/sunday.md) — согласованный целевой Sunday-контракт frontend/backend.
+- [api/sunday.types.ts](api/sunday.types.ts) — генерируемые TS DTO/новые event unions для frontend.
+- [SUNDAY_BACKLOG.md](SUNDAY_BACKLOG.md) — новые backend-задачи и порядок интеграции.
+- [superpowers/plans/2026-11-01-sunday.md](superpowers/plans/2026-11-01-sunday.md) — технический план, без реализации runtime.

@@ -1,0 +1,7 @@
+{
+  "type": "client.metrics",
+  "payload": {
+    "fps": 58.5,
+    "visible": true
+  }
+}

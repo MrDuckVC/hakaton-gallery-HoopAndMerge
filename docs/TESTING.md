@@ -134,3 +134,21 @@ HTTP-тесты проверяют корень, GET/HEAD, MIME, SPA navigation,
 проверки вместе с существующими build/vet/race/coverage/lint/contracts/Docker smoke.
 Ручные сценарии и фактические ограничения — [DEMO.md](DEMO.md),
 [I01_ACCEPTANCE.md](I01_ACCEPTANCE.md).
+
+## Целевой Sunday: матрица приёмки
+
+Контракт [api/sunday.md](api/sunday.md) ещё не реализован. При реализации автоматизировать:
+- admin: 401/403, точный Origin для PUT, 64 КиБ, неизвестные поля, role только из БД;
+- два конкурентных room/profile PUT: один commit, второй REVISION_CONFLICT, без partial broadcast;
+- effective guide placement/profile: distance/LOS и следующий running используют override,
+  уже running остаётся со старым snapshot, чужая память не читается;
+- лампа: два take, другой holder, старый epoch/connection, place за стеной, CAS, disconnect/
+  replacement/door/SQL-сбой/неопределённый commit/restart, lazy cleanup без сброса нового owner;
+- telemetry: fake clock 2/5/6 с, visible=false, неверный nonce, stale, старый callback,
+  без участия в обычном лимите/UUID, SQL и других метриках;
+- NPC: fake clock/seed, 40/0, остановка/чат/3 с, стены, отсутствие LLM/SQL tick,
+  полные snapshots, новый instance при новом lifecycle комнаты;
+- guide.action: только перечисленные фразы, без LLM/SQL из текста, CAS/LOS/ready,
+  повтор show без новых объектов, обычный ask работает независимо;
+- контрактные fixtures/TS, сохранность базовых HTTP/WS/10% и сборки офлайн-комплекта.
+Реальные LAN/Wi-Fi-off/WebGL проверки дополняют №20/21, не заменяются unit tests.
