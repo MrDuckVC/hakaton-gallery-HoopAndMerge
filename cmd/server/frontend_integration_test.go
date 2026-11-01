@@ -28,17 +28,18 @@ func TestFrontendSameOriginIntegration(t *testing.T) {
 	if dsn == os.Getenv("DATABASE_URL") {
 		t.Fatal("test and runtime database must differ")
 	}
-	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
-	defer cancel()
-	if _, err := postgres.Migrate(ctx, dsn, "up"); err != nil {
-		t.Fatal(err)
-	}
+	// Fixture encoding is setup, outside the bounded runtime scenario.
 	world := t.TempDir()
-	if err := testworld.Write(ctx, world, "frontend_test"); err != nil {
+	if err := testworld.Write(t.Context(), world, "frontend_test"); err != nil {
 		t.Fatal(err)
 	}
 	dist := t.TempDir()
 	if err := os.WriteFile(filepath.Join(dist, "index.html"), []byte("<!doctype html><title>Local gallery</title>"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
+	defer cancel()
+	if _, err := postgres.Migrate(ctx, dsn, "up"); err != nil {
 		t.Fatal(err)
 	}
 	listener, err := net.Listen("tcp", "127.0.0.1:0")
@@ -58,7 +59,9 @@ func TestFrontendSameOriginIntegration(t *testing.T) {
 			t.Error(runErr)
 		}
 	}()
-	client := &http.Client{Timeout: 2 * time.Second}
+	// Registration runs the real password KDF under race/coverage instrumentation.
+	// The shared request context bounds this scenario; do not impose a latency SLA.
+	client := &http.Client{}
 	for {
 		request, requestErr := http.NewRequestWithContext(ctx, "GET", origin+"/", nil)
 		if requestErr != nil {
