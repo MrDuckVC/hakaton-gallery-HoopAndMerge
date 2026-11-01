@@ -179,3 +179,22 @@ func TestAdminPublicRoomListAndMe(t *testing.T) {
 		t.Fatal(w.Body)
 	}
 }
+
+func TestAdminRoomNPCLimit(t *testing.T) {
+	for _, count := range []string{"0", "10", "11", "40"} {
+		s, a, _ := adminServer()
+		body := strings.Replace(roomUpdate, `"npc_count":0`, `"npc_count":`+count, 1)
+		w := perform(s, "PUT", "/api/v1/admin/rooms/room", body, "http://localhost:8080", "token")
+		if count == "0" || count == "10" {
+			assertResponse(t, w, 200, "")
+			if a.updates != 1 {
+				t.Fatal("valid count not applied")
+			}
+		} else {
+			assertResponse(t, w, 400, "VALIDATION_ERROR")
+			if a.updates != 0 {
+				t.Fatal("excessive count reached usecase")
+			}
+		}
+	}
+}

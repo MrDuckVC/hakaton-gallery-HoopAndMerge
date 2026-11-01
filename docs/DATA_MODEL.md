@@ -140,3 +140,12 @@ room seed материализуется как revision=2; последующи
 читает effective profile+revision до commit queued→running. Снимок хранится только
 в выполняемом задании, не в wire или новой истории prompts. После рестарта pending
 завершаются прежней recovery-операцией SERVER_RESTARTED. Terminal+memory не меняются.
+
+## Лимит посетителей (00008)
+
+`00008_npc_limit.sql` не меняет структуру таблиц: транзакционно заменяет только
+room_overlays.config.npc_count>10 на 10 и повышает revision на 1, обновляя updated_at.
+Это относится ко всем сохранённым WORLD_VERSION; другие поля config, lamp и
+приватный holder сохраняются. Counts 0–10 не затрагиваются. При переполнении
+предельной revision constraint отклоняет всю миграцию без частичного результата.
+Повторный up безопасен по истории goose; миграции 00001–00007 не переписываются.

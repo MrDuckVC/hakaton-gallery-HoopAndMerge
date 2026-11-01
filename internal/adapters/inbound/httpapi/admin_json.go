@@ -187,7 +187,7 @@ func adminConfig(value any) (domain.Config, bool) {
 	if !ok {
 		return c, false
 	}
-	count, ok := adminInteger(m["npc_count"], 0, 40)
+	count, ok := adminInteger(m["npc_count"], 0, domain.MaxNPCCount)
 	if !ok {
 		return c, false
 	}

@@ -147,7 +147,7 @@ S01, S02, S03 и S04 реализованы; фактические провер
   replacement/door/SQL-сбой/неопределённый commit/restart, lazy cleanup без сброса нового owner;
 - telemetry: fake clock 2/5/6 с, visible=false, неверный nonce, stale, старый callback,
   без участия в обычном лимите/UUID, SQL и других метриках;
-- NPC: fake clock/seed, 40/0, остановка/чат/3 с, стены, отсутствие LLM/SQL tick,
+- NPC: fake clock/seed, 10/0, остановка/чат/3 с, стены, отсутствие LLM/SQL tick,
   полные snapshots, новый instance при новом lifecycle комнаты;
 - guide.action: только перечисленные фразы, без LLM/SQL из текста, CAS/LOS/ready,
   повтор show без новых объектов, обычный ask работает независимо;
@@ -184,3 +184,9 @@ SQL-интеграции проверяют CAS, version isolation, rollback у�
 Сквозной HTTP/WS-тест проверяет not-ready broadcast, rollback без лишних событий,
 room.sync, replacement и восстановление профиля новым runtime service.
 Все SQL-тесты используют только отдельный TEST_DATABASE_URL и свои schemas.
+
+Лимит посетителей: seed=10; domain/admin PUT допускают npc_count=0/10 и
+отклоняют 11/40. Контрактный валидатор проверяет тот же диапазон и NPC snapshot
+из 10 записей; 11-я запись запрещена. SQL-тест миграции 00008 стартует со схемы
+00007, проверяет counts 0/10/11/40, разные WORLD_VERSION, сохранение config/lamp/holder,
+повышение revisions только изменённых комнат, повторный up и startup после миграции.

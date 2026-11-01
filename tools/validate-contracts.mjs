@@ -105,11 +105,15 @@ assert.throws(()=>check({type:'telemetry.pong',payload:{nonce:'short'}},client,c
 assert.throws(()=>check({type:'object.act',payload:{object_id:'lamp_01',action:'take',movement_epoch:1,expected_revision:1}},client,client));
 assert.throws(()=>check(sundayCommand('object.act',{object_id:'lamp_01',action:'take',movement_epoch:1,expected_revision:1,on:true}),client,client));
 assert.throws(()=>check(sundayCommand('object.act',{object_id:'lamp_01',action:'aim',movement_epoch:1,expected_revision:1,yaw:0,head_pitch:2}),client,client));
-const npcs=read('docs/api/examples/sunday/npc.state.json');check(npcs,server,server);npcs.payload.npcs.push(npcs.payload.npcs[0]);assert.throws(()=>check(npcs,server,server));
+const npcs=read('docs/api/examples/sunday/npc.state.json');assert.equal(npcs.payload.npcs.length,10);check(npcs,server,server);npcs.payload.npcs.push(npcs.payload.npcs[0]);assert.throws(()=>check(npcs,server,server));
 const currentWorld=read('content/world/catalog.json');
 const runtime=read('docs/api/examples/sunday/world.runtime.json').payload;
 assert(currentWorld.rooms.some(x=>x.id===runtime.room_id));
 assert(Buffer.byteLength(JSON.stringify(runtime))<=32768);
 assert(Buffer.byteLength(JSON.stringify(read('docs/api/examples/sunday/npc.state.json').payload))<=24576);
 for(const room of currentWorld.rooms){const dto=read('content/world/'+room.file);assert(dto.guides.length<=3);}
+
+const npcConfig=structuredClone(runtime.config);
+for(const count of [0,10]){npcConfig.npc_count=count;check(npcConfig,api.components.schemas.SundayRoomConfig,api);}
+for(const count of [-1,11,40]){npcConfig.npc_count=count;assert.throws(()=>check(npcConfig,api.components.schemas.SundayRoomConfig,api));}
 console.log('PASS: Sunday HTTP/WS fixtures, telemetry exemptions/nullability, lamp action unions, limits, real C01 room and bounded snapshots.');

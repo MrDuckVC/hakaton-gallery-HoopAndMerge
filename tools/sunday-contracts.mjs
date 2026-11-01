@@ -11,8 +11,9 @@ export function sundayContracts({S,P,client,server,obj,ref,str,number,integer,ar
  const named=(name,schema)=>{S['Sunday'+name]=schema;return ref('Sunday'+name);};
  const vec=named('Vec3',obj({x:number(),y:{const:0},z:number()}));
  const placement=named('GuidePlacement',obj({guide_id:id(),position:vec,rotation_y:yaw}));
+ const maxNPCCount=10;
  const slot=named('LampSlot',obj({slot_id:e(['a','b']),position:vec}));
- const config=named('RoomConfig',obj({accent_color:color,lighting:e(['neutral','warm','cool']),guide_placements:list(placement,0,3),lamp_slots:list(slot,2,2),npc_count:int(0,40),installation_visible:bool}));
+ const config=named('RoomConfig',obj({accent_color:color,lighting:e(['neutral','warm','cool']),guide_placements:list(placement,0,3),lamp_slots:list(slot,2,2),npc_count:int(0,maxNPCCount),installation_visible:bool}));
  const guide=named('PublicGuide',obj({guide_id:id(),display_name:text(64),subtitle:text(200),position:vec,rotation_y:yaw}));
  const lamp=named('Lamp',obj({object_id:{const:'lamp_01'},slot_id:e(['a','b']),holder_user_id:nullable(id()),yaw,head_pitch:num(-Math.PI/3,Math.PI/3),on:bool}));
  const runtime=named('RoomRuntime',obj({world_version:id(),room_id:id(),revision:int(1),config,guides:list(guide,0,3),lamp}));
@@ -26,8 +27,8 @@ export function sundayContracts({S,P,client,server,obj,ref,str,number,integer,ar
  const clients=named('Clients',obj({clients:list(metric,0,32)}));
  const rooms=named('Rooms',obj({rooms:arr(obj({room_id:id(),title:str(),revision:int(1)}))}));
  const guides=named('Guides',obj({guides:arr(obj({guide_id:id(),display_name:text(64),revision:int(1)}))}));
- const npc=named('NPC',obj({npc_id:str({pattern:'^npc_[0-3][0-9]$'}),position:vec,yaw,state:e(['walking','idle','talking']),speed_mps:num(0,.6),phase:{type:'number',minimum:0,exclusiveMaximum:2*Math.PI}}));
- const npcs=named('NPCState',obj({world_version:id(),room_id:id(),room_instance_id:id(),seq:int(1),npcs:list(npc,0,40)}));
+ const npc=named('NPC',obj({npc_id:str({pattern:'^npc_0[0-9]$'}),position:vec,yaw,state:e(['walking','idle','talking']),speed_mps:num(0,.6),phase:{type:'number',minimum:0,exclusiveMaximum:2*Math.PI}}));
+ const npcs=named('NPCState',obj({world_version:id(),room_id:id(),room_instance_id:id(),seq:int(1),npcs:list(npc,0,maxNPCCount)}));
  const commandBase={object_id:{const:'lamp_01'},movement_epoch:int(1),expected_revision:int(1)};
  const actions=named('ObjectAct',{oneOf:[
   obj({...commandBase,action:{const:'take'}}),
@@ -85,14 +86,14 @@ export function sundayContracts({S,P,client,server,obj,ref,str,number,integer,ar
  write('docs/api/sunday.types.ts',types);
  const roomID='room_leonardo_portrait',guideID='guide_leonardo';
  const p={x:6,y:0,z:7.5};
- const runtimeExample={world_version:'gallery_c01_v1',room_id:roomID,revision:1,config:{accent_color:'#D9D2C3',lighting:'neutral',guide_placements:[{guide_id:guideID,position:p,rotation_y:0}],lamp_slots:[{slot_id:'a',position:{x:3,y:0,z:4}},{slot_id:'b',position:{x:9,y:0,z:4}}],npc_count:40,installation_visible:false},guides:[{guide_id:guideID,display_name:'Леонардо',subtitle:'Учебная реконструкция',position:p,rotation_y:0}],lamp:{object_id:'lamp_01',slot_id:'a',holder_user_id:null,yaw:0,head_pitch:0,on:true}};
+ const runtimeExample={world_version:'gallery_c01_v1',room_id:roomID,revision:1,config:{accent_color:'#D9D2C3',lighting:'neutral',guide_placements:[{guide_id:guideID,position:p,rotation_y:0}],lamp_slots:[{slot_id:'a',position:{x:3,y:0,z:4}},{slot_id:'b',position:{x:9,y:0,z:4}}],npc_count:maxNPCCount,installation_visible:false},guides:[{guide_id:guideID,display_name:'Леонардо',subtitle:'Учебная реконструкция',position:p,rotation_y:0}],lamp:{object_id:'lamp_01',slot_id:'a',holder_user_id:null,yaw:0,head_pitch:0,on:true}};
  const requestID='11111111-1111-4111-8111-111111111111';
  const event=(type,payload,correlated=false)=>({type,event_id:'evt_sunday_'+type.replaceAll('.','_'),server_time:'2026-11-01T12:00:00Z',...(correlated?{request_id:requestID}:{}),payload});
  const command=(type,payload)=>({type,...(special.has(type)?{}:{request_id:requestID}),payload});
  const example=(name,value)=>json('docs/api/examples/sunday/'+name+'.json',value);
  example('world.runtime',event('world.runtime',runtimeExample));
  example('room.sync',command('room.sync',{}));
- const npcPayload={world_version:'gallery_c01_v1',room_id:roomID,room_instance_id:'room_instance_01',seq:1,npcs:Array.from({length:40},(_,i)=>({npc_id:'npc_'+String(i).padStart(2,'0'),position:{x:2+(i%8),y:0,z:3+Math.floor(i/8)*.7},yaw:0,state:'walking',speed_mps:.6,phase:(i*.5)%(2*Math.PI)}))};
+ const npcPayload={world_version:'gallery_c01_v1',room_id:roomID,room_instance_id:'room_instance_01',seq:1,npcs:Array.from({length:maxNPCCount},(_,i)=>({npc_id:'npc_'+String(i).padStart(2,'0'),position:{x:2+(i%8),y:0,z:3+Math.floor(i/8)*.7},yaw:0,state:'walking',speed_mps:.6,phase:(i*.5)%(2*Math.PI)}))};
  example('npc.state',event('npc.state',npcPayload));
  for(const [action,extra]of Object.entries({take:{},place:{slot_id:'b'},aim:{yaw:.4,head_pitch:.2},power:{on:false}}))example('object.act.'+action,command('object.act',{object_id:'lamp_01',movement_epoch:1,expected_revision:1,action,...extra}));
  example('object.acted',event('object.acted',{action:'take',runtime:{...runtimeExample,revision:2,lamp:{...runtimeExample.lamp,holder_user_id:'usr_01'}}},true));

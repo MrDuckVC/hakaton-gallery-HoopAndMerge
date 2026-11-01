@@ -2109,7 +2109,7 @@
         "npc_count": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 40
+          "maximum": 10
         },
         "installation_visible": {
           "type": "boolean"
@@ -2642,7 +2642,7 @@
       "properties": {
         "npc_id": {
           "type": "string",
-          "pattern": "^npc_[0-3][0-9]$"
+          "pattern": "^npc_0[0-9]$"
         },
         "position": {
           "$ref": "#/$defs/SundayVec3"
@@ -2713,7 +2713,7 @@
             "$ref": "#/$defs/SundayNPC"
           },
           "minItems": 0,
-          "maxItems": 40
+          "maxItems": 10
         }
       },
       "required": [
