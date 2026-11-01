@@ -76,6 +76,10 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 		return fmt.Errorf("prepare room runtime: %w", err)
 	}
 	connections.ConfigureRuntime(rooms)
+	if err = connections.ConfigureNPCs(catalog.Rooms(), security.Crypto{}.NewID); err != nil {
+		pool.Close()
+		return err
+	}
 	guideStore := postgres.NewGuideStore(pool)
 	guideStore.ConfigureProfiles(cfg.WorldVersion, catalog)
 	guides := guidecase.New(guideStore, rooms, accounts, connections, ollama.New(cfg.OllamaBaseURL, cfg.OllamaModel), guidecase.Clock{Now: time.Now, After: time.After}, security.Crypto{}.NewID)

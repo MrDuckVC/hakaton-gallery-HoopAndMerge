@@ -72,6 +72,7 @@ type Event struct {
 	InspectedAt     time.Time
 	Guide           guidecase.Event
 	Runtime         runtime.Room
+	NPCs            NPCSnapshot
 }
 
 // Sink performs bounded, nonblocking memory operations only, never network I/O.

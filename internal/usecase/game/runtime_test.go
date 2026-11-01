@@ -135,15 +135,8 @@ func TestRuntimeEnterOrderAndDurableReadOutsideMutex(t *testing.T) {
 	}
 }
 
-type roomSnapshots struct{}
-
-func (roomSnapshots) EnqueueSnapshot(_ string, request string, sink Sink) bool {
-	return sink.Enqueue(Event{Type: "npc.state", RequestID: request})
-}
 func TestRuntimeAlwaysPrecedesRoomSimulationSnapshots(t *testing.T) {
-	s := New(time.Now)
-	s.ConfigureRuntime(runtimeFixture())
-	s.ConfigureRoomSnapshots(roomSnapshots{})
+	s, _, _ := setupNPC(t)
 	sink := &testSink{}
 	id := attach(t, s, "a", sink)
 	if len(sink.events) != 3 || sink.events[0].Type != "world.snapshot" || sink.events[1].Type != "world.runtime" || sink.events[2].Type != "npc.state" {

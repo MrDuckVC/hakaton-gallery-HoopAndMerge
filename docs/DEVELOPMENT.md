@@ -314,8 +314,8 @@ Overlay хранится отдельно по `(world_version,room_id)`. Reconn
 Первое событие — snapshot, затем runtime; переход — entered, затем runtime.
 `room.sync {}` требует обычный UUID, owning connection, но допускается до ready;
 лимит 2 за 10 секунд на user сохраняется при reconnect. Ответ runtime содержит request_id.
-S05 подключит NPC snapshot через `game.RoomSnapshots` в ту же упорядоченную очередь,
-после runtime. S01 не запускает симуляцию NPC и не включает capability `sunday_v1`.
+S05 добавляет полный NPC snapshot после runtime в ту же очередь; room.sync
+коррелирует оба события. Capability `sunday_v1` пока не включается.
 Обычные guide.ask и игровые проверки используют effective placement runtime.
 
 SQL-интеграции запускайте только с отдельным `TEST_DATABASE_URL`:
@@ -385,8 +385,8 @@ URL, uploads и фиксированные системные инструкци
 ## Лимит NPC: 10 посетителей на зал
 
 В рамках #38 максимум и seed снижены с 40 до 10; admin PUT разрешает 0–10,
-11 и выше возвращают VALIDATION_ERROR. Это обновление Sunday-контракта, не
-реализация симуляции S05; capability sunday_v1 по-прежнему выключена.
+11 и выше возвращают VALIDATION_ERROR. Сам лимит внесён в #38; симуляция
+добавлена в S05 (#41). Capability sunday_v1 по-прежнему выключена.
 
 Оператор отдельно выполняет `make migrate-up`, затем `make migrate-status` до
 запуска обновлённого backend. Новая forward-only миграция 00008 уменьшает все
@@ -395,3 +395,26 @@ URL, uploads и фиксированные системные инструкци
 сохраняются. Если revision нельзя увеличить в пределах safe integer, миграция
 откатывается целиком; автоматического сброса revision нет. Startup требует новую
 схему и не меняет её. Рабочую БД агент не мигрирует; новых env нет.
+
+## S05 — симуляция NPC
+
+В каждом зале с owning WS работают до 10 посетителей из config.npc_count. При
+startup проверяются маршруты неизменяемой геометрии всех залов; ошибка подготовки
+запрещает listener. Существующий игровой цикл выполняет NPC-шаг раз в 200 мс,
+без SQL/Ollama и без добавления препятствий игрокам. При задержке scheduler
+пропущенные шаги не догоняются, чтобы не создавать скачки и залпы сообщений.
+
+После потери последнего owning WS симуляция удаляется до SQL-cleanup. Следующий
+вход начинает новый instance с seq=1; непрерывный replacement сохраняет instance.
+Принятый текст чата вызывает talking на 3 с у посетителей того же зала в радиусе
+3 м; фото без текста не вызывает реакцию. NPC-позиции и реакции не сохраняются.
+Новых env/миграций/ассетов нет; для лимита 10 схема уже должна включать 00008.
+Анимации и интерполяция относятся к отдельному frontend. Проверки:
+
+```sh
+go test ./internal/domain/npc ./internal/usecase/game
+go test ./cmd/server -run TestNPCPlansForAllC01Rooms
+go test -race ./internal/adapters/inbound/websocket -run TestNPC
+# С отдельной TEST_DATABASE_URL, как описано выше:
+go test ./internal/adapters/outbound/postgres -run TestRuntimeHTTPWebSocketDurabilityIntegration
+```

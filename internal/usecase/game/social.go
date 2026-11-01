@@ -99,6 +99,9 @@ func (s *Service) chat(ctx context.Context, c *connection, cmd Command) Failure 
 	if s.active[c.identity.User.ID] != c || c.ended || s.stopping {
 		return Failure{Drop: true}
 	}
+	if text != "" {
+		s.npcChatLocked(c)
+	}
 	for userID, other := range s.active {
 		if other.ended {
 			continue

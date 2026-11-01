@@ -28,26 +28,29 @@ type reservation struct{ identity Identity }
 
 // Service serializes registry and presence changes; its lock never covers external I/O.
 type Service struct {
-	mu            sync.Mutex
-	now           Clock
-	next          uint64
-	stopping      bool
-	active        map[string]*connection
-	pending       map[string]reservation
-	limits        map[string]*windows
-	gates         map[string]chan struct{}
-	world         World
-	objects       Objects
-	dirtyLamps    map[string]lampRetry
-	lampSequence  uint64
-	runtime       Runtime
-	roomSnapshots RoomSnapshots
-	store         PositionStore
-	questions     Questions
-	guides        GuideCommands
-	inspections   InspectionStore
-	photos        PhotoPublisher
-	newMessageID  func() string
+	mu                  sync.Mutex
+	now                 Clock
+	next                uint64
+	stopping            bool
+	active              map[string]*connection
+	pending             map[string]reservation
+	limits              map[string]*windows
+	gates               map[string]chan struct{}
+	world               World
+	objects             Objects
+	dirtyLamps          map[string]lampRetry
+	lampSequence        uint64
+	runtime             Runtime
+	npcPlans            map[string]npcPlan
+	npcRooms            map[string]*npcRoom
+	newNPCInstanceID    func() string
+	npcInstanceSequence uint64
+	store               PositionStore
+	questions           Questions
+	guides              GuideCommands
+	inspections         InspectionStore
+	photos              PhotoPublisher
+	newMessageID        func() string
 }
 
 // New constructs a registry limited to 32 active or reserved accounts.
@@ -176,6 +179,8 @@ func (s *Service) attachPrepared(ticket string, sink Sink, r reservation, room *
 	if !ok || s.stopping {
 		return authdomain.Unavailable
 	}
+	s.pruneNPCLocked()
+	defer s.pruneNPCLocked()
 	userID := r.identity.User.ID
 	snapshot := Snapshot{WorldVersion: r.identity.State.WorldVersion, Self: presence(r.identity), CurrentRoom: r.identity.Package, Players: make([]Player, 0, len(s.active))}
 	for id, c := range s.active {
@@ -194,6 +199,7 @@ func (s *Service) attachPrepared(ticket string, sink Sink, r reservation, room *
 		s.broadcastLocked(Event{Type: "player.left", UserID: userID}, userID)
 	}
 	s.active[userID] = &connection{id: ticket, identity: r.identity, sink: sink, seen: make(map[string]struct{}), epoch: 1, telemetry: telemetry{nextProbe: s.now().Add(5 * time.Second)}}
+	s.pruneNPCLocked()
 	s.broadcastLocked(Event{Type: "player.joined", Player: presence(r.identity)}, userID)
 	return nil
 }
@@ -219,7 +225,7 @@ func (s *Service) Detach(userID, id string) {
 		s.mu.Unlock()
 		return
 	}
-	c.ended = true
+	s.endLocked(c)
 	c.ready = false
 	roomID := c.identity.State.RoomID
 	s.markLampDirtyLocked(roomID)
@@ -250,6 +256,7 @@ func (s *Service) remove(userID, id string) {
 	defer s.mu.Unlock()
 	if c := s.active[userID]; c != nil && c.id == id {
 		delete(s.active, userID)
+		s.pruneNPCLocked()
 		s.broadcastLocked(Event{Type: "player.left", UserID: userID}, userID)
 	}
 }
@@ -287,7 +294,7 @@ func (s *Service) closeCurrent(userID, id string, code int) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if c := s.active[userID]; c != nil && c.id == id {
-		c.ended = true
+		s.endLocked(c)
 		s.markLampDirtyLocked(c.identity.State.RoomID)
 		if code == 1011 {
 			c.reloadPose = true
@@ -315,6 +322,7 @@ func (s *Service) StopAccepting(context.Context) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.stopping = true
+	s.pruneNPCLocked()
 	return nil
 }
 
@@ -323,7 +331,7 @@ func (s *Service) CloseConnections(context.Context) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	for _, c := range s.active {
-		c.ended = true
+		s.endLocked(c)
 		s.markLampDirtyLocked(c.identity.State.RoomID)
 		c.sink.Close(1012)
 	}
@@ -371,7 +379,7 @@ func (s *Service) Check(userID, id string, cmd Command) Failure {
 				w.moveSecond = second
 			}
 			if w.violatingSeconds >= 5 {
-				c.ended = true
+				s.endLocked(c)
 				s.markLampDirtyLocked(c.identity.State.RoomID)
 				c.sink.Close(1008)
 			}
@@ -387,7 +395,7 @@ func (s *Service) Check(userID, id string, cmd Command) Failure {
 		_, duplicate = c.seen[key]
 		c.seen[key] = struct{}{}
 		if len(c.seen) >= 10000 {
-			c.ended = true
+			s.endLocked(c)
 			s.markLampDirtyLocked(c.identity.State.RoomID)
 			c.sink.Close(1012)
 		}
