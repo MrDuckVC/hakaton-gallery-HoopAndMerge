@@ -23,6 +23,7 @@ type connection struct {
 	ready      bool
 	epoch, ack int64
 	lastMove   time.Time
+	moveBudget float64
 }
 type reservation struct{ identity Identity }
 

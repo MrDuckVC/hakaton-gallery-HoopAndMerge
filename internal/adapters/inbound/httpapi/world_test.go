@@ -2,6 +2,7 @@ package httpapi
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"net/url"
 	"testing"
@@ -15,6 +16,27 @@ type fakeWorld struct {
 	calls              int
 	token, version, id string
 	err                error
+}
+
+func TestManifestAdvertisesIntegratedSunday(t *testing.T) {
+	s, _ := authServer(false)
+	s.ConfigureWorld(&fakeWorld{})
+	w := perform(s, "GET", "/api/v1/world/manifest", "", "", "owner")
+	assertResponse(t, w, 200, "")
+	var manifest struct {
+		Extensions   []string `json:"extensions"`
+		MaxRooms     int      `json:"max_loaded_rooms"`
+		PhotoReserve int64    `json:"photo_reserve_bytes"`
+	}
+	if err := json.Unmarshal(w.Body.Bytes(), &manifest); err != nil {
+		t.Fatal(err)
+	}
+	if len(manifest.Extensions) != 1 || manifest.Extensions[0] != "sunday_v1" {
+		t.Fatalf("Sunday capability missing: %s", w.Body.String())
+	}
+	if manifest.MaxRooms != 1 || manifest.PhotoReserve != world.PhotoReserve {
+		t.Fatalf("base manifest changed: %s", w.Body.String())
+	}
 }
 
 func (f *fakeWorld) Manifest(_ context.Context, token string) (world.Manifest, error) {

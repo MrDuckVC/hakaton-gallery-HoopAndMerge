@@ -116,6 +116,12 @@ func (p *peer) heartbeat(ctx context.Context, interval, timeout time.Duration) {
 			cancel()
 			if err != nil {
 				p.Close(1008)
+				// CloseNow can join a concurrent graceful Close in coder/websocket.
+				// Abort the underlying socket first: a silent peer cannot finish
+				// that handshake, and must not retain transport workers until it does.
+				if p.abort != nil {
+					p.abort()
+				}
 				_ = p.conn.CloseNow()
 				return
 			}

@@ -271,8 +271,8 @@ Node нужен backend только для tools/build-contracts.mjs и validat
 ## Sunday
 
 Контракты — [api/sunday.md](api/sunday.md), задачи — [SUNDAY_BACKLOG.md](SUNDAY_BACKLOG.md).
-Реализованы S01/S02/S03/S04. Capability sunday_v1 остаётся выключенной до S07;
-frontend и физический показ проверяются отдельно.
+S01–S07 интегрированы, manifest объявляет sunday_v1. Production frontend закреплён
+на проверенном main SHA. Проверки и границы — [S07_ACCEPTANCE.md](S07_ACCEPTANCE.md).
 
 ## S01: runtime залов и административная роль
 
@@ -315,7 +315,7 @@ Overlay хранится отдельно по `(world_version,room_id)`. Reconn
 `room.sync {}` требует обычный UUID, owning connection, но допускается до ready;
 лимит 2 за 10 секунд на user сохраняется при reconnect. Ответ runtime содержит request_id.
 S05 добавляет полный NPC snapshot после runtime в ту же очередь; room.sync
-коррелирует оба события. Capability `sunday_v1` пока не включается.
+коррелирует оба события. S07 включает capability `sunday_v1`.
 Обычные guide.ask и игровые проверки используют effective placement runtime.
 
 SQL-интеграции запускайте только с отдельным `TEST_DATABASE_URL`:
@@ -386,7 +386,7 @@ URL, uploads и фиксированные системные инструкци
 
 В рамках #38 максимум и seed снижены с 40 до 10; admin PUT разрешает 0–10,
 11 и выше возвращают VALIDATION_ERROR. Сам лимит внесён в #38; симуляция
-добавлена в S05 (#41). Capability sunday_v1 по-прежнему выключена.
+добавлена в S05 (#41). S07 включает capability sunday_v1.
 
 Оператор отдельно выполняет `make migrate-up`, затем `make migrate-status` до
 запуска обновлённого backend. Новая forward-only миграция 00008 уменьшает все
@@ -435,3 +435,36 @@ go test ./internal/adapters/outbound/postgres -run TestGuideActionWebSocketDurab
 ```
 
 Полный test/race/coverage прогон включает эти проверки и регрессии B07/B08.
+
+## S07 — обновление существующего офлайн-запуска
+
+Подготовка не перезаписывает существующий dist/комплект. После `make build`:
+
+```sh
+sh tools/build-frontend.sh ./data/frontend-s07
+python3 tools/offline-bundle.py prepare --frontend-dist ./data/frontend-s07 --output ./data/offline/s07-final
+python3 tools/offline-bundle.py verify ./data/offline/s07-final
+```
+
+Для повторной подготовки выбирайте новые имена выходных каталогов. В комплекте
+обязательны исполняемые `bin/gallery`, `bin/migrate`, `bin/admin`; hashes каждого
+фиксируются в bundle-manifest.json. Миграции 00006–00008 поставляются как есть,
+новой миграции S07 нет. В корне комплекта после настройки и экспорта доверенного .env:
+
+```sh
+./bin/migrate up
+./bin/migrate status
+# Существующий зарегистрированный аккаунт; команда не создаёт пользователя.
+./bin/admin grant --username NAME
+./bin/gallery
+```
+
+Миграции/выдачу роли оператор выполняет отдельно до игрового запуска. При обновлении
+сохраните прежние Compose project/volume и абсолютный PHOTO_DIR; порядок Ollama,
+LAN и localhost — [DEMO.md](DEMO.md). Рабочие данные в комплект не копируются.
+Для сквозного теста с реальным dist дополнительно задайте абсолютный
+`SUNDAY_TEST_FRONTEND_DIST` вместе с отдельным `TEST_DATABASE_URL`; без dist тест
+использует временную HTML-страницу, а без тестовой БД явно пропускается.
+По умолчанию мир синтетический; `SUNDAY_TEST_WORLD_DIR=/absolute/content/world`
+включает отдельную uninstrumented проверку C01. Каждый запуск владеет случайной
+SQL-схемой и удаляет только её.

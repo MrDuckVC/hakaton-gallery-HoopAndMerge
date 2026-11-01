@@ -72,6 +72,7 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 		if !c.ready {
 			c.ready = true
 			c.lastMove = s.now()
+			c.moveBudget = 0
 		}
 		c.sink.Enqueue(Event{Type: "world.ready", RequestID: cmd.RequestID, MovementEpoch: c.epoch})
 		return Failure{}
@@ -194,6 +195,7 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 			c.ack = 0
 			c.ready = false
 			c.lastMove = time.Time{}
+			c.moveBudget = 0
 			c.sink.Enqueue(Event{Type: "world.entered", RequestID: cmd.RequestID, Player: presenceConnection(c), CurrentRoom: pkg})
 			if room != nil {
 				s.enqueueRuntimeLocked(c.sink, *room, "")
@@ -234,9 +236,14 @@ func (s *Service) moveLocked(c *connection, cmd Command) Failure {
 	now := s.now()
 	dt := max(0, min(now.Sub(c.lastMove).Seconds(), .25))
 	c.lastMove = now
+	// Preserve unused distance across packets so delivery jitter cannot reject
+	// ordinary walking. The 1 m cap bounds bursts after idle; the refill rate
+	// still prevents sustained travel above 4 m/s.
+	c.moveBudget = min(1, c.moveBudget+4*dt)
 	c.ack = cmd.Seq
 	c.identity.State.Rotation = cmd.Rotation
-	if math.Hypot(p.X-c.identity.State.Position.X, p.Z-c.identity.State.Position.Z) > 4*dt+.000001 {
+	distance := math.Hypot(p.X-c.identity.State.Position.X, p.Z-c.identity.State.Position.Z)
+	if distance > c.moveBudget+.000001 {
 		return Failure{}
 	}
 	if s.world == nil {
@@ -248,6 +255,7 @@ func (s *Service) moveLocked(c *connection, cmd Command) Failure {
 	}
 	if worlddomain.Sweep(room, c.identity.State.Position, p) {
 		c.identity.State.Position = p
+		c.moveBudget = max(0, c.moveBudget-distance)
 	}
 	return Failure{}
 }

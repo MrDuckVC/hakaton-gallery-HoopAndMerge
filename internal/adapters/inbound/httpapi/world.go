@@ -31,7 +31,7 @@ func (s *Server) serveWorld(w http.ResponseWriter, r *http.Request) bool {
 			applicationError(w, err)
 			return true
 		}
-		writeJSON(w, 200, manifestDTO{WorldID: m.ID, Version: m.Version, Total: m.TotalBytes, Limit: m.CacheLimit, MaxRooms: 1, PhotoReserve: domain.PhotoReserve, Movement: movementDTO{SendRate: 10, StateRate: 10, MaxSpeed: 4, Radius: 0.3, Height: 1.8, Camera: 1.65}})
+		writeJSON(w, 200, manifestDTO{Extensions: []string{"sunday_v1"}, WorldID: m.ID, Version: m.Version, Total: m.TotalBytes, Limit: m.CacheLimit, MaxRooms: 1, PhotoReserve: domain.PhotoReserve, Movement: movementDTO{SendRate: 10, StateRate: 10, MaxSpeed: 4, Radius: 0.3, Height: 1.8, Camera: 1.65}})
 		return true
 	}
 	path := r.URL.EscapedPath()
@@ -90,6 +90,7 @@ type movementDTO struct {
 	Camera    float64 `json:"camera_height_m"`
 }
 type manifestDTO struct {
+	Extensions   []string    `json:"extensions"`
 	WorldID      string      `json:"world_id"`
 	Version      string      `json:"world_version"`
 	Total        int64       `json:"total_content_bytes"`

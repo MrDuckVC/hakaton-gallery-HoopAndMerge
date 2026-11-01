@@ -26,3 +26,5 @@ content/README.md — готовая галерея C01, её маршрут, и
 - [S01_ACCEPTANCE.md](S01_ACCEPTANCE.md) — runtime залов/admin rooms: проверки, миграция и границы S01.
 - [S02_ACCEPTANCE.md](S02_ACCEPTANCE.md) — профили гидов: CAS, снимок worker, публичные имена и миграция 00007.
 - [S04_ACCEPTANCE.md](S04_ACCEPTANCE.md) — светильник: CAS, WS, cleanup/recovery и проверки.
+
+- [S07_ACCEPTANCE.md](S07_ACCEPTANCE.md) — интеграция Sunday, production frontend, автономный комплект и ограничения приёмки №20/21.

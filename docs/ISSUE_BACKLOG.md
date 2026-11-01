@@ -188,7 +188,7 @@ GitHub: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/issues/6
 ### Что сделать
 
 - [ ] Реализовать domain/usecase ready, epoch, seq, state snapshot и players.state10Hz; not-ready отклоняет игровые команды, но разрешает chat/cancel.
-- [ ] Проверять finite coordinates, Y=0, yaw/pitch, скорость4m/s с dt<=0.25, sweep цилиндра radius0.3/height1.8 и границы; допустимый rotation независим от отклонённого движения.
+- [ ] Проверять finite coordinates, Y=0, yaw/pitch, скорость4m/s с запасом расстояния<=1m (начально0, по contract.md), sweep цилиндра radius0.3/height1.8 и границы; допустимый rotation независим от отклонённого движения.
 - [ ] world.enter: дверь текущего зала, XZ<=1.5м и LOS; отмена вопроса через порт, транзакционное сохранение до entered, epoch+1/ack0/not-ready, entered до state.
 - [ ] Позиция каждые5с и disconnect; DB failure периодического save ->close1011; недопустимое восстановленное положение сохраняется исправленным.
 

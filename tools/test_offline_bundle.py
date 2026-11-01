@@ -25,6 +25,51 @@ class OfflineKitTest(unittest.TestCase):
                 kit.prepare(repo / "output", repo / "frontend", repo / "runtime", repo / "models")
             self.assertFalse((repo / "output").exists())
 
+    def test_prepared_kit_contains_executable_admin_and_detects_its_loss(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            for name in ["bin/gallery", "bin/migrate", "bin/admin", "runtime/bin/ollama"]:
+                file = repo / name
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_text("executable placeholder")
+                file.chmod(0o755)
+            (repo / "frontend").mkdir()
+            (repo / "frontend/index.html").write_text("<!doctype html>")
+            (repo / "frontend/build-info.json").write_text(json.dumps({
+                "repository": "https://github.com/ManInTheCoat/Hope-Merge-Frontend.git",
+                "branch": "main", "commit": "c" * 40, "mock": False,
+            }))
+            for name in ["migrations", "docs", "configs/ollama", "tools", "content/world"]:
+                (repo / name).mkdir(parents=True, exist_ok=True)
+            (repo / "content/world/catalog.json").write_text('{"world_version":"test_v1"}')
+            (repo / "tools/offline-bundle.py").write_text("verifier")
+            (repo / ".env.example").write_text("PHOTO_DIR=./data/photos\nFRONTEND_DIST_DIR=./data/frontend\n")
+            (repo / "docker-compose.yml").write_text("services:\n  postgres:\n    image: postgres:18.6-bookworm\n")
+            output = repo / "output"
+
+            def export_image(args, **_kwargs):
+                self.assertEqual(args[:3], ["docker", "image", "save"])
+                Path(args[args.index("--output") + 1]).write_bytes(b"test image")
+
+            with patch.object(kit, "REPO", repo), \
+                    patch.object(kit, "check_runtime", return_value="0.40.13"), \
+                    patch.object(kit, "model_files", return_value=(set(), {})), \
+                    patch.object(kit.subprocess, "check_output", side_effect=["image-id\n", "b" * 40 + "\n", b""]), \
+                    patch.object(kit.subprocess, "run", side_effect=export_image):
+                kit.prepare(output, repo / "frontend", repo / "runtime", repo / "models")
+            admin = output / "bin/admin"
+            self.assertEqual(admin.read_bytes(), (repo / "bin/admin").read_bytes())
+            self.assertEqual(admin.stat().st_mode & 0o111, 0o111)
+            manifest = json.loads((output / "bundle-manifest.json").read_text())
+            self.assertEqual(manifest["files"]["bin/admin"]["sha256"], kit.digest(admin))
+            kit.verify(output)
+            admin.write_bytes(b"tampered")
+            with self.assertRaisesRegex(ValueError, "bin/admin"):
+                kit.verify(output)
+            admin.unlink()
+            with self.assertRaisesRegex(ValueError, "bin/admin"):
+                kit.verify(output)
+
     def test_runtime_version_is_read_from_client_and_must_match_pin(self):
         for output in ["Warning: client version is 0.40.13", "Warning: client version is 0.39.0", "unknown runtime"]:
             with self.subTest(output=output), patch.object(kit.subprocess, "run", return_value=SimpleNamespace(stdout="", stderr=output, returncode=0)) as run:

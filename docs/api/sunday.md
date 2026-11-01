@@ -1,8 +1,9 @@
 # Sunday v1 — нормативное расширение API галереи
 
-Статус: **S01 runtime/admin rooms, S02 admin guides, S03 FPS+ping, S04 светильник, S05 NPC и S06 действия гидов реализованы; остальные части — целевой контракт**. Дата 01.11.2026.
+Статус: **S01–S07 интегрированы; физическая приёмка остаётся отдельной проверкой**. Дата 01.11.2026.
 `world.runtime`, `room.sync` и `npc.state` доступны; NPC-снимок идёт после runtime,
-с тем же request_id для sync. Capability `sunday_v1` включается только в S07.
+с тем же request_id для sync. Manifest объявляет `extensions: ["sunday_v1"]` после интеграции S07.
+Проверенный frontend main: `c7dbfdc62057fabf06d50bce2a0c3e8e0f386150`; результаты — [S07_ACCEPTANCE.md](../S07_ACCEPTANCE.md).
 Основа: backend `issue-14@c5db7e42454ad5ad2c7c0d7edebf1a8c9e6d694d` (№2–14), frontend
 `main@b71bdc1f506f4963dd5d07d8463d696c22aab307`. Эта спецификация — часть contract.md.
 Объём на 7 часов: редактирование оформления/размещения, поведения существующих гидов,
