@@ -1,6 +1,6 @@
 # Локальная разработка и конфигурация
 
-B01: backend слушает HTTP, проверяет PostgreSQL/схему и обрабатывает SIGINT/SIGTERM. B02 подключает API аккаунтов и cookie-сессии. B03 добавляет startup-валидацию локального мира и HTTP выдачу через порт игрового владения. B04 подключает WS, snapshot, presence и HTTP-владение текущим залом. B05 реализует ready/движение/двери и сохранение. B06 подключает чат, осмотр и личные события памяти. B07 сохраняет очередь/историю, B08 подключает локальный Ollama и персональный контекст. B09 подключает загрузку фото; B10 подключает альбом, защищённое чтение файлов и публикацию. Раздача frontend ещё не реализована. Все ответы приложения имеют `X-Request-ID` и `Cache-Control: no-store`; неизвестные маршруты возвращают JSON `404 NOT_FOUND`.
+B01: backend слушает HTTP, проверяет PostgreSQL/схему и обрабатывает SIGINT/SIGTERM. B02 подключает API аккаунтов и cookie-сессии. B03 добавляет startup-валидацию локального мира и HTTP выдачу через порт игрового владения. B04 подключает WS, snapshot, presence и HTTP-владение текущим залом. B05 реализует ready/движение/двери и сохранение. B06 подключает чат, осмотр и личные события памяти. B07 сохраняет очередь/историю, B08 подключает локальный Ollama и персональный контекст. B09 подключает загрузку фото; B10 подключает альбом, защищённое чтение файлов и публикацию. I01 раздаёт отдельно собранный frontend dist из FRONTEND_DIST_DIR через Go HTTP-адаптер. Все ответы приложения имеют `X-Request-ID` и `Cache-Control: no-store`; неизвестные маршруты возвращают JSON `404 NOT_FOUND`.
 
 ## Подготовка и запуск
 
@@ -9,6 +9,8 @@ Go >=1.27.1, Docker Compose для локальной PostgreSQL. Версии p
 ```sh
 cp .env.example .env
 # Замените пароли, origins, WORLD_VERSION и OLLAMA_MODEL.
+sh tools/build-frontend.sh ./data/frontend
+# Для API-only разработки удалите FRONTEND_DIST_DIR из .env.
 # Подготовьте WORLD_DIR/catalog.json по WORLD_CONTENT.md.
 # .env — доверенный shell-файл; backend сам его не загружает.
 set -a
@@ -33,6 +35,8 @@ make migrate-status                # либо ./bin/migrate status
 | DATABASE_URL | Обязательный PostgreSQL URL с host и database; не логируется |
 | ALLOWED_ORIGINS | Обязательные точные HTTP(S) origins через запятую, без path/query/fragment/credentials; включить LAN и localhost |
 | COOKIE_SECURE | `true`; локальный HTTP требует явного `false` |
+| FRONTEND_DIST_DIR | Не задан: API-only. При заданном пути обязателен читаемый index.html до listener; шаблон: `./data/frontend` |
+| COMPOSE_PROJECT_NAME | Шаблон: `backend`; сохранять прежнее значение при переносе комплекта для того же PostgreSQL volume |
 | WORLD_DIR | `./content/world` |
 | WORLD_VERSION | Обязательный ID, 1–128 печатных ASCII-символов без пробелов |
 | PHOTO_DIR | `./data/photos` |
@@ -91,19 +95,19 @@ make docker-build
 DATABASE_URL="$TEST_DATABASE_URL" sh tools/smoke-docker.sh gallery-backend:local
 ```
 
-Multi-stage Dockerfile: `golang:1.27.1`, статические `/gallery` и `/migrate`, финальный `scratch`, пользователь 65532:65532. Миграции встроены в оба бинарника. Smoke-test выполняет миграции, стартует контейнер на localhost:18080, проверяет HTTP 404 и успешное завершение по SIGTERM. Использует host networking на Linux для доступа к тестовой БД и удаляет только свой контейнер. Для Docker Desktop/WSL можно задать `SMOKE_DOCKER_NETWORK` с именем уже созданной обычной bridge-сети (без `--internal`, чтобы работала публикация порта): тестовая PostgreSQL должна быть подключена к ней, а `DATABASE_URL` должен использовать её сетевой alias и порт 5432; HTTP-порт 18080 публикуется на loopback. Старый запуск с `--network none` без PostgreSQL теперь ожидаемо завершается с ошибкой.
+Multi-stage Dockerfile: `golang:1.27.1`, статические `/gallery` и `/migrate`, финальный `scratch`, пользователь 65532:65532. Миграции встроены в оба бинарника. Smoke-test выполняет миграции, стартует контейнер на localhost:18080, проверяет HTTP API 404, frontend 200 и успешное завершение по SIGTERM. Использует host networking на Linux для доступа к тестовой БД и удаляет только свой контейнер. Для Docker Desktop/WSL можно задать `SMOKE_DOCKER_NETWORK` с именем уже созданной обычной bridge-сети (без `--internal`, чтобы работала публикация порта): тестовая PostgreSQL должна быть подключена к ней, а `DATABASE_URL` должен использовать её сетевой alias и порт 5432; HTTP-порт 18080 публикуется на loopback. Старый запуск с `--network none` без PostgreSQL теперь ожидаемо завершается с ошибкой.
 
 GitHub Actions: gofmt, vet, race/coverage с PostgreSQL integration tests, lint, build, генерация и проверка отсутствия drift контрактов, затем Docker build и smoke-test с отдельной PostgreSQL. Workflow не публикует образ и не выполняет deploy.
 
-До отключения интернета: `go mod download`, `make lint` для установки закреплённого линтера, `docker compose pull postgres`, `make build`, `make docker-build`; отдельно подготовить модель и контент по A01/C01/I01. Runtime использует PostgreSQL, локальные файлы мира и стандартную криптографию Go, без внешних API. Не выполнять `tools/write-docs.mjs` поверх ручных изменений. `world-check` пока не реализован.
+До отключения интернета: `go mod download`, `make lint` для установки закреплённого линтера, `docker compose pull postgres`, `make build`, `make docker-build`; отдельно подготовить модель и контент по A01/C01/I01. Runtime использует PostgreSQL, локальные файлы мира и стандартную криптографию Go, без внешних API. Не выполнять `tools/write-docs.mjs` поверх ручных изменений. `make world-check` проверяет поставляемый C01 штатным валидатором.
 
-Frontend остаётся в отдельном репозитории. Proxy `/api` должен поддерживать WS и сохранять Origin. Bind `0.0.0.0` не является браузерным origin; адреса LAN и localhost задаются явно. Пакеты мира доступны через B03; B04 уже подключает игровые соединения. B05 подключает движение/готовность/переходы и полный state 10 Гц; фото и раздача dist появятся в следующих задачах.
+Frontend остаётся в отдельном репозитории. При разработке через Vite proxy `/api` должен поддерживать WS и сохранять Origin; добавьте точный dev origin `http://localhost:5173` в ALLOWED_ORIGINS. В production dist, API и WS обслуживает Go на одном origin. Bind `0.0.0.0` не является браузерным origin; адреса LAN и localhost задаются явно. Пакеты мира доступны через B03; B04 уже подключает игровые соединения. B05 подключает движение/готовность/переходы и полный state 10 Гц. I01 раздаёт dist из FRONTEND_DIST_DIR; исходники frontend не копируются в backend.
 
 ## Требуемая топология демонстрации
 
 Единственный сервер — ноутбук с RTX 4070 Laptop. PostgreSQL, backend, Ollama, модели, frontend dist, мир и фотографии размещаются на нём. На других ноутбуках — только браузер; установку серверных инструментов на них не требовать. Все runtime-ресурсы frontend должны входить в локальную сборку.
 
-Подготовить оба origin: адрес сервера в LAN и localhost. Сначала показывать многопользовательский режим по Wi-Fi без интернета, затем выключить Wi-Fi на сервере и показать автономную игру с ИИ через localhost. Bind 0.0.0.0 не является origin браузера; exact Origin allowlist должен включать реальные адреса обоих режимов. Офлайн-комплект и реальные команды раздачи dist/запуска всех сервисов ещё предстоит реализовать в I01; сама эта запись не означает готовности запуска.
+Подготовить оба origin: адрес сервера в LAN и localhost. Сначала показывать многопользовательский режим по Wi-Fi без интернета, затем выключить Wi-Fi на сервере и показать автономную игру с ИИ через localhost. Bind 0.0.0.0 не является origin браузера; exact Origin allowlist должен включать реальные адреса обоих режимов. Подготовка офлайн-комплекта, реальные команды запуска и два режима показа описаны в [DEMO.md](DEMO.md); фактический статус проверок — [I01_ACCEPTANCE.md](I01_ACCEPTANCE.md).
 
 До выбора OLLAMA_MODEL выполнить A01 на реальном ноутбуке: измерить доступную память и время ответа, в том числе рядом с браузерной сценой; зафиксировать точный основной и резервный tags, квантование и контекст. Скачать оба до отключения интернета.
 
@@ -241,3 +245,25 @@ SQL/HTTP/WS тесты B09 входят в штатные `go test ./...`, `go t
 ## C01 — готовая офлайн-галерея
 
 В `.env.example` задано `WORLD_DIR=./content/world`, `WORLD_VERSION=gallery_c01_v1`. Каталог, 72 JPEG и три профиля уже включены в репозиторий; перед штатным запуском выполните `make world-check`. Скачивание контента при старте не требуется. Полная подготовка, отдельный output без перезаписи рабочего мира, измерение размеров и правила обновления — [content/README.md](content/README.md). Для пересборки JSON нужен только Python 3 stdlib; Go runtime и клиенты Python не используют.
+
+## I01 — frontend и переносимый комплект
+
+По уточнению владельца Go раздаёт frontend напрямую, без отдельного reverse proxy.
+`sh tools/build-frontend.sh ./data/frontend` собирает закреплённый commit внешнего
+frontend с frozen lockfile и отключёнными mocks; нужен Bun, Git и интернет только
+при подготовке. Существующий dist скрипт не перезаписывает. FRONTEND_DIST_DIR
+подключается до listener; без переменной доступен API-only режим. Статика разрешает
+GET/HEAD, выдаёт MIME/no-store/X-Request-ID, HTML-навигация без расширения возвращает
+index.html. Отсутствующие assets и неизвестный `/api` возвращают 404, листинг,
+скрытые файлы и symlinks недоступны. PHOTO_DIR/WORLD_DIR никогда не монтировать
+внутрь dist. Раздача не требует сессии; API сохраняет свои проверки авторизации.
+
+`python3 tools/offline-bundle.py prepare --frontend-dist ./data/frontend --output ./data/offline/i01`
+создаёт новый каталог комплекта, проверяет клиентский runtime Ollama 0.40.13 и
+записывает абсолютный исходный PHOTO_DIR в шаблон .env, не копируя фотографии.
+Для другого постоянного пути используйте `--photo-dir /absolute/path/to/photos`. `python3 tools/offline-bundle.py verify ./data/offline/i01`
+проверяет состав и hashes без Docker/сети. Проверку проводить до создания runtime
+файлов внутри комплекта. Python 3.11+ нужен для подготовки/проверки, не для runtime;
+Node нужен backend только для tools/build-contracts.mjs и validate-contracts.mjs.
+Команды запуска из комплекта, firewall, WSL NAT/mirrored networking и сохранение
+существующего volume/фото — [DEMO.md](DEMO.md). Go runtime lifecycle не изменяется.

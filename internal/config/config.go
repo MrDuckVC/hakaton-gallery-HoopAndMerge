@@ -14,16 +14,17 @@ import (
 
 // Config contains startup settings. Never log the struct: DatabaseURL contains credentials.
 type Config struct {
-	HTTPAddr       string
-	DatabaseURL    string
-	AllowedOrigins []string
-	CookieSecure   bool
-	WorldDir       string
-	WorldVersion   string
-	PhotoDir       string
-	OllamaBaseURL  string
-	OllamaModel    string
-	LogLevel       slog.Level
+	FrontendDistDir string
+	HTTPAddr        string
+	DatabaseURL     string
+	AllowedOrigins  []string
+	CookieSecure    bool
+	WorldDir        string
+	WorldVersion    string
+	PhotoDir        string
+	OllamaBaseURL   string
+	OllamaModel     string
+	LogLevel        slog.Level
 }
 
 // Load validates environment values without including their contents in errors.
@@ -50,6 +51,12 @@ func Load(lookup func(string) (string, bool)) (Config, error) {
 			return Config{}, fmt.Errorf("%s: a non-empty value without control characters is required", field.key)
 		}
 		*field.target = value
+	}
+	if value, exists := lookup("FRONTEND_DIST_DIR"); exists {
+		if strings.TrimSpace(value) == "" || strings.ContainsAny(value, "\x00\r\n") {
+			return Config{}, errors.New("FRONTEND_DIST_DIR: expected a non-empty path without control characters")
+		}
+		cfg.FrontendDistDir = value
 	}
 	if !validAddr(cfg.HTTPAddr) {
 		return Config{}, errors.New("HTTP_ADDR: expected host:port with port 1..65535")
