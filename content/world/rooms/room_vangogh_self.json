@@ -1,0 +1,179 @@
+{
+  "id": "room_vangogh_self",
+  "world_version": "gallery_c01_v1",
+  "title": "Постимпрессионизм: Автопортрет и художественный образ",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_17_16",
+      "target_room_id": "room_monet_series",
+      "label": "Один мотив — разные впечатления",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_17_18",
+      "target_room_id": "room_vangogh_person",
+      "label": "Человек и цвет",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_106382",
+      "title": "Автопортрет",
+      "description": "Винсент ван Гог. Автопортрет. Датировка музея: 1889. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1998.74.5. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните автопортреты Ван Гога и Гогена. Какие решения видны в цвете, фоне и повороте головы?",
+      "image_asset_id": "nga_106382",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 1.994348,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_46625",
+      "title": "Автопортрет",
+      "description": "Поль Гоген. Автопортрет. Датировка музея: 1889. Техника: oil on wood. National Gallery of Art, Washington, инв. 1963.10.150. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните автопортреты Ван Гога и Гогена. Какие решения видны в цвете, фоне и повороте головы?",
+      "image_asset_id": "nga_46625",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 1.670749,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_66418",
+      "title": "Автопортрет, посвящённый Карьеру",
+      "description": "Поль Гоген. Автопортрет, посвящённый Карьеру. Датировка музея: 1888 or 1889. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1985.64.20. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Сравните автопортреты Ван Гога и Гогена. Какие решения видны в цвете, фоне и повороте головы?",
+      "image_asset_id": "nga_66418",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 2.103745,
+      "height_m": 2.6,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_vangogh",
+      "display_name": "Винсент ван Гог",
+      "subtitle": "Художественная реконструкция · Постимпрессионизм",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}

@@ -5,7 +5,7 @@ BIN_DIR := ./bin
 LINT_BIN := $(BIN_DIR)/golangci-lint
 LINT_VER := v2.13.2
 
-.PHONY: build run test coverage vet fmt lint lint-fix contracts docker-build migrate-up migrate-status
+.PHONY: build run test coverage vet fmt lint lint-fix contracts docker-build migrate-up migrate-status world-check
 
 build:
 	$(GO) build -o $(BIN_DIR)/gallery ./cmd/server
@@ -52,3 +52,6 @@ migrate-up:
 
 migrate-status:
 	$(GO) run ./cmd/migrate status
+
+world-check:
+	@$(GO) run ./tools/worldcheck -dir content/world -version gallery_c01_v1

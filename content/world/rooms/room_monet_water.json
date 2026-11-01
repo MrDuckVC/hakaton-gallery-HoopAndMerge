@@ -1,0 +1,179 @@
+{
+  "id": "room_monet_water",
+  "world_version": "gallery_c01_v1",
+  "title": "Импрессионизм: Вода и отражения",
+  "bounds": {
+    "min": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "max": {
+      "x": 12,
+      "y": 4,
+      "z": 12
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor",
+      "position": {
+        "x": 6,
+        "y": -0.1,
+        "z": 6
+      },
+      "size": {
+        "x": 12,
+        "y": 0.2,
+        "z": 12
+      },
+      "color": "#C6AE89",
+      "collidable": true
+    },
+    {
+      "id": "north",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 0
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "south",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "z": 12
+      },
+      "size": {
+        "x": 12,
+        "y": 4,
+        "z": 0.2
+      },
+      "color": "#F2EEE5",
+      "collidable": true
+    },
+    {
+      "id": "west",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    },
+    {
+      "id": "east",
+      "position": {
+        "x": 12,
+        "y": 2,
+        "z": 6
+      },
+      "size": {
+        "x": 0.2,
+        "y": 4,
+        "z": 12
+      },
+      "color": "#E8E2D6",
+      "collidable": true
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_12_11",
+      "target_room_id": "room_monet_evening",
+      "label": "Вечер над рекой",
+      "position": {
+        "x": 0.6,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    },
+    {
+      "id": "door_12_13",
+      "target_room_id": "room_monet_garden",
+      "label": "Сад как мастерская",
+      "position": {
+        "x": 11.4,
+        "y": 0,
+        "z": 6
+      },
+      "interaction_radius_m": 1.5
+    }
+  ],
+  "exhibits": [
+    {
+      "id": "exhibit_nga_46655",
+      "title": "Сена в Живерни",
+      "description": "Клод Моне. Сена в Живерни. Датировка музея: 1897. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.180. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Найдите отражения и повторяющиеся мазки. Где вода различима без чёткого контура?",
+      "image_asset_id": "nga_46655",
+      "position": {
+        "x": 2,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.421043,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_61374",
+      "title": "Мост в Аржантёе",
+      "description": "Клод Моне. Мост в Аржантёе. Датировка музея: 1874. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1983.1.24. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Найдите отражения и повторяющиеся мазки. Где вода различима без чёткого контура?",
+      "image_asset_id": "nga_61374",
+      "position": {
+        "x": 6,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.249531,
+      "interaction_radius_m": 3
+    },
+    {
+      "id": "exhibit_nga_46689",
+      "title": "Берега Уазы",
+      "description": "Альфред Сислей. Берега Уазы. Датировка музея: 1877/1878. Техника: oil on canvas. National Gallery of Art, Washington, инв. 1963.10.214. Репродукция: общественное достояние, NGA Open Access. Учебное сравнение: Найдите отражения и повторяющиеся мазки. Где вода различима без чёткого контура?",
+      "image_asset_id": "nga_46689",
+      "position": {
+        "x": 10,
+        "y": 1.9,
+        "z": 0.2
+      },
+      "rotation_y": 0,
+      "width_m": 3.0,
+      "height_m": 2.486084,
+      "interaction_radius_m": 3
+    }
+  ],
+  "guides": [
+    {
+      "id": "guide_monet",
+      "display_name": "Клод Моне",
+      "subtitle": "Художественная реконструкция · Импрессионизм",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 7.5
+      },
+      "rotation_y": 0,
+      "interaction_radius_m": 3
+    }
+  ]
+}
