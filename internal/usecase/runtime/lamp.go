@@ -48,14 +48,14 @@ func (s *Service) Act(ctx context.Context, id string, actor domain.ObjectActor, 
 	if err = guard(); err != nil {
 		return err
 	}
-	if err = s.commitLamp(ctx, r, current.Overlay, next); err != nil {
+	if err = s.commitOverlay(ctx, r, current.Overlay, next); err != nil {
 		return err
 	}
 	publish(result)
 	return nil
 }
 
-func (s *Service) commitLamp(ctx context.Context, r world.Room, current, next domain.Overlay) error {
+func (s *Service) commitOverlay(ctx context.Context, r world.Room, current, next domain.Overlay) error {
 	store, ok := s.store.(LampStore)
 	if !ok {
 		return auth.Unavailable
@@ -75,7 +75,7 @@ func (s *Service) commitLamp(ctx context.Context, r world.Room, current, next do
 			// the dirty-room worker or the next startup, never extends shutdown.
 			_, _ = s.read(readCtx, r)
 		}
-		return fmt.Errorf("commit lamp: %w", auth.Unavailable)
+		return fmt.Errorf("commit room overlay: %w", auth.Unavailable)
 	}
 	s.mu.Lock()
 	s.cache[r.ID] = next.Clone()
@@ -123,7 +123,7 @@ func (s *Service) cleanLamp(ctx context.Context, id string, stale func(domain.La
 		next.Revision++
 		next.Lamp.HolderUserID = ""
 		next.Lamp.HolderConnectionID = ""
-		err = s.commitLamp(ctx, r, current.Overlay, next)
+		err = s.commitOverlay(ctx, r, current.Overlay, next)
 		if err == nil {
 			s.publisher.PublishRuntime(s.effective(r, next))
 			return nil

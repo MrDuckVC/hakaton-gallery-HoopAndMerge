@@ -64,7 +64,7 @@ FPS/ping доступны только GET /api/v1/admin/clients, не players.s
 ## Sunday v1: runtime, светильник и NPC
 
 Нормативные правила: [sunday.md](sunday.md), типы [sunday.types.ts](sunday.types.ts).
-Реализованы world.runtime, room.sync, object.act, object.acted и npc.state.
+Реализованы world.runtime, room.sync, object.act, object.acted, npc.state, guide.action и guide.action.completed.
 До S07 capability sunday_v1 отсутствует.
 Новые client events: room.sync, object.act, guide.action, client.metrics, telemetry.pong.
 Новые server events: world.runtime, npc.state, object.acted, guide.action.completed, telemetry.probe.
@@ -101,3 +101,16 @@ instance seq возрастает; после опустошения комна�
 instance и seq=1. Replacement при непрерывном владении сохраняет instance.
 Клиент отбрасывает старые room/version/instance/seq, интерполирует 200 мс и
 анимирует конечности локально. Единственный writer и очередь 1 МиБ сохраняются.
+
+
+## S06: локальные действия гидов реализованы
+
+`guide.action {guide_id,text,movement_epoch,expected_revision}` распознаёт только
+девять фраз [Sunday §6](sunday.md#6-просьбы-к-гиду-guideaction). Текст после trim —
+1–200 Unicode-символов без NUL; UUID обычный, лимит 3/10 с/user сохраняется при reconnect.
+Owning/ready/epoch и effective guide placement с XZ ≤3 м/LOS проверяются до CAS.
+Неизвестный текст возвращает UNSUPPORTED_ACTION. После commit отправитель получает
+`guide.action.completed {guide_id,effect,runtime}` с request_id, остальные owning WS
+зала — `world.runtime` без request_id; за ними следует обычный NPC-снимок.
+Повтор show с новым UUID повышает revision без второго объекта; повтор UUID —
+DUPLICATE_REQUEST. guide.ask продолжает только образовательный диалог с памятью.

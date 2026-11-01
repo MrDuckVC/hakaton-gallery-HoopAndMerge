@@ -91,6 +91,10 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 		s.mu.Unlock()
 		return Failure{Code: "GAME_NOT_READY"}
 	}
+	if cmd.Type == "guide.action" {
+		s.mu.Unlock()
+		return s.guideAction(ctx, userID, id, cmd)
+	}
 	if cmd.Type == "object.act" {
 		s.mu.Unlock()
 		return s.objectAct(ctx, userID, id, cmd)

@@ -38,6 +38,7 @@ type Service struct {
 	gates               map[string]chan struct{}
 	world               World
 	objects             Objects
+	guideActions        GuideActions
 	dirtyLamps          map[string]lampRetry
 	lampSequence        uint64
 	runtime             Runtime
@@ -405,6 +406,11 @@ func (s *Service) Check(userID, id string, cmd Command) Failure {
 	}
 	if duplicate {
 		return Failure{Code: "DUPLICATE_REQUEST"}
+	}
+	if cmd.Type == "guide.action" {
+		if wait := allow(&w.actions, now, 10*time.Second, 3); wait > 0 {
+			return rateFailure(wait)
+		}
 	}
 	if cmd.Type == "object.act" {
 		if wait := allow(&w.objects, now, 10*time.Second, 10); wait > 0 {

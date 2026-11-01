@@ -68,6 +68,7 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	rooms := runtimecase.New(catalog, runtimeStore, runtimeStore, connections, runtimewire.Sizer{})
 	rooms.ConfigureProfiles(catalog, runtimeStore)
 	connections.ConfigureObjects(rooms)
+	connections.ConfigureGuideActions(rooms)
 	runtimeCtx, runtimeCancel := context.WithTimeout(ctx, 15*time.Second)
 	err = rooms.Initialize(runtimeCtx)
 	runtimeCancel()
