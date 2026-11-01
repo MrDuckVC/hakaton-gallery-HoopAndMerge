@@ -10,6 +10,7 @@ LINT_VER := v2.13.2
 build:
 	$(GO) build -o $(BIN_DIR)/gallery ./cmd/server
 	$(GO) build -o $(BIN_DIR)/migrate ./cmd/migrate
+	$(GO) build -o $(BIN_DIR)/admin ./cmd/admin
 
 run:
 	$(GO) run ./cmd/server

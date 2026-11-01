@@ -7,6 +7,7 @@ import (
 
 	authdomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
+	runtime "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/runtime"
 	worlddomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 	authcase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/auth"
 	guidecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
@@ -68,6 +69,7 @@ type Event struct {
 	ExhibitID       string
 	InspectedAt     time.Time
 	Guide           guidecase.Event
+	Runtime         runtime.Room
 }
 
 // Sink performs bounded, nonblocking memory operations only, never network I/O.

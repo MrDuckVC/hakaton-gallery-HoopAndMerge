@@ -3,10 +3,10 @@ package game
 import "time"
 
 type windows struct {
-	moveSecond                 int64
-	violatingSeconds           int
-	moves, commands, chat, ask []time.Time
-	last                       time.Time
+	moveSecond                        int64
+	violatingSeconds                  int
+	moves, commands, chat, ask, syncs []time.Time
+	last                              time.Time
 }
 
 func allow(window *[]time.Time, now time.Time, duration time.Duration, limit int) time.Duration {

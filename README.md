@@ -37,7 +37,7 @@ B01 реализует запуск и lifecycle; B02 — аккаунты и co
 
 Manifest доступен действующей сессии. Для rooms/assets нужны version и активный owning WS с совпадающими пользователем и сессией; login сам по себе владения не даёт. Каталог уже обеспечивает настоящий spawn для register и `/me`. B04 подключает `/api/v1/ws`, snapshot, presence и замену соединения. B08 подключает локальный Ollama; I01 раздаёт отдельно собранный frontend dist через тот же Go HTTP listener.
 
-Команды миграций, отдельная тестовая БД, Docker smoke-test и подготовка офлайн-работы — в docs/DEVELOPMENT.md. Docker-образ собирается через `make docker-build` и содержит `/gallery` и административный `/migrate`.
+Команды миграций, отдельная тестовая БД, Docker smoke-test и подготовка офлайн-работы — в docs/DEVELOPMENT.md. Docker-образ собирается через `make docker-build` и содержит `/gallery`, административные `/migrate` и `/admin`.
 
 ## Офлайн-показ I01
 
@@ -97,5 +97,9 @@ C01: `make world-check` проверяет поставляемый мир шт�
 
 Целевые контракты для параллельной разработки: [api/sunday.md](docs/api/sunday.md),
 [TypeScript DTO](docs/api/sunday.types.ts), [JSON-примеры](docs/api/examples/sunday/).
-Админка, FPS+ping, светильник, массовые NPC и изменения окружения пока **не реализованы**.
+S01 реализует сохраняемый runtime залов, редактирование комнат через admin API и
+назначение роли командой `./bin/admin grant --username NAME` после отдельного применения
+миграции 00006. `world.runtime` следует за snapshot/entered; `room.sync` перечитывает БД.
+Интерактивные команды светильника, профили гидов, NPC, FPS+ping и guide.action
+остаются задачами S02–S06. `sunday_v1` не объявляется до интеграции S07.
 Основа №2–14 не переписывается. Задачи и порядок — [SUNDAY_BACKLOG.md](docs/SUNDAY_BACKLOG.md).

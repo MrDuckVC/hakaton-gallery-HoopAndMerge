@@ -8,6 +8,7 @@ import (
 	"time"
 
 	authdomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	runtime "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/runtime"
 	worlddomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 )
 
@@ -26,21 +27,23 @@ type reservation struct{ identity Identity }
 
 // Service serializes registry and presence changes; its lock never covers external I/O.
 type Service struct {
-	mu           sync.Mutex
-	now          Clock
-	next         uint64
-	stopping     bool
-	active       map[string]*connection
-	pending      map[string]reservation
-	limits       map[string]*windows
-	gates        map[string]chan struct{}
-	world        World
-	store        PositionStore
-	questions    Questions
-	guides       GuideCommands
-	inspections  InspectionStore
-	photos       PhotoPublisher
-	newMessageID func() string
+	mu            sync.Mutex
+	now           Clock
+	next          uint64
+	stopping      bool
+	active        map[string]*connection
+	pending       map[string]reservation
+	limits        map[string]*windows
+	gates         map[string]chan struct{}
+	world         World
+	runtime       Runtime
+	roomSnapshots RoomSnapshots
+	store         PositionStore
+	questions     Questions
+	guides        GuideCommands
+	inspections   InspectionStore
+	photos        PhotoPublisher
+	newMessageID  func() string
 }
 
 // New constructs a registry limited to 32 active or reserved accounts.
@@ -130,9 +133,14 @@ func (s *Service) AttachContext(ctx context.Context, ticket string, sink Sink) e
 	if err = ctx.Err(); err != nil {
 		return err
 	}
-	return s.attachPrepared(ticket, sink, r)
+	if s.runtime != nil {
+		return s.runtime.WithRoom(ctx, r.identity.State.RoomID, func(room runtime.Room) error {
+			return s.attachPrepared(ticket, sink, r, &room)
+		})
+	}
+	return s.attachPrepared(ticket, sink, r, nil)
 }
-func (s *Service) attachPrepared(ticket string, sink Sink, r reservation) error {
+func (s *Service) attachPrepared(ticket string, sink Sink, r reservation, room *runtime.Room) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	_, ok := s.pending[ticket]
@@ -148,6 +156,9 @@ func (s *Service) attachPrepared(ticket string, sink Sink, r reservation) error 
 		}
 	}
 	if !sink.Enqueue(Event{Type: "world.snapshot", Snapshot: snapshot}) {
+		return authdomain.Unavailable
+	}
+	if room != nil && !s.enqueueRuntimeLocked(sink, *room, "") {
 		return authdomain.Unavailable
 	}
 	if old := s.active[userID]; old != nil {
@@ -342,6 +353,11 @@ func (s *Service) Check(userID, id string, cmd Command) Failure {
 	}
 	if duplicate {
 		return Failure{Code: "DUPLICATE_REQUEST"}
+	}
+	if cmd.Type == "room.sync" {
+		if wait := allow(&w.syncs, now, 10*time.Second, 2); wait > 0 {
+			return rateFailure(wait)
+		}
 	}
 	if cmd.Type == "chat.send" {
 		if wait := allow(&w.chat, now, 10*time.Second, 5); wait > 0 {

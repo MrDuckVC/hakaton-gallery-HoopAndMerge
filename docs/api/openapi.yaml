@@ -1809,8 +1809,8 @@
       "operationId": "getAdminMe"
       "summary": "getAdminMe"
       "tags":
-        - "Sunday target (not implemented)"
-      "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md."
+        - "Sunday S01"
+      "description": "S01 реализован. Только admin cookie; семантика/лимиты в sunday.md."
       "responses":
         "200":
           "description": "Успешно"
@@ -1969,7 +1969,7 @@
       "summary": "getAdminClients"
       "tags":
         - "Sunday target (not implemented)"
-      "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md."
+      "description": "Целевой контракт, ещё не реализован. Только admin cookie; семантика/лимиты в sunday.md."
       "responses":
         "200":
           "description": "Успешно"
@@ -2127,8 +2127,8 @@
       "operationId": "getAdminRooms"
       "summary": "getAdminRooms"
       "tags":
-        - "Sunday target (not implemented)"
-      "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md."
+        - "Sunday S01"
+      "description": "S01 реализован. Только admin cookie; семантика/лимиты в sunday.md."
       "responses":
         "200":
           "description": "Успешно"
@@ -2286,8 +2286,8 @@
       "operationId": "getAdminRoom"
       "summary": "getAdminRoom"
       "tags":
-        - "Sunday target (not implemented)"
-      "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md."
+        - "Sunday S01"
+      "description": "S01 реализован. Только admin cookie; семантика/лимиты в sunday.md."
       "responses":
         "200":
           "description": "Успешно"
@@ -2452,8 +2452,8 @@
       "operationId": "updateAdminRoom"
       "summary": "updateAdminRoom"
       "tags":
-        - "Sunday target (not implemented)"
-      "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md. PUT: exact Origin, body <=65536 bytes, CAS expected_revision."
+        - "Sunday S01"
+      "description": "S01 реализован. Только admin cookie; семантика/лимиты в sunday.md. PUT: exact Origin, body <=65536 bytes, CAS expected_revision."
       "responses":
         "200":
           "description": "Успешно"
@@ -2658,7 +2658,7 @@
       "summary": "getAdminGuides"
       "tags":
         - "Sunday target (not implemented)"
-      "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md."
+      "description": "Целевой контракт, ещё не реализован. Только admin cookie; семантика/лимиты в sunday.md."
       "responses":
         "200":
           "description": "Успешно"
@@ -2817,7 +2817,7 @@
       "summary": "getAdminGuide"
       "tags":
         - "Sunday target (not implemented)"
-      "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md."
+      "description": "Целевой контракт, ещё не реализован. Только admin cookie; семантика/лимиты в sunday.md."
       "responses":
         "200":
           "description": "Успешно"
@@ -2983,7 +2983,7 @@
       "summary": "updateAdminGuide"
       "tags":
         - "Sunday target (not implemented)"
-      "description": "Целевой контракт, runtime пока не реализован. Только admin cookie; семантика/лимиты в sunday.md. PUT: exact Origin, body <=65536 bytes, CAS expected_revision."
+      "description": "Целевой контракт, ещё не реализован. Только admin cookie; семантика/лимиты в sunday.md. PUT: exact Origin, body <=65536 bytes, CAS expected_revision."
       "responses":
         "200":
           "description": "Успешно"

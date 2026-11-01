@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/guidewire"
+	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/runtimewire"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/adapters/inbound/worldwire"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/game"
 )
@@ -29,6 +30,8 @@ func publicPlayer(p game.Player) worldwire.Player {
 func encode(e game.Event) ([]byte, error) {
 	var payload any
 	switch e.Type {
+	case "world.runtime":
+		payload = runtimewire.Public(e.Runtime)
 	case "guide.accepted", "guide.completed", "guide.failed", "guide.cancelled":
 		payload = struct {
 			Generation guidewire.Generation `json:"generation"`

@@ -16,6 +16,7 @@ import (
 
 	domain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
 	"github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/player"
+	runtime "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/runtime"
 	world "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 	auth "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/auth"
 )
@@ -228,6 +229,14 @@ func readStrings(w http.ResponseWriter, r *http.Request, fields []string) (map[s
 func applicationError(w http.ResponseWriter, err error) {
 	status, code, message := 500, "INTERNAL_ERROR", "Внутренняя ошибка сервера"
 	switch {
+	case errors.Is(err, runtime.Forbidden):
+		status, code, message = 403, "FORBIDDEN", "Недостаточно прав"
+	case errors.Is(err, runtime.RevisionConflict):
+		status, code, message = 409, "REVISION_CONFLICT", "Состояние зала изменилось"
+	case errors.Is(err, runtime.ObjectBusy):
+		status, code, message = 409, "OBJECT_BUSY", "Объект занят"
+	case errors.Is(err, runtime.CommitUnknown):
+		status, code, message = 503, "SERVICE_UNAVAILABLE", "Сервис временно недоступен"
 	case errors.Is(err, domain.Code("NOT_FOUND")):
 		status, code, message = 404, "NOT_FOUND", "Ресурс не найден"
 	case errors.Is(err, domain.Code("INVALID_CURSOR")):

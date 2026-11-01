@@ -123,3 +123,25 @@ root закрывается после HTTP drain. Domain/usecase не знаю�
 API и WS сохраняют маршрутизацию и авторизацию; SPA fallback не обрабатывает `/api`.
 Исходники frontend остаются в отдельном репозитории. Отдельный reverse proxy из
 исходного I01 заменён прямой раздачей Go по уточнению владельца.
+
+
+## S01 — runtime поверх неизменяемого каталога
+
+`domain/runtime` задаёт RoomConfig, Overlay, lamp, seed и геометрические ограничения.
+`usecase/runtime` определяет потребительские порты Catalog/Store/RoleStore/Publisher/Sizer;
+SQL rows и публичные DTO преобразуют postgres/runtime и inbound/runtimewire.
+Размер 32 КиБ проверяется внешним wire Sizer до записи, без JSON внутри usecase.
+
+Контекстный канал на каждый зал сериализует durable read/CAS/publication. Cache mutex
+держится только на копировании памяти. Game определяет порт Runtime.WithRoom:
+SQL выполняется вне game mutex, затем callback ставит snapshot/entered и runtime
+в единственную очередь, удерживая room gate. Поэтому конкурентный commit не теряется
+между чтением и подключением/переходом. Порядок: user gate → room gate → game mutex;
+runtime publisher берёт только game mutex. Optional RoomSnapshots добавляет S05 NPC
+после runtime в той же очереди; симуляция в S01 отсутствует.
+
+Game и guide получают effective Geometry от runtime service. Immutable Package/Spawn,
+файловые downloads и бюджет остаются у базового каталога; public guide positions
+строятся из того же overlay, что серверные distance/LOS. Неопределённый COMMIT
+удаляет cached geometry, отзывает owning room WS и закрывает их 1011. WithRoom
+на новом подключении читает канонический overlay до публикации состояния.

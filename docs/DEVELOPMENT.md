@@ -17,7 +17,7 @@ set -a
 . ./.env
 set +a
 docker compose up -d --wait postgres
-make build                         # bin/gallery и bin/migrate
+make build                         # bin/gallery, bin/migrate и bin/admin
 make migrate-up                    # либо ./bin/migrate up
 make migrate-status                # либо ./bin/migrate status
 ./bin/gallery
@@ -95,7 +95,7 @@ make docker-build
 DATABASE_URL="$TEST_DATABASE_URL" sh tools/smoke-docker.sh gallery-backend:local
 ```
 
-Multi-stage Dockerfile: `golang:1.27.1`, статические `/gallery` и `/migrate`, финальный `scratch`, пользователь 65532:65532. Миграции встроены в оба бинарника. Smoke-test выполняет миграции, стартует контейнер на localhost:18080, проверяет HTTP API 404, frontend 200 и успешное завершение по SIGTERM. Использует host networking на Linux для доступа к тестовой БД и удаляет только свой контейнер. Для Docker Desktop/WSL можно задать `SMOKE_DOCKER_NETWORK` с именем уже созданной обычной bridge-сети (без `--internal`, чтобы работала публикация порта): тестовая PostgreSQL должна быть подключена к ней, а `DATABASE_URL` должен использовать её сетевой alias и порт 5432; HTTP-порт 18080 публикуется на loopback. Старый запуск с `--network none` без PostgreSQL теперь ожидаемо завершается с ошибкой.
+Multi-stage Dockerfile: `golang:1.27.1`, статические `/gallery`, `/migrate` и `/admin`, финальный `scratch`, пользователь 65532:65532. Миграции встроены в бинарники; `/admin` проверяет схему, но не применяет её. Smoke-test выполняет миграции, стартует контейнер на localhost:18080, проверяет HTTP API 404, frontend 200 и успешное завершение по SIGTERM. Использует host networking на Linux для доступа к тестовой БД и удаляет только свой контейнер. Для Docker Desktop/WSL можно задать `SMOKE_DOCKER_NETWORK` с именем уже созданной обычной bridge-сети (без `--internal`, чтобы работала публикация порта): тестовая PostgreSQL должна быть подключена к ней, а `DATABASE_URL` должен использовать её сетевой alias и порт 5432; HTTP-порт 18080 публикуется на loopback. Старый запуск с `--network none` без PostgreSQL теперь ожидаемо завершается с ошибкой.
 
 GitHub Actions: gofmt, vet, race/coverage с PostgreSQL integration tests, lint, build, генерация и проверка отсутствия drift контрактов, затем Docker build и smoke-test с отдельной PostgreSQL. Workflow не публикует образ и не выполняет deploy.
 
@@ -275,3 +275,56 @@ Node нужен backend только для tools/build-contracts.mjs и validat
 для уже существующего аккаунта; сейчас эту команду не запускать — бинарника ещё нет.
 I01 Host + Compose/существующие PHOTO_DIR/volumes сохраняются. S07 добавит новый binary
 в сборку/комплект и обновит закреплённый frontend main SHA после общей интеграции.
+
+
+## S01: runtime залов и административная роль
+
+После обновления программы примените **новую** миграцию 00006 отдельной командой;
+сервер и команда выдачи роли схему не изменяют. Миграции 00001–00005 и C01 неизменны.
+Сначала зарегистрируйте обычный аккаунт через API, затем выполните:
+
+```sh
+make build
+./bin/migrate up
+./bin/admin grant --username NAME
+./bin/gallery
+```
+
+`DATABASE_URL` должен быть экспортирован. Повтор grant безопасен; неизвестный username
+даёт ненулевой exit, пользователей команда не создаёт. В Docker команда имеет вид
+`docker compose run --rm --entrypoint /admin <backend-service> grant --username NAME`,
+где `<backend-service>` — сервис вашего deployment: штатный Compose содержит только PostgreSQL.
+Можно вызвать `/admin` через `docker run --rm --network ... --env DATABASE_URL --entrypoint /admin gallery-backend:local grant --username NAME`.
+Offline kit включает `bin/admin`; уже собранный старый kit нужно пересобрать в новом каталоге.
+
+`GET /api/v1/admin/me`, `/admin/rooms`, `/admin/rooms/{room_id}` и PUT последнего
+требуют cookie и сохранённую роль на каждом запросе, игровой WS не нужен.
+PUT принимает полный `{world_version,expected_revision,config}`, точный настроенный Origin,
+JSON UTF-8 не более 65536 байт; лимит всех admin PUT — 10 за 10 секунд на пользователя.
+Неизвестные, повторные, отсутствующие и null-поля запрещены. Ревизия начинается с 1;
+успешная запись повышает её на 1. При 409 перечитайте runtime и повторите осознанную правку.
+Редактируются только существующие гиды и допустимые позиции; стены, двери, C01 и версия
+не меняются. Полный runtime ограничен 32768 байтами до сохранения.
+
+Overlay хранится отдельно по `(world_version,room_id)`. Reconnect/restart читает БД,
+новая WORLD_VERSION получает отдельный seed. До listener проверяются seed и текущие
+сохранённые overlays всех залов. Неподходящий другому миру seed останавливает startup;
+подготовка собственного seed требует отдельного изменения кода, fallback не применяется.
+После SQL commit owning WS зала получают полный runtime, включая ещё not-ready.
+При неизвестном исходе COMMIT HTTP возвращает 503, затронутые WS закрываются с 1011;
+новое подключение перечитывает БД, RAM rollback не выполняется.
+
+Первое событие — snapshot, затем runtime; переход — entered, затем runtime.
+`room.sync {}` требует обычный UUID, owning connection, но допускается до ready;
+лимит 2 за 10 секунд на user сохраняется при reconnect. Ответ runtime содержит request_id.
+S05 подключит NPC snapshot через `game.RoomSnapshots` в ту же упорядоченную очередь,
+после runtime. S01 не запускает симуляцию NPC и не включает capability `sunday_v1`.
+Обычные guide.ask и игровые проверки используют effective placement runtime.
+
+SQL-интеграции запускайте только с отдельным `TEST_DATABASE_URL`:
+
+```sh
+TEST_DATABASE_URL='postgres://USER:PASSWORD@127.0.0.1:55437/gallery_test?sslmode=disable' go test ./internal/adapters/outbound/postgres
+```
+
+Тесты создают и удаляют собственные схемы этой тестовой БД, рабочие БД/файлы не очищают.

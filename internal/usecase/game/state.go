@@ -9,6 +9,7 @@ import (
 	"time"
 
 	authdomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/auth"
+	runtime "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/runtime"
 	worlddomain "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/domain/world"
 	guidecase "github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/internal/usecase/guide"
 )
@@ -71,6 +72,10 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 		}
 		c.sink.Enqueue(Event{Type: "world.ready", RequestID: cmd.RequestID, MovementEpoch: c.epoch})
 		return Failure{}
+	case "room.sync":
+		roomID := c.identity.State.RoomID
+		s.mu.Unlock()
+		return s.syncRoom(ctx, userID, id, roomID, cmd.RequestID)
 	case "chat.send":
 		s.mu.Unlock()
 		return s.chat(ctx, c, cmd)
@@ -161,19 +166,38 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 		s.closeCurrent(userID, id, code)
 		return Failure{Drop: true}
 	}
-	// Ownership operations use the same user gate. Publish committed data even if
-	// shutdown has started: the database is now the canonical position.
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if current := s.active[userID]; current == c {
-		c.identity.State = next
-		c.reloadPose = false
-		c.identity.Package = pkg
-		c.epoch++
-		c.ack = 0
-		c.ready = false
-		c.lastMove = time.Time{}
-		c.sink.Enqueue(Event{Type: "world.entered", RequestID: cmd.RequestID, Player: presenceConnection(c), CurrentRoom: pkg})
+	// Ownership operations use the same user gate. Runtime uses the room gate
+	// across durable read and enqueue so no committed update is lost on entry.
+	publish := func(room *runtime.Room) error {
+		s.mu.Lock()
+		defer s.mu.Unlock()
+		if current := s.active[userID]; current == c && !c.ended {
+			c.identity.State = next
+			c.reloadPose = false
+			c.identity.Package = pkg
+			c.epoch++
+			c.ack = 0
+			c.ready = false
+			c.lastMove = time.Time{}
+			c.sink.Enqueue(Event{Type: "world.entered", RequestID: cmd.RequestID, Player: presenceConnection(c), CurrentRoom: pkg})
+			if room != nil {
+				s.enqueueRuntimeLocked(c.sink, *room, "")
+			}
+		}
+		return nil
+	}
+	if s.runtime != nil {
+		if err = s.runtime.WithRoom(ctx, next.RoomID, func(room runtime.Room) error { return publish(&room) }); err != nil {
+			s.mu.Lock()
+			if s.active[userID] == c {
+				c.reloadPose = true
+			}
+			s.mu.Unlock()
+			s.closeCurrent(userID, id, 1011)
+			return Failure{Drop: true}
+		}
+	} else {
+		_ = publish(nil)
 	}
 	return Failure{}
 }

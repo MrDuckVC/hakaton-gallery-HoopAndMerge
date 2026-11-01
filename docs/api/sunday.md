@@ -1,6 +1,9 @@
 # Sunday v1 — нормативное расширение API галереи
 
-Статус: **согласованный целевой контракт, runtime ещё не реализован**. Дата 01.11.2026.
+Статус: **S01: runtime залов и admin rooms реализованы; остальные части — целевой контракт**. Дата 01.11.2026.
+`world.runtime` и `room.sync` доступны; снимок NPC подключается в S05 через порт
+`game.RoomSnapshots`, после runtime и с тем же request_id для sync. До S05 сервер
+не выдаёт фиктивный NPC snapshot. Capability `sunday_v1` включается только в S07.
 Основа: backend `issue-14@c5db7e42454ad5ad2c7c0d7edebf1a8c9e6d694d` (№2–14), frontend
 `main@b71bdc1f506f4963dd5d07d8463d696c22aab307`. Эта спецификация — часть contract.md.
 Объём на 7 часов: редактирование оформления/размещения, поведения существующих гидов,
@@ -40,6 +43,7 @@ JSON/изображения C01 и WORLD_VERSION неизменны. Runtime ove
 RoomConfig: цвет оформления `accent_color`, свет `lighting=neutral|warm|cool`,
 `guide_placements` всех и только существующих в зале гидов, ровно два `lamp_slots`
 с ID `a`,`b`, `npc_count` 0–40, `installation_visible`. Типы/структура — схемы и TS.
+Для guide placements `rotation_y ∈ [−π, π)`, как в машинных схемах.
 Редактор не меняет surfaces/exhibits/doors базового Room. Accent меняет отделку стен на клиенте,
 не геометрию и не подписи/авторство картин. Runtime guide placements полностью заменяют
 базовое положение/rotation_y при render, targeting, ask, action и distance/LOS на сервере.

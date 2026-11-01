@@ -14,6 +14,17 @@ spec.loader.exec_module(kit)
 
 
 class OfflineKitTest(unittest.TestCase):
+    def test_admin_binary_is_required_before_preparing_offline_kit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            for name in ["frontend/index.html", "frontend/build-info.json", "bin/gallery", "bin/migrate", "runtime/bin/ollama"]:
+                file = repo / name
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_text("placeholder")
+            with patch.object(kit, "REPO", repo), self.assertRaisesRegex(ValueError, "bin/admin"):
+                kit.prepare(repo / "output", repo / "frontend", repo / "runtime", repo / "models")
+            self.assertFalse((repo / "output").exists())
+
     def test_runtime_version_is_read_from_client_and_must_match_pin(self):
         for output in ["Warning: client version is 0.40.13", "Warning: client version is 0.39.0", "unknown runtime"]:
             with self.subTest(output=output), patch.object(kit.subprocess, "run", return_value=SimpleNamespace(stdout="", stderr=output, returncode=0)) as run:

@@ -38,7 +38,7 @@ func decode(body []byte) (game.Command, game.Failure) {
 	switch c.Type {
 	case "player.move":
 		c.RequestID = ""
-	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.ask", "guide.cancel":
+	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.ask", "guide.cancel", "room.sync":
 	default:
 		if c.Type == "" {
 			return fail("VALIDATION_ERROR")
@@ -61,6 +61,8 @@ func decode(body []byte) (game.Command, game.Failure) {
 	}
 	valid := false
 	switch c.Type {
+	case "room.sync":
+		valid = keys(p, nil)
 	case "world.ready":
 		c.WorldVersion, _ = p["world_version"].(string)
 		c.MovementEpoch = integer(p["movement_epoch"])
@@ -276,7 +278,7 @@ func validUnicodeEscapes(body []byte) bool {
 // acquiring an ordinary request ID or bypassing future durable guide idempotency.
 func rejectedCommand(c game.Command) game.Command {
 	switch c.Type {
-	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.cancel":
+	case "world.ready", "world.enter", "chat.send", "exhibit.inspect", "guide.cancel", "room.sync":
 		return game.Command{Type: c.Type, RequestID: c.RequestID}
 	default:
 		return game.Command{}
