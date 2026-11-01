@@ -51,6 +51,7 @@ func (s *Service) InvalidateRuntime(roomID string) {
 	defer s.mu.Unlock()
 	for _, c := range s.active {
 		if !c.ended && c.identity.State.RoomID == roomID {
+			s.markLampDirtyLocked(roomID)
 			c.ended = true
 			c.reloadPose = true
 			c.ready = false

@@ -24,3 +24,4 @@ content/README.md — готовая галерея C01, её маршрут, и
 - [superpowers/plans/2026-11-01-sunday.md](superpowers/plans/2026-11-01-sunday.md) — технический план, без реализации runtime.
 
 - [S01_ACCEPTANCE.md](S01_ACCEPTANCE.md) — runtime залов/admin rooms: проверки, миграция и границы S01.
+- [S04_ACCEPTANCE.md](S04_ACCEPTANCE.md) — светильник: CAS, WS, cleanup/recovery и проверки.

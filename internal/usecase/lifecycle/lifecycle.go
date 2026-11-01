@@ -16,6 +16,9 @@ type Generations interface{ CancelGenerations(context.Context) error }
 // Positions flushes player positions before connections and storage close.
 type Positions interface{ SavePositions(context.Context) error }
 
+// Objects releases durable held objects before transport and storage close.
+type Objects interface{ ReleaseObjects(context.Context) error }
+
 // Connections closes game connections with the server-restart close code (1012).
 type Connections interface{ CloseConnections(context.Context) error }
 
@@ -24,6 +27,7 @@ type Coordinator struct {
 	Admission   Admission
 	Generations Generations
 	Positions   Positions
+	Objects     Objects
 	Connections Connections
 }
 
@@ -34,7 +38,7 @@ func (c Coordinator) Shutdown(ctx context.Context) error {
 		name string
 		run  func(context.Context) error
 	}{
-		{"stop admission", nil}, {"cancel generations", nil}, {"save positions", nil}, {"close connections", nil},
+		{"stop admission", nil}, {"cancel generations", nil}, {"save positions", nil}, {"release objects", nil}, {"close connections", nil},
 	}
 	if c.Admission != nil {
 		steps[0].run = c.Admission.StopAccepting
@@ -45,8 +49,11 @@ func (c Coordinator) Shutdown(ctx context.Context) error {
 	if c.Positions != nil {
 		steps[2].run = c.Positions.SavePositions
 	}
+	if c.Objects != nil {
+		steps[3].run = c.Objects.ReleaseObjects
+	}
 	if c.Connections != nil {
-		steps[3].run = c.Connections.CloseConnections
+		steps[4].run = c.Connections.CloseConnections
 	}
 	for _, step := range steps {
 		if step.run != nil {

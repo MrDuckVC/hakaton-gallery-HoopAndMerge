@@ -88,6 +88,10 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 		s.mu.Unlock()
 		return Failure{Code: "GAME_NOT_READY"}
 	}
+	if cmd.Type == "object.act" {
+		s.mu.Unlock()
+		return s.objectAct(ctx, userID, id, cmd)
+	}
 	if cmd.Type == "player.move" {
 		defer s.mu.Unlock()
 		return s.moveLocked(c, cmd)
@@ -149,6 +153,9 @@ func (s *Service) Handle(ctx context.Context, userID, id string, cmd Command) Fa
 	}
 	if err = ctx.Err(); err != nil {
 		return Failure{Drop: true}
+	}
+	if err = s.releaseConnectionLamp(ctx, state.RoomID, userID, id); err != nil {
+		return Failure{Code: "SERVICE_UNAVAILABLE"}
 	}
 	next, err = s.store.SaveState(ctx, c.identity.Session, state, next, true)
 	if err != nil {

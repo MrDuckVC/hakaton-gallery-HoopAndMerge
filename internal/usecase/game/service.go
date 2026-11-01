@@ -36,6 +36,9 @@ type Service struct {
 	limits        map[string]*windows
 	gates         map[string]chan struct{}
 	world         World
+	objects       Objects
+	dirtyLamps    map[string]lampRetry
+	lampSequence  uint64
 	runtime       Runtime
 	roomSnapshots RoomSnapshots
 	store         PositionStore
@@ -103,6 +106,20 @@ func (s *Service) AttachContext(ctx context.Context, ticket string, sink Sink) e
 		return err
 	}
 	defer release()
+	s.mu.Lock()
+	oldConnection := s.active[r.identity.User.ID]
+	oldRoom, oldID := "", ""
+	if oldConnection != nil {
+		oldRoom = oldConnection.identity.State.RoomID
+		oldID = oldConnection.id
+	}
+	s.mu.Unlock()
+	if oldConnection != nil {
+		if err = s.releaseConnectionLamp(ctx, oldRoom, r.identity.User.ID, oldID); err != nil {
+			sink.Close(1011)
+			return err
+		}
+	}
 	if s.store != nil {
 		s.mu.Lock()
 		old := s.active[r.identity.User.ID]
@@ -132,6 +149,16 @@ func (s *Service) AttachContext(ctx context.Context, ticket string, sink Sink) e
 	}
 	if err = ctx.Err(); err != nil {
 		return err
+	}
+	if s.objects != nil {
+		roomID := r.identity.State.RoomID
+		if err = s.objects.ReconcileLamp(ctx, roomID, func(u, c string) bool { return s.lampLive(roomID, u, c) }); err != nil {
+			sink.Close(1011)
+			s.mu.Lock()
+			s.markLampDirtyLocked(roomID)
+			s.mu.Unlock()
+			return err
+		}
 	}
 	if s.runtime != nil {
 		return s.runtime.WithRoom(ctx, r.identity.State.RoomID, func(room runtime.Room) error {
@@ -193,6 +220,8 @@ func (s *Service) Detach(userID, id string) {
 	}
 	c.ended = true
 	c.ready = false
+	roomID := c.identity.State.RoomID
+	s.markLampDirtyLocked(roomID)
 	s.mu.Unlock()
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -202,6 +231,9 @@ func (s *Service) Detach(userID, id string) {
 		return
 	}
 	defer release()
+	releaseCtx, releaseCancel := context.WithTimeout(context.Background(), 5*time.Second)
+	_ = s.releaseConnectionLamp(releaseCtx, roomID, userID, id)
+	releaseCancel()
 	if s.questions != nil {
 		_ = s.questions.CancelQuestion(ctx, userID, id)
 	}
@@ -255,6 +287,7 @@ func (s *Service) closeCurrent(userID, id string, code int) {
 	defer s.mu.Unlock()
 	if c := s.active[userID]; c != nil && c.id == id {
 		c.ended = true
+		s.markLampDirtyLocked(c.identity.State.RoomID)
 		if code == 1011 {
 			c.reloadPose = true
 		}
@@ -290,6 +323,7 @@ func (s *Service) CloseConnections(context.Context) error {
 	defer s.mu.Unlock()
 	for _, c := range s.active {
 		c.ended = true
+		s.markLampDirtyLocked(c.identity.State.RoomID)
 		c.sink.Close(1012)
 	}
 	return nil
@@ -330,6 +364,7 @@ func (s *Service) Check(userID, id string, cmd Command) Failure {
 			}
 			if w.violatingSeconds >= 5 {
 				c.ended = true
+				s.markLampDirtyLocked(c.identity.State.RoomID)
 				c.sink.Close(1008)
 			}
 			return Failure{Drop: true}
@@ -345,6 +380,7 @@ func (s *Service) Check(userID, id string, cmd Command) Failure {
 		c.seen[key] = struct{}{}
 		if len(c.seen) >= 10000 {
 			c.ended = true
+			s.markLampDirtyLocked(c.identity.State.RoomID)
 			c.sink.Close(1012)
 		}
 	}
@@ -353,6 +389,11 @@ func (s *Service) Check(userID, id string, cmd Command) Failure {
 	}
 	if duplicate {
 		return Failure{Code: "DUPLICATE_REQUEST"}
+	}
+	if cmd.Type == "object.act" {
+		if wait := allow(&w.objects, now, 10*time.Second, 10); wait > 0 {
+			return rateFailure(wait)
+		}
 	}
 	if cmd.Type == "room.sync" {
 		if wait := allow(&w.syncs, now, 10*time.Second, 2); wait > 0 {

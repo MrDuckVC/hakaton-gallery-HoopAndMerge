@@ -58,6 +58,7 @@ type Failure struct {
 // Event is an ordered application notification, converted to JSON only by the adapter.
 type Event struct {
 	Type, RequestID string
+	ObjectAction    string
 	Snapshot        Snapshot
 	Player          Player
 	Players         []Player
@@ -81,6 +82,7 @@ type Sink interface {
 
 // Command contains validated input; movement and interaction rules are supplied by B05.
 type Command struct {
+	Object                                                                                 runtime.ObjectAction
 	Type, RequestID, WorldVersion, DoorID, Text, PhotoID, ExhibitID, GuideID, GenerationID string
 	MovementEpoch, Seq                                                                     int64
 	Position                                                                               player.Vector
