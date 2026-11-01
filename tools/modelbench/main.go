@@ -83,7 +83,9 @@ func run(ctx context.Context, s settings, output io.Writer, sampler func(context
 				if i == 2 {
 					f.data = guide.ContextData{}
 				}
-				g := domain.Generation{UserID: "synthetic", GuideID: name, UserMessage: domain.Message{Text: q}}
+				// Build excludes the current generation ID from completed history.
+				// Synthetic questions therefore need distinct identities too.
+				g := domain.Generation{ID: fmt.Sprintf("benchmark-%d-%s-%d", repeat, name, i), UserID: "synthetic", GuideID: name, UserMessage: domain.Message{Text: q}}
 				input, e := builder.Build(ctx, g)
 				if e != nil {
 					return e

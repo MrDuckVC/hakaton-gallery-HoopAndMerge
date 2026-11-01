@@ -1,12 +1,15 @@
 {
+  "scenario_protocol": "completed-pairs-v2",
+  "review_comment": "https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/pull/33#discussion_r4434030603",
+  "superseded_protocol": "empty-generation-ids-summary-only",
   "date": "2026-11-01",
   "ollama": "0.40.13",
   "source_frontend_sha": "2e763e8e9e63f8909bd15077b9ab66178fd64ea7",
   "scene_observer": "Synthetic auto-login + WebGL/RAF observer in temporary index.html only. Original frontend repo unchanged.",
   "scene_samples": [
     {
-      "at": "2026-11-01T00:29:59.385Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:11:57.619Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -21,11 +24,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493000.1534564
+      "received_at": 1793499117.8049536
     },
     {
-      "at": "2026-11-01T00:30:04.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:02.621Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -40,18 +43,18 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493004.889091
+      "received_at": 1793499122.513419
     },
     {
-      "at": "2026-11-01T00:30:04.392Z",
-      "raf_fps": 102.91355261580271,
+      "at": "2026-11-01T02:12:02.626Z",
+      "raf_fps": 188.84514697947688,
       "visible": "visible",
       "focused": true,
-      "received_at": 1793493004.8894792
+      "received_at": 1793499122.5139596
     },
     {
-      "at": "2026-11-01T00:30:09.389Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:07.618Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -66,11 +69,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493009.6398091
+      "received_at": 1793499127.2218401
     },
     {
-      "at": "2026-11-01T00:30:14.386Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:12.628Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -85,11 +88,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493014.3947737
+      "received_at": 1793499131.9671721
     },
     {
-      "at": "2026-11-01T00:30:19.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:17.618Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -104,18 +107,18 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493019.076836
+      "received_at": 1793499138.46722
     },
     {
-      "at": "2026-11-01T00:30:19.475Z",
-      "raf_fps": 83.19201995012475,
+      "at": "2026-11-01T02:12:17.664Z",
+      "raf_fps": 96.6,
       "visible": "visible",
       "focused": true,
-      "received_at": 1793493019.1596184
+      "received_at": 1793499138.507885
     },
     {
-      "at": "2026-11-01T00:30:24.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:22.620Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -130,11 +133,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493023.8022926
+      "received_at": 1793499143.1867282
     },
     {
-      "at": "2026-11-01T00:30:29.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:27.632Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -149,11 +152,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493029.284736
+      "received_at": 1793499147.934095
     },
     {
-      "at": "2026-11-01T00:30:34.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:32.630Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -168,18 +171,18 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493034.0149524
+      "received_at": 1793499152.7060132
     },
     {
-      "at": "2026-11-01T00:30:34.391Z",
-      "raf_fps": 201.43482344477505,
+      "at": "2026-11-01T02:12:32.754Z",
+      "raf_fps": 67.334764032998,
       "visible": "visible",
       "focused": true,
-      "received_at": 1793493034.0187883
+      "received_at": 1793499152.7066576
     },
     {
-      "at": "2026-11-01T00:30:39.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:37.634Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -194,11 +197,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493038.7435641
+      "received_at": 1793499157.5260785
     },
     {
-      "at": "2026-11-01T00:30:44.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:42.620Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -213,11 +216,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493045.3212712
+      "received_at": 1793499161.982028
     },
     {
-      "at": "2026-11-01T00:30:49.397Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:47.619Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -232,18 +235,18 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493050.0670185
+      "received_at": 1793499168.608427
     },
     {
-      "at": "2026-11-01T00:30:49.402Z",
-      "raf_fps": 140.65118506104855,
+      "at": "2026-11-01T02:12:47.628Z",
+      "raf_fps": 67.34477728262836,
       "visible": "visible",
       "focused": true,
-      "received_at": 1793493050.068396
+      "received_at": 1793499168.613094
     },
     {
-      "at": "2026-11-01T00:30:54.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:52.619Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -258,11 +261,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493054.785047
+      "received_at": 1793499173.3305976
     },
     {
-      "at": "2026-11-01T00:30:59.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:12:57.632Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -277,398 +280,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493059.38265
+      "received_at": 1793499178.168766
     },
     {
-      "at": "2026-11-01T00:31:04.385Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:02.618Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493065.07031
-    },
-    {
-      "at": "2026-11-01T00:31:04.391Z",
-      "raf_fps": 150.6,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493065.0708826
-    },
-    {
-      "at": "2026-11-01T00:31:09.388Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493069.977812
-    },
-    {
-      "at": "2026-11-01T00:31:14.382Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493074.5184748
-    },
-    {
-      "at": "2026-11-01T00:31:19.383Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493079.2477
-    },
-    {
-      "at": "2026-11-01T00:31:19.405Z",
-      "raf_fps": 126.68581916846199,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493079.2480662
-    },
-    {
-      "at": "2026-11-01T00:31:24.387Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493084.152703
-    },
-    {
-      "at": "2026-11-01T00:31:29.382Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493088.6704473
-    },
-    {
-      "at": "2026-11-01T00:31:34.390Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493095.1621077
-    },
-    {
-      "at": "2026-11-01T00:31:34.398Z",
-      "raf_fps": 103.02897190663492,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493095.1625154
-    },
-    {
-      "at": "2026-11-01T00:31:39.390Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493099.93419
-    },
-    {
-      "at": "2026-11-01T00:31:44.382Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493104.6436467
-    },
-    {
-      "at": "2026-11-01T00:31:49.396Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493109.388938
-    },
-    {
-      "at": "2026-11-01T00:31:49.452Z",
-      "raf_fps": 107.31200415659147,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493109.391505
-    },
-    {
-      "at": "2026-11-01T00:31:54.389Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493114.0509038
-    },
-    {
-      "at": "2026-11-01T00:31:59.384Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493118.7422829
-    },
-    {
-      "at": "2026-11-01T00:32:04.383Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493125.2796588
-    },
-    {
-      "at": "2026-11-01T00:32:04.406Z",
-      "raf_fps": 141.84821642326963,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493125.2988212
-    },
-    {
-      "at": "2026-11-01T00:32:09.382Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493130.0305822
-    },
-    {
-      "at": "2026-11-01T00:32:14.386Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493134.7596605
-    },
-    {
-      "at": "2026-11-01T00:32:19.382Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493139.6629994
-    },
-    {
-      "at": "2026-11-01T00:32:19.572Z",
-      "raf_fps": 79.29311442517289,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493139.6637373
-    },
-    {
-      "at": "2026-11-01T00:32:24.384Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493144.2138133
-    },
-    {
-      "at": "2026-11-01T00:32:29.383Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493149.0338798
-    },
-    {
-      "at": "2026-11-01T00:32:34.392Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -680,37 +299,18 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493153.7137
+      "received_at": 1793499182.7417243
     },
     {
-      "at": "2026-11-01T00:32:34.508Z",
-      "raf_fps": 87.25515644030878,
+      "at": "2026-11-01T02:13:02.930Z",
+      "raf_fps": 83.48506566458775,
       "visible": "visible",
-      "focused": true,
-      "received_at": 1793493154.508445
-    },
-    {
-      "at": "2026-11-01T00:32:39.385Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493160.1544063
+      "focused": false,
+      "received_at": 1793499183.0304854
     },
     {
-      "at": "2026-11-01T00:32:44.386Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:07.621Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -725,14 +325,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493164.8217857
+      "received_at": 1793499187.4412804
     },
     {
-      "at": "2026-11-01T00:32:49.390Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:12.957Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -744,21 +344,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493169.605091
-    },
-    {
-      "at": "2026-11-01T00:32:49.447Z",
-      "raf_fps": 104.75247524752476,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493169.6065638
+      "received_at": 1793499192.4508786
     },
     {
-      "at": "2026-11-01T00:32:54.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:17.958Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -770,14 +363,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493174.3548627
+      "received_at": 1793499197.1713593
     },
     {
-      "at": "2026-11-01T00:32:59.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:22.947Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -789,14 +382,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493178.9862313
+      "received_at": 1793499203.7252018
     },
     {
-      "at": "2026-11-01T00:33:04.390Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:27.945Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -808,21 +401,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493183.96835
-    },
-    {
-      "at": "2026-11-01T00:33:04.656Z",
-      "raf_fps": 84.99981026828056,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493183.9691608
+      "received_at": 1793499208.4427743
     },
     {
-      "at": "2026-11-01T00:33:09.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:32.952Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -834,14 +420,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493190.238638
+      "received_at": 1793499213.1548572
     },
     {
-      "at": "2026-11-01T00:33:14.381Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:37.953Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -853,14 +439,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493194.967594
+      "received_at": 1793499217.8490486
     },
     {
-      "at": "2026-11-01T00:33:19.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:42.950Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -872,21 +458,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493199.6874633
-    },
-    {
-      "at": "2026-11-01T00:33:19.396Z",
-      "raf_fps": 73.14002517935327,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493199.6959188
+      "received_at": 1793499222.5475385
     },
     {
-      "at": "2026-11-01T00:33:24.392Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:47.943Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -898,14 +477,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493204.5231726
+      "received_at": 1793499227.2461634
     },
     {
-      "at": "2026-11-01T00:33:29.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:52.941Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -917,14 +496,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493209.1161296
+      "received_at": 1793499233.8204145
     },
     {
-      "at": "2026-11-01T00:33:34.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:13:57.947Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -936,21 +515,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493213.8307796
-    },
-    {
-      "at": "2026-11-01T00:33:34.394Z",
-      "raf_fps": 81.33168138763467,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493213.8313217
+      "received_at": 1793499238.5425797
     },
     {
-      "at": "2026-11-01T00:33:39.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:02.962Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -962,14 +534,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493220.2874663
+      "received_at": 1793499243.3143911
     },
     {
-      "at": "2026-11-01T00:33:44.381Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:07.947Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -981,11 +553,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493225.018167
+      "received_at": 1793499247.9647462
     },
     {
-      "at": "2026-11-01T00:33:49.395Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:18.767Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1000,18 +572,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493229.7868798
-    },
-    {
-      "at": "2026-11-01T00:33:49.427Z",
-      "raf_fps": 71.52081056918645,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493229.7883048
+      "received_at": 1793499258.1719801
     },
     {
-      "at": "2026-11-01T00:33:54.385Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:22.619Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1026,97 +591,49 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493234.46587
+      "received_at": 1793499263.7063892
     },
     {
-      "at": "2026-11-01T00:33:59.384Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "at": "2026-11-01T02:14:23.807Z",
+      "raf_fps": 52.15977152830132,
       "visible": "visible",
       "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493239.1690116
+      "received_at": 1793499264.8642724
     },
     {
-      "at": "2026-11-01T00:34:04.382Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "at": "2026-11-01T02:14:23.812Z",
+      "raf_fps": 52.15977152830132,
       "visible": "visible",
       "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493243.8878968
+      "received_at": 1793499264.8749197
     },
     {
-      "at": "2026-11-01T00:34:04.393Z",
-      "raf_fps": 130.19479220831212,
+      "at": "2026-11-01T02:14:23.817Z",
+      "raf_fps": 52.15977152830132,
       "visible": "visible",
       "focused": true,
-      "received_at": 1793493243.8892593
+      "received_at": 1793499264.8768988
     },
     {
-      "at": "2026-11-01T00:34:09.384Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "at": "2026-11-01T02:14:23.823Z",
+      "raf_fps": 52.15977152830132,
       "visible": "visible",
       "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493248.6067853
+      "received_at": 1793499264.8847203
     },
     {
-      "at": "2026-11-01T00:34:14.384Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "at": "2026-11-01T02:14:23.842Z",
+      "raf_fps": 52.04918846971431,
       "visible": "visible",
       "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493255.1019046
+      "received_at": 1793499264.8866055
     },
     {
-      "at": "2026-11-01T00:34:19.393Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:27.943Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1128,21 +645,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493260.019858
-    },
-    {
-      "at": "2026-11-01T00:34:19.578Z",
-      "raf_fps": 101.62317567432643,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493260.021985
+      "received_at": 1793499268.73471
     },
     {
-      "at": "2026-11-01T00:34:24.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:32.943Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1154,14 +664,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493264.567799
+      "received_at": 1793499273.4369113
     },
     {
-      "at": "2026-11-01T00:34:29.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:37.948Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1173,14 +683,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493269.2951427
+      "received_at": 1793499278.1758637
     },
     {
-      "at": "2026-11-01T00:34:34.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:42.948Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1192,21 +702,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493274.017251
-    },
-    {
-      "at": "2026-11-01T00:34:34.394Z",
-      "raf_fps": 170.06055034871486,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493274.024731
+      "received_at": 1793499282.8242133
     },
     {
-      "at": "2026-11-01T00:34:39.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:47.955Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1218,14 +721,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493278.7451482
+      "received_at": 1793499287.5088131
     },
     {
-      "at": "2026-11-01T00:34:44.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:52.954Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1237,14 +740,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493285.1907759
+      "received_at": 1793499292.2256486
     },
     {
-      "at": "2026-11-01T00:34:49.381Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:14:57.942Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1256,21 +759,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493289.9253798
-    },
-    {
-      "at": "2026-11-01T00:34:49.387Z",
-      "raf_fps": 119.2,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493289.9266362
+      "received_at": 1793499298.8410702
     },
     {
-      "at": "2026-11-01T00:34:54.389Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:15:02.956Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1282,14 +778,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493294.7065756
+      "received_at": 1793499303.577366
     },
     {
-      "at": "2026-11-01T00:34:59.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:15:07.948Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1301,14 +797,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493299.389542
+      "received_at": 1793499308.255081
     },
     {
-      "at": "2026-11-01T00:35:04.381Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:15:12.945Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1320,21 +816,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493304.1009054
-    },
-    {
-      "at": "2026-11-01T00:35:04.406Z",
-      "raf_fps": 165.59264210043332,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493304.1202507
+      "received_at": 1793499312.937825
     },
     {
-      "at": "2026-11-01T00:35:09.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:15:17.942Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1346,14 +835,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493308.826547
+      "received_at": 1793499317.631448
     },
     {
-      "at": "2026-11-01T00:35:14.391Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:15:22.947Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1365,14 +854,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493315.368781
+      "received_at": 1793499322.337523
     },
     {
-      "at": "2026-11-01T00:35:19.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:15:45.949Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1384,18 +873,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493320.0151494
-    },
-    {
-      "at": "2026-11-01T00:35:19.498Z",
-      "raf_fps": 96.2,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493320.1195483
+      "received_at": 1793499345.7792559
     },
     {
-      "at": "2026-11-01T00:35:24.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:16:14.321Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1410,11 +892,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493324.8460357
+      "received_at": 1793499374.4204154
     },
     {
-      "at": "2026-11-01T00:35:29.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:16:17.621Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1429,101 +911,53 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493329.4634545
+      "received_at": 1793499377.5211153
     },
     {
-      "at": "2026-11-01T00:35:34.382Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "at": "2026-11-01T02:16:19.320Z",
+      "raf_fps": 160.27178257394084,
       "visible": "visible",
       "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493334.183181
+      "received_at": 1793499379.116166
     },
     {
-      "at": "2026-11-01T00:35:34.394Z",
-      "raf_fps": 138.0867688495424,
+      "at": "2026-11-01T02:16:19.320Z",
+      "raf_fps": 160.27178257394084,
       "visible": "visible",
       "focused": true,
-      "received_at": 1793493334.1883755
+      "received_at": 1793499379.1166165
     },
     {
-      "at": "2026-11-01T00:35:39.382Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "at": "2026-11-01T02:16:19.321Z",
+      "raf_fps": 160.27178257394084,
       "visible": "visible",
       "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493338.8978918
+      "received_at": 1793499379.1168258
     },
     {
-      "at": "2026-11-01T00:35:44.392Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "at": "2026-11-01T02:16:19.321Z",
+      "raf_fps": 160.27178257394084,
       "visible": "visible",
       "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493343.6328743
+      "received_at": 1793499379.1170063
     },
     {
-      "at": "2026-11-01T00:35:49.384Z",
-      "url": "http://localhost:5173/?a01=scene",
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "at": "2026-11-01T02:16:19.321Z",
+      "raf_fps": 160.27178257394084,
       "visible": "visible",
       "focused": true,
-      "viewport": [
-        1578,
-        910,
-        1.25
-      ],
-      "canvas": [
-        1972,
-        1137
-      ],
-      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-      "login_visible": false,
-      "received_at": 1793493350.0917013
+      "received_at": 1793499379.1196492
     },
     {
-      "at": "2026-11-01T00:35:49.401Z",
-      "raf_fps": 170.66346922462031,
+      "at": "2026-11-01T02:16:19.324Z",
+      "raf_fps": 160.27178257394084,
       "visible": "visible",
       "focused": true,
-      "received_at": 1793493350.1064649
+      "received_at": 1793499379.1211731
     },
     {
-      "at": "2026-11-01T00:35:54.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:16:22.622Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1538,11 +972,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493354.820309
+      "received_at": 1793499382.223643
     },
     {
-      "at": "2026-11-01T00:35:59.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:16:27.622Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1557,11 +991,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493359.5476298
+      "received_at": 1793499386.94741
     },
     {
-      "at": "2026-11-01T00:36:04.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:16:32.622Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1576,18 +1010,18 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493364.263642
+      "received_at": 1793499393.5373979
     },
     {
-      "at": "2026-11-01T00:36:04.391Z",
-      "raf_fps": 147.4820143884892,
+      "at": "2026-11-01T02:16:32.636Z",
+      "raf_fps": 141.79716405671954,
       "visible": "visible",
       "focused": true,
-      "received_at": 1793493364.2691474
+      "received_at": 1793499393.548556
     },
     {
-      "at": "2026-11-01T00:36:09.387Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:16:37.618Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1602,11 +1036,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493369.1023157
+      "received_at": 1793499398.2548864
     },
     {
-      "at": "2026-11-01T00:36:14.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:16:42.620Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1621,11 +1055,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493373.7010436
+      "received_at": 1793499402.9385993
     },
     {
-      "at": "2026-11-01T00:36:19.381Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:16:47.621Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1640,18 +1074,18 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493380.2124999
+      "received_at": 1793499407.6241286
     },
     {
-      "at": "2026-11-01T00:36:19.389Z",
-      "raf_fps": 117.50364700945279,
+      "at": "2026-11-01T02:16:47.627Z",
+      "raf_fps": 119.4,
       "visible": "visible",
       "focused": true,
-      "received_at": 1793493380.2154045
+      "received_at": 1793499407.6244266
     },
     {
-      "at": "2026-11-01T00:36:24.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:16:52.646Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1666,14 +1100,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493384.9438345
+      "received_at": 1793499412.3316417
     },
     {
-      "at": "2026-11-01T00:36:29.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:16:57.952Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1685,14 +1119,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493389.6734543
+      "received_at": 1793499417.314817
     },
     {
-      "at": "2026-11-01T00:36:34.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:02.954Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1704,21 +1138,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493394.4025257
-    },
-    {
-      "at": "2026-11-01T00:36:34.389Z",
-      "raf_fps": 193.4,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493394.4033399
+      "received_at": 1793499423.8980033
     },
     {
-      "at": "2026-11-01T00:36:39.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:07.950Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1730,14 +1157,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493399.1168585
+      "received_at": 1793499428.6097429
     },
     {
-      "at": "2026-11-01T00:36:44.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:12.947Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1749,14 +1176,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493403.8474617
+      "received_at": 1793499433.3144164
     },
     {
-      "at": "2026-11-01T00:36:49.393Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:17.943Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1768,21 +1195,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493410.482589
-    },
-    {
-      "at": "2026-11-01T00:36:49.573Z",
-      "raf_fps": 203.0594287261396,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493410.484664
+      "received_at": 1793499437.9821258
     },
     {
-      "at": "2026-11-01T00:36:54.386Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:22.953Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1794,14 +1214,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493415.042622
+      "received_at": 1793499442.6758945
     },
     {
-      "at": "2026-11-01T00:36:59.385Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:27.956Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1813,14 +1233,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493419.7788332
+      "received_at": 1793499447.3793046
     },
     {
-      "at": "2026-11-01T00:37:04.382Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:32.954Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1832,21 +1252,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493424.5013156
-    },
-    {
-      "at": "2026-11-01T00:37:04.399Z",
-      "raf_fps": 162.1308627678058,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493424.509912
+      "received_at": 1793499452.0924969
     },
     {
-      "at": "2026-11-01T00:37:09.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:37.957Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1858,14 +1271,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493429.217484
+      "received_at": 1793499458.7513163
     },
     {
-      "at": "2026-11-01T00:37:14.386Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:42.956Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1877,14 +1290,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493433.9344127
+      "received_at": 1793499463.4708738
     },
     {
-      "at": "2026-11-01T00:37:19.383Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:47.954Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1896,21 +1309,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493438.6916645
-    },
-    {
-      "at": "2026-11-01T00:37:19.421Z",
-      "raf_fps": 120.79601990049751,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493438.6935112
+      "received_at": 1793499468.1732044
     },
     {
-      "at": "2026-11-01T00:37:24.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:17:52.950Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1922,14 +1328,14 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493445.139654
+      "received_at": 1793499472.8892336
     },
     {
-      "at": "2026-11-01T00:37:29.381Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:18:45.944Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
-      "visible": "visible",
-      "focused": true,
+      "visible": "hidden",
+      "focused": false,
       "viewport": [
         1578,
         910,
@@ -1941,11 +1347,11 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493449.8735883
+      "received_at": 1793499526.4783523
     },
     {
-      "at": "2026-11-01T00:37:34.384Z",
-      "url": "http://localhost:5173/?a01=scene",
+      "at": "2026-11-01T02:19:00.978Z",
+      "url": "http://localhost:5173/?a01=review",
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
       "visible": "visible",
       "focused": true,
@@ -1960,14 +1366,7 @@
       ],
       "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
       "login_visible": false,
-      "received_at": 1793493454.59177
-    },
-    {
-      "at": "2026-11-01T00:37:34.394Z",
-      "raf_fps": 174.46043165467626,
-      "visible": "visible",
-      "focused": true,
-      "received_at": 1793493454.6002707
+      "received_at": 1793499540.588153
     }
   ],
   "queue": [
@@ -1977,335 +1376,251 @@
         {
           "item": 0,
           "model": "gallery-guide-main:a01",
-          "queue_seconds": 0.118024,
-          "run_seconds": 13.993352,
-          "ttft_seconds": 11.151124533
+          "queue_seconds": 0.113851,
+          "run_seconds": 7.507675,
+          "ttft_seconds": 4.974600244
         },
         {
           "item": 1,
           "model": "gallery-guide-main:a01",
-          "queue_seconds": 14.107038,
-          "run_seconds": 8.426133,
-          "ttft_seconds": 4.441807258
+          "queue_seconds": 7.625821,
+          "run_seconds": 6.719378,
+          "ttft_seconds": 3.59136059
         },
         {
           "item": 2,
           "model": "gallery-guide-main:a01",
-          "queue_seconds": 22.552209,
-          "run_seconds": 8.047931,
-          "ttft_seconds": 4.765569045
+          "queue_seconds": 14.348713,
+          "run_seconds": 5.780602,
+          "ttft_seconds": 3.414235809
         }
       ],
       "gpu_samples": [
         {
-          "at": "2026/11/01 03:40:21.880",
+          "at": "2026/11/01 05:20:11.789",
           "total_mib": 8188,
-          "used_mib": 701,
-          "free_mib": 7248
+          "used_mib": 2267,
+          "free_mib": 5682
         },
         {
-          "at": "2026/11/01 03:40:22.881",
+          "at": "2026/11/01 05:20:14.721",
           "total_mib": 8188,
-          "used_mib": 701,
-          "free_mib": 7248
+          "used_mib": 827,
+          "free_mib": 7122
         },
         {
-          "at": "2026/11/01 03:40:23.881",
+          "at": "2026/11/01 05:20:15.721",
           "total_mib": 8188,
-          "used_mib": 826,
-          "free_mib": 7123
+          "used_mib": 818,
+          "free_mib": 7131
         },
         {
-          "at": "2026/11/01 03:40:24.881",
+          "at": "2026/11/01 05:20:16.721",
           "total_mib": 8188,
-          "used_mib": 701,
-          "free_mib": 7248
+          "used_mib": 3437,
+          "free_mib": 4512
         },
         {
-          "at": "2026/11/01 03:40:25.882",
+          "at": "2026/11/01 05:20:17.722",
           "total_mib": 8188,
-          "used_mib": 716,
-          "free_mib": 7233
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:26.884",
+          "at": "2026/11/01 05:20:18.722",
           "total_mib": 8188,
-          "used_mib": 826,
-          "free_mib": 7123
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:27.884",
+          "at": "2026/11/01 05:20:19.722",
           "total_mib": 8188,
-          "used_mib": 826,
-          "free_mib": 7123
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:28.885",
+          "at": "2026/11/01 05:20:20.723",
           "total_mib": 8188,
-          "used_mib": 3320,
-          "free_mib": 4629
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:29.890",
+          "at": "2026/11/01 05:20:21.723",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:32.624",
+          "at": "2026/11/01 05:20:22.724",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:33.625",
+          "at": "2026/11/01 05:20:23.724",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:34.625",
+          "at": "2026/11/01 05:20:24.725",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:35.625",
+          "at": "2026/11/01 05:20:25.726",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:36.627",
+          "at": "2026/11/01 05:20:26.726",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:37.627",
+          "at": "2026/11/01 05:20:27.726",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:38.628",
+          "at": "2026/11/01 05:20:28.727",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:39.628",
+          "at": "2026/11/01 05:20:29.727",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:40.629",
+          "at": "2026/11/01 05:20:30.728",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:41.630",
+          "at": "2026/11/01 05:20:31.728",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:42.631",
+          "at": "2026/11/01 05:20:32.729",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         },
         {
-          "at": "2026/11/01 03:40:43.631",
+          "at": "2026/11/01 05:20:33.729",
           "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
-        },
-        {
-          "at": "2026/11/01 03:40:44.632",
-          "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
-        },
-        {
-          "at": "2026/11/01 03:40:45.635",
-          "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
-        },
-        {
-          "at": "2026/11/01 03:40:46.635",
-          "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
-        },
-        {
-          "at": "2026/11/01 03:40:47.636",
-          "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
-        },
-        {
-          "at": "2026/11/01 03:40:48.637",
-          "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
-        },
-        {
-          "at": "2026/11/01 03:40:49.638",
-          "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
-        },
-        {
-          "at": "2026/11/01 03:40:50.638",
-          "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
-        },
-        {
-          "at": "2026/11/01 03:40:51.639",
-          "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
-        },
-        {
-          "at": "2026/11/01 03:40:52.641",
-          "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
-        },
-        {
-          "at": "2026/11/01 03:40:53.645",
-          "total_mib": 8188,
-          "used_mib": 4688,
-          "free_mib": 3261
+          "used_mib": 4805,
+          "free_mib": 3144
         }
       ],
       "windows_samples": [
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 11713664
+          "FreePhysicalMemory": 6604016
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 11767692
+          "FreePhysicalMemory": 6614964
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 11069680
+          "FreePhysicalMemory": 6532960
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 9924716
+          "FreePhysicalMemory": 6534372
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 11422256
+          "FreePhysicalMemory": 6515924
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12457268
+          "FreePhysicalMemory": 6534772
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12466436
+          "FreePhysicalMemory": 6495944
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12436512
+          "FreePhysicalMemory": 6535692
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12466432
+          "FreePhysicalMemory": 6466192
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12462496
+          "FreePhysicalMemory": 6454908
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12462004
+          "FreePhysicalMemory": 6475860
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12446980
-        },
-        {
-          "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12440896
-        },
-        {
-          "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12425668
-        },
-        {
-          "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12435944
+          "FreePhysicalMemory": 6465548
         }
       ],
       "wsl_samples": [
         {
           "total_kib": 16176336,
-          "available_kib": 13352852
+          "available_kib": 12536280
         },
         {
           "total_kib": 16176336,
-          "available_kib": 13568464
+          "available_kib": 12998844
         },
         {
           "total_kib": 16176336,
-          "available_kib": 13320528
+          "available_kib": 12300924
         },
         {
           "total_kib": 16176336,
-          "available_kib": 13232552
+          "available_kib": 12275960
         },
         {
           "total_kib": 16176336,
-          "available_kib": 13033648
+          "available_kib": 12275740
         },
         {
           "total_kib": 16176336,
-          "available_kib": 13033932
+          "available_kib": 12176268
         },
         {
           "total_kib": 16176336,
-          "available_kib": 13029904
+          "available_kib": 12178544
         },
         {
           "total_kib": 16176336,
-          "available_kib": 12933464
+          "available_kib": 12178924
         },
         {
           "total_kib": 16176336,
-          "available_kib": 12934052
+          "available_kib": 12178604
         },
         {
           "total_kib": 16176336,
-          "available_kib": 12933804
+          "available_kib": 12082560
         },
         {
           "total_kib": 16176336,
-          "available_kib": 12933964
+          "available_kib": 12082588
         },
         {
           "total_kib": 16176336,
-          "available_kib": 12820232
-        },
-        {
-          "total_kib": 16176336,
-          "available_kib": 12819828
-        },
-        {
-          "total_kib": 16176336,
-          "available_kib": 12819852
-        },
-        {
-          "total_kib": 16176336,
-          "available_kib": 12822504
+          "available_kib": 12081984
         }
       ]
     },
@@ -2315,135 +1630,129 @@
         {
           "item": 0,
           "model": "gallery-guide-reserve:a01",
-          "queue_seconds": 0.145806,
-          "run_seconds": 6.577673,
-          "ttft_seconds": 3.507705051
+          "queue_seconds": 0.114166,
+          "run_seconds": 4.517586,
+          "ttft_seconds": 3.124815785
         },
         {
           "item": 1,
           "model": "gallery-guide-reserve:a01",
-          "queue_seconds": 6.699365,
-          "run_seconds": 3.04955,
-          "ttft_seconds": 0.021332627
+          "queue_seconds": 4.630325,
+          "run_seconds": 1.494213,
+          "ttft_seconds": 0.022630538
         },
         {
           "item": 2,
           "model": "gallery-guide-reserve:a01",
-          "queue_seconds": 9.741069,
-          "run_seconds": 1.386327,
-          "ttft_seconds": 0.019569607
+          "queue_seconds": 6.12545,
+          "run_seconds": 2.008115,
+          "ttft_seconds": 0.030404388
         }
       ],
       "gpu_samples": [
         {
-          "at": "2026/11/01 03:40:54.832",
+          "at": "2026/11/01 05:20:34.881",
           "total_mib": 8188,
-          "used_mib": 701,
-          "free_mib": 7248
+          "used_mib": 4797,
+          "free_mib": 3152
         },
         {
-          "at": "2026/11/01 03:40:55.832",
+          "at": "2026/11/01 05:20:35.881",
           "total_mib": 8188,
-          "used_mib": 718,
-          "free_mib": 7231
+          "used_mib": 827,
+          "free_mib": 7122
         },
         {
-          "at": "2026/11/01 03:40:56.833",
+          "at": "2026/11/01 05:20:36.881",
           "total_mib": 8188,
-          "used_mib": 701,
-          "free_mib": 7248
+          "used_mib": 818,
+          "free_mib": 7131
         },
         {
-          "at": "2026/11/01 03:40:57.834",
+          "at": "2026/11/01 05:20:37.882",
           "total_mib": 8188,
-          "used_mib": 701,
-          "free_mib": 7248
+          "used_mib": 2223,
+          "free_mib": 5726
         },
         {
-          "at": "2026/11/01 03:40:58.834",
+          "at": "2026/11/01 05:20:38.882",
           "total_mib": 8188,
-          "used_mib": 826,
-          "free_mib": 7123
+          "used_mib": 3269,
+          "free_mib": 4680
         },
         {
-          "at": "2026/11/01 03:40:59.835",
+          "at": "2026/11/01 05:20:39.883",
           "total_mib": 8188,
-          "used_mib": 2156,
-          "free_mib": 5793
+          "used_mib": 3273,
+          "free_mib": 4676
         },
         {
-          "at": "2026/11/01 03:41:00.835",
+          "at": "2026/11/01 05:20:40.883",
           "total_mib": 8188,
-          "used_mib": 2156,
-          "free_mib": 5793
+          "used_mib": 3273,
+          "free_mib": 4676
         },
         {
-          "at": "2026/11/01 03:41:02.654",
+          "at": "2026/11/01 05:20:41.884",
           "total_mib": 8188,
-          "used_mib": 2156,
-          "free_mib": 5793
+          "used_mib": 3273,
+          "free_mib": 4676
         },
         {
-          "at": "2026/11/01 03:41:04.628",
+          "at": "2026/11/01 05:20:42.884",
           "total_mib": 8188,
-          "used_mib": 2156,
-          "free_mib": 5793
+          "used_mib": 3273,
+          "free_mib": 4676
         },
         {
-          "at": "2026/11/01 03:41:05.635",
+          "at": "2026/11/01 05:20:43.885",
           "total_mib": 8188,
-          "used_mib": 2156,
-          "free_mib": 5793
-        },
-        {
-          "at": "2026/11/01 03:41:06.635",
-          "total_mib": 8188,
-          "used_mib": 2156,
-          "free_mib": 5793
+          "used_mib": 3273,
+          "free_mib": 4676
         }
       ],
       "windows_samples": [
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12460208
+          "FreePhysicalMemory": 6566172
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 12441140
+          "FreePhysicalMemory": 6584168
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 11724164
+          "FreePhysicalMemory": 6536436
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 11744200
+          "FreePhysicalMemory": 6571656
         },
         {
           "TotalVisibleMemorySize": 33161208,
-          "FreePhysicalMemory": 11750392
+          "FreePhysicalMemory": 6576388
         }
       ],
       "wsl_samples": [
         {
           "total_kib": 16176336,
-          "available_kib": 13091112
+          "available_kib": 12307732
         },
         {
           "total_kib": 16176336,
-          "available_kib": 13412904
+          "available_kib": 13025492
         },
         {
           "total_kib": 16176336,
-          "available_kib": 13263448
+          "available_kib": 12647464
         },
         {
           "total_kib": 16176336,
-          "available_kib": 13175784
+          "available_kib": 12535340
         },
         {
           "total_kib": 16176336,
-          "available_kib": 13170156
+          "available_kib": 12533112
         }
       ]
     }
@@ -2489,46 +1798,7 @@
     ],
     "routes4": [],
     "routes6": [],
-    "main": {
-      "name": "gallery-guide-main:a01",
-      "model": "gallery-guide-main:a01",
-      "size": 4001072414,
-      "digest": "01dccbec213a6c7f3483c736f329b0b9e60581c89acfd64e1b0f490ca800a812",
-      "details": {
-        "parent_model": "",
-        "format": "gguf",
-        "family": "qwen3",
-        "families": [
-          "qwen3"
-        ],
-        "parameter_size": "4.0B",
-        "quantization_level": "Q4_K_M"
-      },
-      "expires_at": "2026-11-01T03:49:28.329476863+03:00",
-      "size_vram": 4001072414,
-      "context_length": 8192,
-      "runner": "llamacpp"
-    },
-    "reserve": {
-      "name": "gallery-guide-reserve:a01",
-      "model": "gallery-guide-reserve:a01",
-      "size": 1367059988,
-      "digest": "403c6fd5cd375b3952875a5f42c6e05926c3a191521276580703968491733991",
-      "details": {
-        "parent_model": "",
-        "format": "gguf",
-        "family": "qwen2",
-        "families": [
-          "qwen2"
-        ],
-        "parameter_size": "1.5B",
-        "quantization_level": "Q4_K_M"
-      },
-      "expires_at": "2026-11-01T03:50:11.32430039+03:00",
-      "size_vram": 1367059988,
-      "context_length": 8192,
-      "runner": "llamacpp"
-    }
+    "status": "interrupted at user request; main production fixtures passed, full two-model offline matrix not completed"
   },
   "physical_wifi_off_game_demo": "not performed"
 }
