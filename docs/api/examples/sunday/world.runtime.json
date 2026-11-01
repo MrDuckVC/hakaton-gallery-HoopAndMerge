@@ -3,7 +3,7 @@
   "event_id": "evt_sunday_world_runtime",
   "server_time": "2026-11-01T12:00:00Z",
   "payload": {
-    "world_version": "gallery_c01_v1",
+    "world_version": "gallery_c01_v2",
     "room_id": "room_leonardo_portrait",
     "revision": 1,
     "config": {
@@ -38,7 +38,7 @@
           }
         }
       ],
-      "npc_count": 10,
+      "npc_count": 5,
       "installation_visible": false
     },
     "guides": [

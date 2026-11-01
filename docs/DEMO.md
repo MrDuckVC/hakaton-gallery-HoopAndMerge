@@ -101,7 +101,7 @@ ALLOWED_ORIGINS=http://localhost:8080,http://127.0.0.1:8080,http://192.168.1.50:
 COOKIE_SECURE=false
 FRONTEND_DIST_DIR=./frontend
 WORLD_DIR=./content/world
-WORLD_VERSION=gallery_c01_v1
+WORLD_VERSION=gallery_c01_v2
 PHOTO_DIR=/absolute/path/to/persistent/photos
 OLLAMA_BASE_URL=http://127.0.0.1:11434
 OLLAMA_MODEL=gallery-guide-main:a01
@@ -239,3 +239,12 @@ holder не завис. Проверьте переходы, фото/альбо
 Повторите сценарий сначала в LAN без WAN, затем на localhost с физически
 выключенным Wi-Fi. Результаты и непроведённые пункты фиксируйте отдельно в
 [S07_ACCEPTANCE.md](S07_ACCEPTANCE.md); unit/mock/namespace не заменяют показ.
+
+## Обновление галереи и количество посетителей
+
+Для `gallery_c01_v2` перед запуском примените миграцию 00009 по
+[инструкции обновления](DEVELOPMENT.md#обновление-демогалереи-v2-задача-52).
+Проверьте 5 NPC во всех 24 залах, сохранение после перехода и рестарта,
+нумерацию серверных title от 01 до 24. Администратор по-прежнему задаёт 0–10 NPC.
+Постоянного названия зала в HUD закреплённого frontend пока нет; серверный title
+виден в сообщении возвращения. Полная UI-приёмка номера требует отдельной правки frontend.

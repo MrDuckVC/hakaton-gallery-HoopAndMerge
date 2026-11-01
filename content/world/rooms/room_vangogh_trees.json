@@ -1,7 +1,7 @@
 {
   "id": "room_vangogh_trees",
-  "world_version": "gallery_c01_v1",
-  "title": "Постимпрессионизм: Деревья и движение взгляда",
+  "world_version": "gallery_c01_v2",
+  "title": "22. Постимпрессионизм: Деревья и движение взгляда",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_22_21",
       "target_room_id": "room_vangogh_field",
-      "label": "Поле и ритм",
+      "label": "21. Постимпрессионизм: Поле и ритм",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_22_23",
       "target_room_id": "room_vangogh_interior",
-      "label": "Предметы и повседневная жизнь",
+      "label": "23. Постимпрессионизм: Предметы и повседневная жизнь",
       "position": {
         "x": 11.4,
         "y": 0,

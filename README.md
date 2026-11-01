@@ -1,109 +1,139 @@
-# Gallery Backend
+[![Backend CI](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/actions/workflows/ci.yml/badge.svg?branch=issue-1)](https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge/actions/workflows/ci.yml)
+![Go 1.27.1](https://img.shields.io/badge/Go-1.27.1-00ADD8?logo=go)
+![PostgreSQL 18.6](https://img.shields.io/badge/PostgreSQL-18.6-4169E1?logo=postgresql)
+![Ollama 0.40.13](https://img.shields.io/badge/Ollama-0.40.13-black)
 
-Разработка ведётся только по Clean Architecture: domain <- usecase <- adapters. Зависимости направлены внутрь, реализации связывает cmd/server. Требование обязательно и для MVP; обход слоёв ради сроков запрещён. Подробности — docs/ARCHITECTURE.md (для файлов в docs/ — ARCHITECTURE.md).
+# Hope & Merge — Gallery Backend
 
-Backend многопользовательской 3D-галереи: посещение тематических залов, общий чат, фотографии и локальные ИИ-гиды с персональной памятью. Во время игры интернет не требуется; клиенты подключаются по LAN/Wi-Fi.
+Многопользовательская 3D-галерея для локальной сети: посетители гуляют по залам,
+обсуждают картины в чате, снимают фотографии и разговаривают с локальными
+ИИ-гидами. Личная память гида сохраняет контекст посещений. После подготовки
+комплекта интернет не требуется: один ноутбук обслуживает браузеры по LAN/Wi-Fi,
+а также позволяет играть локально с выключенным Wi-Fi.
 
-Репозиторий: https://github.com/MrDuckVC/hakaton-gallery-HopeAndMerge. Frontend разрабатывается отдельно.
+Демонстрационный мир C01: **24 пронумерованных зала, 72 музейные репродукции,
+три художника-гида и 5 NPC в каждом зале по умолчанию**. Администратор может
+настроить 0–10 NPC. Движение и реакции посетителей выполняет сервер.
+Frontend развивается в [отдельном репозитории](https://github.com/ManInTheCoat/Hope-Merge-Frontend).
 
-Единственный сервер — ноутбук с RTX 4070 Laptop: backend, PostgreSQL, Ollama и контент находятся на нём. На остальных ноутбуках нужен только браузер. Обязательны два показа: несколько игроков по Wi-Fi без интернета, затем игра с локальным ИИ в браузере на серверном ноутбуке с выключенным Wi-Fi. Модель выбирается по замерам на этом ноутбуке. Требования и приёмка — docs/REQUIREMENTS.md; задачи — docs/ISSUE_BACKLOG.md.
+## Стек и версии
 
-## Стек
-Go net/http, PostgreSQL, pgx/v5, coder/websocket, локальный Ollama. Версии фиксируются в go.mod/go.sum и docker-compose.yml. Один процесс Go обслуживает HTTP и WS, одна локальная модель — всех гидов.
+Версии берутся из `go.mod`, Compose, Makefile и подготовленного офлайн-комплекта.
+
+| Компонент | Версия / назначение |
+|---|---|
+| Go / стандартный `net/http` | 1.27.1; та же версия в Docker builder |
+| PostgreSQL | `postgres:18.6-bookworm`, постоянный named volume |
+| pgx/v5 | v5.11.0, драйвер PostgreSQL |
+| coder/websocket | v1.8.15 |
+| goose/v3 | v3.29.0, SQL-миграции |
+| golang.org/x/image | v0.47.0, обработка изображений |
+| golangci-lint | v2.13.2 |
+| Ollama | 0.40.13 для проверенного офлайн-комплекта; HTTP API без SDK |
+| Основная модель | `gallery-guide-main:a01`, база `qwen3:4b-q4_K_M` |
+| Резервная модель | `gallery-guide-reserve:a01`, база `qwen2.5:3b-instruct-q4_K_M` |
+| Контекст моделей | 8192 токена, temperature 0.2; параметры в `configs/ollama/` |
+| Node.js | 24 в CI, только генерация/валидация контрактов |
+| Python | 3.9+ для контента; 3.11+ для офлайн-комплекта |
+| Docker / Compose | Compose v2; точные версии CLI не закреплены |
+| Bun | только подготовка отдельного frontend; версия CLI не закреплена |
+
+Транзитивные Go-зависимости (`go.mod`; контрольные суммы — `go.sum`):
+
+```text
+github.com/jackc/pgpassfile       v1.0.0
+github.com/jackc/pgservicefile    v0.0.0-20240606120523-5a60cdf6a761
+github.com/jackc/puddle/v2        v2.2.3
+github.com/mfridman/interpolate   v0.0.2
+github.com/sethvargo/go-retry     v0.5.0
+go.uber.org/multierr             v1.11.0
+golang.org/x/sync                v0.24.0
+golang.org/x/text                v0.43.0
+```
+
+Model tags не заменяют hashes: точные digests подготовленных моделей фиксирует
+manifest офлайн-комплекта. Замеры GPU и выбор модели — [MODEL_BENCHMARK.md](docs/MODEL_BENCHMARK.md).
 
 ## Запуск
 
-Go-модуль `github.com/MrDuckVC/hakaton-gallery-HopeAndMerge`, Go >=1.27.1; pgx/v5 и goose закреплены в go.mod/go.sum.
+Нужны Go, Docker с Compose и локальный Ollama. До отключения интернета скачайте
+зависимости, образ PostgreSQL, Ollama и модели. Подготовка Ollama и GPU подробно
+описана в [DEVELOPMENT.md](docs/DEVELOPMENT.md). Ollama запускается отдельно
+на `127.0.0.1:11434`; настройки из `.env` он автоматически не читает.
 
 ```sh
-export PATH="/usr/local/go/bin:$PATH" # если требуется
-cp .env.example .env
-# Отредактируйте .env: пароли, origins, версия мира и заранее подготовленный model tag.
-# Сначала соберите frontend: sh tools/build-frontend.sh ./data/frontend
+# Только для новой установки; существующий .env сохраняется.
+[ -e .env ] || cp .env.example .env
+# Отредактируйте .env: POSTGRES_PASSWORD, DATABASE_URL, origins и постоянный PHOTO_DIR.
+# Для поставляемого мира: WORLD_DIR=./content/world, WORLD_VERSION=gallery_c01_v2.
+# Подготовьте frontend (нужен Bun); output должен быть новым каталогом:
+sh tools/build-frontend.sh ./data/frontend
 # Для API-only разработки удалите FRONTEND_DIST_DIR из .env.
-# Готовый мир C01 уже в content/world; WORLD_VERSION=gallery_c01_v1.
 set -a
 . ./.env
 set +a
 docker compose up -d --wait postgres
 make build
 make migrate-up
+make world-check
 ./bin/gallery
 ```
 
-Сервер проверяет конфигурацию, соединение с PostgreSQL и точный набор применённых миграций, затем слушает `HTTP_ADDR`. Схему при старте не меняет. SIGINT/SIGTERM запускает завершение с общим deadline 15 секунд. `make migrate-status` показывает миграции; повторный `make migrate-up` сохраняет данные. Compose хранит PostgreSQL в постоянном named volume.
+Откройте `http://localhost:8080`; для LAN добавьте фактический origin сервера
+в `ALLOWED_ORIGINS`. Go раздаёт frontend, HTTP API и WebSocket на одном origin.
+Frontend закреплён на commit в `tools/build-frontend.sh`, сборка отключает mocks.
+Сервер проверяет схему БД и мир до открытия listener; миграции при старте не применяет.
+`make migrate-status` показывает их состояние; повторный `migrate-up` сохраняет данные.
 
-B01 реализует запуск и lifecycle; B02 — аккаунты и cookie-сессии; B03 — проверяемый локальный каталог и `/api/v1/world/manifest`, `/api/v1/world/rooms/{room_id}`, `/api/v1/world/assets/{asset_id}`. До открытия HTTP listener проверяются геометрия, ссылки, spawns, точные размеры, бюджет с резервом фото и максимальный snapshot. Без валидного WORLD_DIR запуск завершается ошибкой. Формат контента — docs/WORLD_CONTENT.md.
+**Обновление существующей галереи:** остановите backend и выполните
+[инструкцию перехода на v2](docs/DEVELOPMENT.md#обновление-демогалереи-v2-задача-52).
+Миграция 00009 переносит настройки залов/гидов и устанавливает 5 NPC без очистки
+БД. Сохраните прежние volume, DATABASE_URL и PHOTO_DIR. После миграции обновите
+WORLD_VERSION в существующем окружении. Постоянного названия зала в HUD
+закреплённого frontend пока нет; сервер передаёт номер в Room.title.
 
-Manifest доступен действующей сессии. Для rooms/assets нужны version и активный owning WS с совпадающими пользователем и сессией; login сам по себе владения не даёт. Каталог уже обеспечивает настоящий spawn для register и `/me`. B04 подключает `/api/v1/ws`, snapshot, presence и замену соединения. B08 подключает локальный Ollama; I01 раздаёт отдельно собранный frontend dist через тот же Go HTTP listener.
+## Структура проекта
 
-Команды миграций, отдельная тестовая БД, Docker smoke-test и подготовка офлайн-работы — в docs/DEVELOPMENT.md. Docker-образ собирается через `make docker-build` и содержит `/gallery`, административные `/migrate` и `/admin`.
+```text
+cmd/server/          composition root: конфигурация, HTTP/WS, lifecycle
+cmd/migrate/         применение и статус миграций
+cmd/admin/           административный CLI
+internal/domain/     бизнес-типы и правила
+internal/usecase/    сценарии приложения и порты
+internal/adapters/   HTTP/WS, PostgreSQL, Ollama, файлы
+internal/config/     конфигурация окружения
+migrations/          встроенные последовательные SQL-миграции
+content/gallery.json авторский источник C01
+content/world/       готовые комнаты, изображения и профили
+configs/ollama/      Modelfile основной и резервной моделей
+tools/               контракты, подготовка контента, валидатор, офлайн-комплект
+build/               Dockerfile
+docs/               контракты, архитектура, разработка и показ
+```
 
-## Офлайн-показ I01
+Clean Architecture обязательна: `domain <- usecase <- adapters`; зависимости
+направлены внутрь, интерфейсы определяет потребитель. Правила —
+[ARCHITECTURE.md](docs/ARCHITECTURE.md), схема БД — [DATA_MODEL.md](docs/DATA_MODEL.md).
 
-[docs/DEMO.md](docs/DEMO.md) содержит подготовку комплекта, холодный запуск,
-LAN-показ и localhost с выключенным Wi-Fi. Go раздаёт frontend, API и WS на
-одном origin; PostgreSQL в Compose, Ollama с GPU на хосте. Подготовка frontend
-из отдельного репозитория закреплена на проверенном commit ветки `main` (SHA — в tools/build-frontend.sh).
-`python3 tools/offline-bundle.py prepare --frontend-dist ./data/frontend --output ./data/offline/i01`
-собирает комплект с gallery/migrate/admin без рабочих секретов/фото/БД, `verify` проверяет его hashes.
-Статус проверок — [docs/I01_ACCEPTANCE.md](docs/I01_ACCEPTANCE.md).
-
-## API и документы
-- docs/api/contract.md — нормативный контракт пользователя; имеет приоритет над старыми планами.
-- docs/api/openapi.yaml — HTTP; docs/api/websocket.md — WS.
-- docs/api/examples/ — готовые JSON-fixtures для параллельной разработки клиента.
-- docs/ARCHITECTURE.md, docs/DATA_MODEL.md — устройство сервера.
-- docs/MODEL_BENCHMARK.md — реальные замеры A01, модели, контекст и статус офлайн-проверки.
-- docs/IMPLEMENTATION_PLAN.md, docs/TESTING.md — порядок реализации и проверки.
-- AGENTS.md — инструкции ИИ-агентам.
-
-## Проверки
+## Проверки и документация
 
 ```sh
 go build ./...
 go vet ./...
 go test ./...
+go test -race ./...
 make lint
-make coverage
-make contracts
+make coverage     # race и порог суммарного покрытия ≥60%
+make contracts    # генерация и валидация HTTP/WS схем и примеров
+make world-check  # геометрия, ссылки, точные байты и бюджет кеша 10%
 ```
 
-B04: login → `/api/v1/ws` → `world.snapshot` → загрузка room/assets. Первое событие всегда snapshot; замена вкладки закрывает старую с 4009. B05 подтверждает `world.ready`, проверяет движение и переходы и рассылает полный `players.state` 10 Гц. До ready игровые действия возвращают `GAME_NOT_READY`; B06 подключает чат до ready и осмотр после ready; B07 сохраняет очередь и историю гидов, cancel доступен до ready; B08 выполняет принятые вопросы через локальный Ollama с личной памятью. Позиции сохраняются каждые 5 секунд, при отключении и shutdown; ошибка периодического save закрывает WS с 1011.
+Интеграционные тесты используют отдельную `TEST_DATABASE_URL`; без неё явно
+пропускаются. Рабочую БД для тестов не используйте. CI проверяет форматирование,
+vet, race/coverage, lint, сборку, контракты, воспроизводимость контента и Docker smoke.
 
-Также доступны `make test`, `make vet`, `make fmt`. Для конкурентного кода — `go test -race ./...`. Тестируются каталог/бюджет/выдача файлов B03, конфигурация, ошибки запуска, lifecycle, HTTP-контракт, миграции и сценарии B02: KDF, сессии, Origin, лимиты и восстановление положения через порт мира. `make coverage` запускает тесты с race detector и требует суммарное покрытие всех Go-пакетов не ниже 60%; отчёт — `coverage.out`. Интеграционные тесты требуют отдельный `TEST_DATABASE_URL`; без него они явно пропускаются. `make lint` при первом запуске скачивает golangci-lint версии из Makefile; для офлайн-работы установите его заранее.
-
-`make contracts` генерирует и проверяет схемы API; Node нужен только этим инструментам.
-
-Проект содержит запускаемый backend с PostgreSQL и каталогом, с WS-входом, загрузкой залов, авторитетным движением и сохранением. B06 подключает общий чат и сохранение осмотра с личной памятью; B07 подключает очередь и историю гидов, B08 — Ollama и личный контекст; B09 подключает загрузку фото; B10 подключает альбом, защищённое чтение файлов и публикацию в чат; готовый образовательный пакет C01 включён в `content/world`: 24 зала, 72 музейные репродукции и три художника-гида. API-примеры остаются независимыми демонстрационными fixtures. Подготовка, права, бюджет и приёмка — [docs/content/README.md](docs/content/README.md). Карта документации — docs/INDEX.md.
-
-GitHub Actions (`.github/workflows/ci.yml`) запускается на push, pull_request и вручную: форматирование, vet, race-тесты с порогом 60%, golangci-lint и Go-сборка. После успешных проверок собирается Docker-образ и проверяется запуск контейнера с отдельной тестовой PostgreSQL и штатное завершение по SIGTERM. Образ не публикуется в registry.
-
-B06: `chat.send` рассылает общий чат без хранения истории. `exhibit.inspect` проверяет текущий зал, дистанцию и LOS, затем атомарно сохраняет осмотр и единственное событие памяти на пользователя/экспонат. Повтор обновляет время и контекст между версиями мира. Перед запуском примените новую миграцию через `make migrate-up`. B10 публикует `photo_id` владельца транзакционно до рассылки.
-
-B07: перед запуском примените миграции 00003–00004 через `make migrate-up`. Вопрос сохраняется до `guide.accepted`; повторы UUID не создают дубликаты, результаты восстанавливаются через `/api/v1/guides/{guide_id}/generations` и `generations/by-request/{request_id}`. B08 использует настроенный Ollama; при его недоступности принятый вопрос завершается `failed / AI_UNAVAILABLE`, прогулка продолжает работать. Fake-модель используется только в тестах. Рестарт завершает pending как `SERVER_RESTARTED` до открытия listener.
-
-
-B08: серверные профили теперь имеют строгий формат. Подготовьте профили и новую WORLD_VERSION до обновления; см. [docs/GUIDES.md](docs/GUIDES.md). Там же — две демонстрационные личности, предел входа 16 000 кодовых точек, детерминированная память и проверка реальной модели. Подтверждение GPU-производительности/офлайн-показа требует A01 и C01; fake-тесты его не заменяют.
-
-
-B09: `POST /api/v1/photos` сохраняет JPEG/static WebP и JPEG-миниатюру с устойчивой идемпотентностью по user+UUID. Повтор после перехода возвращает прежнее фото; все POST учитываются в лимите 6/60 секунд. Примените миграцию 00005 через `make migrate-up`, подготовьте записываемый PHOTO_DIR по [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). B10 подключает альбом, чтение файлов и публикацию.
-
-B10: `GET /api/v1/photos` возвращает личный альбом с keyset-пагинацией (limit 1–6, по умолчанию 6). Оригинал `/photos/{photo_id}/image` и JPEG-миниатюра `/thumbnail` доступны владельцу; после публикации через `chat.send` — любому вошедшему игроку. Чужое приватное фото возвращает 404. Чтение не требует игрового WS. Публикация необратима, повтор разрешён; новые миграции и настройки не нужны.
-
-C01: `make world-check` проверяет поставляемый мир штатным валидатором и печатает точные размеры. При любых изменениях файлов или профилей нужна новая WORLD_VERSION и перезапуск. Все изображения и знания локальные; Python 3 нужен только для необязательной пересборки JSON авторским инструментом.
-
-## Согласованное расширение Sunday
-
-Целевые контракты для параллельной разработки: [api/sunday.md](docs/api/sunday.md),
-[TypeScript DTO](docs/api/sunday.types.ts), [JSON-примеры](docs/api/examples/sunday/).
-S01 реализует сохраняемый runtime залов, редактирование комнат через admin API и
-назначение роли командой `./bin/admin grant --username NAME` после отдельного применения
-миграции 00006. `world.runtime` следует за snapshot/entered; `room.sync` перечитывает БД.
-S04 реализует интерактивные команды светильника и восстановление holder после сбоев;
-новые миграции/config не нужны. S03 реализует client.metrics, telemetry.probe/pong и GET /api/v1/admin/clients только для admin. Измерения живут в RAM текущего соединения; новые миграции/config не нужны. S02 реализует admin guides и снимок профиля при старте running; перед запуском отдельно примените новую миграцию 00007. S05 реализует NPC-посетителей 5 Гц в активных залах с реакциями на игроков/чат, без SQL и Ollama на tick. S06 реализует guide.action: девять точных локальных фраз меняют экспозицию через durable runtime без LLM и записи в память. S07 объявляет `extensions: ["sunday_v1"]` после подключения всех частей; результаты — [docs/S07_ACCEPTANCE.md](docs/S07_ACCEPTANCE.md).
-Основа №2–14 не переписывается. Задачи и порядок — [SUNDAY_BACKLOG.md](docs/SUNDAY_BACKLOG.md).
-
-Максимум и seed NPC-посетителей — **10 на зал**, admin npc_count=0–10. Перед
-запуском версии с этим лимитом оператор отдельно применяет миграцию 00008 через
-`make migrate-up`: старые значения >10 уменьшаются до 10 с повышением room revision.
+- [Нормативный API-контракт](docs/api/contract.md), [OpenAPI](docs/api/openapi.yaml), [WebSocket](docs/api/websocket.md).
+- [Разработка и миграции](docs/DEVELOPMENT.md), [матрица тестов](docs/TESTING.md).
+- [Контент C01 и воспроизводимая сборка](docs/content/README.md).
+- [Подготовка и сценарий офлайн-показа](docs/DEMO.md).
+- [Требования](docs/REQUIREMENTS.md), [карта документации](docs/INDEX.md).

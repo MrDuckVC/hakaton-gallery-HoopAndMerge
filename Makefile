@@ -55,4 +55,4 @@ migrate-status:
 	$(GO) run ./cmd/migrate status
 
 world-check:
-	@$(GO) run ./tools/worldcheck -dir content/world -version gallery_c01_v1
+	@$(GO) run ./tools/worldcheck -dir content/world -version gallery_c01_v2

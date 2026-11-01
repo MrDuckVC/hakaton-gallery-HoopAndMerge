@@ -1,7 +1,7 @@
 {
   "id": "room_vangogh_village",
-  "world_version": "gallery_c01_v1",
-  "title": "Постимпрессионизм: Деревня и постройки",
+  "world_version": "gallery_c01_v2",
+  "title": "20. Постимпрессионизм: Деревня и постройки",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_20_19",
       "target_room_id": "room_vangogh_still-life",
-      "label": "Натюрморт: цвет и предмет",
+      "label": "19. Постимпрессионизм: Натюрморт: цвет и предмет",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_20_21",
       "target_room_id": "room_vangogh_field",
-      "label": "Поле и ритм",
+      "label": "21. Постимпрессионизм: Поле и ритм",
       "position": {
         "x": 11.4,
         "y": 0,

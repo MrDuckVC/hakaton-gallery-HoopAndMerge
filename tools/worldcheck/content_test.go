@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"math"
 	"os"
 	"path/filepath"
@@ -18,6 +19,7 @@ type curation struct {
 	Rooms []struct {
 		ID        string `json:"id"`
 		GuideID   string `json:"guide_id"`
+		Title     string `json:"title"`
 		Question  string `json:"question"`
 		Paintings []struct {
 			ID                string `json:"id"`
@@ -66,7 +68,10 @@ func checkGalleryProvenance(t *testing.T, loaded world.LoadedWorld) {
 		rooms[r.ID] = r
 	}
 	hashes := map[string]bool{}
-	for _, r := range source.Rooms {
+	for i, r := range source.Rooms {
+		if loaded.Input.Rooms[i].ID != r.ID || !strings.HasPrefix(r.Title, fmt.Sprintf("%02d. ", i+1)) || rooms[r.ID].Title != r.Title {
+			t.Fatalf("room %d: source/catalog/title numbering mismatch", i+1)
+		}
 		geometry, ok := rooms[r.ID]
 		if !ok || len(r.Paintings) != 3 || strings.TrimSpace(r.Question) == "" || len(geometry.Guides) != 1 || geometry.Guides[0].ID != r.GuideID {
 			t.Fatalf("missing educational content in %s", r.ID)

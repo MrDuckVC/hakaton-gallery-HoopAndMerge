@@ -1,7 +1,7 @@
 {
   "id": "room_monet_evening",
-  "world_version": "gallery_c01_v1",
-  "title": "Импрессионизм: Вечер над рекой",
+  "world_version": "gallery_c01_v2",
+  "title": "11. Импрессионизм: Вечер над рекой",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_11_10",
       "target_room_id": "room_monet_daylight",
-      "label": "Дневной свет",
+      "label": "10. Импрессионизм: Дневной свет",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_11_12",
       "target_room_id": "room_monet_water",
-      "label": "Вода и отражения",
+      "label": "12. Импрессионизм: Вода и отражения",
       "position": {
         "x": 11.4,
         "y": 0,

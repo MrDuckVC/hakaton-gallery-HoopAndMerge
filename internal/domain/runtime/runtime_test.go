@@ -80,8 +80,8 @@ func TestGuideYawLowerBoundAccepted(t *testing.T) {
 
 func TestNPCCountLimitAndSeed(t *testing.T) {
 	room := fixtureRoom()
-	if got := Seed(room).Config.NPCCount; got != 10 {
-		t.Fatalf("seed NPC count=%d, want 10", got)
+	if got := Seed(room).Config.NPCCount; got != 5 {
+		t.Fatalf("seed NPC count=%d, want 5", got)
 	}
 	for _, count := range []int{-1, 0, 10, 11, 40} {
 		c := Seed(room).Config

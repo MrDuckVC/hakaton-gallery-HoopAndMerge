@@ -80,6 +80,9 @@ func TestC01SeedsFitEveryRoomWithoutChangingContent(t *testing.T) {
 				spawns = append(spawns, s.Position)
 			}
 		}
+		if got := domain.Seed(r).Config.NPCCount; got != 5 {
+			t.Errorf("room %s: NPC count=%d, want 5", r.ID, got)
+		}
 		if err := domain.ValidateOverlay(r, spawns, domain.Seed(r)); err != nil {
 			t.Errorf("room %s: %v", r.ID, err)
 		}

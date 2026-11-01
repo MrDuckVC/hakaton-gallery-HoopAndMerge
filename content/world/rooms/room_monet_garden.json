@@ -1,7 +1,7 @@
 {
   "id": "room_monet_garden",
-  "world_version": "gallery_c01_v1",
-  "title": "Импрессионизм: Сад как мастерская",
+  "world_version": "gallery_c01_v2",
+  "title": "13. Импрессионизм: Сад как мастерская",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_13_12",
       "target_room_id": "room_monet_water",
-      "label": "Вода и отражения",
+      "label": "12. Импрессионизм: Вода и отражения",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_13_14",
       "target_room_id": "room_monet_city",
-      "label": "Город и современная жизнь",
+      "label": "14. Импрессионизм: Город и современная жизнь",
       "position": {
         "x": 11.4,
         "y": 0,

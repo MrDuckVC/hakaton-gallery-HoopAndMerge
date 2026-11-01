@@ -238,7 +238,7 @@ guide.action, профиль, probe/pong/admin clients, рестарт с held l
 `SUNDAY_TEST_FRONTEND_DIST=/absolute/dist` включает настоящий production dist;
 проверка его раздачи не подтверждает WebGL/rAF/визуальные анимации.
 `SUNDAY_TEST_WORLD_DIR=/absolute/content/world` включает отдельный прогон с C01
-и gallery_c01_v1; тяжёлая загрузка C01 под race/coverage может превысить production
+и gallery_c01_v2; тяжёлая загрузка C01 под race/coverage может превысить production
 startup deadline, поэтому в instrumented CI используется testworld, deadline не увеличивается.
 Kit-тест успешной подготовки проверяет наличие, executable mode и hash admin,
 отказ verify после его подмены/удаления; существующие тесты защищают от перезаписи.
@@ -271,3 +271,13 @@ TestPrepareWorld убран повтор полного decode ради version 
 кейс остаётся в usecase/world TestLoadFailures/version. Production C01, loader,
 валидация изображений и тайм-ауты не изменены. По поручению владельца повторяются
 только затронутые PrepareWorld/Sunday/fixture/version тесты и lint.
+
+
+Задача №52: seed каждого из 24 C01-залов равен 5 при сохранении диапазона API
+0–10. Контентные проверки сверяют порядок каталога и префиксы 01–24 с авторским
+источником. SQL-тест `TestDemoGalleryMigrationPreservesSettings` проходит путь
+40→10→5, переносит настройки в v2, проверяет приоритет существующей v2,
+сохранность остальных полей, изоляцию посторонних миров/комнат и сохранение
+административной настройки 10 после повторного migrate-up. Интеграционные WS
+проверки ожидают 5 NPC при начальном входе. Ручной переход/рестарт и физические
+анимации проверяются на демосреде; постоянное название в HUD — отдельная frontend-правка.

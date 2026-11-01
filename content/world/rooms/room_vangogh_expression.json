@@ -1,7 +1,7 @@
 {
   "id": "room_vangogh_expression",
-  "world_version": "gallery_c01_v1",
-  "title": "Постимпрессионизм: От наблюдения к выразительному цвету",
+  "world_version": "gallery_c01_v2",
+  "title": "24. Постимпрессионизм: От наблюдения к выразительному цвету",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_24_23",
       "target_room_id": "room_vangogh_interior",
-      "label": "Предметы и повседневная жизнь",
+      "label": "23. Постимпрессионизм: Предметы и повседневная жизнь",
       "position": {
         "x": 0.6,
         "y": 0,

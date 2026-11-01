@@ -106,7 +106,7 @@ def prepare(manifest_path, asset_root, output):
         guide_id = curated["guide_id"]
         name, era, _, _ = ARTISTS[guide_id]
         room = {"id": rid, "world_version": manifest["world_version"],
-                "title": era + ": " + curated["title"],
+                "title": curated["title"],
                 "bounds": {"min": vector(0, 0, 0), "max": vector(12, 4, 12)},
                 "surfaces": [], "doors": [], "exhibits": [],
                 "guides": [{"id": guide_id, "display_name": name,

@@ -105,9 +105,13 @@ assert.throws(()=>check({type:'telemetry.pong',payload:{nonce:'short'}},client,c
 assert.throws(()=>check({type:'object.act',payload:{object_id:'lamp_01',action:'take',movement_epoch:1,expected_revision:1}},client,client));
 assert.throws(()=>check(sundayCommand('object.act',{object_id:'lamp_01',action:'take',movement_epoch:1,expected_revision:1,on:true}),client,client));
 assert.throws(()=>check(sundayCommand('object.act',{object_id:'lamp_01',action:'aim',movement_epoch:1,expected_revision:1,yaw:0,head_pitch:2}),client,client));
-const npcs=read('docs/api/examples/sunday/npc.state.json');assert.equal(npcs.payload.npcs.length,10);check(npcs,server,server);npcs.payload.npcs.push(npcs.payload.npcs[0]);assert.throws(()=>check(npcs,server,server));
+const npcs=read('docs/api/examples/sunday/npc.state.json');assert.equal(npcs.payload.npcs.length,5);check(npcs,server,server);
+npcs.payload.npcs=Array.from({length:10},(_,i)=>({...npcs.payload.npcs[0],npc_id:'npc_'+String(i).padStart(2,'0')}));
+check(npcs,server,server);npcs.payload.npcs.push(npcs.payload.npcs[0]);assert.throws(()=>check(npcs,server,server));
 const currentWorld=read('content/world/catalog.json');
 const runtime=read('docs/api/examples/sunday/world.runtime.json').payload;
+assert.equal(runtime.config.npc_count,5);
+assert.equal(runtime.world_version,currentWorld.world_version);
 assert(currentWorld.rooms.some(x=>x.id===runtime.room_id));
 assert(Buffer.byteLength(JSON.stringify(runtime))<=32768);
 assert(Buffer.byteLength(JSON.stringify(read('docs/api/examples/sunday/npc.state.json').payload))<=24576);

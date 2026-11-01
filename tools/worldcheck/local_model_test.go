@@ -37,7 +37,7 @@ func TestLocalModelGallery(t *testing.T) {
 	if base == "" {
 		base = "http://127.0.0.1:11434"
 	}
-	catalog, err := world.Load(t.Context(), worldfiles.Files{Dir: "../../content/world"}, worldwire.SnapshotSizer{}, "gallery_c01_v1")
+	catalog, err := world.Load(t.Context(), worldfiles.Files{Dir: "../../content/world"}, worldwire.SnapshotSizer{}, "gallery_c01_v2")
 	if err != nil {
 		t.Fatal(err)
 	}

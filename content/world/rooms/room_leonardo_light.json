@@ -1,7 +1,7 @@
 {
   "id": "room_leonardo_light",
-  "world_version": "gallery_c01_v1",
-  "title": "Возрождение: Светотень и объём",
+  "world_version": "gallery_c01_v2",
+  "title": "04. Возрождение: Светотень и объём",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_04_03",
       "target_room_id": "room_leonardo_perspective",
-      "label": "Построение пространства",
+      "label": "03. Возрождение: Построение пространства",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_04_05",
       "target_room_id": "room_leonardo_figure",
-      "label": "Фигура в пространстве",
+      "label": "05. Возрождение: Фигура в пространстве",
       "position": {
         "x": 11.4,
         "y": 0,

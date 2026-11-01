@@ -1,7 +1,7 @@
 {
   "id": "room_vangogh_self",
-  "world_version": "gallery_c01_v1",
-  "title": "Постимпрессионизм: Автопортрет и художественный образ",
+  "world_version": "gallery_c01_v2",
+  "title": "17. Постимпрессионизм: Автопортрет и художественный образ",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_17_16",
       "target_room_id": "room_monet_series",
-      "label": "Один мотив — разные впечатления",
+      "label": "16. Импрессионизм: Один мотив — разные впечатления",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_17_18",
       "target_room_id": "room_vangogh_person",
-      "label": "Человек и цвет",
+      "label": "18. Постимпрессионизм: Человек и цвет",
       "position": {
         "x": 11.4,
         "y": 0,

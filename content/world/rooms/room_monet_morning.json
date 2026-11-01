@@ -1,7 +1,7 @@
 {
   "id": "room_monet_morning",
-  "world_version": "gallery_c01_v1",
-  "title": "Импрессионизм: Утро и воздух",
+  "world_version": "gallery_c01_v2",
+  "title": "09. Импрессионизм: Утро и воздух",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_09_08",
       "target_room_id": "room_leonardo_details",
-      "label": "Деталь и материал",
+      "label": "08. Возрождение: Деталь и материал",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_09_10",
       "target_room_id": "room_monet_daylight",
-      "label": "Дневной свет",
+      "label": "10. Импрессионизм: Дневной свет",
       "position": {
         "x": 11.4,
         "y": 0,

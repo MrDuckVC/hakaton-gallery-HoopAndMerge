@@ -243,7 +243,7 @@ func TestSundayCompositionIntegration(t *testing.T) {
 			if want == "world.runtime" {
 				runtime = p
 			}
-			if want == "npc.state" && len(p["npcs"].([]any)) != 10 {
+			if want == "npc.state" && len(p["npcs"].([]any)) != 5 {
 				t.Fatal(p)
 			}
 		}
@@ -396,7 +396,7 @@ func sundayDatabase(ctx context.Context, t *testing.T, dsn string) string {
 func sundayWorld(ctx context.Context, t *testing.T) (string, string) {
 	t.Helper()
 	if dir := os.Getenv("SUNDAY_TEST_WORLD_DIR"); dir != "" {
-		return dir, "gallery_c01_v1"
+		return dir, "gallery_c01_v2"
 	}
 	dir := t.TempDir()
 	const version = "sunday_test_v1"

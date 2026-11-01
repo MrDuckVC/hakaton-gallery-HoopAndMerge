@@ -9,7 +9,7 @@ import (
 )
 
 func TestRunRejectsInvalidWorld(t *testing.T) {
-	for _, args := range [][]string{{}, {"-dir", t.TempDir(), "-version", "gallery_c01_v1"}, {"-unknown"}} {
+	for _, args := range [][]string{{}, {"-dir", t.TempDir(), "-version", "gallery_c01_v2"}, {"-unknown"}} {
 		var out bytes.Buffer
 		if err := run(context.Background(), args, &out); err == nil {
 			t.Fatal("invalid input accepted")
@@ -22,7 +22,7 @@ func TestRunRejectsInvalidWorld(t *testing.T) {
 
 func TestPreparedGallery(t *testing.T) {
 	var out bytes.Buffer
-	if err := run(t.Context(), []string{"-dir", "../../content/world", "-version", "gallery_c01_v1"}, &out); err != nil {
+	if err := run(t.Context(), []string{"-dir", "../../content/world", "-version", "gallery_c01_v2"}, &out); err != nil {
 		t.Fatal(err)
 	}
 	committed, err := os.ReadFile("../../docs/content/budget.json")
@@ -36,7 +36,7 @@ func TestPreparedGallery(t *testing.T) {
 	if err := json.Unmarshal(out.Bytes(), &got); err != nil {
 		t.Fatal(err)
 	}
-	if got.WorldVersion != "gallery_c01_v1" || len(got.Rooms) < 24 || len(got.Assets) < 72 {
+	if got.WorldVersion != "gallery_c01_v2" || len(got.Rooms) < 24 || len(got.Assets) < 72 {
 		t.Fatalf("incomplete gallery: %s", out.String())
 	}
 	if got.CacheLimitBytes != got.TotalContentBytes/10 {

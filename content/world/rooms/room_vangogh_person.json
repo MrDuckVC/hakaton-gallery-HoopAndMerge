@@ -1,7 +1,7 @@
 {
   "id": "room_vangogh_person",
-  "world_version": "gallery_c01_v1",
-  "title": "Постимпрессионизм: Человек и цвет",
+  "world_version": "gallery_c01_v2",
+  "title": "18. Постимпрессионизм: Человек и цвет",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_18_17",
       "target_room_id": "room_vangogh_self",
-      "label": "Автопортрет и художественный образ",
+      "label": "17. Постимпрессионизм: Автопортрет и художественный образ",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_18_19",
       "target_room_id": "room_vangogh_still-life",
-      "label": "Натюрморт: цвет и предмет",
+      "label": "19. Постимпрессионизм: Натюрморт: цвет и предмет",
       "position": {
         "x": 11.4,
         "y": 0,

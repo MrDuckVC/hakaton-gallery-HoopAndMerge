@@ -1,7 +1,7 @@
 {
   "id": "room_monet_city",
-  "world_version": "gallery_c01_v1",
-  "title": "Импрессионизм: Город и современная жизнь",
+  "world_version": "gallery_c01_v2",
+  "title": "14. Импрессионизм: Город и современная жизнь",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_14_13",
       "target_room_id": "room_monet_garden",
-      "label": "Сад как мастерская",
+      "label": "13. Импрессионизм: Сад как мастерская",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_14_15",
       "target_room_id": "room_monet_snow",
-      "label": "Снег и перемена погоды",
+      "label": "15. Импрессионизм: Снег и перемена погоды",
       "position": {
         "x": 11.4,
         "y": 0,

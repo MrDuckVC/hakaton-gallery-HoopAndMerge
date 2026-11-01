@@ -1,6 +1,6 @@
 {
   "world_id": "painting_gallery",
-  "world_version": "gallery_c01_v1",
+  "world_version": "gallery_c01_v2",
   "rooms": [
     {
       "id": "room_leonardo_portrait",

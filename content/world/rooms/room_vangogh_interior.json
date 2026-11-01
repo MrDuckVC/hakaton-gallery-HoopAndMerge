@@ -1,7 +1,7 @@
 {
   "id": "room_vangogh_interior",
-  "world_version": "gallery_c01_v1",
-  "title": "Постимпрессионизм: Предметы и повседневная жизнь",
+  "world_version": "gallery_c01_v2",
+  "title": "23. Постимпрессионизм: Предметы и повседневная жизнь",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_23_22",
       "target_room_id": "room_vangogh_trees",
-      "label": "Деревья и движение взгляда",
+      "label": "22. Постимпрессионизм: Деревья и движение взгляда",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_23_24",
       "target_room_id": "room_vangogh_expression",
-      "label": "От наблюдения к выразительному цвету",
+      "label": "24. Постимпрессионизм: От наблюдения к выразительному цвету",
       "position": {
         "x": 11.4,
         "y": 0,
