@@ -6,7 +6,7 @@
   "payload": {
     "action": "take",
     "runtime": {
-      "world_version": "gallery_c01_v1",
+      "world_version": "gallery_c01_v2",
       "room_id": "room_leonardo_portrait",
       "revision": 2,
       "config": {
@@ -41,7 +41,7 @@
             }
           }
         ],
-        "npc_count": 10,
+        "npc_count": 5,
         "installation_visible": false
       },
       "guides": [

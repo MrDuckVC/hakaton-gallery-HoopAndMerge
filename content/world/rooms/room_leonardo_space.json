@@ -1,7 +1,7 @@
 {
   "id": "room_leonardo_space",
-  "world_version": "gallery_c01_v1",
-  "title": "Возрождение: Пейзаж за фигурой",
+  "world_version": "gallery_c01_v2",
+  "title": "02. Возрождение: Пейзаж за фигурой",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_02_01",
       "target_room_id": "room_leonardo_portrait",
-      "label": "Лицо и характер",
+      "label": "01. Возрождение: Лицо и характер",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_02_03",
       "target_room_id": "room_leonardo_perspective",
-      "label": "Построение пространства",
+      "label": "03. Возрождение: Построение пространства",
       "position": {
         "x": 11.4,
         "y": 0,

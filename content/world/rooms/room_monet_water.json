@@ -1,7 +1,7 @@
 {
   "id": "room_monet_water",
-  "world_version": "gallery_c01_v1",
-  "title": "Импрессионизм: Вода и отражения",
+  "world_version": "gallery_c01_v2",
+  "title": "12. Импрессионизм: Вода и отражения",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_12_11",
       "target_room_id": "room_monet_evening",
-      "label": "Вечер над рекой",
+      "label": "11. Импрессионизм: Вечер над рекой",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_12_13",
       "target_room_id": "room_monet_garden",
-      "label": "Сад как мастерская",
+      "label": "13. Импрессионизм: Сад как мастерская",
       "position": {
         "x": 11.4,
         "y": 0,

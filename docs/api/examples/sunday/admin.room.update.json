@@ -1,5 +1,5 @@
 {
-  "world_version": "gallery_c01_v1",
+  "world_version": "gallery_c01_v2",
   "expected_revision": 1,
   "config": {
     "accent_color": "#D9D2C3",
@@ -33,7 +33,7 @@
         }
       }
     ],
-    "npc_count": 10,
+    "npc_count": 5,
     "installation_visible": false
   }
 }

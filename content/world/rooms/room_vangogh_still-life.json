@@ -1,7 +1,7 @@
 {
   "id": "room_vangogh_still-life",
-  "world_version": "gallery_c01_v1",
-  "title": "Постимпрессионизм: Натюрморт: цвет и предмет",
+  "world_version": "gallery_c01_v2",
+  "title": "19. Постимпрессионизм: Натюрморт: цвет и предмет",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_19_18",
       "target_room_id": "room_vangogh_person",
-      "label": "Человек и цвет",
+      "label": "18. Постимпрессионизм: Человек и цвет",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_19_20",
       "target_room_id": "room_vangogh_village",
-      "label": "Деревня и постройки",
+      "label": "20. Постимпрессионизм: Деревня и постройки",
       "position": {
         "x": 11.4,
         "y": 0,

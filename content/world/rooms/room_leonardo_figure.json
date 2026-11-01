@@ -1,7 +1,7 @@
 {
   "id": "room_leonardo_figure",
-  "world_version": "gallery_c01_v1",
-  "title": "Возрождение: Фигура в пространстве",
+  "world_version": "gallery_c01_v2",
+  "title": "05. Возрождение: Фигура в пространстве",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_05_04",
       "target_room_id": "room_leonardo_light",
-      "label": "Светотень и объём",
+      "label": "04. Возрождение: Светотень и объём",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_05_06",
       "target_room_id": "room_leonardo_gesture",
-      "label": "Жест и отношения",
+      "label": "06. Возрождение: Жест и отношения",
       "position": {
         "x": 11.4,
         "y": 0,

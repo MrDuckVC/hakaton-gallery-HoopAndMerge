@@ -1,7 +1,7 @@
 {
   "id": "room_leonardo_composition",
-  "world_version": "gallery_c01_v1",
-  "title": "Возрождение: Равновесие композиции",
+  "world_version": "gallery_c01_v2",
+  "title": "07. Возрождение: Равновесие композиции",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_07_06",
       "target_room_id": "room_leonardo_gesture",
-      "label": "Жест и отношения",
+      "label": "06. Возрождение: Жест и отношения",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_07_08",
       "target_room_id": "room_leonardo_details",
-      "label": "Деталь и материал",
+      "label": "08. Возрождение: Деталь и материал",
       "position": {
         "x": 11.4,
         "y": 0,

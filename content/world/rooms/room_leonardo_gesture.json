@@ -1,7 +1,7 @@
 {
   "id": "room_leonardo_gesture",
-  "world_version": "gallery_c01_v1",
-  "title": "Возрождение: Жест и отношения",
+  "world_version": "gallery_c01_v2",
+  "title": "06. Возрождение: Жест и отношения",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_06_05",
       "target_room_id": "room_leonardo_figure",
-      "label": "Фигура в пространстве",
+      "label": "05. Возрождение: Фигура в пространстве",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_06_07",
       "target_room_id": "room_leonardo_composition",
-      "label": "Равновесие композиции",
+      "label": "07. Возрождение: Равновесие композиции",
       "position": {
         "x": 11.4,
         "y": 0,

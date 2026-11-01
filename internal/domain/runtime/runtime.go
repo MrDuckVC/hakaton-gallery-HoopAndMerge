@@ -23,6 +23,7 @@ const (
 	Forbidden        Code = "FORBIDDEN"
 	MaxRuntimeBytes       = 32768
 	MaxNPCCount           = 10
+	DefaultNPCCount       = 5
 )
 
 // GuidePlacement replaces one existing guide's immutable placement.
@@ -74,7 +75,7 @@ func Seed(r world.Room) Overlay {
 	for i, g := range r.Guides {
 		placements[i] = GuidePlacement{GuideID: g.ID, Position: g.Position, RotationY: g.Rotation}
 	}
-	return Overlay{WorldVersion: r.Version, RoomID: r.ID, Revision: 1, Config: Config{AccentColor: "#D9D2C3", Lighting: "neutral", GuidePlacements: placements, LampSlots: []LampSlot{{SlotID: "a", Position: player.Vector{X: 3, Z: 4}}, {SlotID: "b", Position: player.Vector{X: 9, Z: 4}}}, NPCCount: MaxNPCCount}, Lamp: Lamp{ObjectID: "lamp_01", SlotID: "a", On: true}}
+	return Overlay{WorldVersion: r.Version, RoomID: r.ID, Revision: 1, Config: Config{AccentColor: "#D9D2C3", Lighting: "neutral", GuidePlacements: placements, LampSlots: []LampSlot{{SlotID: "a", Position: player.Vector{X: 3, Z: 4}}, {SlotID: "b", Position: player.Vector{X: 9, Z: 4}}}, NPCCount: DefaultNPCCount}, Lamp: Lamp{ObjectID: "lamp_01", SlotID: "a", On: true}}
 }
 
 // Clone returns mutable configuration storage belonging only to the caller.

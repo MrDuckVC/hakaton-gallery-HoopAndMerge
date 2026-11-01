@@ -128,7 +128,7 @@ func TestRuntimeHTTPWebSocketDurabilityIntegration(t *testing.T) {
 			Seq  int64             `json:"seq"`
 			NPCs []json.RawMessage `json:"npcs"`
 		}
-		if err = json.Unmarshal(npcEvent.Payload, &npcs); err != nil || npcs.Seq < 1 || len(npcs.NPCs) != 10 {
+		if err = json.Unmarshal(npcEvent.Payload, &npcs); err != nil || npcs.Seq < 1 || len(npcs.NPCs) != 5 {
 			t.Fatal(string(npcEvent.Payload), err)
 		}
 		return conn

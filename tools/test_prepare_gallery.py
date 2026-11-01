@@ -75,6 +75,11 @@ class PrepareGalleryTests(unittest.TestCase):
         second = {p.relative_to(self.output): p.read_bytes() for p in self.output.rglob("*") if p.is_file()}
         self.assertEqual(first, second)
         self.assertIn(Path("catalog.json"), first)
+        room = self.manifest["rooms"][0]
+        rebuilt = json.loads(first[Path("rooms") / (room["id"] + ".json")])
+        self.assertEqual(rebuilt["title"], room["title"])
+        self.assertTrue(rebuilt["title"].startswith("01. "))
+        self.assertEqual(rebuilt["world_version"], "gallery_c01_v2")
 
 
 if __name__ == "__main__":

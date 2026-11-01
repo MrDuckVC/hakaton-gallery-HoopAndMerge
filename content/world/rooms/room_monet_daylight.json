@@ -1,7 +1,7 @@
 {
   "id": "room_monet_daylight",
-  "world_version": "gallery_c01_v1",
-  "title": "Импрессионизм: Дневной свет",
+  "world_version": "gallery_c01_v2",
+  "title": "10. Импрессионизм: Дневной свет",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_10_09",
       "target_room_id": "room_monet_morning",
-      "label": "Утро и воздух",
+      "label": "09. Импрессионизм: Утро и воздух",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_10_11",
       "target_room_id": "room_monet_evening",
-      "label": "Вечер над рекой",
+      "label": "11. Импрессионизм: Вечер над рекой",
       "position": {
         "x": 11.4,
         "y": 0,

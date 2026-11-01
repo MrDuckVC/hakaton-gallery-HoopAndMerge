@@ -1,7 +1,7 @@
 {
   "id": "room_leonardo_perspective",
-  "world_version": "gallery_c01_v1",
-  "title": "Возрождение: Построение пространства",
+  "world_version": "gallery_c01_v2",
+  "title": "03. Возрождение: Построение пространства",
   "bounds": {
     "min": {
       "x": 0,
@@ -95,7 +95,7 @@
     {
       "id": "door_03_02",
       "target_room_id": "room_leonardo_space",
-      "label": "Пейзаж за фигурой",
+      "label": "02. Возрождение: Пейзаж за фигурой",
       "position": {
         "x": 0.6,
         "y": 0,
@@ -106,7 +106,7 @@
     {
       "id": "door_03_04",
       "target_room_id": "room_leonardo_light",
-      "label": "Светотень и объём",
+      "label": "04. Возрождение: Светотень и объём",
       "position": {
         "x": 11.4,
         "y": 0,
