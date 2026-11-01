@@ -42,6 +42,7 @@ Manifest доступен действующей сессии. Для rooms/asse
 - docs/api/openapi.yaml — HTTP; docs/api/websocket.md — WS.
 - docs/api/examples/ — готовые JSON-fixtures для параллельной разработки клиента.
 - docs/ARCHITECTURE.md, docs/DATA_MODEL.md — устройство сервера.
+- docs/MODEL_BENCHMARK.md — реальные замеры A01, модели, контекст и статус офлайн-проверки.
 - docs/IMPLEMENTATION_PLAN.md, docs/TESTING.md — порядок реализации и проверки.
 - AGENTS.md — инструкции ИИ-агентам.
 

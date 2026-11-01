@@ -1,0 +1,4 @@
+# A01 measured reserve; quality limits and measurements: docs/MODEL_BENCHMARK.md.
+FROM qwen2.5:3b-instruct-q4_K_M
+PARAMETER num_ctx 8192
+PARAMETER temperature 0.2
