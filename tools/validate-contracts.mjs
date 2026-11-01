@@ -97,6 +97,7 @@ for(const file of fs.readdirSync(sundayDir).filter(x=>x.endsWith('.json'))){
  else {const name={'admin.clients.json':'SundayClients','admin.room.update.json':'SundayRoomUpdate','admin.guide.json':'SundayAdminGuide','admin.guide.update.json':'SundayGuideUpdate'}[file];assert(name,'unmapped fixture '+file);check(value,api.components.schemas[name],api);}
 }
 const sundayCommand=(type,payload)=>({type,request_id:uuid,payload});
+check({type:'client.metrics',payload:{fps:null,visible:true}},client,client);
 assert.throws(()=>check({type:'client.metrics',request_id:uuid,payload:{fps:60,visible:true}},client,client));
 assert.throws(()=>check({type:'client.metrics',payload:{fps:60,visible:false}},client,client));
 assert.throws(()=>check({type:'client.metrics',payload:{fps:1001,visible:true}},client,client));

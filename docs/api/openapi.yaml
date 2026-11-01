@@ -1968,8 +1968,8 @@
       "operationId": "getAdminClients"
       "summary": "getAdminClients"
       "tags":
-        - "Sunday target (not implemented)"
-      "description": "Целевой контракт, ещё не реализован. Только admin cookie; семантика/лимиты в sunday.md."
+        - "Sunday S03"
+      "description": "S03 реализован. Только admin cookie; семантика/лимиты в sunday.md."
       "responses":
         "200":
           "description": "Успешно"
@@ -4659,9 +4659,13 @@
           "additionalProperties": false
           "properties":
             "fps":
-              "type": "number"
-              "minimum": 0
-              "maximum": 1000
+              "anyOf":
+                -
+                  "type": "number"
+                  "minimum": 0
+                  "maximum": 1000
+                -
+                  "type": "null"
             "visible":
               "const": true
           "required":

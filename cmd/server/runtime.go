@@ -102,6 +102,7 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	server.ConfigureFrontend(frontend)
 	server.ConfigureAuth(accounts, cfg.AllowedOrigins, cfg.CookieSecure)
 	server.ConfigureRuntime(rooms, accounts, cfg.AllowedOrigins)
+	server.ConfigureClients(connections)
 	connections.Configure(rooms, postgres.NewGameStore(pool), guides)
 	connections.ConfigureGuides(guides)
 	server.ConfigureGuides(guides)

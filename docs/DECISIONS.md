@@ -165,3 +165,14 @@ canonical state перечитывается, автоматического rep
 release завершённым после перечитывания, если прежней пары holder уже нет.
 Приоритет геометрии перед ownership соответствует Sunday §8; недопустимый held-state
 возвращает OBJECT_BUSY до сравнения revision, чтобы конкурентный take не передавал владение.
+
+## S03 — connection-scoped FPS/ping
+
+01.11.2026, задача #39: измерения размещены внутри существующего owning connection
+в game, без отдельного реестра/SQL. Это сохраняет атомарность replacement и немедленное
+исключение ended socket, пока завершается durable cleanup. Probe использует игровой
+tick и единственный writer; интервалы/RTT вычисляются по монотонному clock, sampled_at
+отдаётся как обычный timestamp. После 5 с без pong прежний ping становится null;
+новый probe заменяет истёкший nonce. Валидный pong погашает nonce однократно.
+Нормативное fps:number|null допускает null и при visible=true; производная схема,
+ранее запрещавшая такой payload, исправлена. Capability sunday_v1 остаётся до S07.

@@ -1,6 +1,6 @@
 # Sunday v1 — нормативное расширение API галереи
 
-Статус: **S01 runtime/admin rooms и S04 светильник реализованы; остальные части — целевой контракт**. Дата 01.11.2026.
+Статус: **S01 runtime/admin rooms, S03 FPS+ping и S04 светильник реализованы; остальные части — целевой контракт**. Дата 01.11.2026.
 `world.runtime` и `room.sync` доступны; снимок NPC подключается в S05 через порт
 `game.RoomSnapshots`, после runtime и с тем же request_id для sync. До S05 сервер
 не выдаёт фиктивный NPC snapshot. Capability `sunday_v1` включается только в S07.
@@ -223,6 +223,7 @@ world.runtime остальным в зале. Каждое принятое де
 `client.metrics` без request_id: `{fps:number|null,visible:boolean}` раз в 2 с.
 fps — среднее rAF-кадров за фактические последние 2 с, конечное 0..1000; visible=false
 требует fps=null. Клиентский FPS — заявленный браузером, не защищённый benchmark.
+При visible=true значение null также допустимо, если измерение ещё недоступно.
 Скрытая вкладка отправляет visible=false сразу и не генерирует фиктивные FPS=0.
 
 `telemetry.probe {nonce}` сервер → текущий socket раз в 5 с после snapshot.
@@ -236,12 +237,24 @@ Metrics/pong допускаются до ready и исключены из UUID-�
 30/10с; отдельный предел каждого типа 2/с/connection. Лишние валидные telemetry сообщения
 отбрасываются без error/broadcast; некорректная структура даёт обычный VALIDATION_ERROR,
 не обновляет метрики. Исключение применяется только после аутентификации/Origin.
+Распознанные telemetry-сообщения с неверным payload также не расходуют обычный
+command rate/UUID; неразбираемый JSON и неоднозначные повторные ключи следуют общим
+правилам ошибок транспорта. sampled_at меняется только у принятого metrics,
+не у отброшенного по частоте или невалидного сообщения.
 Данные хранятся в RAM по connection ID; replacement сбрасывает измерения, старый callback
 не переписывает новые. disconnect немедленно удаляет строку. Нет истории, SQL, новых метрик.
 Admin poll GET /admin/clients раз в 2 с: user_id,display_name,room_id,fps,ping_ms,
 visible,sampled_at nullable,stale. FPS протухает через 6 с →null, stale=true; sampled_at —
 время последнего валидного metrics. Ping отдельно null после 5 с. Начальные значения null,
 visible=false,stale=true. Не выдавать cookie/session ID/IP/prompt/dialogue.
+Границы stale и timeout включительные: возраст metrics >=6 с и outstanding probe
+>=5 с. Первый probe планируется через 5 с после attach, следующие через 5 с;
+его постановка в очередь выполняется существующим игровым tick (100 мс), без I/O
+под mutex. После ответа nonce погашается; прежний ping сохраняется до timeout
+следующего неотвеченного probe. Фоновая вкладка со свежим metrics имеет stale=false,
+fps=null; stale не означает hidden. UI polling раз в 2 с реализуется отдельно на frontend.
+RTT фиксируется по времени получения pong до SQL-проверки сессии; изменение публичных
+данных выполняется только после её успеха и повторной проверки connection ID.
 
 ## 8. Лимиты, ошибки и интеграционная приёмка
 

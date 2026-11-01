@@ -68,6 +68,8 @@ func (s *Server) serveAdmin(w http.ResponseWriter, r *http.Request) bool {
 		}
 	}
 	switch {
+	case r.Method == http.MethodGet && r.URL.Path == "/api/v1/admin/clients":
+		s.adminClients(w)
 	case r.Method == http.MethodGet && r.URL.Path == "/api/v1/admin/me":
 		writeJSON(w, 200, struct {
 			UserID string `json:"user_id"`

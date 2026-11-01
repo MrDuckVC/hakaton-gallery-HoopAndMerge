@@ -26,6 +26,7 @@ type Server struct {
 	websocket    http.Handler
 	frontend     *Frontend
 	admin        *adminRoutes
+	clients      Clients
 }
 
 type errorResponse struct {

@@ -23,6 +23,15 @@ Guide: accepted содержит Generation; затем started, delta*, complet
 
 Общий лимит 30/10 с учитывает также повторы и некорректные сообщения; при исчерпании окна ответ RATE_LIMITED имеет приоритет над ошибкой разбора/дедупликации. Дополнительные chat/new ask/move окна и серия нарушений move привязаны к user_id и переживают reconnect. Данные окон без активности удаляются после 60 секунд, когда все окна уже освобождены.
 
+Исключение S03: client.metrics и telemetry.pong без request_id доступны до ready,
+не входят в 30/10 с и 10000 UUID. У каждого отдельное скользящее окно 2/с/connection;
+лишние валидные сообщения молча отбрасываются. Неверный payload распознанной telemetry
+даёт VALIDATION_ERROR, не меняя измерений и обычных лимитов. Неоднозначный/неразбираемый
+JSON обрабатывается как прежде. Сервер отправляет telemetry.probe только текущему
+socket через общий writer, начиная через 5 с после snapshot/runtime; nonce погашается
+одним ответом. Это не заменяет protocol ping 20 с / pong timeout 10 с.
+FPS/ping доступны только GET /api/v1/admin/clients, не players.state или broadcast.
+
 Некорректный upgrade (Connection/Upgrade, Sec-WebSocket-Version/Key) возвращает HTTP 400 VALIDATION_ERROR в общем JSON-формате с request_id/no-store, сохраняя необходимые Upgrade и Sec-WebSocket-Version headers. Валидацию handshake выполняет coder/websocket; адаптер нормализует его HTTP-ошибки до upgrade.
 
 ## Реализовано в B05

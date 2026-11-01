@@ -153,6 +153,10 @@ func (t *Transport) read(ctx context.Context, conn *ws.Conn, p *peer, token, use
 		}
 		cmd, failure := decode(body)
 		if failure.Code != "" {
+			if telemetryCommandType(cmd.Type) {
+				t.service.Send(userID, id, game.Event{Type: "error", Failure: failure})
+				continue
+			}
 			admission := t.service.Check(userID, id, rejectedCommand(cmd))
 			if admission.Drop {
 				continue
@@ -162,6 +166,9 @@ func (t *Transport) read(ctx context.Context, conn *ws.Conn, p *peer, token, use
 			}
 			t.service.Send(userID, id, game.Event{Type: "error", RequestID: cmd.RequestID, Failure: failure})
 			continue
+		}
+		if telemetryCommandType(cmd.Type) {
+			cmd = t.service.ReceiveTelemetry(userID, id, cmd)
 		}
 		failure = t.service.Check(userID, id, cmd)
 		if failure.Drop {

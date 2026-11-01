@@ -2350,9 +2350,16 @@
           "additionalProperties": false,
           "properties": {
             "fps": {
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1000
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "visible": {
               "const": true

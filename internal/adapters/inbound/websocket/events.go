@@ -30,6 +30,10 @@ func publicPlayer(p game.Player) worldwire.Player {
 func encode(e game.Event) ([]byte, error) {
 	var payload any
 	switch e.Type {
+	case "telemetry.probe":
+		payload = struct {
+			Nonce string `json:"nonce"`
+		}{e.Nonce}
 	case "object.acted":
 		payload = struct {
 			Action  string           `json:"action"`
