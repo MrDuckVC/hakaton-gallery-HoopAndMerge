@@ -81,11 +81,11 @@ func TestReadyMovementSequenceAndIdle(t *testing.T) {
 	if got.State.Position.X != .4 || got.AckSeq != 2 || got.State.Rotation.Yaw != 1 {
 		t.Fatal(got)
 	}
-	// Rejected move consumes server time: an immediate retry has no speed budget.
+	// A rejected oversize move does not spend the bounded distance reserve.
 	s.Handle(ctx, "a", id, moveCommand(3, .5))
 	s.PublishState()
 	got = sink.events[len(sink.events)-1].Players[0]
-	if got.State.Position.X != .4 || got.AckSeq != 3 {
+	if got.State.Position.X != .5 || got.AckSeq != 3 {
 		t.Fatal(got)
 	}
 	old := moveCommand(4, 0)

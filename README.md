@@ -44,9 +44,9 @@ Manifest доступен действующей сессии. Для rooms/asse
 [docs/DEMO.md](docs/DEMO.md) содержит подготовку комплекта, холодный запуск,
 LAN-показ и localhost с выключенным Wi-Fi. Go раздаёт frontend, API и WS на
 одном origin; PostgreSQL в Compose, Ollama с GPU на хосте. Подготовка frontend
-из отдельного репозитория закреплена на commit ветки `fix/day2-first-demo`.
+из отдельного репозитория закреплена на проверенном commit ветки `main` (SHA — в tools/build-frontend.sh).
 `python3 tools/offline-bundle.py prepare --frontend-dist ./data/frontend --output ./data/offline/i01`
-собирает комплект без рабочих секретов/фото/БД, `verify` проверяет его hashes.
+собирает комплект с gallery/migrate/admin без рабочих секретов/фото/БД, `verify` проверяет его hashes.
 Статус проверок — [docs/I01_ACCEPTANCE.md](docs/I01_ACCEPTANCE.md).
 
 ## API и документы
@@ -101,7 +101,7 @@ S01 реализует сохраняемый runtime залов, редакти
 назначение роли командой `./bin/admin grant --username NAME` после отдельного применения
 миграции 00006. `world.runtime` следует за snapshot/entered; `room.sync` перечитывает БД.
 S04 реализует интерактивные команды светильника и восстановление holder после сбоев;
-новые миграции/config не нужны. S03 реализует client.metrics, telemetry.probe/pong и GET /api/v1/admin/clients только для admin. Измерения живут в RAM текущего соединения; новые миграции/config не нужны. S02 реализует admin guides и снимок профиля при старте running; перед запуском отдельно примените новую миграцию 00007. S05 реализует NPC-посетителей 5 Гц в активных залах с реакциями на игроков/чат, без SQL и Ollama на tick. S06 реализует guide.action: девять точных локальных фраз меняют экспозицию через durable runtime без LLM и записи в память. `sunday_v1` не объявляется до интеграции S07.
+новые миграции/config не нужны. S03 реализует client.metrics, telemetry.probe/pong и GET /api/v1/admin/clients только для admin. Измерения живут в RAM текущего соединения; новые миграции/config не нужны. S02 реализует admin guides и снимок профиля при старте running; перед запуском отдельно примените новую миграцию 00007. S05 реализует NPC-посетителей 5 Гц в активных залах с реакциями на игроков/чат, без SQL и Ollama на tick. S06 реализует guide.action: девять точных локальных фраз меняют экспозицию через durable runtime без LLM и записи в память. S07 объявляет `extensions: ["sunday_v1"]` после подключения всех частей; результаты — [docs/S07_ACCEPTANCE.md](docs/S07_ACCEPTANCE.md).
 Основа №2–14 не переписывается. Задачи и порядок — [SUNDAY_BACKLOG.md](docs/SUNDAY_BACKLOG.md).
 
 Максимум и seed NPC-посетителей — **10 на зал**, admin npc_count=0–10. Перед

@@ -3,6 +3,8 @@ package websocket
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"math"
 	"net/http/httptest"
 	"sync"
 	"sync/atomic"
@@ -239,5 +241,28 @@ func TestGameTransportTransitionOrdersEnteredAndSwitchesOwnership(t *testing.T) 
 	writeStateCommand(t, c, `{"type":"player.move","payload":{"movement_epoch":2,"seq":1,"position":{"x":2.1,"y":0,"z":0},"rotation":{"yaw":0,"pitch":0}}}`)
 	if e = readEvent(t, c); e["payload"].(map[string]any)["code"] != "GAME_NOT_READY" {
 		t.Fatal(e)
+	}
+}
+
+func TestGameTransportWalkingAcrossCompressedDeliveryIntervals(t *testing.T) {
+	server, tr, clock, _ := setupStateTransport(t)
+	c := dial(t, server, "a")
+	readEvent(t, c)
+	writeStateCommand(t, c, stateReady)
+	readEvent(t, c)
+	for step, ms := range []int64{140, 60, 100, 180, 20, 100} {
+		clock.Add(ms * int64(time.Millisecond))
+		x := float64(step+1) * .36
+		writeStateCommand(t, c, fmt.Sprintf(`{"type":"player.move","payload":{"movement_epoch":1,"seq":%d,"position":{"x":%v,"y":0,"z":0},"rotation":{"yaw":0,"pitch":0}}}`, step+1, x))
+		// A ready reply is a processing barrier, not a movement-clock reset.
+		writeStateCommand(t, c, fmt.Sprintf(`{"type":"world.ready","request_id":"12345678-1234-4123-8123-%012d","payload":{"world_version":"v1","movement_epoch":1}}`, step+10))
+		if e := readEvent(t, c); e["type"] != "world.ready" {
+			t.Fatal(e)
+		}
+		tr.service.PublishState()
+		state := readEvent(t, c)["payload"].(map[string]any)["players"].([]any)[0].(map[string]any)
+		if got := state["position"].(map[string]any)["x"].(float64); math.Abs(got-x) > 1e-9 || state["ack_seq"] != float64(step+1) {
+			t.Fatalf("walking correction at step %d: %v", step, state)
+		}
 	}
 }

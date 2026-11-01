@@ -16,6 +16,7 @@ import (
 )
 
 // Write creates a valid 40-room world using genuine JPEG bytes in a new empty directory.
+// High-quality grayscale keeps the byte budget valid with less instrumented decode work.
 func Write(ctx context.Context, dir, version string) error {
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return err
@@ -28,13 +29,9 @@ func Write(ctx context.Context, dir, version string) error {
 		return errors.New("fixture directory must be empty")
 	}
 	rng := rand.New(rand.NewPCG(4, 3))
-	img := image.NewRGBA(image.Rect(0, 0, 1024, 1024))
-	for i := 0; i < len(img.Pix); i += 4 {
-		n := rng.Uint64()
-		img.Pix[i] = byte(n)
-		img.Pix[i+1] = byte(n >> 8)
-		img.Pix[i+2] = byte(n >> 16)
-		img.Pix[i+3] = 255
+	img := image.NewGray(image.Rect(0, 0, 896, 896))
+	for i := range img.Pix {
+		img.Pix[i] = byte(rng.Uint64())
 	}
 	refs := make([]map[string]string, 0, 40)
 	assets := make([]map[string]string, 0, 40)
@@ -61,7 +58,7 @@ func Write(ctx context.Context, dir, version string) error {
 		door := fmt.Sprintf("d%d", n)
 		img.Pix[0] = byte(n)
 		var jpegBytes bytes.Buffer
-		if err := jpeg.Encode(&jpegBytes, img, &jpeg.Options{Quality: 95}); err != nil {
+		if err := jpeg.Encode(&jpegBytes, img, &jpeg.Options{Quality: 100}); err != nil {
 			return err
 		}
 		if err := os.WriteFile(filepath.Join(dir, asset+".jpg"), jpegBytes.Bytes(), 0644); err != nil {

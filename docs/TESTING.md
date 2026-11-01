@@ -72,7 +72,7 @@ Usecase-тесты через fake Sink проверяют snapshot первым
 
 ## B05: состояние, движение и сохранение
 
-Domain-тесты проверяют sweep тонкой стены, округлые углы цилиндра, границы, касание пола, конечные координаты и LOS. Usecase-тесты с управляемым временем проверяют готовность, повтор ready без сброса dt, старый/будущий epoch, stale seq, ограничение скорости после простоя, ack/rotation при отклонённом перемещении и отсутствие изменений при неверных полях.
+Domain-тесты проверяют sweep тонкой стены, округлые углы цилиндра, границы, касание пола, конечные координаты и LOS. Usecase-тесты с управляемым временем проверяют готовность, повтор ready без сброса времени/запаса расстояния, старый/будущий epoch, stale seq, ограничение скорости после простоя, ack/rotation при отклонённом перемещении и отсутствие изменений при неверных полях.
 
 Блокируемый fake store проверяет, что SQL-переход не останавливает публикацию state, replacement ждёт commit и получает фактическую позу/пакет, старый cleanup не пишет в БД. Ошибка отмены сохраняет старый зал; ошибка записи перехода и периодического save закрывает только текущий WS с 1011. Финальный flush сохраняет принятый move.
 
@@ -135,10 +135,10 @@ HTTP-тесты проверяют корень, GET/HEAD, MIME, SPA navigation,
 Ручные сценарии и фактические ограничения — [DEMO.md](DEMO.md),
 [I01_ACCEPTANCE.md](I01_ACCEPTANCE.md).
 
-## Целевой Sunday: матрица приёмки
+## Sunday: матрица приёмки
 
-S01, S02, S03 и S04 реализованы; фактические проверки светильника — [S04_ACCEPTANCE.md](S04_ACCEPTANCE.md).
-Остальные части [api/sunday.md](api/sunday.md) остаются целевыми. Матрица:
+S01–S07 интегрированы. Итоговый прогон и границы — [S07_ACCEPTANCE.md](S07_ACCEPTANCE.md);
+исторические проверки светильника — [S04_ACCEPTANCE.md](S04_ACCEPTANCE.md). Матрица:
 - admin: 401/403, точный Origin для PUT, 64 КиБ, неизвестные поля, role только из БД;
 - два конкурентных room/profile PUT: один commit, второй REVISION_CONFLICT, без partial broadcast;
 - effective guide placement/profile: distance/LOS и следующий running используют override,
@@ -228,3 +228,46 @@ TEST_DATABASE_URL связывает настоящий WS/SQL с двумя и�
 Отсутствие generations/memory events/summary и вызовов модели проверяется отдельно;
 та же фраза в guide.ask проходит прежнюю очередь/модель и сохраняет память.
 Физический LAN/offline показ и frontend-отрисовка остаются ручной проверкой S07.
+
+## S07: composition root и комплект
+
+`TestSundayCompositionIntegration` запускает настоящий cmd/server с валидным синтетическим миром/гидом, отдельной
+тестовой БД и двумя настоящими WS: capability/base protocol, snapshot → runtime → NPC,
+admin 401/403/grant, room CAS, ready, chat/metrics до ready, лампа/конфликт,
+guide.action, профиль, probe/pong/admin clients, рестарт с held lamp и room.sync.
+`SUNDAY_TEST_FRONTEND_DIST=/absolute/dist` включает настоящий production dist;
+проверка его раздачи не подтверждает WebGL/rAF/визуальные анимации.
+`SUNDAY_TEST_WORLD_DIR=/absolute/content/world` включает отдельный прогон с C01
+и gallery_c01_v1; тяжёлая загрузка C01 под race/coverage может превысить production
+startup deadline, поэтому в instrumented CI используется testworld, deadline не увеличивается.
+Kit-тест успешной подготовки проверяет наличие, executable mode и hash admin,
+отказ verify после его подмены/удаления; существующие тесты защищают от перезаписи.
+Физические режимы и бюджет в настоящем браузере проверяются по DEMO, отдельно.
+
+## S07: рывки при ходьбе и регрессия heartbeat CI
+
+MovementDeliveryJitter воспроизводит 200 шагов по 0,36 м с интервалами доставки
+140/60/100/180/20/100 мс: каждый принятый state совпадает с запрошенным.
+Тот же короткий сценарий проверяется через настоящий WS. Отдельные отрицательные
+тесты запрещают постоянные 5 м/с, накопление больше 1 м после простоя, обход
+стены, повторный ready и добычу запаса частыми replacement. Стартовый запас 0,
+пополнение только реальным серверным временем; расход только принятой дистанции.
+
+Heartbeat regression моделирует CloseNow, который ждёт уже начатый graceful close:
+heartbeat обязан вызвать underlying network abort до ожидания CloseNow. Исходный
+TestTransportHeartbeat и regression повторены 50 раз под race/coverage, без
+увеличения production интервалов ping20с/pong10с. CI failure #41305284103 был
+воспроизведён отдельным RED-тестом, затем исправлен; это runtime fix, не увеличение
+допустимого времени ожидания теста.
+
+## S07: стоимость fixture под instrumentation
+
+После первого push оба CI-прогона упёрлись в общий 10-минутный timeout cmd/server
+во время JPEG-декодирования. Синтетический testworld использует настоящие
+896×896 grayscale JPEG quality100 вместо1024×1024 RGB quality95: бюджет с резервом
+фото по-прежнему проверяется production-валидатором, padding не добавлен.
+TestFixtureBoundsDecodedPixels ограничивает объём декодируемых пикселей. Из
+TestPrepareWorld убран повтор полного decode ради version mismatch: отрицательный
+кейс остаётся в usecase/world TestLoadFailures/version. Production C01, loader,
+валидация изображений и тайм-ауты не изменены. По поручению владельца повторяются
+только затронутые PrepareWorld/Sunday/fixture/version тесты и lint.
