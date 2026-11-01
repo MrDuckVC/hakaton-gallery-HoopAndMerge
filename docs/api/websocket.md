@@ -52,10 +52,10 @@ Guide: accepted содержит Generation; затем started, delta*, complet
 Тайм-аут queued — 120 секунд, running — 90 секунд; output limit — 8000 кодовых точек. До B08 модель явно недоступна: после accepted/started приходит failed с AI_UNAVAILABLE. При ошибке хранения результата WS закрывается 1011; восстановление переводит оставшиеся pending в SERVER_RESTARTED и уведомляет ещё подключённых владельцев. До открытия listener выполняется та же recovery-операция.
 
 
-## Sunday v1: S01 runtime, остальные события целевые
+## Sunday v1: S01 runtime и S04 светильник
 
 Нормативные правила: [sunday.md](sunday.md), типы [sunday.types.ts](sunday.types.ts).
-Реализованы world.runtime и room.sync. NPC-снимок подключается задачей S05 через
+Реализованы world.runtime, room.sync, object.act и object.acted. NPC-снимок подключается задачей S05 через
 упорядоченный порт game.RoomSnapshots; до S07 capability sunday_v1 отсутствует.
 Новые client events: room.sync, object.act, guide.action, client.metrics, telemetry.pong.
 Новые server events: world.runtime, npc.state, object.acted, guide.action.completed, telemetry.probe.
@@ -63,3 +63,12 @@ Guide: accepted содержит Generation; затем started, delta*, complet
 Metrics/pong без request_id и вне обычного лимита команд; остальные новые команды
 имеют UUID и обычную дедупликацию. Полные runtime snapshots + CAS revision, без новых
 геометрических файлов/смены WORLD_VERSION при правке оформления.
+
+S04: `object.act` принимает только union take/place/aim/power из Sunday §4. Все действия
+требуют owning/ready/epoch, XZ ≤3 м и LOS, обычный UUID и дополнительный лимит
+10/10 с/user, сохраняющийся при reconnect. Сначала объект/дистанция/LOS, затем
+допустимость holder и revision: held aim/power/take и чужой place →OBJECT_BUSY;
+при допустимом holder устаревшая revision →REVISION_CONFLICT. Ошибки не меняют revision.
+После commit отправитель получает `object.acted {action,runtime}` с request_id,
+остальные owning WS зала — `world.runtime` без request_id. No-op тоже повышает revision.
+Release публикует обычный полный runtime; приватный connection ID не входит в DTO.

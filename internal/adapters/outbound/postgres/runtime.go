@@ -122,6 +122,15 @@ func (s *RuntimeStore) Read(ctx context.Context, version, roomID string) (runtim
 // CompareAndSwap persists the complete next overlay before returning success.
 // Initial revision 1 is implicit; the first successful update inserts revision 2.
 func (s *RuntimeStore) CompareAndSwap(ctx context.Context, expected int64, next runtime.Overlay) error {
+	return s.compareAndSwap(ctx, expected, nil, next)
+}
+
+// CompareAndSwapLamp compares the previous private owner as well as the revision.
+func (s *RuntimeStore) CompareAndSwapLamp(ctx context.Context, expected int64, owner runtime.Holder, next runtime.Overlay) error {
+	return s.compareAndSwap(ctx, expected, &owner, next)
+}
+
+func (s *RuntimeStore) compareAndSwap(ctx context.Context, expected int64, owner *runtime.Holder, next runtime.Overlay) error {
 	if expected < 1 || expected >= world.MaxSafeInteger || next.Revision != expected+1 {
 		return auth.Validation
 	}
@@ -145,15 +154,31 @@ func (s *RuntimeStore) CompareAndSwap(ctx context.Context, expected int64, next 
 		defer stop()
 		_ = tx.Rollback(cleanup)
 	}()
-	query := `UPDATE room_overlays SET revision=$3,config=$4,lamp=$5,updated_at=now() WHERE world_version=$1 AND room_id=$2 AND revision=$6 AND lamp->>'holder_user_id' IS NULL`
-	if expected == 1 {
-		query = `INSERT INTO room_overlays(world_version,room_id,revision,config,lamp) VALUES($1,$2,$3,$4,$5) ON CONFLICT(world_version,room_id) DO UPDATE SET revision=EXCLUDED.revision,config=EXCLUDED.config,lamp=EXCLUDED.lamp,updated_at=now() WHERE room_overlays.revision=$6 AND room_overlays.lamp->>'holder_user_id' IS NULL`
+	predicate := `room_overlays.lamp->>'holder_user_id' IS NULL`
+	args := []any{next.WorldVersion, next.RoomID, next.Revision, config, lamp, expected}
+	if owner != nil {
+		var user, connection *string
+		if owner.UserID != "" {
+			user = &owner.UserID
+		}
+		if owner.ConnectionID != "" {
+			connection = &owner.ConnectionID
+		}
+		args = append(args, user, connection)
+		predicate = `room_overlays.lamp->>'holder_user_id' IS NOT DISTINCT FROM $7::text AND room_overlays.lamp->>'holder_connection_id' IS NOT DISTINCT FROM $8::text`
 	}
-	result, err := tx.Exec(ctx, query, next.WorldVersion, next.RoomID, next.Revision, config, lamp, expected)
+	query := `UPDATE room_overlays SET revision=$3,config=$4,lamp=$5,updated_at=now() WHERE world_version=$1 AND room_id=$2 AND revision=$6 AND ` + predicate
+	if expected == 1 && (owner == nil || *owner == (runtime.Holder{})) {
+		query = `INSERT INTO room_overlays(world_version,room_id,revision,config,lamp) VALUES($1,$2,$3,$4,$5) ON CONFLICT(world_version,room_id) DO UPDATE SET revision=EXCLUDED.revision,config=EXCLUDED.config,lamp=EXCLUDED.lamp,updated_at=now() WHERE room_overlays.revision=$6 AND ` + predicate
+	}
+	result, err := tx.Exec(ctx, query, args...)
 	if err != nil {
 		return runtimeStoreError("write room overlay")
 	}
 	if result.RowsAffected() != 1 {
+		if owner != nil {
+			return runtime.RevisionConflict
+		}
 		var revision int64
 		var held bool
 		err = tx.QueryRow(ctx, `SELECT revision,lamp->>'holder_user_id' IS NOT NULL FROM room_overlays WHERE world_version=$1 AND room_id=$2`, next.WorldVersion, next.RoomID).Scan(&revision, &held)

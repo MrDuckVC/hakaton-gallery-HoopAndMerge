@@ -38,7 +38,7 @@ func (s *Service) Initialize(ctx context.Context) error {
 		if err := domain.ValidateOverlay(r, s.catalog.SpawnPositions(r.ID), domain.Seed(r)); err != nil {
 			return fmt.Errorf("room %q has unsafe Sunday seed: %w", r.ID, err)
 		}
-		if _, err := s.Read(ctx, r.ID); err != nil {
+		if err := s.ReconcileLamp(ctx, r.ID, func(string, string) bool { return false }); err != nil {
 			return fmt.Errorf("initialize runtime room %q: %w", r.ID, err)
 		}
 	}

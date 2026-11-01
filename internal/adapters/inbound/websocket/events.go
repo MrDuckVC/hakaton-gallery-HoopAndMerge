@@ -30,6 +30,11 @@ func publicPlayer(p game.Player) worldwire.Player {
 func encode(e game.Event) ([]byte, error) {
 	var payload any
 	switch e.Type {
+	case "object.acted":
+		payload = struct {
+			Action  string           `json:"action"`
+			Runtime runtimewire.Room `json:"runtime"`
+		}{e.ObjectAction, runtimewire.Public(e.Runtime)}
 	case "world.runtime":
 		payload = runtimewire.Public(e.Runtime)
 	case "guide.accepted", "guide.completed", "guide.failed", "guide.cancelled":

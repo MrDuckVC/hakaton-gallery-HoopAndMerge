@@ -145,3 +145,18 @@ Game и guide получают effective Geometry от runtime service. Immutabl
 строятся из того же overlay, что серверные distance/LOS. Неопределённый COMMIT
 удаляет cached geometry, отзывает owning room WS и закрывает их 1011. WithRoom
 на новом подключении читает канонический overlay до публикации состояния.
+
+## S04: составной светильник
+
+`domain/runtime.ApplyObject` проверяет геометрию взаимодействия и переходы состояния.
+`usecase/game.Objects` — порт действий/release/reconciliation; game владеет ready/epoch,
+user gates, UUID/rate и живыми connection ID. Runtime владеет room gates и `LampStore`:
+SQL CAS сравнивает revision и старую пару holder. Порядок user gate → room gate →
+краткий registry mutex; callbacks runtime не захватывают пользовательские gates и не
+выполняют I/O. Команда повторно проверяет допуск непосредственно перед CAS.
+
+Game содержит один cleanup worker и map грязных комнат. Каждая попытка перечитывает
+БД и проверяет live owner; generation записи предотвращает потерю работы при новых
+закрытиях во время I/O. Ошибки сохраняют backoff даже при concurrent invalidation.
+Startup выполняет recovery до listener, lifecycle освобождает объекты до закрытия WS
+и storage. При аварийном завершении следующая startup recovery снимает stale holder.

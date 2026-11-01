@@ -66,6 +66,7 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	accounts := auth.New(postgres.NewAuthStore(pool), security.Crypto{}, catalog, sessions, time.Now)
 	runtimeStore := postgres.NewRuntimeStore(pool)
 	rooms := runtimecase.New(catalog, runtimeStore, runtimeStore, connections, runtimewire.Sizer{})
+	connections.ConfigureObjects(rooms)
 	runtimeCtx, runtimeCancel := context.WithTimeout(ctx, 15*time.Second)
 	err = rooms.Initialize(runtimeCtx)
 	runtimeCancel()
@@ -112,15 +113,18 @@ func run(ctx context.Context, cfg config.Config, logger *slog.Logger) error {
 	loopCtx, stopLoop := context.WithCancel(context.Background())
 	loopDone := make(chan struct{})
 	go func() { defer close(loopDone); connections.Run(loopCtx) }()
+	lampDone := make(chan struct{})
+	go func() { defer close(lampDone); connections.RunLampCleanup(loopCtx) }()
 	guideDone := make(chan struct{})
 	go func() { defer close(guideDone); guides.Run(loopCtx) }()
 	transport := wsapi.New(connections, accounts, catalog, connections, cfg.AllowedOrigins)
 	server.ConfigureWebSocket(transport)
 	server.ConfigureWorld(worldcase.New(catalog, accounts, connections))
-	return serve(ctx, server, listener, lifecycle.Coordinator{Admission: connections, Generations: guides, Positions: connections, Connections: transport}, logger, 15*time.Second, func() {
+	return serve(ctx, server, listener, lifecycle.Coordinator{Admission: connections, Generations: guides, Positions: connections, Objects: connections, Connections: transport}, logger, 15*time.Second, func() {
 		stopLoop()
 		<-loopDone
 		<-guideDone
+		<-lampDone
 		pool.Close()
 	})
 }

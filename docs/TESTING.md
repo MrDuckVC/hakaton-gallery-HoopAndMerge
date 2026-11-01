@@ -137,7 +137,8 @@ HTTP-тесты проверяют корень, GET/HEAD, MIME, SPA navigation,
 
 ## Целевой Sunday: матрица приёмки
 
-Контракт [api/sunday.md](api/sunday.md) ещё не реализован. При реализации автоматизировать:
+S01 и S04 реализованы; фактические проверки светильника — [S04_ACCEPTANCE.md](S04_ACCEPTANCE.md).
+Остальные части [api/sunday.md](api/sunday.md) остаются целевыми. Матрица:
 - admin: 401/403, точный Origin для PUT, 64 КиБ, неизвестные поля, role только из БД;
 - два конкурентных room/profile PUT: один commit, второй REVISION_CONFLICT, без partial broadcast;
 - effective guide placement/profile: distance/LOS и следующий running используют override,
